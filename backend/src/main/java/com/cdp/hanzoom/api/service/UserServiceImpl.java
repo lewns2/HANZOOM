@@ -24,18 +24,20 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder passwordEncoder;
 	
 	@Override
-	public User createUser(UserRegisterReq userRegisterInfo) {
+	public User registerUser(UserRegisterReq userRegisterInfo) {
+		System.out.println("debug " + userRegisterInfo.toString());
 		User user = new User();
 		user.setUserEmail(userRegisterInfo.getUserEmail());
+		user.setUserNickname(userRegisterInfo.getUserNickname());
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		user.setUserPassword(passwordEncoder.encode(userRegisterInfo.getUserPassword()));
 		return userRepository.save(user);
 	}
 
 	@Override
-	public User getUserByUserId(String userId) {
+	public User getUserByUserEmail(String userEmail) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByUserEmail(userId).get();
+		User user = userRepositorySupport.findUserByUserEmail(userEmail).get();
 		return user;
 	}
 }

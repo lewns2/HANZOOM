@@ -33,21 +33,22 @@ public class UserController {
 	
 	@Autowired
     UserService userService;
-	
-	@PostMapping()
-	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
-    @ApiResponses({
-        @ApiResponse(code = 200, message = "성공"),
-        @ApiResponse(code = 401, message = "인증 실패"),
-        @ApiResponse(code = 404, message = "사용자 없음"),
-        @ApiResponse(code = 500, message = "서버 오류")
-    })
-	public ResponseEntity<? extends BaseResponseBody> register(
+
+	// 회원 가입
+	@PostMapping("/register/signup")
+	@ApiOperation(value = "회원 가입", notes = "<strong>이메일과 패스워드</strong>를 통해 회원가입 한다." +
+			"닉네임은 3~ 12자리 수 이다." +
+			"비밀번호는 숫자, 문자, 특수기호를 조합하여 8 ~ 12 자리로 구성된다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> registerSignUp(
 			@RequestBody @ApiParam(value="회원가입 정보", required = true) UserRegisterReq registerInfo) {
-		
 		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
-		User user = userService.createUser(registerInfo);
-		
+		User user = userService.registerUser(registerInfo);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 	
@@ -65,8 +66,8 @@ public class UserController {
 		 * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
 		 */
 		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
-		String userId = userDetails.getUsername();
-		User user = userService.getUserByUserId(userId);
+		String userEmail = userDetails.getUsername();
+		User user = userService.getUserByUserEmail(userEmail);
 		
 		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
