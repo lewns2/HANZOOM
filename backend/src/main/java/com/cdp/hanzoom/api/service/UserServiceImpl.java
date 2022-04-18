@@ -1,5 +1,6 @@
 package com.cdp.hanzoom.api.service;
 
+import com.cdp.hanzoom.api.request.UserFindPasswordReq;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.repository.UserRepository;
 import com.cdp.hanzoom.db.repository.UserRepositorySupport;
@@ -38,6 +39,15 @@ public class UserServiceImpl implements UserService {
 	public User getUserByUserEmail(String userEmail) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
 		User user = userRepositorySupport.findUserByUserEmail(userEmail).get();
+		return user;
+	}
+
+	@Override
+	public User getUser(UserFindPasswordReq userFindPasswordReq) {
+		String userEmail = userFindPasswordReq.getUserEmail();
+		String userNickname = userFindPasswordReq.getUserNickname();
+		User user = userRepositorySupport.findUserByUserNicknameAndUserEmail(userEmail, userNickname).orElse(null);
+
 		return user;
 	}
 }
