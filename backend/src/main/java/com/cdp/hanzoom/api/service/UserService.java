@@ -1,5 +1,6 @@
 package com.cdp.hanzoom.api.service;
 
+import com.cdp.hanzoom.api.request.UserFindPasswordReq;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.api.request.UserRegisterReq;
 
@@ -9,4 +10,5 @@ import com.cdp.hanzoom.api.request.UserRegisterReq;
 public interface UserService {
 	User registerUser(UserRegisterReq userRegisterInfo);
 	User getUserByUserEmail(String userEmail);
+	User getUser(UserFindPasswordReq userFindPasswordReq);
 }
