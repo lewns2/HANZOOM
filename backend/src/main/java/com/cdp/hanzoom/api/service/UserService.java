@@ -7,6 +7,6 @@ import com.cdp.hanzoom.api.request.UserRegisterReq;
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
  */
 public interface UserService {
-	User createUser(UserRegisterReq userRegisterInfo);
-	User getUserByUserId(String userId);
+	User registerUser(UserRegisterReq userRegisterInfo);
+	User getUserByUserEmail(String userEmail);
 }
