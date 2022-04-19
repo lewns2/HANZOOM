@@ -1,6 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    alert('로그아웃 되었습니다.');
+    localStorage.removeItem('jwt-token');
+    navigate('/login');
+  };
+
   return (
     <div className="navbar">
       <li>
@@ -16,10 +24,13 @@ export const Navbar = () => {
         <Link to="/my-page">MY식재료</Link>
       </li>
       <li>
-        <Link to="/main">로그인</Link>
+        <Link to="/login">로그인</Link>
       </li>
       <li>
         <Link to="/signup">회원가입</Link>
+      </li>
+      <li>
+        <div onClick={logout}>로그아웃</div>
       </li>
     </div>
   );
