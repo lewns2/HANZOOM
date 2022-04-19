@@ -4,6 +4,8 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import { Axios } from '../../../core/axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getUserInfo } from '../../../Reducer/userSlice';
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -17,6 +19,7 @@ export const LoginForm = () => {
   const passwordInput = useRef();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const login = async () => {
     if (email == '') {
@@ -47,6 +50,7 @@ export const LoginForm = () => {
         if (res.data.accessToken) {
           localStorage.setItem('jwt-token', res.data.accessToken);
         }
+        dispatch(getUserInfo());
         navigate('/main');
       })
       .catch(() => {
