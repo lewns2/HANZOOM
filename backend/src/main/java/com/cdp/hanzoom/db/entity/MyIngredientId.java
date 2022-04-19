@@ -14,9 +14,9 @@ import java.io.Serializable;
 public class MyIngredientId implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name="user_nickname")
+    @JoinColumn(name="user_email")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User userNickname;
+    private User userEmail;
 
     @OneToOne
     @JoinColumn(name = "ingredient_no")

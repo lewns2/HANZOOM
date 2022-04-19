@@ -18,7 +18,7 @@ public class LikeList {
     Long likeNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_nickname")
+    @JoinColumn(name="user_email")
     @OnDelete(action = OnDeleteAction.CASCADE)
     User user;
 
