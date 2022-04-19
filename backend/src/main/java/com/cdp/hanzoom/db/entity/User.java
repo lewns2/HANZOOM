@@ -41,10 +41,10 @@ public class User {
     String userImage; // 프로필 이미지 경로
 
     @Column(name = "lat")
-    double lat;   // 위도
+    Double lat;   // 위도
 
     @Column(name = "lng")
-    double lng;  // 경도
+    Double lng;  // 경도
 
     @Column(columnDefinition = "TIMESTAMP")
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
@@ -54,5 +54,9 @@ public class User {
     public void updateUser(String userNickname, String userPassword) {
         this.userNickname = userNickname;
         this.userPassword = userPassword;
+    }
+    public void updateUserLatAndLng(Double lat, Double lng) {
+        this.lat = lat;
+        this.lng = lng;
     }
 }
