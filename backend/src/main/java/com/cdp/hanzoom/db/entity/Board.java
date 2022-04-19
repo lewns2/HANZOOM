@@ -48,7 +48,7 @@ public class Board {
     String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_nickname")
+    @JoinColumn(name="user_email")
     @OnDelete(action = OnDeleteAction.CASCADE)
     User user;
 }
