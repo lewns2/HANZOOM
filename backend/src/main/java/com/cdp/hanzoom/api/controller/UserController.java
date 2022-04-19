@@ -50,7 +50,7 @@ public class UserController {
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 	
-	@GetMapping("/me")
+	@GetMapping("/find/me")
 	@ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.") 
     @ApiResponses({
         @ApiResponse(code = 200, message = "성공"),
@@ -70,24 +70,23 @@ public class UserController {
 		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
 
-//	// 회원탈퇴.
-//	@ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
-//	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
-//			@ApiResponse(code = 401, message = "인증 실패"),
-//			@ApiResponse(code = 404, message = "사용자 없음"),
-//			@ApiResponse(code = 500, message = "해당 회원 없음")})
-//	@DeleteMapping("/remove/{userId}")
-//	public ResponseEntity<String> deleteUser(@PathVariable("userId") String userId) throws Exception {
-//		boolean result;
-//		try {
-//			User user = userService.getUserByUserId(userId);
-//			result = userService.deleteByUserId(user);
-//		}catch(NoSuchElementException E) {
-//			logger.debug("회원 탈퇴 실패");
-//			return  ResponseEntity.status(500).body("해당 회원 없어서 회원 탈퇴 실패");
-//		}
-//		return ResponseEntity.status(200).body("회원 탈퇴 성공");
-//	}
+//	회원탈퇴.
+	@ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "해당 회원 없음")})
+	@DeleteMapping("/remove/{userEmail}")
+	public ResponseEntity<String> deleteUser(@PathVariable("userEmail") String userEmail) throws Exception {
+		boolean result;
+		try {
+			User user = userService.getUserByUserEmail(userEmail);
+			result = userService.deleteByUserEmail(user);
+		}catch(NoSuchElementException E) {
+			return  ResponseEntity.status(500).body("해당 회원 없어서 회원 탈퇴 실패");
+		}
+		return ResponseEntity.status(200).body("회원 탈퇴 성공");
+	}
 
 //	아이디 중복 체크
 	@GetMapping("/nicknameCheck/{userNickname}")

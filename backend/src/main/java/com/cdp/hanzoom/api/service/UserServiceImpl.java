@@ -55,6 +55,13 @@ public class UserServiceImpl implements UserService {
 		System.out.println("닉네임 체크 함수 들어옴??>> "+ userNickname);
 		return userRepositorySupport.findByUserNicknameEquals(userNickname);
 	}
+	
+ // 회원 탈퇴
+	@Override
+	public boolean deleteByUserEmail(User user) {
+		userRepository.delete(user);
+		return true;
+	}
 
 	@Override
 	public boolean checkUserEmail(String userEmail) {
