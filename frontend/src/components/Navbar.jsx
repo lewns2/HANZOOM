@@ -1,11 +1,15 @@
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { clearUser } from '../Reducer/userSlice';
 
 export const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const logout = () => {
     alert('로그아웃 되었습니다.');
     localStorage.removeItem('jwt-token');
+    dispatch(clearUser());
     navigate('/login');
   };
 
