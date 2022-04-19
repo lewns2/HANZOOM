@@ -48,4 +48,11 @@ public class UserRepositorySupport {
         if(user == null) return true;
         return false; // 중복이 있다면 false
     }
+
+    public Optional<User> findUserByUserNickname(String userNickname) {
+        User user = jpaQueryFactory.select(qUser).from(qUser)
+                .where(qUser.userNickname.eq(userNickname)).fetchOne();
+        if(user == null) return Optional.empty();
+        return Optional.ofNullable(user);
+    }
 }

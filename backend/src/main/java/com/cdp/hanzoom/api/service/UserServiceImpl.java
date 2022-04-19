@@ -1,6 +1,7 @@
 package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.UserFindPasswordReq;
+import com.cdp.hanzoom.api.request.UserUpdateReq;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.repository.UserRepository;
 import com.cdp.hanzoom.db.repository.UserRepositorySupport;
@@ -9,6 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cdp.hanzoom.api.request.UserRegisterReq;
+
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 /**
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -55,8 +59,30 @@ public class UserServiceImpl implements UserService {
 		System.out.println("닉네임 체크 함수 들어옴??>> "+ userNickname);
 		return userRepositorySupport.findByUserNicknameEquals(userNickname);
 	}
-	
- // 회원 탈퇴
+
+	@Override
+	public User getUserByUserNickName(String userNickname) {
+		// 디비에 유저 정보 조회 (userNickname 를 통한 조회).
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> userNickname : " + userNickname);
+		Optional<User> user = userRepositorySupport.findUserByUserNickname(userNickname);
+		if(user.isPresent()) {
+			System.out.println("data : " + user.get());
+			return user.get();
+		} else {
+			return null;
+		}
+	}
+
+	@Transactional
+	@Override
+	public void updateUser(User user, UserUpdateReq updateUserDto) {
+		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
+		String password = passwordEncoder.encode(updateUserDto.getUserPassword());
+		user.updateUser(updateUserDto.getUserNickname(), password);
+	}
+
+
+	// 회원 탈퇴
 	@Override
 	public boolean deleteByUserEmail(User user) {
 		userRepository.delete(user);

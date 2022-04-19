@@ -1,9 +1,11 @@
 package com.cdp.hanzoom.api.controller;
 
 import com.cdp.hanzoom.api.request.UserRegisterReq;
+import com.cdp.hanzoom.api.request.UserUpdateReq;
 import com.cdp.hanzoom.api.service.UserService;
 import com.cdp.hanzoom.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,8 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-	
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	@Autowired
     UserService userService;
 
@@ -69,15 +72,51 @@ public class UserController {
 		
 		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
+	// 회원 정보 수정 (닉네임, 비밀번호 수정)
+	@ApiOperation(value = "회원 정보 수정 (닉네임, 비밀번호 수정) (token)", notes = "회원 정보 수정 (닉네임, 비밀번호 수정)")
+	@PutMapping("/update")
+	public ResponseEntity<String> updateUser(@RequestBody UserUpdateReq updateUserDto, @ApiIgnore Authentication authentication) throws Exception {
+		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		String userEmail = userDetails.getUsername();
+		User user;
+		try {
+			user = userService.getUserByUserEmail(userEmail);
+		}catch(NoSuchElementException E) {
+			System.out.println("회원 수정 실패");
+			return  ResponseEntity.status(500).body("해당 회원 정보가 없어서 회원 수정 실패");
+		}
+		userService.updateUser(user,updateUserDto);
+		System.out.println("회원 정보 수정 성공");
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+
+//	@ApiOperation(value = "회원 약속 장소의 위도 경도 수정 (token)", notes = "회원 약속 장소의 위도 경도 수정")
+//	@PutMapping("/update/latAndlng")
+//	public ResponseEntity<String> updateUserLatitudeAndLongitudeOfTheMeetingPlace (@RequestBody UserUpdateReq updateUserDto, @ApiIgnore Authentication authentication) throws Exception {
+//		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+//		String userEmail = userDetails.getUsername();
+//		User user;
+//		try {
+//			user = userService.getUserByUserEmail(userEmail);
+//		}catch(NoSuchElementException E) {
+//			System.out.println("회원 수정 실패");
+//			return  ResponseEntity.status(500).body("해당 회원 정보가 없어서 회원 수정 실패");
+//		}
+//		userService.updateUser(user,updateUserDto);
+//		System.out.println("회원 정보 수정 성공");
+//		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+//	}
 
 //	회원탈퇴.
-	@ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
+	@ApiOperation(value = "회원 탈퇴(token)", notes = "회원 탈퇴")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
 			@ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 404, message = "사용자 없음"),
 			@ApiResponse(code = 500, message = "해당 회원 없음")})
-	@DeleteMapping("/remove/{userEmail}")
-	public ResponseEntity<String> deleteUser(@PathVariable("userEmail") String userEmail) throws Exception {
+	@DeleteMapping("/remove")
+	public ResponseEntity<String> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
+		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		String userEmail = userDetails.getUsername();
 		boolean result;
 		try {
 			User user = userService.getUserByUserEmail(userEmail);

@@ -50,4 +50,9 @@ public class User {
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
     @CreationTimestamp
     LocalDateTime joinDate; // 가입일
+
+    public void updateUser(String userNickname, String userPassword) {
+        this.userNickname = userNickname;
+        this.userPassword = userPassword;
+    }
 }
