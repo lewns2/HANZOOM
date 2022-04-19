@@ -1,23 +1,21 @@
 package com.cdp.hanzoom.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Board {
     @Id
     @Column(name = "board_no")
@@ -33,22 +31,30 @@ public class Board {
     @Column(name = "food_name", length = 200)
     String foodName;
 
-    @Column(name = "expiration_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
-    LocalDate expirationDate;
-
-    @Column(name = "type", length = 200)
+    @Column(name = "type", length = 20)
     String type;
 
     @Column(name = "description", length = 2000)
     String description;
 
     @Column(name = "status", length = 200)
+    @ColumnDefault("거래전")
     String status;
+
+    @Column(name = "viewCnt")
+    @ColumnDefault("0")
+    Long viewCnt;
+
+    @Column(name = "likeCnt")
+    @ColumnDefault("0")
+    Long likeCnt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_email")
     @OnDelete(action = OnDeleteAction.CASCADE)
     User user;
+
+    public void increaseViewCnt() { this.viewCnt++; }
+    public void increaseLikeCnt() { this.likeCnt++; }
+    public void decreaseLikeCnt() { this.likeCnt--; }
 }
