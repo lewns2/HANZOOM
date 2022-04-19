@@ -6,11 +6,7 @@ import com.cdp.hanzoom.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cdp.hanzoom.api.response.UserRes;
 import com.cdp.hanzoom.common.auth.SsafyUserDetails;
@@ -22,6 +18,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.NoSuchElementException;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -70,5 +68,57 @@ public class UserController {
 		User user = userService.getUserByUserEmail(userEmail);
 		
 		return ResponseEntity.status(200).body(UserRes.of(user));
+	}
+
+//	// 회원탈퇴.
+//	@ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
+//	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+//			@ApiResponse(code = 401, message = "인증 실패"),
+//			@ApiResponse(code = 404, message = "사용자 없음"),
+//			@ApiResponse(code = 500, message = "해당 회원 없음")})
+//	@DeleteMapping("/remove/{userId}")
+//	public ResponseEntity<String> deleteUser(@PathVariable("userId") String userId) throws Exception {
+//		boolean result;
+//		try {
+//			User user = userService.getUserByUserId(userId);
+//			result = userService.deleteByUserId(user);
+//		}catch(NoSuchElementException E) {
+//			logger.debug("회원 탈퇴 실패");
+//			return  ResponseEntity.status(500).body("해당 회원 없어서 회원 탈퇴 실패");
+//		}
+//		return ResponseEntity.status(200).body("회원 탈퇴 성공");
+//	}
+
+//	아이디 중복 체크
+	@GetMapping("/nicknameCheck/{userNickname}")
+	@ApiOperation(value = "회원 닉네임 중복 체크", notes = "회원가입 시 회원 닉네임 중복 체크 검사 - <strong> true : 중복 없음 , false : 중복 있음<strong> ")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<Boolean> userNicknameCheck(@PathVariable("userNickname") String userNickname) {
+		System.out.println(userService.checkUserNickName(userNickname));
+		if (userService.checkUserNickName(userNickname) == true) {
+			System.out.println("NickName 중복이 없다");
+			return ResponseEntity.status(200).body(userService.checkUserNickName(userNickname));
+		} else System.out.println("NickName 중복이 있다.");
+		return ResponseEntity.status(200).body(userService.checkUserNickName(userNickname));
+	}
+
+//	이메일 중복 체크
+	@GetMapping("/emailCheck/{userEmail}")
+	@ApiOperation(value = "회원 이메일 중복 체크", notes = "회원가입 시 회원 이메일 중복 체크 검사. "
+			+ "<strong>이메일이 중복: false, 이메일이 중복x : true 리턴시킴 <strong>")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<Boolean> userEmailCheck(@PathVariable("userEmail") String userEmail) {
+		System.out.println(">>>>>>>>>>>>>>>>>>>>> emailCheck : " + userService.checkUserEmail(userEmail));
+		if (userService.checkUserEmail(userEmail)==true) { // 이메일 중복이 없다면.
+			return ResponseEntity.status(200).body(true);
+		} else return ResponseEntity.status(200).body(false);
 	}
 }
