@@ -1,6 +1,7 @@
 package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.UserFindPasswordReq;
+import com.cdp.hanzoom.api.request.UserUpdateLatAndLngReq;
 import com.cdp.hanzoom.api.request.UserUpdateReq;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.repository.UserRepository;
@@ -79,6 +80,11 @@ public class UserServiceImpl implements UserService {
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		String password = passwordEncoder.encode(updateUserDto.getUserPassword());
 		user.updateUser(updateUserDto.getUserNickname(), password);
+	}
+	@Transactional
+	@Override
+	public void updateUserLatAndLng(User user, UserUpdateLatAndLngReq updateUserLatAndLngDto) {
+		user.updateUserLatAndLng(updateUserLatAndLngDto.getLat(), updateUserLatAndLngDto.getLng());
 	}
 
 
