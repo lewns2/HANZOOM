@@ -3,12 +3,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import { Axios } from '../../../core/axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const SignUpForm = () => {
   const [email, setEmail] = useState('');
   const [nickName, setNickName] = useState('');
-  const [password1, setPassword1] = useState(null);
-  const [password2, setPassword2] = useState(null);
+  const [password1, setPassword1] = useState('');
+  const [password2, setPassword2] = useState('');
   const [password1Type, setPassword1Type] = useState({
     type: 'password',
     visible: false,
@@ -23,6 +24,8 @@ export const SignUpForm = () => {
   const nickNameInput = useRef();
   const emailInput = useRef();
   const passwordInput = useRef();
+
+  const navigate = useNavigate();
 
   const signUp = () => {
     if (!nickNameChkState) {
@@ -50,14 +53,13 @@ export const SignUpForm = () => {
     }
 
     Axios.post('/users/register/signup', {
-      // params: {
       userEmail: email,
       userNickname: nickName,
       userPassword: password1,
-      // },
     })
       .then(() => {
         alert('회원가입이 완료되었습니다.');
+        navigate('/login');
       })
       .catch((error) => {
         alert('회원가입 실패!');
@@ -66,7 +68,7 @@ export const SignUpForm = () => {
   };
 
   // 닉네임 중복 검사
-  const nickNameChk = () => {
+  const nickNameChk = async () => {
     if (nickName == '') {
       alert('닉네임을 입력해주세요.');
       nickNameInput.current.focus();
@@ -79,15 +81,18 @@ export const SignUpForm = () => {
       return;
     }
 
-    const chkResult = Axios.get(`/users/nicknameCheck/${nickName}`);
-    if (chkResult) {
+    const chkResult = await Axios.get(`/users/nicknameCheck/${nickName}`);
+    if (chkResult.data) {
       alert('사용 가능한 닉네임입니다.');
       setNickNameChkState(true);
-    } else alert('이미 사용 중인 닉네임입니다.');
+    } else {
+      alert('이미 사용 중인 닉네임입니다.');
+      setNickNameChkState(false);
+    }
   };
 
   // 이메일 중복 검사
-  const emailChk = () => {
+  const emailChk = async () => {
     if (email == '') {
       alert('이메일을 입력해주세요.');
       emailInput.current.focus();
@@ -100,11 +105,14 @@ export const SignUpForm = () => {
       return;
     }
 
-    const chkResult = Axios.get(`/users/emailCheck/${email}`);
-    if (chkResult) {
+    const chkResult = await Axios.get(`/users/emailCheck/${email}`);
+    if (chkResult.data) {
       alert('사용 가능한 이메일입니다.');
       setEmailChkState(true);
-    } else alert('이미 사용 중인 이메일입니다.');
+    } else {
+      alert('이미 사용 중인 이메일입니다.');
+      setEmailChkState(false);
+    }
   };
 
   const handlePassword1Type = () => {
@@ -190,7 +198,9 @@ export const SignUpForm = () => {
           <button className="signUpBtn" onClick={signUp}>
             SIGN UP
           </button>
-          <p className="loginExplain">이미 계정이 있나요? 로그인하러 가기</p>
+          <Link to="/login">
+            <p className="loginExplain">이미 계정이 있나요? 로그인하러 가기</p>
+          </Link>
         </div>
       </section>
     </>
