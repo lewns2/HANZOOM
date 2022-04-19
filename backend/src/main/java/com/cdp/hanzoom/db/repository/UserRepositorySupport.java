@@ -34,4 +34,18 @@ public class UserRepositorySupport {
         if(user == null) return Optional.empty();
         return Optional.ofNullable(user);
     }
+//     닉네임 중복체크 함수
+    public boolean findByUserNicknameEquals(String userNickname) {
+        User user = jpaQueryFactory.select(qUser).from(qUser)
+                .where(qUser.userNickname.eq(userNickname)).fetchOne();
+        if(user == null) return true;
+        return false;
+    }
+    // 이메일 중복체크 함수
+    public boolean  findByUserEmailEquals(String userEmail) {
+        User user = jpaQueryFactory.select(qUser).from(qUser)
+                .where(qUser.userEmail.eq(userEmail)).fetchOne();
+        if(user == null) return true;
+        return false; // 중복이 있다면 false
+    }
 }
