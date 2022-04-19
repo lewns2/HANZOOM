@@ -3,6 +3,7 @@ import { Board } from './Board';
 import { MyFoodIngredients } from './MyFoodIngredients';
 import { MyPage } from './MyPage';
 import { SignUp } from './User/SignUp';
+import { Login } from './User/Login';
 
 import { Navbar } from '../components/Navbar';
 
@@ -17,7 +18,7 @@ export const Routing = () => {
         <Route path="/board" element={<Board />} />
         <Route path="/my-food-ingredients" element={<MyFoodIngredients />} />
         <Route path="/my-page" element={<MyPage />} />
-        <Route path="*" element={<Navigate replace to="/main" />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
