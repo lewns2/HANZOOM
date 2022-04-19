@@ -1,6 +1,7 @@
 package com.cdp.hanzoom.api.controller;
 
 import com.cdp.hanzoom.api.request.UserRegisterReq;
+import com.cdp.hanzoom.api.request.UserUpdateLatAndLngReq;
 import com.cdp.hanzoom.api.request.UserUpdateReq;
 import com.cdp.hanzoom.api.service.UserService;
 import com.cdp.hanzoom.db.entity.User;
@@ -90,22 +91,22 @@ public class UserController {
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 
-//	@ApiOperation(value = "회원 약속 장소의 위도 경도 수정 (token)", notes = "회원 약속 장소의 위도 경도 수정")
-//	@PutMapping("/update/latAndlng")
-//	public ResponseEntity<String> updateUserLatitudeAndLongitudeOfTheMeetingPlace (@RequestBody UserUpdateReq updateUserDto, @ApiIgnore Authentication authentication) throws Exception {
-//		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
-//		String userEmail = userDetails.getUsername();
-//		User user;
-//		try {
-//			user = userService.getUserByUserEmail(userEmail);
-//		}catch(NoSuchElementException E) {
-//			System.out.println("회원 수정 실패");
-//			return  ResponseEntity.status(500).body("해당 회원 정보가 없어서 회원 수정 실패");
-//		}
-//		userService.updateUser(user,updateUserDto);
-//		System.out.println("회원 정보 수정 성공");
-//		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-//	}
+	@ApiOperation(value = "회원 약속 장소의 위도 경도 수정 (token)", notes = "회원 약속 장소의 위도 경도 수정")
+	@PutMapping("/update/latAndlng")
+	public ResponseEntity<String> updateUserLatitudeAndLongitudeOfTheMeetingPlace (@RequestBody UserUpdateLatAndLngReq updateUserLatAndLngDto, @ApiIgnore Authentication authentication) throws Exception {
+		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		String userEmail = userDetails.getUsername();
+		User user;
+		try {
+			user = userService.getUserByUserEmail(userEmail);
+		}catch(NoSuchElementException E) {
+			System.out.println("회원 약속 장소의 위도 경도 수정 실패");
+			return  ResponseEntity.status(500).body("해당 회원 정보가 없어서 회원 수정 실패");
+		}
+		userService.updateUserLatAndLng(user,updateUserLatAndLngDto);
+		System.out.println("회원 약속 장소의 위도 경도 수정 성공");
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
 
 //	회원탈퇴.
 	@ApiOperation(value = "회원 탈퇴(token)", notes = "회원 탈퇴")
