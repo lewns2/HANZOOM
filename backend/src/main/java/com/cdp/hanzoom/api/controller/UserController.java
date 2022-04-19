@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import com.cdp.hanzoom.api.response.UserRes;
-import com.cdp.hanzoom.common.auth.SsafyUserDetails;
+import com.cdp.hanzoom.common.auth.UserDetails;
 import com.cdp.hanzoom.common.model.response.BaseResponseBody;
 
 import io.swagger.annotations.Api;
@@ -67,7 +67,7 @@ public class UserController {
 		 * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
 		 * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
 		 */
-		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		UserDetails userDetails = (UserDetails)authentication.getDetails();
 		String userEmail = userDetails.getUsername();
 		User user = userService.getUserByUserEmail(userEmail);
 		
@@ -77,7 +77,7 @@ public class UserController {
 	@ApiOperation(value = "회원 정보 수정 (닉네임, 비밀번호 수정) (token)", notes = "회원 정보 수정 (닉네임, 비밀번호 수정)")
 	@PutMapping("/update")
 	public ResponseEntity<String> updateUser(@RequestBody UserUpdateReq updateUserDto, @ApiIgnore Authentication authentication) throws Exception {
-		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		UserDetails userDetails = (UserDetails)authentication.getDetails();
 		String userEmail = userDetails.getUsername();
 		User user;
 		try {
@@ -94,7 +94,7 @@ public class UserController {
 	@ApiOperation(value = "회원 약속 장소의 위도 경도 수정 (token)", notes = "회원 약속 장소의 위도 경도 수정")
 	@PutMapping("/update/latAndlng")
 	public ResponseEntity<String> updateUserLatitudeAndLongitudeOfTheMeetingPlace (@RequestBody UserUpdateLatAndLngReq updateUserLatAndLngDto, @ApiIgnore Authentication authentication) throws Exception {
-		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		UserDetails userDetails = (UserDetails)authentication.getDetails();
 		String userEmail = userDetails.getUsername();
 		User user;
 		try {
@@ -116,7 +116,7 @@ public class UserController {
 			@ApiResponse(code = 500, message = "해당 회원 없음")})
 	@DeleteMapping("/remove")
 	public ResponseEntity<String> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
-		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		UserDetails userDetails = (UserDetails)authentication.getDetails();
 		String userEmail = userDetails.getUsername();
 		boolean result;
 		try {
