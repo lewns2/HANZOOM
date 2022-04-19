@@ -1,7 +1,6 @@
 package com.cdp.hanzoom.db.entity;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -10,7 +9,10 @@ import javax.validation.constraints.Email;
  * 식재료 모델 정의.
  */
 @Builder
+@Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Ingredient {
     @Id
@@ -18,6 +20,6 @@ public class Ingredient {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     Long ingredientNo;
 
-    @Column(name = "ingredient_name")
+    @Column(name = "ingredient_name", length = 50)
     String ingredientName;
 }
