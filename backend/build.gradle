@@ -161,8 +161,8 @@ dependencies {
     implementation('org.kurento:kurento-utils-js:6.15.0')
 
     //AWS S3관련 의존성 추가
-//    implementation 'io.awspring.cloud:spring-cloud-aws-context:2.3.3'
-//    implementation'org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.6.RELEASE'
+    implementation 'io.awspring.cloud:spring-cloud-aws-context:2.3.3'
+    implementation'org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.6.RELEASE'
 
 
     //IntelliJ용
