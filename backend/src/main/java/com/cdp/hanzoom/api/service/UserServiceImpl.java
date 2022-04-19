@@ -47,7 +47,19 @@ public class UserServiceImpl implements UserService {
 		String userEmail = userFindPasswordReq.getUserEmail();
 		String userNickname = userFindPasswordReq.getUserNickname();
 		User user = userRepositorySupport.findUserByUserNicknameAndUserEmail(userEmail, userNickname).orElse(null);
-
 		return user;
 	}
+
+	@Override
+	public boolean checkUserNickName(String userNickname) {
+		System.out.println("닉네임 체크 함수 들어옴??>> "+ userNickname);
+		return userRepositorySupport.findByUserNicknameEquals(userNickname);
+	}
+
+	@Override
+	public boolean checkUserEmail(String userEmail) {
+		System.out.println("이메일 체크 함수 들어옴??>> "+ userEmail);
+		return userRepositorySupport.findByUserEmailEquals(userEmail);
+	}
+
 }
