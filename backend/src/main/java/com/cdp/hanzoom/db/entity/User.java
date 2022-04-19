@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
         // 속성에 UNIQUE 제약조건 설정
         uniqueConstraints = {
                 @UniqueConstraint(
-                        columnNames = {"user_email"}
+                        columnNames = {"user_nickname"}
                 )
         }
 )
@@ -26,12 +26,13 @@ import java.time.LocalDateTime;
 @Entity
 public class User {
     @Id
-    @Column(name = "user_nickname", length= 60,  nullable = false)
-    String userNickname;
-
     @Email
     @Column(name = "user_email",length = 100, nullable = false)
     String userEmail;
+
+    @Column(name = "user_nickname", length= 60,  nullable = false)
+    String userNickname;
+
 
     @Column(name = "user_password", length= 200, nullable = false)
     String userPassword;
