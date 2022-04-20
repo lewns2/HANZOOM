@@ -1,6 +1,7 @@
 package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.BoardRegisterReq;
+import com.cdp.hanzoom.api.request.BoardUpdateReq;
 import com.cdp.hanzoom.api.response.BoardFindAllRes;
 import com.cdp.hanzoom.api.response.BoardFindIngredientRes;
 import com.cdp.hanzoom.api.response.BoardFindRes;
@@ -24,6 +25,8 @@ public class BoardServiceImpl implements BoardService{
     S3FileUploadService s3FileUploadService;
     @Autowired
     BoardRepository boardRepository;
+    @Autowired
+    LikeListRepository likeListRepository;
     @Autowired
     UserRepositorySupport userRepositorySupport;
     @Autowired
@@ -53,8 +56,8 @@ public class BoardServiceImpl implements BoardService{
             User user = userRepositorySupport.findUserByUserEmail(boardRegisterReq.getUserEmail()).orElse(null);
             Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(boardRegisterReq.getIngredientList().get(i)).orElse(null);
             UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNameAndUserEmail(ingredient,user).orElse(null);;
-            userIngredient.registerBoardNo(board.getBoardNo());
-            userIngredient.registerType(boardRegisterReq.getType());
+            userIngredient.setBoardNo(board.getBoardNo());
+            userIngredient.setType(boardRegisterReq.getType());
             userIngredientRepository.save(userIngredient);
         }
 
@@ -158,5 +161,75 @@ public class BoardServiceImpl implements BoardService{
         res.setBoardFindIngredientResList(boardFindIngredientResList);
 
         return res;
+    }
+
+    @Override
+    public void setLikeList(Long boardNo, String userEmail) {
+        Board board = boardRepositorySupport.findBoardByBoardNo(boardNo).orElse(null);
+        User user = new User();
+        user.setUserEmail(userEmail);
+
+        LikeList likeList = likeListRepositorySupport.findLikeListByUserEmailAndBoardNo(userEmail, boardNo).orElse(null);
+        if(likeList==null) {
+            likeList = LikeList.builder()
+                        .board(board)
+                        .user(user)
+                        .build();
+            likeListRepository.save(likeList);
+            board.increaseLikeCnt();
+            boardRepository.save(board);
+        } else {
+            likeListRepository.delete(likeList);
+            board.decreaseLikeCnt();
+            boardRepository.save(board);
+        }
+    }
+
+    @Override
+    @Transactional
+    public BoardFindRes updateBoard(MultipartFile imagePath, BoardUpdateReq boardUpdateReq) throws Exception {
+        // 이미지 업로드
+        if(imagePath != null) {
+            String savePath = s3FileUploadService.upload(imagePath);
+            boardUpdateReq.setImagePath(savePath);
+        }
+
+        // 게시판 테이블에 수정
+        Board board  = boardRepository.save(boardUpdateReq.toEntity());
+
+        // 기존 게시판에 해당하는 식재료 일반으로 저장
+        List<UserIngredient> userIngredients = userIngredientRepositorySupport.findByBoardNo(boardUpdateReq.getBoardNo());
+        for(int i=0; i<userIngredients.size(); i++) {
+            UserIngredient userIngredient = userIngredients.get(i);
+            userIngredient.setBoardNo(null);
+            userIngredient.setType("일반");
+            userIngredientRepository.save(userIngredient);
+        }
+
+        // 식재료 테이블 게시판 번호 저장 + type 변경
+        for (int i=0; i<boardUpdateReq.getIngredientList().size(); i++) {
+            User user = userRepositorySupport.findUserByUserEmail(boardUpdateReq.getUserEmail()).orElse(null);
+            Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(boardUpdateReq.getIngredientList().get(i)).orElse(null);
+            UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNameAndUserEmail(ingredient,user).orElse(null);;
+            userIngredient.setBoardNo(boardUpdateReq.getBoardNo());
+            userIngredient.setType(boardUpdateReq.getType());
+            userIngredientRepository.save(userIngredient);
+        }
+
+        BoardFindRes boardFindRes = findBoardByBoardNo(boardUpdateReq.getBoardNo(), boardUpdateReq.getUserEmail());
+        return boardFindRes;
+    }
+
+    @Override
+    public void deleteBoard(Long boardNo) {
+        Board board = boardRepositorySupport.findBoardByBoardNo(boardNo).orElse(null);
+        boardRepository.delete(board);
+        List<UserIngredient> userIngredients = userIngredientRepositorySupport.findByBoardNo(boardNo);
+        for(int i=0; i<userIngredients.size(); i++) {
+            UserIngredient userIngredient = userIngredients.get(i);
+            userIngredient.setBoardNo(null);
+            userIngredient.setType("일반");
+            userIngredientRepository.save(userIngredient);
+        }
     }
 }

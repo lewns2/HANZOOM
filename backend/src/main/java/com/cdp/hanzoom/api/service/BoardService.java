@@ -1,6 +1,7 @@
 package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.BoardRegisterReq;
+import com.cdp.hanzoom.api.request.BoardUpdateReq;
 import com.cdp.hanzoom.api.response.BoardFindAllRes;
 import com.cdp.hanzoom.api.response.BoardFindRes;
 import com.cdp.hanzoom.db.entity.Board;
@@ -16,4 +17,10 @@ public interface BoardService {
     Page<BoardFindAllRes> findInfoFindAllBoard(Page<Board> boards, String userEmail);
     // 게시글 상세조회
     BoardFindRes findBoardByBoardNo(Long boardNo, String userEmail);
+    // 게시글 찜하기
+    void setLikeList(Long boardNo, String userEmail);
+    // 게시글 수정
+    BoardFindRes updateBoard(MultipartFile imagePath, BoardUpdateReq boardUpdateReq) throws Exception;
+    // 게시글 삭제
+    void deleteBoard(Long boardNo);
 }
