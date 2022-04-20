@@ -8,7 +8,6 @@ export const Navbar = () => {
 
   const logout = () => {
     alert('로그아웃 되었습니다.');
-    localStorage.removeItem('jwt-token');
     dispatch(clearUser());
     navigate('/login');
   };
