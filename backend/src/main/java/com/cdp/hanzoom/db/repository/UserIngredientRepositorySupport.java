@@ -27,4 +27,14 @@ public class UserIngredientRepositorySupport {
         if(userIngredient == null) return Optional.empty();
         return Optional.ofNullable(userIngredient);
     }
+
+    public List<UserIngredient> findByBoardNo(Long boardNo) {
+        List<UserIngredient> userIngredients = jpaQueryFactory
+                .select(qUserIngredient)
+                .from(qUserIngredient)
+                .where(qUserIngredient.boardNo.eq(boardNo))
+                .fetch();
+        if(userIngredients == null) return null;
+        return userIngredients;
+    }
 }

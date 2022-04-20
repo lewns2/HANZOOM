@@ -28,9 +28,6 @@ public class Board {
     @Column(name = "image_path", length = 300)
     String imagePath;
 
-    @Column(name = "food_name", length = 200)
-    String foodName;
-
     @Column(name = "type", length = 20)
     String type;
 
@@ -38,7 +35,6 @@ public class Board {
     String description;
 
     @Column(name = "status", length = 200)
-    @ColumnDefault("거래전")
     String status;
 
     @Column(name = "viewCnt")
