@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @ApiModel("BoardFindAllRes")
@@ -25,6 +25,9 @@ public class BoardFindAllRes {
     Long likeCnt;
     @ApiModelProperty(name="Board userNickname")
     String userNickname;
+    @ApiModelProperty(name="Board distance")
+    Double distance;
     @ApiModelProperty(name="Board isLike")
     boolean isLike;
+    List<BoardFindIngredientRes> boardFindIngredientResList;
 }

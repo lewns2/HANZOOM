@@ -2,12 +2,10 @@ package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.BoardRegisterReq;
 import com.cdp.hanzoom.api.response.BoardFindAllRes;
+import com.cdp.hanzoom.api.response.BoardFindIngredientRes;
 import com.cdp.hanzoom.api.response.BoardFindRes;
-import com.cdp.hanzoom.db.entity.Board;
-import com.cdp.hanzoom.db.entity.LikeList;
-import com.cdp.hanzoom.db.repository.BoardRepository;
-import com.cdp.hanzoom.db.repository.BoardRepositorySupport;
-import com.cdp.hanzoom.db.repository.LikeListRepositorySupport;
+import com.cdp.hanzoom.db.entity.*;
+import com.cdp.hanzoom.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -27,9 +25,17 @@ public class BoardServiceImpl implements BoardService{
     @Autowired
     BoardRepository boardRepository;
     @Autowired
+    UserRepositorySupport userRepositorySupport;
+    @Autowired
     BoardRepositorySupport boardRepositorySupport;
     @Autowired
     LikeListRepositorySupport likeListRepositorySupport;
+    @Autowired
+    IngredientRepositorySupport ingredientRepositorySupport;
+    @Autowired
+    UserIngredientRepository userIngredientRepository;
+    @Autowired
+    UserIngredientRepositorySupport userIngredientRepositorySupport;
 
     @Override
     @Transactional
@@ -39,11 +45,17 @@ public class BoardServiceImpl implements BoardService{
         boardRegisterReq.setImagePath(savePath);
 
         // 게시판 테이블에 저장
+        boardRegisterReq.setStatus("거래전");
         Board board  = boardRepository.save(boardRegisterReq.toEntity());
 
-        // 식재료 테이블에 저장
+        // 식재료 테이블 게시판 번호 저장 + type 변경
         for (int i=0; i<boardRegisterReq.getIngredientList().size(); i++) {
-            // board.getBoardNo()
+            User user = userRepositorySupport.findUserByUserEmail(boardRegisterReq.getUserEmail()).orElse(null);
+            Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(boardRegisterReq.getIngredientList().get(i)).orElse(null);
+            UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNameAndUserEmail(ingredient,user).orElse(null);;
+            userIngredient.registerBoardNo(board.getBoardNo());
+            userIngredient.registerType(boardRegisterReq.getType());
+            userIngredientRepository.save(userIngredient);
         }
 
         return board;
@@ -70,11 +82,31 @@ public class BoardServiceImpl implements BoardService{
             boardFindAllRes.setViewCnt(board.getViewCnt());
             boardFindAllRes.setLikeCnt(board.getLikeCnt());
             boardFindAllRes.setUserNickname(board.getUser().getUserNickname());
+
+            User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
+            Double latUser = user.getLat();
+            Double lngUser = user.getLng();
+            Double latBoard = board.getUser().getLat();
+            Double lngBoard = board.getUser().getLng();
+            Double X = (Math.cos(latUser)*6400*2*3.14/360) * Math.abs(lngUser-lngBoard);
+            Double Y = 111*Math.abs(latUser-latBoard);
+            Double distance = Math.sqrt(Math.pow(X,2)+Math.pow(Y,2));
+            boardFindAllRes.setDistance(distance);
+
             LikeList likeList = likeListRepositorySupport.findLikeListByUserEmailAndBoardNo(userEmail, board.getBoardNo()).orElse(null);
             boolean isLike;
             if(likeList == null) isLike = false;
             else isLike = true;
             boardFindAllRes.setLike(isLike);
+
+            List<UserIngredient> userIngredients = userIngredientRepositorySupport.findByBoardNo(board.getBoardNo());
+            List<BoardFindIngredientRes> boardFindIngredientResList = new ArrayList<>();
+            for(int i=0; i<userIngredients.size(); i++) {
+                String ingredientName = userIngredients.get(i).getUserIngredientId().getIngredientNo().getIngredientName();
+                String expirationDate = String.valueOf(userIngredients.get(i).getExpirationDate());
+                boardFindIngredientResList.add(new BoardFindIngredientRes(ingredientName,expirationDate));
+            }
+            boardFindAllRes.setBoardFindIngredientResList(boardFindIngredientResList);
 
             boardFindAllResList.add(boardFindAllRes);
         }
@@ -99,11 +131,31 @@ public class BoardServiceImpl implements BoardService{
         res.setLikeCnt(board.getLikeCnt());
         res.setUserNickname(board.getUser().getUserNickname());
         res.setUserImage(board.getUser().getUserImage());
+
+        User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
+        Double latUser = user.getLat();
+        Double lngUser = user.getLng();
+        Double latBoard = board.getUser().getLat();
+        Double lngBoard = board.getUser().getLng();
+        Double X = (Math.cos(latUser)*6400*2*3.14/360) * Math.abs(lngUser-lngBoard);
+        Double Y = 111*Math.abs(latUser-latBoard);
+        Double distance = Math.sqrt(Math.pow(X,2)+Math.pow(Y,2));
+        res.setDistance(distance);
+
         LikeList likeList = likeListRepositorySupport.findLikeListByUserEmailAndBoardNo(userEmail, boardNo).orElse(null);
         boolean isLike;
         if(likeList == null) isLike = false;
         else isLike = true;
         res.setLike(isLike);
+
+        List<UserIngredient> userIngredients = userIngredientRepositorySupport.findByBoardNo(board.getBoardNo());
+        List<BoardFindIngredientRes> boardFindIngredientResList = new ArrayList<>();
+        for(int i=0; i<userIngredients.size(); i++) {
+            String ingredientName = userIngredients.get(i).getUserIngredientId().getIngredientNo().getIngredientName();
+            String expirationDate = String.valueOf(userIngredients.get(i).getExpirationDate());
+            boardFindIngredientResList.add(new BoardFindIngredientRes(ingredientName,expirationDate));
+        }
+        res.setBoardFindIngredientResList(boardFindIngredientResList);
 
         return res;
     }

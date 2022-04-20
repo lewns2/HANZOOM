@@ -34,4 +34,7 @@ public class UserIngredient {
 
     @Column(name = "board_no")
     Long boardNo;
+
+    public void registerBoardNo(Long boardNo) { this.boardNo=boardNo; }
+    public void registerType(String type) { this.type=type; }
 }
