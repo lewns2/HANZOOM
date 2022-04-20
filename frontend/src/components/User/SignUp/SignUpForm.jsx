@@ -115,6 +115,12 @@ export const SignUpForm = () => {
     }
   };
 
+  const onKeyPress = (e) => {
+    if (e.key == 'Enter') {
+      signUp();
+    }
+  };
+
   const handlePassword1Type = () => {
     setPassword1Type(() => {
       if (!password1Type.visible) {
@@ -144,7 +150,11 @@ export const SignUpForm = () => {
               className="form-control nickName"
               type="text"
               placeholder="닉네임"
-              onChange={(e) => setNickName(e.target.value)}
+              onChange={(e) => {
+                setNickName(e.target.value);
+                setNickNameChkState(false);
+              }}
+              onKeyPress={onKeyPress}
               ref={nickNameInput}
             />
             <button className="checkBtn" onClick={nickNameChk}>
@@ -156,7 +166,11 @@ export const SignUpForm = () => {
               className="form-control"
               type="text"
               placeholder="이메일"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailChkState(false);
+              }}
+              onKeyPress={onKeyPress}
               ref={emailInput}
             />
             <button className="checkBtn" onClick={emailChk}>
@@ -166,10 +180,10 @@ export const SignUpForm = () => {
           <div className="formInput">
             <input
               className="form-control"
-              // type="password"
               type={password1Type.type}
               placeholder="비밀번호"
               onChange={(e) => setPassword1(e.target.value)}
+              onKeyPress={onKeyPress}
             />
             <span className="visibleIcon">
               {!password1Type.visible ? (
@@ -185,6 +199,7 @@ export const SignUpForm = () => {
               type={password2Type.type}
               placeholder="비밀번호 확인"
               onChange={(e) => setPassword2(e.target.value)}
+              onKeyPress={onKeyPress}
               ref={passwordInput}
             />
             <span className="visibleIcon">
