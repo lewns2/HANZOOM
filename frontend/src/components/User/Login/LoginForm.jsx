@@ -59,6 +59,12 @@ export const LoginForm = () => {
       });
   };
 
+  const onKeyPress = (e) => {
+    if (e.key == 'Enter') {
+      login();
+    }
+  };
+
   const handlePasswordType = () => {
     setPasswordType(() => {
       if (!passwordType.visible) {
@@ -79,6 +85,7 @@ export const LoginForm = () => {
               type="text"
               placeholder="이메일"
               onChange={(e) => setEmail(e.target.value)}
+              onKeyPress={onKeyPress}
               ref={emailInput}
             />
           </div>
@@ -88,6 +95,7 @@ export const LoginForm = () => {
               type={passwordType.type}
               placeholder="비밀번호"
               onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={onKeyPress}
               ref={passwordInput}
             />
             <span className="visibleIcon">
