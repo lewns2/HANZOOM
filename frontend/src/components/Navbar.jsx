@@ -22,10 +22,10 @@ export const Navbar = () => {
         <Link to="/board">게시판</Link>
       </li>
       <li>
-        <Link to="/my-food-ingredients">MY페이지</Link>
+        <Link to="/my-food-ingredients">MY식재료</Link>
       </li>
       <li>
-        <Link to="/my-page">MY식재료</Link>
+        <Link to="/my-page">MY페이지</Link>
       </li>
       <li>
         <Link to="/login">로그인</Link>

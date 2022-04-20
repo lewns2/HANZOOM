@@ -1,0 +1,103 @@
+.myPageWrap {
+  padding: 30px 40px;
+  width: 100%;
+  margin: 0 auto;
+
+  .userInfoWrap {
+    background-color: #f7f6f2;
+    height: 240px;
+    margin-top: 15px;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 4px 4px -3px #777;
+
+    .row {
+      height: 100%;
+
+      .userImage {
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      .userContent {
+        height: 100%;
+        padding-left: 20px;
+        p {
+          margin: 0;
+        }
+        .userNickName {
+          font-size: 35px;
+          font-weight: 600;
+        }
+        .userEmail {
+          font-size: 20px;
+          font-weight: 600;
+          margin-bottom: 40px;
+        }
+
+        .withdrawBtn {
+          font-size: 14px;
+          font-weight: bolder;
+          background-color: #fff;
+          border: 2px solid #f7c343;
+          border-radius: 8px;
+          padding: 3px 2px;
+          margin-right: 5px;
+          box-shadow: 0 4px 4px -4px #777;
+        }
+        .updateBtn {
+          font-size: 14px;
+          font-weight: bolder;
+          background-color: #f7c343;
+          border: 2px solid #f7c343;
+          border-radius: 8px;
+          padding: 3px 2px;
+          box-shadow: 0 4px 4px -4px #777;
+        }
+      }
+    }
+  }
+}
+
+.favoriteListWrap {
+  width: 70%;
+  margin: 30px auto 0;
+
+  h3 {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .favoriteList {
+    // width: 100%;
+
+    .slick-list {
+      width: 100%;
+
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+
+        div {
+          width: 90%;
+        }
+      }
+    }
+
+    .box {
+      background-color: bisque;
+      height: 200px;
+    }
+    .slick-prev::before {
+      content: url(../../assets/icon_prev.png);
+    }
+    .slick-next::before {
+      content: url(../../assets/icon_next.png);
+    }
+  }
+}
