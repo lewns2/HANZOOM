@@ -1,14 +1,11 @@
 package com.cdp.hanzoom.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -25,6 +22,9 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class User {
     @Id
     @Email
@@ -59,5 +59,9 @@ public class User {
     public void updateUserLatAndLng(Double lat, Double lng) {
         this.lat = lat;
         this.lng = lng;
+    }
+
+    public void updateProfileImage(String savingFileName) {
+        this.userImage = savingFileName;
     }
 }

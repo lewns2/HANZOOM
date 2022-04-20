@@ -1,16 +1,13 @@
 package com.cdp.hanzoom.api.service;
 
-import com.cdp.hanzoom.api.request.UserFindPasswordReq;
-import com.cdp.hanzoom.api.request.UserUpdateLatAndLngReq;
-import com.cdp.hanzoom.api.request.UserUpdateReq;
+import com.cdp.hanzoom.api.request.*;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.repository.UserRepository;
 import com.cdp.hanzoom.db.repository.UserRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.cdp.hanzoom.api.request.UserRegisterReq;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -28,7 +25,10 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
+
+	@Autowired
+	S3FileUploadService s3FileUploadService;
+
 	@Override
 	public User registerUser(UserRegisterReq userRegisterInfo) {
 		System.out.println("debug " + userRegisterInfo.toString());
@@ -72,6 +72,18 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return null;
 		}
+	}
+	@Transactional
+	@Override
+	public User updateUserProfile(User user, MultipartFile imagePath) throws Exception {
+		// 프로필 이미지 수정시 업로드
+		if(imagePath != null) {
+			String savingFileName = s3FileUploadService.upload(imagePath);
+			// user 테이블 프로필 이미지 경로 수정
+			user.updateProfileImage(savingFileName);
+		}
+		// 수정된 데이터 가져오기
+		return getUserByUserEmail(user.getUserEmail());
 	}
 
 	@Transactional
