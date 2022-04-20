@@ -20,6 +20,7 @@ export const userSlice = createSlice({
   reducers: {
     clearUser: (state) => {
       state.userInfo = [];
+      localStorage.removeItem('jwt-token');
     },
   },
   extraReducers: (builder) => {
