@@ -37,11 +37,11 @@ public class Board {
     @Column(name = "status", length = 200)
     String status;
 
-    @Column(name = "viewCnt")
+    @Column(name = "viewCnt", nullable = false)
     @ColumnDefault("0")
     Long viewCnt;
 
-    @Column(name = "likeCnt")
+    @Column(name = "likeCnt", nullable = false)
     @ColumnDefault("0")
     Long likeCnt;
 

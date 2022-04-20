@@ -120,7 +120,7 @@ public class UserIngredientController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<String> deleteDietDiary(@PathVariable("ingredientNo") Long ingredientNo, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<String> deleteUserIngredient(@PathVariable("ingredientNo") Long ingredientNo, @ApiIgnore Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userEmail = userDetails.getUsername();
 
