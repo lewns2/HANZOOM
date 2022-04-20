@@ -1,7 +1,7 @@
 import { Main } from './Main';
 import { Board } from './Board';
 import { MyFoodIngredients } from './MyFoodIngredients';
-import { MyPage } from './MyPage';
+import { MyPage } from './User/MyPage';
 import { SignUp } from './User/SignUp';
 import { Login } from './User/Login';
 
