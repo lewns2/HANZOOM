@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.NoSuchElementException;
@@ -89,6 +90,30 @@ public class UserController {
 		userService.updateUser(user,updateUserDto);
 		System.out.println("회원 정보 수정 성공");
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+
+	@PutMapping("/update/profileImage")
+	@ApiOperation(value = "프로필 이미지 정보 수정(token)", notes = "<strong>프로필 이미지 정보</strong>를 수정한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	// File과 Dto를 같이 받기 위해서는 @RequestPart라는 어노테이션이 필요
+	// 하지만 Dto를 같이 안 받으려면 File을 받을 때는 MultipartFile 객체를 사용하며, @RequestParam을 사용합니다.
+	public ResponseEntity<User> updateUserProfileImage(@ApiIgnore Authentication authentication,
+			@RequestParam(value="file", required=false) MultipartFile imagePath) throws Exception {
+		User user = null;
+		UserDetails userDetails = (UserDetails)authentication.getDetails();
+		String userEmail = userDetails.getUsername();
+		try {
+			user = userService.getUserByUserEmail(userEmail);
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);
+		}
+		user = userService.updateUserProfile(user, imagePath);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "회원 약속 장소의 위도 경도 수정 (token)", notes = "회원 약속 장소의 위도 경도 수정")
