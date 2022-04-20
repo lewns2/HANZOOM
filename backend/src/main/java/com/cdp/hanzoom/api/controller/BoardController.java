@@ -1,6 +1,7 @@
 package com.cdp.hanzoom.api.controller;
 
 import com.cdp.hanzoom.api.request.BoardRegisterReq;
+import com.cdp.hanzoom.api.request.BoardUpdateReq;
 import com.cdp.hanzoom.api.response.BoardFindAllRes;
 import com.cdp.hanzoom.api.response.BoardFindRes;
 import com.cdp.hanzoom.api.service.BoardService;
@@ -99,5 +100,60 @@ public class BoardController {
         return ResponseEntity.status(200).body(boardFindRes);
     }
 
+    // 게시글 찜하기
+    @PostMapping("/like/{boardNo}")
+    @ApiOperation(value = "게시글 찜하기", notes = "<strong>게시글 찜</strong>한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> boardLike(@PathVariable Long boardNo, @ApiIgnore Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userEmail = userDetails.getUsername();
+        boardService.setLikeList(boardNo, userEmail);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+    }
+
+    // 게시글 수정
+    @PutMapping("/update")
+    @ApiOperation(value = "게시글 수정", notes = "<strong>게시글 수정</strong>한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<BoardFindRes> updateBoard(
+            @RequestPart(value="key") BoardUpdateReq boardUpdateReq
+            , @RequestPart(value="file", required = false) MultipartFile imagePath
+            , @ApiIgnore Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userEmail = userDetails.getUsername();
+        BoardFindRes boardFindRes = new BoardFindRes();
+        try {
+            boardUpdateReq.setUserEmail(userEmail);
+            boardFindRes = boardService.updateBoard(imagePath, boardUpdateReq);
+        } catch (Exception E) {
+            E.printStackTrace();
+            ResponseEntity.status(400).body(BaseResponseBody.of(500, "DB Transaction Failed"));
+        }
+        return ResponseEntity.status(200).body(boardFindRes);
+    }
+
+    // 게시글 삭제
+    @DeleteMapping("/remove/{boardNo}")
+    @ApiOperation(value = "게시글 삭제", notes = "<strong>게시글 삭제</strong>한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteBoard(@PathVariable Long boardNo) {
+        boardService.deleteBoard(boardNo);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+    }
 
 }
