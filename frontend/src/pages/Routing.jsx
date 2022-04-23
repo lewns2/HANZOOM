@@ -1,20 +1,20 @@
-import { Main } from './Main';
+import { Main } from './Main/Main';
 import { Board } from './Board';
 import { MyFoodIngredients } from './MyFoodIngredients';
 import { MyPage } from './User/MyPage';
 import { SignUp } from './User/SignUp';
 import { Login } from './User/Login';
 
-import { Navbar } from '../components/Navbar';
+import { Header } from '../components/Header';
 
 import { Route, Routes, Navigate, BrowserRouter } from 'react-router-dom';
 
 export const Routing = () => {
   return (
     <BrowserRouter>
-      <Navbar />
+      <Header />
       <Routes>
-        <Route path="/main" element={<Main />} />
+        <Route path="/" element={<Main />} />
         <Route path="/board" element={<Board />} />
         <Route path="/my-food-ingredients" element={<MyFoodIngredients />} />
         <Route path="/my-page" element={<MyPage />} />
