@@ -1,0 +1,157 @@
+/* 제목 + 글쓰기 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 검색 창 */
+.searchBar {
+  align-items: center;
+
+  #text-area {
+    width: 20rem;
+    height: 30px;
+    resize: none;
+  }
+
+  #searchBtn {
+    height: 30px;
+    font-size: 16px;
+    font-weight: bolder;
+    background-color: #f7c343;
+    border: 1px solid #f7c343;
+    border-radius: 8px;
+    text-align: center;
+  }
+}
+
+/* 내 위치, 필터(거리순, 최신순, 조회순) */
+.body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.locationBtn {
+  font-size: 16px;
+  font-weight: bolder;
+  background-color: #f7c343;
+  border: 1px solid #f7c343;
+  border-radius: 8px;
+  padding: 8px 0;
+  margin: 10px 0;
+  text-align: center;
+}
+
+/* 선택되지 않은 필터 버튼 스타일 */
+.filter #filterBtn {
+  font-size: 16px;
+  font-weight: bolder;
+  background-color: #fff;
+  border: 2px solid #f7c343;
+  border-radius: 8px;
+  padding: 3px 2px;
+  margin-right: 5px;
+  box-shadow: 0 4px 4px -4px #777;
+}
+
+/* 선택된 필터 버튼 스타일 */
+.filter #selectedFilterBtn {
+  font-size: 16px;
+  font-weight: bolder;
+  background-color: #f7c343;
+  border: 2px solid #f7c343;
+  border-radius: 8px;
+  padding: 3px 2px;
+  margin-right: 5px;
+  box-shadow: 0 4px 4px -4px #777;
+}
+
+/* 게시글 */
+.contentsContainer {
+  // display: flex;
+  height: 60%;
+
+  .contentCard {
+    display: inline-block;
+    width: 23.5%;
+    // height: 20rem;
+    box-shadow: 1px 1px 1px 1px gray;
+    border-radius: 1rem;
+  }
+
+  .card-img-top {
+    .card__image {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .status {
+    font-size: 16px;
+    font-weight: bolder;
+    background-color: #f7c343;
+    border: 2px solid #f7c343;
+    border-radius: 16px;
+    padding: 3px 2px;
+    margin-right: 5px;
+    box-shadow: 0 4px 4px -4px #777;
+    text-align: center;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bolder;
+  }
+
+  .likeBtn {
+    text-align: right;
+  }
+}
+
+/* 글 생성 시, 뒷 배경 (모달 시, dimmed 효과) */
+.content-create-form {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.8);
+  // background-color: white;
+}
+
+/* 글 생성 모달 전체 */
+.content-create-form.openModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  // animation: content-create-form-bg-show 0.6s;
+}
+
+/* 글 생성 모달 내부 */
+.formWrap {
+  width: 120vh;
+  height: 90vh;
+  padding-top: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 0.8rem;
+  background-color: #fffcf2;
+  overflow: hidden;
+
+  #yellowbtn {
+    margin-right: 5px;
+    border-radius: 0.8rem;
+  }
+}
+
+/* 페이지네이션 */
+
+.pagination {
+  display: fixed;
+  bottom: 0;
+}
