@@ -1,5 +1,5 @@
 import { Main } from './Main/Main';
-import { Board } from './Board';
+import { Board } from './Board/Board';
 import { MyFoodIngredients } from './MyFoodIngredients';
 import { MyPage } from './User/MyPage';
 import { SignUp } from './User/SignUp';
