@@ -57,6 +57,13 @@ export const Board = () => {
     }
   };
 
+  /* 조회(페이지네이션) */
+  const limit = 8;
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
+  const [totalPage, setTotalPage] = useState();
+  const [totalElements, setTotalElements] = useState();
+
   return (
     <section className="container mt-1 px-2 py-3">
       <div className="header">
@@ -94,9 +101,14 @@ export const Board = () => {
         </div>
       </div>
 
-      <Contents />
+      <Contents
+        page={page}
+        size={limit}
+        setTotalPage={setTotalPage}
+        setTotalElements={setTotalElements}
+      />
 
-      <Pagination />
+      <Pagination setPage={setPage} totalPage={totalPage} totalElements={totalElements} />
     </section>
   );
 };
