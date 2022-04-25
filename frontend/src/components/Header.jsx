@@ -19,7 +19,7 @@ export const Header = () => {
     <>
       <Navbar collapseOnSelect expand="lg">
         <Container>
-          <Navbar.Brand href="/main">한줌</Navbar.Brand>
+          <Navbar.Brand href="/">한줌</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="nav-menu ms-auto">
