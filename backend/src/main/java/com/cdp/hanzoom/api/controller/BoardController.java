@@ -33,7 +33,7 @@ public class BoardController {
 
     // 게시글 등록
     @PostMapping("/register")
-    @ApiOperation(value = "게시글 등록", notes = "<strong>게시글 등록</strong>한다.")
+    @ApiOperation(value = "게시글 등록(token)", notes = "<strong>게시글 등록</strong>한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -42,7 +42,7 @@ public class BoardController {
     })
     public ResponseEntity<? extends BaseResponseBody> registerBoard(
             @RequestPart(value="key") BoardRegisterReq boardRegisterReq
-            , @RequestPart(value="file") MultipartFile imagePath
+            , @RequestPart(value="file", required = false) MultipartFile imagePath
             , @ApiIgnore Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userEmail = userDetails.getUsername();
@@ -63,7 +63,7 @@ public class BoardController {
      * PageableDefault 에 page 는 기본 0이 처음 페이지 시작 / 인자로 받는 page는 1이 맨 처음 페이지 이다.
      */
     @GetMapping("/findAll")
-    @ApiOperation(value = "게시글 전체 조회", notes = "<strong>게시글 조회(페이지네이션 이용)</strong>한다. 페이지수, 페이지 사이즈, 정렬방법은 url에 담아주면 된다.")
+    @ApiOperation(value = "게시글 전체 조회(token)", notes = "<strong>게시글 조회(페이지네이션 이용)</strong>한다. 페이지수, 페이지 사이즈, 정렬방법은 url에 담아주면 된다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -83,7 +83,7 @@ public class BoardController {
 
     // 게시글 상세 조회
     @GetMapping("/find/{boardNo}")
-    @ApiOperation(value = "게시글 상세 조회", notes = "<strong>게시글 조회</strong>한다.")
+    @ApiOperation(value = "게시글 상세 조회(token)", notes = "<strong>게시글 조회</strong>한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -102,7 +102,7 @@ public class BoardController {
 
     // 게시글 찜하기
     @PostMapping("/like/{boardNo}")
-    @ApiOperation(value = "게시글 찜하기", notes = "<strong>게시글 찜</strong>한다.")
+    @ApiOperation(value = "게시글 찜하기(token)", notes = "<strong>게시글 찜</strong>한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -118,7 +118,7 @@ public class BoardController {
 
     // 게시글 수정
     @PutMapping("/update")
-    @ApiOperation(value = "게시글 수정", notes = "<strong>게시글 수정</strong>한다.")
+    @ApiOperation(value = "게시글 수정(token)", notes = "<strong>게시글 수정</strong>한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
