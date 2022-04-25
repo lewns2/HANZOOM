@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Axios } from '../../../core/axios';
 import { clearUser } from '../../../Reducer/userSlice';
 
-export const UserInfo = () => {
+export const UserInfo = (props) => {
   const user = useSelector((state) => state.user);
   const [userInfo, setUserInfo] = useState([]);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -35,11 +36,13 @@ export const UserInfo = () => {
   useEffect(() => {
     setUserInfo(user.userInfo);
   }, []);
+  useEffect(() => {
+    setUserInfo(user.userInfo);
+  }, [user]);
 
   return (
     <>
       <section className="userInfoWrap">
-        {console.log(userInfo)}
         <div className="row">
           <div className="col-4 userImage">
             <img
@@ -55,7 +58,9 @@ export const UserInfo = () => {
               <button className="withdrawBtn" onClick={withdrawUser}>
                 회원 탈퇴
               </button>
-              <button className="updateBtn">정보 수정</button>
+              <button className="updateBtn" onClick={() => props.setModalOpen(true)}>
+                정보 수정
+              </button>
             </div>
           </div>
         </div>
