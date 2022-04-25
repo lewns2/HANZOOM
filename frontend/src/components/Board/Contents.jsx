@@ -1,5 +1,7 @@
-import { Fragment } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import sample from '../../assets/images/Initimage.PNG';
+import { Axios } from '../../core/axios';
 
 const contents = [
   {
@@ -88,11 +90,37 @@ const contents = [
   },
 ];
 
-export const Contents = () => {
+export const Contents = (props) => {
+  const totalElements = 48;
+  const totalPages = 6;
+
+  const navigate = useNavigate();
+  // const [totalElements, setTotalElements] = useState(48);
+  // const [totalPages, setTotalPages] = useState(6);
+  // const [contents, setContents] = useState();
+  useEffect(() => {
+    Axios.get('board/findAll', {
+      headers: { page: `${props.page}`, size: `${props.size}`, sort: 'ASC' },
+    })
+      .then((res) => console.log(res))
+      .catch(
+        (err) => console.log(`${props.page} 페이지 조회한다!`, err),
+        props.setTotalPage(totalPages),
+        props.setTotalElements(totalElements),
+      );
+  }, [props.page]);
+
+  const moveToDetail = (num) => {
+    navigate(`/board/${num}`);
+  };
+
   return (
     <section className="contentsContainer">
       {contents.map((content, key) => (
-        <div className="contentCard mx-2 mb-3" key={content.boardNo}>
+        <div
+          className="contentCard mx-2 mb-3"
+          key={content.boardNo}
+          onClick={() => moveToDetail(content.boardNo)}>
           {/*  이미지  */}
           <img src={content.imagePath} className="card-img-top" alt="..." />
 
