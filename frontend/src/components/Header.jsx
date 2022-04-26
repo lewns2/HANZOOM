@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
@@ -6,13 +6,13 @@ import { clearUser } from '../Reducer/userSlice';
 import './Header.scss';
 
 export const Header = () => {
-  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  console.log(user.userInfo);
   const dispatch = useDispatch();
 
   const logout = () => {
     alert('로그아웃 되었습니다.');
     dispatch(clearUser());
-    navigate('/login');
   };
 
   return (
@@ -23,17 +23,24 @@ export const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="nav-menu ms-auto">
-              <Nav.Link href="/board">게시판</Nav.Link>
-              <Nav.Link href="/my-food-ingredients">MY식재료</Nav.Link>
-              <Nav.Link href="/my-page">MY페이지</Nav.Link>
-              <Nav.Link href="/login">로그인</Nav.Link>
-              <Nav.Link href="/signup" className="hi">
-                회원가입
-              </Nav.Link>
+              <Link to="/board">게시판</Link>
 
-              {/* <div>
-            <div onClick={logout}>로그아웃</div>
-          </div> */}
+              {user.userInfo.length == 0 ? (
+                <>
+                  <Link to="/login">로그인</Link>
+                  <Link to="/signup" className="hi">
+                    회원가입
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/my-food-ingredients">MY식재료</Link>
+                  <Link to="/my-page">MY페이지</Link>
+                  <Link to="/login" onClick={logout}>
+                    로그아웃
+                  </Link>
+                </>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
