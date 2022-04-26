@@ -1,12 +1,16 @@
 .navbar {
   overflow: hidden;
   background-color: #f7c343;
-  .nav-menu a{
+  .nav-menu a {
+    color: #222;
     margin: 0 2rem 0 0;
     padding: 0;
     // color: black;
     text-decoration: none;
     font-weight: bold;
     align-items: center;
-  }  
+    &:hover {
+      color: #444;
+    }
+  }
 }
