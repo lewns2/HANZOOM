@@ -5,6 +5,7 @@ import { MyFoodIngredients } from './MyFoodIngredients';
 import { MyPage } from './User/MyPage';
 import { SignUp } from './User/SignUp';
 import { Login } from './User/Login';
+import { FindPassword } from './User/FindPassword';
 
 import { Header } from '../components/Header';
 
@@ -21,7 +22,7 @@ export const Routing = () => {
         <Route path="/my-food-ingredients" element={<MyFoodIngredients />} />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/find-password" element={<FindPassword />} />
       </Routes>
     </BrowserRouter>
   );

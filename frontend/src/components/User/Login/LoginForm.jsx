@@ -51,7 +51,7 @@ export const LoginForm = () => {
           localStorage.setItem('jwt-token', res.data.accessToken);
         }
         dispatch(getUserInfo());
-        navigate('/main');
+        navigate('/');
       })
       .catch(() => {
         alert('패스워드를 다시 입력해주세요.');
@@ -110,7 +110,9 @@ export const LoginForm = () => {
             LOGIN
           </button>
           <div className="loginBottom d-flex justify-content-between">
-            <p className="findPwd">비밀번호 찾기</p>
+            <Link to="/find-password">
+              <p className="findPwd">비밀번호 찾기</p>
+            </Link>
             <Link to="/signup">
               <p>계정이 없으신가요? 회원가입 하러가기</p>
             </Link>
