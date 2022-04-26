@@ -1,7 +1,8 @@
-.loginWrap {
+.userFormWrap {
   background-color: #f7c343;
-  height: 100vh;
-
+  // height: 100vh;
+  height: calc(100vh - 70px);
+  overflow: hidden;
   display: flex;
   align-items: center;
 
@@ -48,7 +49,7 @@
     cursor: pointer;
   }
 
-  .loginBtn {
+  .formBtn {
     font-size: 18px;
     font-weight: bolder;
     background-color: #f7c343;
@@ -60,7 +61,6 @@
 
   .loginBottom {
     padding: 0;
-
     p {
       color: #888;
       font-size: 12px;
@@ -70,9 +70,19 @@
         font-weight: bold;
       }
     }
-
     .findPwd {
       color: #222;
+      font-weight: bold;
+    }
+  }
+
+  .loginExplain {
+    color: #666;
+    font-size: 12px;
+    text-align: right;
+    cursor: pointer;
+    &:hover {
+      // color: #f7c343;
       font-weight: bold;
     }
   }

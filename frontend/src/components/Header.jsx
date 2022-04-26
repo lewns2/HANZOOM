@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
 import { clearUser } from '../Reducer/userSlice';
@@ -16,15 +16,14 @@ export const Header = () => {
   };
 
   return (
-    <>
+    <header>
       <Navbar collapseOnSelect expand="lg">
         <Container>
-          <Navbar.Brand href="/">한줌</Navbar.Brand>
+          <Link to="/">한줌</Link>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="nav-menu ms-auto">
               <Link to="/board">게시판</Link>
-
               {user.userInfo.length == 0 ? (
                 <>
                   <Link to="/login">로그인</Link>
@@ -69,6 +68,6 @@ export const Header = () => {
           </div>
         </div>
       </nav> */}
-    </>
+    </header>
   );
 };

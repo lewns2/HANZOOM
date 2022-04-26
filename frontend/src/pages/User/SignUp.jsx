@@ -1,11 +1,11 @@
 import { SignUpForm } from '../../components/User/SignUp/SignUpForm';
 
-import './SignUp.scss';
+import './UserForm.scss';
 
 export const SignUp = () => {
   return (
     <>
-      <section className="signUpWrap d-flex justify-content-center">
+      <section className="userFormWrap d-flex justify-content-center">
         <div className="formWrap">
           <SignUpForm />
         </div>

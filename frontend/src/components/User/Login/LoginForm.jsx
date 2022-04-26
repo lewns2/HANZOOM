@@ -106,7 +106,7 @@ export const LoginForm = () => {
               )}
             </span>
           </div>
-          <button className="loginBtn" onClick={login}>
+          <button className="formBtn" onClick={login}>
             LOGIN
           </button>
           <div className="loginBottom d-flex justify-content-between">
