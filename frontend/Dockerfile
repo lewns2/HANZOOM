@@ -1,7 +1,7 @@
 FROM node:16 as build-stage
 WORKDIR /app
 ADD . .
-RUN npm install -g yarn
+RUN yarn install
 RUN yarn build
 
 FROM nginx:stable-alpine as production-stage
