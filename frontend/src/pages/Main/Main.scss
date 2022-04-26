@@ -14,10 +14,73 @@
     height: auto;
     margin-right: 200px;
   }
+  button {
+    background-color: #f7c343;
+    border: 1px solid #f7c343;
+    border-radius: 8px;
+  }
 }
 #main3 {
+  padding: 4%;
   background-color: #f7c343;
+
   .contentsContainer {
-    width: 50%;
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px;
+    height: 60%;
+  }
+
+  .slick-list {
+    width: 100%;
+
+    .slick-slide {
+      display: flex;
+      justify-content: center;
+
+      .contentCard {
+        display: inline-block;
+        box-shadow: 1px 1px 1px 1px gray;
+        border-radius: 1rem;
+        background-color: white;
+      }
+
+      .card-img-top {
+        .card__image {
+          width: 100%;
+          // height: 100%;
+        }
+      }
+      .card-body {
+        width: 100%;
+
+        .card-title {
+          font-size: 1.25rem;
+          font-weight: bolder;
+        }
+        .status {
+          font-size: 16px;
+          font-weight: bolder;
+          background-color: #f7c343;
+          border: 2px solid #f7c343;
+          border-radius: 16px;
+          padding: 3px 2px;
+          margin-right: 5px;
+          box-shadow: 0 4px 4px -4px #777;
+          text-align: center;
+        }
+      }
+
+      .likeBtn {
+        text-align: right;
+      }
+    }
+  }
+
+  .slick-prev::before {
+    content: url(../../assets/icon_prev.png);
+  }
+  .slick-next::before {
+    content: url(../../assets/icon_next.png);
   }
 }
