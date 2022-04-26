@@ -5,6 +5,7 @@ import com.cdp.hanzoom.db.entity.QBoard;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,15 @@ public class BoardRepositorySupport {
     }
     private OrderSpecifier[] orderCondition(Pageable pageable) {
         PathBuilder<Board> entityPath = new PathBuilder<>(Board.class, "board");
-        return pageable.getSort() // (2) pageable 안에 있는 sort 라는 정보를 가져옴.
-                .stream() // (3)
-                .map(order -> new OrderSpecifier(Order.valueOf(order.getDirection().name()), entityPath.get(order.getProperty()))) // (4)
-                .toArray(OrderSpecifier[]::new); // (5)
+        if(pageable.getSort().stream().findFirst().get().getProperty().equals("distance")) {
+            return new OrderSpecifier[]{new OrderSpecifier(Order.valueOf("DESC"), entityPath.get("boardNo"))};
+        }
+        else {
+            return pageable.getSort() // (2) pageable 안에 있는 sort 라는 정보를 가져옴.
+                    .stream() // (3)
+                    .map(order -> new OrderSpecifier(Order.valueOf(order.getDirection().name()), entityPath.get(order.getProperty()))) // (4)
+                    .toArray(OrderSpecifier[]::new); // (5)
+            }
     }
 
     public Optional<Board> findBoardByBoardNo(Long boardNo) {

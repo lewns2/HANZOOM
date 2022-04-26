@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service("BoardService")
@@ -44,8 +46,12 @@ public class BoardServiceImpl implements BoardService{
     @Transactional
     public Board registerBoard(MultipartFile imagePath, BoardRegisterReq boardRegisterReq) throws Exception {
         // 이미지 업로드
-        String savePath = s3FileUploadService.upload(imagePath);
-        boardRegisterReq.setImagePath(savePath);
+        if(imagePath != null) {
+            String savePath = s3FileUploadService.upload(imagePath);
+            boardRegisterReq.setImagePath(savePath);
+        } else {
+            boardRegisterReq.setImagePath("need.jpg");
+        }
 
         // 게시판 테이블에 저장
         boardRegisterReq.setStatus("거래전");
@@ -112,6 +118,16 @@ public class BoardServiceImpl implements BoardService{
             boardFindAllRes.setBoardFindIngredientResList(boardFindIngredientResList);
 
             boardFindAllResList.add(boardFindAllRes);
+        }
+
+        if(pageable.getSort().stream().findFirst().get().getProperty().equals("distance")) {
+            Collections.sort(boardFindAllResList, new Comparator<BoardFindAllRes>() {
+                @Override
+                public int compare(BoardFindAllRes b1, BoardFindAllRes b2) {
+                    if(b1.getDistance()-b2.getDistance()>0) return 1;
+                    else return -1;
+                }
+            });
         }
 
         Page<BoardFindAllRes> res = new PageImpl<BoardFindAllRes>(boardFindAllResList, pageable, total);
@@ -195,7 +211,9 @@ public class BoardServiceImpl implements BoardService{
         }
 
         // 게시판 테이블에 수정
-        Board board  = boardRepository.save(boardUpdateReq.toEntity());
+        Board board  = boardRepositorySupport.findBoardByBoardNo(boardUpdateReq.getBoardNo()).orElse(null);
+        board.updateBoard(boardUpdateReq);
+        boardRepository.save(board);
 
         // 기존 게시판에 해당하는 식재료 일반으로 저장
         List<UserIngredient> userIngredients = userIngredientRepositorySupport.findByBoardNo(boardUpdateReq.getBoardNo());
