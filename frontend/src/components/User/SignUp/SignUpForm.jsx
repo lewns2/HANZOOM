@@ -210,7 +210,7 @@ export const SignUpForm = () => {
               )}
             </span>
           </div>
-          <button className="signUpBtn" onClick={signUp}>
+          <button className="formBtn" onClick={signUp}>
             SIGN UP
           </button>
           <Link to="/login">

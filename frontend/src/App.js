@@ -2,9 +2,9 @@ import { Routing } from './pages/Routing';
 
 function App() {
   return (
-    <div>      
-      <Routing/>
-    </div>
+    <>
+      <Routing />
+    </>
   );
 }
 
