@@ -19,6 +19,7 @@ export const Board = () => {
   };
 
   /* 버튼 클릭 상태 여부를 확인 */
+  const [selectedFilter, setSelectedFilter] = useState('BoardNo');
   const [isClickDist, setIsClickDist] = useState(false);
   const [isClickRecent, setIsClickRecent] = useState(false);
   const [isClickView, setIsClickView] = useState(false);
@@ -104,6 +105,7 @@ export const Board = () => {
       <Contents
         page={page}
         size={limit}
+        selectedFilter={selectedFilter}
         setTotalPage={setTotalPage}
         setTotalElements={setTotalElements}
       />

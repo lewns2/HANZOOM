@@ -91,23 +91,27 @@ const contents = [
 ];
 
 export const Contents = (props) => {
-  const totalElements = 48;
-  const totalPages = 6;
+  // const totalElements = 48;
+  // const totalPages = 6;
 
   const navigate = useNavigate();
-  // const [totalElements, setTotalElements] = useState(48);
-  // const [totalPages, setTotalPages] = useState(6);
+  const token = localStorage.getItem('jwt-token');
+  const [totalElements, setTotalElements] = useState(48);
+  const [totalPages, setTotalPages] = useState(6);
   // const [contents, setContents] = useState();
   useEffect(() => {
-    Axios.get('board/findAll', {
-      headers: { page: `${props.page}`, size: `${props.size}`, sort: 'ASC' },
-    })
-      .then((res) => console.log(res))
-      .catch(
-        (err) => console.log(`${props.page} 페이지 조회한다!`, err),
-        props.setTotalPage(totalPages),
-        props.setTotalElements(totalElements),
-      );
+    Axios.get(
+      `board/findAll?page=${props.page}&size=${props.size}&sort=${props.selectedFilter}%2CDESC`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    )
+      .then((res) => {
+        console.log(`${props.page} 페이지 조회한다!`, res);
+        props.setTotalPage(res.data.totalPages + 1);
+        props.setTotalElements(res.data.totalElements);
+      })
+      .catch((err) => console.log(err));
   }, [props.page]);
 
   const moveToDetail = (num) => {
