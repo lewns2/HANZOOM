@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-@Service
+
 public interface S3FileUploadService {
     String upload(MultipartFile uploadFile) throws IOException;
     void deleteFile(String fileName);
