@@ -76,6 +76,19 @@
     }
   }
 
+  .findPwdBottom {
+    padding: 0;
+    p {
+      color: #444;
+      font-size: 13px;
+      cursor: pointer;
+      &:hover {
+        // color: #f7c343;
+        font-weight: bold;
+      }
+    }
+  }
+
   .loginExplain {
     color: #666;
     font-size: 12px;
