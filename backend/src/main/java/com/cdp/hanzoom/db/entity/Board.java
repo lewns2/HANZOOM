@@ -1,5 +1,6 @@
 package com.cdp.hanzoom.db.entity;
 
+import com.cdp.hanzoom.api.request.BoardUpdateReq;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -53,4 +54,11 @@ public class Board {
     public void increaseViewCnt() { this.viewCnt++; }
     public void increaseLikeCnt() { this.likeCnt++; }
     public void decreaseLikeCnt() { this.likeCnt--; }
+    public void updateBoard(BoardUpdateReq boardUpdateReq) {
+        this.title = boardUpdateReq.getTitle();
+        this.imagePath = boardUpdateReq.getImagePath();
+        this.status = boardUpdateReq.getStatus();
+        this.type = boardUpdateReq.getType();
+        this.description = boardUpdateReq.getDescription();
+    }
 }
