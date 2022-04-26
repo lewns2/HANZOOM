@@ -25,7 +25,7 @@ services:
       - "8443:8443"
       # [인증서 파일 저장 경로]:/root
     volumes:
-      - /home/ubuntu/docker-volume:/root
+      - /home/ubuntu/docker-volume/ssl:/root
     container_name: "backend"
     networks:
       - hanzoom
