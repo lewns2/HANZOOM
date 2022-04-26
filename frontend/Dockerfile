@@ -1,8 +1,8 @@
 FROM node:16 as build-stage
 WORKDIR /app
 ADD . .
-RUN npm install
-RUN npm run build
+RUN npm install -g yarn
+RUN yarn build
 
 FROM nginx:stable-alpine as production-stage
 #컨테이너 안에 nginx.conf를 옆 해당겨로에 옮겨준다.
