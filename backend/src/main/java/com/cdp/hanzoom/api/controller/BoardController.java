@@ -78,6 +78,7 @@ public class BoardController {
         String userEmail = userDetails.getUsername();
         Page<Board> boards = boardService.findAllBoard(pageable);
         Page<BoardFindAllRes> boardFindAllRes = boardService.findInfoFindAllBoard(boards, userEmail);
+
         return ResponseEntity.status(200).body(boardFindAllRes);
     }
 
