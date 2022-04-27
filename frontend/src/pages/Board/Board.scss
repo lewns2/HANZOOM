@@ -1,3 +1,8 @@
+$mobile: 500px;
+$tablet: 991px;
+$laptopS: 1200px;
+$desktop: 1400px;
+
 /* 제목 + 글쓰기 */
 .header {
   display: flex;
@@ -24,6 +29,15 @@
     border-radius: 8px;
     text-align: center;
   }
+
+  @media only screen and (max-width: $mobile) {
+    #text-area {
+      display: none;
+    }
+    #searchBtn {
+      display: none;
+    }
+  }
 }
 
 /* 내 위치, 필터(거리순, 최신순, 조회순) */
@@ -42,10 +56,18 @@
   padding: 8px 0;
   margin: 10px 0;
   text-align: center;
+  @media only screen and (max-width: $mobile) {
+    display: none;
+  }
 }
-
+.filter {
+  @media only screen and (max-width: $mobile) {
+    visibility: hidden;
+  }
+}
 /* 선택되지 않은 필터 버튼 스타일 */
 .filter #filterBtn {
+  width: 70px;
   font-size: 16px;
   font-weight: bolder;
   background-color: #fff;
@@ -58,6 +80,7 @@
 
 /* 선택된 필터 버튼 스타일 */
 .filter #selectedFilterBtn {
+  width: 70px;
   font-size: 16px;
   font-weight: bolder;
   background-color: #f7c343;
@@ -70,25 +93,31 @@
 
 /* 게시글 */
 .contentsContainer {
-  // display: flex;
-  height: 60%;
+  width: 100%;
+  height: auto;
 
   .contentCard {
     display: inline-block;
-    width: 23.5%;
-    // height: 20rem;
+    width: calc(($desktop - 200px) / 4);
+    height: auto;
     box-shadow: 1px 1px 1px 1px gray;
     border-radius: 1rem;
+    overflow: auto;
+
+    @media only screen and (max-width: $laptopS) {
+      width: calc(($laptopS - 60px) / 4);
+    }
   }
 
   .card-img-top {
     .card__image {
-      width: 100%;
+      max-width: 100%;
       height: auto;
     }
   }
 
   .status {
+    width: 70px;
     font-size: 16px;
     font-weight: bolder;
     background-color: #f7c343;
@@ -107,6 +136,42 @@
 
   .likeBtn {
     text-align: right;
+  }
+
+  @media only screen and (max-width: $tablet) {
+    .contentCard {
+      width: 100%;
+      display: flex;
+    }
+    .card-img-top {
+      max-width: 50%;
+      height: auto;
+    }
+    .status {
+      width: 60px;
+      font-size: 13px;
+    }
+  }
+  @media only screen and (max-width: $mobile) {
+    .contentCard {
+      width: 95%;
+      display: flex;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: bolder;
+    }
+    .card-img-top {
+      max-width: 30%;
+      height: auto;
+    }
+    .status {
+      width: 60px;
+      font-size: 13px;
+    }
+    .contentDescription {
+      display: none;
+    }
   }
 }
 
