@@ -141,7 +141,7 @@ export const Contents = (props) => {
             </div>
 
             {/* 설명 */}
-            <p>{content.description}</p>
+            <div className="contentDescription">{content.description}</div>
 
             {/* 나와의 거리 */}
             <p>{content.distance}</p>
