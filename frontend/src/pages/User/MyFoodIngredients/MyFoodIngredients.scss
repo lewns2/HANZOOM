@@ -1,0 +1,51 @@
+#myFoodIngredients {
+  padding: 5%;
+  #myIngre {
+    h3 {
+      text-align: center;
+    }
+    .addFood {
+      float: right;
+      border-radius: 50%;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+    }
+    .ingreBody {
+      // background-color: #fffcf2;
+      background-color: pink;
+      border-radius: 15px;
+      padding: 10%;
+      margin: 5%;
+    }
+  }
+  #barterShare {
+    h3 {
+      text-align: center;
+    }
+    .ingreBody {
+      // background-color: #fffcf2;
+      background-color: pink;
+      border-radius: 15px;
+      padding: 10%;
+      margin: 7% 5% 5% 5%;
+    }
+  }
+  #needs {
+    h3 {
+      text-align: center;
+    }
+    .addNeeds {
+      float: right;
+      border-radius: 50%;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+    }
+    .ingreBody {
+      // background-color: #fffcf2;
+      background-color: pink;
+      border-radius: 15px;
+      padding: 10%;
+      margin: 5%;
+    }
+  }
+}

@@ -2,7 +2,6 @@ export const ContentList = (props) => {
   return (
     <>
       <div
-        div
         className="contentCard mx-2 mb-3"
         key={props.content.boardNo}
         onClick={() => moveToDetail(props.content.boardNo)}>
