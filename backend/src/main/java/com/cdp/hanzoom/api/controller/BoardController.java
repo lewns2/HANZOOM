@@ -92,7 +92,7 @@ public class BoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BoardFindRes> findBoard(
-            @PathVariable Long boardNo
+            @PathVariable("boardNo") Long boardNo
             , @ApiIgnore Authentication authentication
     ) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
