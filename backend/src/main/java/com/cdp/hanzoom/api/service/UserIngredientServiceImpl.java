@@ -29,8 +29,8 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     @Autowired
     UserIngredientRepositorySupport userIngredientRepositorySupport;
 
-    @Autowired
-    IngredientRepository ingredientRepository;
+//    @Autowired
+//    IngredientRepository ingredientRepository;
 
     @Autowired
     IngredientRepositorySupport ingredientRepositorySupport;
@@ -39,7 +39,16 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     @Override
     public UserIngredient registerUserIngredient(UserIngredientRegisterReq userIngredientRegisterReq, String userEmail) {
 
-        LocalDate expirationDate = LocalDate.parse(userIngredientRegisterReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+        LocalDate purchaseDate = null;
+        LocalDate expirationDate = null;
+
+        if(userIngredientRegisterReq.getPurchaseDate().length() != 0) {
+            purchaseDate = LocalDate.parse(userIngredientRegisterReq.getPurchaseDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+        }
+
+        if(userIngredientRegisterReq.getExpirationDate().length() != 0) {
+            expirationDate = LocalDate.parse(userIngredientRegisterReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+        }
 
         Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(userIngredientRegisterReq.getIngredientName()).orElse(null);
 
@@ -47,6 +56,7 @@ public class UserIngredientServiceImpl implements UserIngredientService {
         userIngredientRes.setUserEmail(userEmail);
         userIngredientRes.setIngredientNo(ingredient.getIngredientNo());
         userIngredientRes.setType("일반");
+        userIngredientRes.setPurchaseDate(purchaseDate);
         userIngredientRes.setExpirationDate(expirationDate);
 
         userIngredientRepository.save(userIngredientRes.toEntity());
@@ -67,6 +77,7 @@ public class UserIngredientServiceImpl implements UserIngredientService {
             userIngredientFindRes.setIngredientName(userIngredientList.get(i).getUserIngredientId().getIngredientNo().getIngredientName());
             userIngredientFindRes.setUserEmail(userIngredientList.get(i).getUserIngredientId().getUserEmail().getUserEmail());
             userIngredientFindRes.setType(userIngredientList.get(i).getType());
+            userIngredientFindRes.setPurchaseDate(userIngredientList.get(i).getPurchaseDate());
             userIngredientFindRes.setExpirationDate(userIngredientList.get(i).getExpirationDate());
             userIngredientFindRes.setBoardNo(userIngredientList.get(i).getBoardNo());
             userIngredientFindResList.add(userIngredientFindRes);
@@ -76,9 +87,9 @@ public class UserIngredientServiceImpl implements UserIngredientService {
 
     /** ingredientName과 userEmail을 이용하여 유저 식재료 디테일 조회하는 findUserIngredientByIngredientName 입니다. **/
     @Override
-    public UserIngredientFindRes findByIngredientNameAndUserEmail(String ingredientName, String userEmail) {
+    public UserIngredientFindRes findByIngredientNoAndUserEmail(Long ingredientNo, String userEmail) {
         User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
-        Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(ingredientName).orElse(null);
+        Ingredient ingredient = ingredientRepositorySupport.findByIngredientNo(ingredientNo).orElse(null);
         // 해당 식재료 찾기
         UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNameAndUserEmail(ingredient, user).orElse(null);
 
@@ -87,6 +98,7 @@ public class UserIngredientServiceImpl implements UserIngredientService {
         userIngredientFindRes.setIngredientName(ingredient.getIngredientName());
         userIngredientFindRes.setUserEmail(userIngredient.getUserIngredientId().getUserEmail().getUserEmail());
         userIngredientFindRes.setType(userIngredient.getType());
+        userIngredientFindRes.setPurchaseDate(userIngredient.getPurchaseDate());
         userIngredientFindRes.setExpirationDate(userIngredient.getExpirationDate());
         userIngredientFindRes.setBoardNo(userIngredient.getBoardNo());
 
@@ -109,8 +121,9 @@ public class UserIngredientServiceImpl implements UserIngredientService {
         Long ingredientNo = userIngredient.getUserIngredientId().getIngredientNo().getIngredientNo();
         String userEmail = userIngredient.getUserIngredientId().getUserEmail().getUserEmail();
         String type = userIngredientUpdateReq.getType();
+        LocalDate purchaseDate = LocalDate.parse(userIngredientUpdateReq.getPurchaseDate().substring(0,10), DateTimeFormatter.ISO_DATE);
         LocalDate expirationDate = LocalDate.parse(userIngredientUpdateReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
-        userIngredientRepository.updateUserIngredient(ingredientNo, userEmail, type, expirationDate);
+        userIngredientRepository.updateUserIngredient(ingredientNo, userEmail, type, purchaseDate, expirationDate);
     }
 
     /** 유저 식재료 정보를 삭제하는 deleteUserIngredient 입니다. **/
