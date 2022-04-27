@@ -20,7 +20,8 @@ public interface UserIngredientRepository extends JpaRepository<UserIngredient, 
     @Transactional
     @Modifying
     @Query(value = "update user_ingredient \t\n" +
-            "set type = :type, expiration_date = :expirationDate \t\n" +
+            "set type = :type, purchase_date = :purchaseDate, expiration_date = :expirationDate \t\n" +
             "where ingredient_no = :ingredientNo and user_email = :userEmail ", nativeQuery = true)
-    void updateUserIngredient(@Param("ingredientNo") Long ingredientNo, @Param("userEmail") String userEmail, @Param("type") String type, @Param("expirationDate") LocalDate expirationDate);
+    void updateUserIngredient(@Param("ingredientNo") Long ingredientNo, @Param("userEmail") String userEmail
+            , @Param("type") String type, @Param("purchaseDate") LocalDate purchaseDate, @Param("expirationDate") LocalDate expirationDate);
 }
