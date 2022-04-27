@@ -16,6 +16,9 @@ public class UserIngredientUpdateReq {
     @ApiModelProperty(name="종류", example="일반")
     String type;
 
+    @ApiModelProperty(name="식재료 구매일", example="2022-01-01")
+    String purchaseDate;
+
     @ApiModelProperty(name="식재료 유통기한", example="2022-01-01")
     String expirationDate;
 }

@@ -27,6 +27,11 @@ public class UserIngredient {
     @Column(name = "type", length = 20)
     String type;
 
+    @Column(name = "purchase_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
+    LocalDate purchaseDate;
+
     @Column(name = "expiration_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")

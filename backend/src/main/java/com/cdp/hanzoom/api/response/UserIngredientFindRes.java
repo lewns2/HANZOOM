@@ -23,6 +23,9 @@ public class UserIngredientFindRes {
     @ApiModelProperty(name="종류")
     String type;
 
+    @ApiModelProperty(name="구매일")
+    LocalDate purchaseDate;
+
     @ApiModelProperty(name="유통기한")
     LocalDate expirationDate;
 
