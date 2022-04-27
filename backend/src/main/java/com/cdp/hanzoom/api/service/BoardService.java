@@ -14,6 +14,8 @@ public interface BoardService {
     Board registerBoard(MultipartFile imagePath, BoardRegisterReq boardRegisterReq) throws Exception;
     // 게시글 전체조회
     Page<Board> findAllBoard(Pageable pageable);
+    // 게시글 검색
+    Page<Board> findBoardByIngredient(Pageable pageable, String ingredient);
     Page<BoardFindAllRes> findInfoFindAllBoard(Page<Board> boards, String userEmail);
     // 게시글 상세조회
     BoardFindRes findBoardByBoardNo(Long boardNo, String userEmail);

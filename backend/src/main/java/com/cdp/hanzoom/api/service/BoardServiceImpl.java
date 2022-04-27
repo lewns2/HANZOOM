@@ -77,6 +77,12 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public Page<Board> findBoardByIngredient(Pageable pageable, String ingredient) {
+        Page<Board> boards = boardRepositorySupport.findBoardByIngredient(pageable, ingredient);
+        return boards;
+    }
+
+    @Override
     public Page<BoardFindAllRes> findInfoFindAllBoard(Page<Board> boards, String userEmail) {
         List<BoardFindAllRes> boardFindAllResList = new ArrayList<>();
         Pageable pageable = boards.getPageable();
@@ -113,7 +119,8 @@ public class BoardServiceImpl implements BoardService{
             for(int i=0; i<userIngredients.size(); i++) {
                 String ingredientName = userIngredients.get(i).getUserIngredientId().getIngredientNo().getIngredientName();
                 String expirationDate = String.valueOf(userIngredients.get(i).getExpirationDate());
-                boardFindIngredientResList.add(new BoardFindIngredientRes(ingredientName,expirationDate));
+                String purchaseDate = String.valueOf(userIngredients.get(i).getPurchaseDate());
+                boardFindIngredientResList.add(new BoardFindIngredientRes(ingredientName,expirationDate,purchaseDate));
             }
             boardFindAllRes.setBoardFindIngredientResList(boardFindIngredientResList);
 
@@ -172,7 +179,8 @@ public class BoardServiceImpl implements BoardService{
         for(int i=0; i<userIngredients.size(); i++) {
             String ingredientName = userIngredients.get(i).getUserIngredientId().getIngredientNo().getIngredientName();
             String expirationDate = String.valueOf(userIngredients.get(i).getExpirationDate());
-            boardFindIngredientResList.add(new BoardFindIngredientRes(ingredientName,expirationDate));
+            String purchaseDate = String.valueOf(userIngredients.get(i).getPurchaseDate());
+            boardFindIngredientResList.add(new BoardFindIngredientRes(ingredientName,expirationDate,purchaseDate));
         }
         res.setBoardFindIngredientResList(boardFindIngredientResList);
 
