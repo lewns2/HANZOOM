@@ -11,10 +11,7 @@ public interface UserService {
 	User registerUser(UserRegisterReq userRegisterInfo); // 회원 가입
 	User getUserByUserEmail(String userEmail);
 	User getUserByUserNickName(String userNickname);
-	/** 식단 일지 정보를 수정하는 updateDietDiary 입니다.
-	 * @return**/
-	User updateUserProfile(User user,
-						   MultipartFile imagePath) throws Exception;
+	User updateUserProfile(User user, MultipartFile imagePath) throws Exception;
 	void updateUser(User user, UserUpdateReq updateUserDto); // 회원 닉넴, 비번 수정.
 	void updateUserLatAndLng(User user,  UserUpdateLatAndLngReq updateUserLatAndLngDto); // 사용자 약속 만남 장소 위도, 경도 수정 기능.
 	User getUser(UserFindPasswordReq userFindPasswordReq);
