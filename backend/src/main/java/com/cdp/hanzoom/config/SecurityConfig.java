@@ -2,7 +2,7 @@ package com.cdp.hanzoom.config;
 
 import com.cdp.hanzoom.api.service.UserService;
 import com.cdp.hanzoom.common.auth.JwtAuthenticationFilter;
-import com.cdp.hanzoom.common.auth.UserDetailService;
+import com.cdp.hanzoom.common.auth.HanZoomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserDetailService userDetailService;
+    private HanZoomUserDetailService hanZoomUserDetailService;
     
     @Autowired
     private UserService userService;
@@ -41,7 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.userDetailService);
+        if(hanZoomUserDetailService !=null){
+            daoAuthenticationProvider.setUserDetailsService(this.hanZoomUserDetailService);
+        }
         return daoAuthenticationProvider;
     }
 
@@ -60,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
                 .authorizeRequests()
-                .antMatchers("/api/v1/users/me").authenticated()       //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
+                .antMatchers().authenticated()       //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
     	        	    .anyRequest().permitAll()
                 .and().cors();
     }

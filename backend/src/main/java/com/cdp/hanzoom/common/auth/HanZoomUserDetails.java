@@ -7,11 +7,11 @@ import java.util.List;
 import com.cdp.hanzoom.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-
+import org.springframework.security.core.userdetails.UserDetails;
 /**
  * 현재 액세스 토큰으로 부터 인증된 유저의 부가 상세정보(활성화 여부, 만료, 롤 등) 정의.
  */
-public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
+public class HanZoomUserDetails implements UserDetails {
 	@Autowired
     User user;
 	boolean accountNonExpired;
@@ -20,7 +20,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
     boolean enabled = false;
     List<GrantedAuthority> roles = new ArrayList<>();
     
-    public UserDetails(User user) {
+    public HanZoomUserDetails(User user) {
     		super();
     		this.user = user;
     }
