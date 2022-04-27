@@ -3,9 +3,8 @@ package com.cdp.hanzoom.api.controller;
 import com.cdp.hanzoom.api.request.UserIngredientRegisterReq;
 import com.cdp.hanzoom.api.request.UserIngredientUpdateReq;
 import com.cdp.hanzoom.api.response.UserIngredientFindRes;
-import com.cdp.hanzoom.api.response.UserIngredientRes;
 import com.cdp.hanzoom.api.service.UserIngredientService;
-import com.cdp.hanzoom.common.auth.UserDetails;
+import com.cdp.hanzoom.common.auth.HanZoomUserDetails;
 import com.cdp.hanzoom.common.model.response.BaseResponseBody;
 import com.cdp.hanzoom.db.entity.UserIngredient;
 import io.swagger.annotations.*;
@@ -45,7 +44,7 @@ public class UserIngredientController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> registerIngredient(@RequestBody @ApiParam(value="유저 식재료 정보", required = true) UserIngredientRegisterReq userIngredientRegisterReq, @ApiIgnore Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
         String userEmail = userDetails.getUsername();
 
         UserIngredient userIngredient;
@@ -66,7 +65,7 @@ public class UserIngredientController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
     public ResponseEntity<List<UserIngredientFindRes>> findUserIngredient(@ApiIgnore Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
         String userEmail = userDetails.getUsername();
 
         List<UserIngredientFindRes> userIngredientFindResList = userIngredientService.findAllUserIngredient(userEmail);
@@ -81,7 +80,7 @@ public class UserIngredientController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
     public ResponseEntity<UserIngredientFindRes> findByIngredientNameAndUserEmail(@PathVariable("ingredientNo") String ingredientNo, @ApiIgnore Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
         String userEmail = userDetails.getUsername();
 
         UserIngredientFindRes userIngredientFindRes = userIngredientService.findByIngredientNameAndUserEmail(ingredientNo, userEmail);
@@ -98,7 +97,7 @@ public class UserIngredientController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<String> updateUserIngredient(@RequestBody @ApiParam(value="유저 식재료 수정 정보", required = true) UserIngredientUpdateReq userIngredientUpdateReq, @ApiIgnore Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
         String userEmail = userDetails.getUsername();
 
         UserIngredient userIngredient;
@@ -121,7 +120,7 @@ public class UserIngredientController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<String> deleteUserIngredient(@PathVariable("ingredientNo") Long ingredientNo, @ApiIgnore Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
         String userEmail = userDetails.getUsername();
 
         UserIngredient userIngredient;
