@@ -3,6 +3,7 @@ package com.cdp.hanzoom.api.service;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class EmailServiceImpl implements EmailService {
     UserRepository userRepository;
 
     @Autowired
+    @Lazy
     PasswordEncoder passwordEncoder;
 
     // 랜덤 비밀번호 생성

@@ -5,6 +5,7 @@ import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.repository.UserRepository;
 import com.cdp.hanzoom.db.repository.UserRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
     UserRepositorySupport userRepositorySupport;
 	
 	@Autowired
+	@Lazy
 	PasswordEncoder passwordEncoder;
 
 	@Autowired
