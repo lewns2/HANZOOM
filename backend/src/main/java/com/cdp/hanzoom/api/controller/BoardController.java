@@ -7,10 +7,7 @@ import com.cdp.hanzoom.api.response.BoardFindRes;
 import com.cdp.hanzoom.api.service.BoardService;
 import com.cdp.hanzoom.common.model.response.BaseResponseBody;
 import com.cdp.hanzoom.db.entity.Board;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,11 +69,18 @@ public class BoardController {
     })
     public ResponseEntity<Page<BoardFindAllRes>> findAllBoard(
             @PageableDefault(page = 0, size = 8, sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable
+            , @RequestParam(value = "ingredient", required = false) String ingredient
             , @ApiIgnore Authentication authentication
     ) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userEmail = userDetails.getUsername();
-        Page<Board> boards = boardService.findAllBoard(pageable);
+        Page<Board> boards;
+        if(ingredient == null || "".equals(ingredient)) {
+            boards = boardService.findAllBoard(pageable);
+        }
+        else {
+            boards = boardService.findBoardByIngredient(pageable, ingredient);
+        }
         Page<BoardFindAllRes> boardFindAllRes = boardService.findInfoFindAllBoard(boards, userEmail);
 
         return ResponseEntity.status(200).body(boardFindAllRes);
