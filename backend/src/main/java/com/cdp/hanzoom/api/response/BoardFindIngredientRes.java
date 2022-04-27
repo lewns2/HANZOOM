@@ -14,4 +14,6 @@ public class BoardFindIngredientRes {
     String ingredientName;
     @ApiModelProperty(name="expiration_date")
     String expirationDate;
+    @ApiModelProperty(name="purchase_date")
+    String purchaseDate;
 }
