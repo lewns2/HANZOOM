@@ -3,13 +3,65 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 99999;
+  z-index: 999;
+  @media only screen and (max-width: 1400px) and (min-width: 991px) {
+    .container {
+      margin-right: 10px;
+    }
+  }
+
+  .logo {
+    height: 50px;
+  }
   .navbar {
     overflow: hidden;
     background-color: #f7c343;
     // min-height: 70px;
-    padding-top: 23px;
-    padding-bottom: 23px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .positioning {
+      position: relative;
+      color: #888;
+      margin-left: 34%;
+
+      display: flex;
+      align-items: center;
+      width: 300px;
+      height: 50px;
+      background-color: #f7f6f2;
+      border-radius: 10px;
+      padding-right: 20px;
+      .addrName {
+        width: 100%;
+        text-align: center;
+        color: #222;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .locationIcon {
+        position: absolute;
+        top: 10.8px;
+        right: 5px;
+        cursor: pointer;
+      }
+      @media only screen and (max-width: 1400px) {
+        margin-left: 25%;
+      }
+      @media only screen and (max-width: 1200px) {
+        margin-left: 18%;
+      }
+      @media only screen and (max-width: 991px) {
+        margin-left: 14%;
+      }
+      @media only screen and (max-width: 767px) {
+        margin-left: 0;
+        width: 210px;
+        .addrName {
+          font-size: 13px;
+        }
+      }
+    }
 
     a {
       color: #222;
