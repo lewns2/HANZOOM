@@ -103,10 +103,14 @@ public class BoardServiceImpl implements BoardService{
             Double lngUser = user.getLng();
             Double latBoard = board.getUser().getLat();
             Double lngBoard = board.getUser().getLng();
-            Double X = (Math.cos(latUser)*6400*2*3.14/360) * Math.abs(lngUser-lngBoard);
-            Double Y = 111*Math.abs(latUser-latBoard);
-            Double distance = Math.sqrt(Math.pow(X,2)+Math.pow(Y,2));
-            boardFindAllRes.setDistance(distance);
+            if(latUser == null || lngUser == null || latBoard == null || lngBoard == null) {
+                boardFindAllRes.setDistance(null);
+            } else {
+                Double X = (Math.cos(latUser)*6400*2*3.14/360) * Math.abs(lngUser-lngBoard);
+                Double Y = 111*Math.abs(latUser-latBoard);
+                Double distance = Math.sqrt(Math.pow(X,2)+Math.pow(Y,2));
+                boardFindAllRes.setDistance(distance);
+            }
 
             LikeList likeList = likeListRepositorySupport.findLikeListByUserEmailAndBoardNo(userEmail, board.getBoardNo()).orElse(null);
             boolean isLike;
@@ -163,10 +167,14 @@ public class BoardServiceImpl implements BoardService{
         Double lngUser = user.getLng();
         Double latBoard = board.getUser().getLat();
         Double lngBoard = board.getUser().getLng();
-        Double X = (Math.cos(latUser)*6400*2*3.14/360) * Math.abs(lngUser-lngBoard);
-        Double Y = 111*Math.abs(latUser-latBoard);
-        Double distance = Math.sqrt(Math.pow(X,2)+Math.pow(Y,2));
-        res.setDistance(distance);
+        if(latUser == null || lngUser == null || latBoard == null || lngBoard == null) {
+            res.setDistance(null);
+        } else {
+            Double X = (Math.cos(latUser)*6400*2*3.14/360) * Math.abs(lngUser-lngBoard);
+            Double Y = 111*Math.abs(latUser-latBoard);
+            Double distance = Math.sqrt(Math.pow(X,2)+Math.pow(Y,2));
+            res.setDistance(distance);
+        }
 
         LikeList likeList = likeListRepositorySupport.findLikeListByUserEmailAndBoardNo(userEmail, boardNo).orElse(null);
         boolean isLike;
