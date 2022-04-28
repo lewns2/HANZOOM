@@ -58,10 +58,9 @@ public class BoardServiceImpl implements BoardService{
         Board board  = boardRepository.save(boardRegisterReq.toEntity());
 
         // 식재료 테이블 게시판 번호 저장 + type 변경
-        for (int i=0; i<boardRegisterReq.getIngredientList().size(); i++) {
-            User user = userRepositorySupport.findUserByUserEmail(boardRegisterReq.getUserEmail()).orElse(null);
-            Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(boardRegisterReq.getIngredientList().get(i)).orElse(null);
-            UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNoAndUserEmail(ingredient.getIngredientNo(), user.getUserEmail()).orElse(null);
+        for (int i=0; i<boardRegisterReq.getUserIngredientNo().size(); i++) {
+            Long userIngredientNo = boardRegisterReq.getUserIngredientNo().get(i);
+            UserIngredient userIngredient = userIngredientRepositorySupport.findByUserIngredientNo(userIngredientNo).orElse(null);
             userIngredient.setBoardNo(board.getBoardNo());
             userIngredient.setType(boardRegisterReq.getType());
             userIngredientRepository.save(userIngredient);
@@ -241,10 +240,9 @@ public class BoardServiceImpl implements BoardService{
         }
 
         // 식재료 테이블 게시판 번호 저장 + type 변경
-        for (int i=0; i<boardUpdateReq.getIngredientList().size(); i++) {
-            User user = userRepositorySupport.findUserByUserEmail(boardUpdateReq.getUserEmail()).orElse(null);
-            Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(boardUpdateReq.getIngredientList().get(i)).orElse(null);
-            UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNoAndUserEmail(ingredient.getIngredientNo(), user.getUserEmail()).orElse(null);;
+        for (int i=0; i<boardUpdateReq.getUserIngredientNo().size(); i++) {
+            Long userIngredientNo = boardUpdateReq.getUserIngredientNo().get(i);
+            UserIngredient userIngredient = userIngredientRepositorySupport.findByUserIngredientNo(userIngredientNo).orElse(null);
             userIngredient.setBoardNo(boardUpdateReq.getBoardNo());
             userIngredient.setType(boardUpdateReq.getType());
             userIngredientRepository.save(userIngredient);
