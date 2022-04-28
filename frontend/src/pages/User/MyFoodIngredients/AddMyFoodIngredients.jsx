@@ -1,15 +1,26 @@
-import { useState } from 'react';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded';
+import { useEffect, useState } from 'react';
 import { Calendar } from '../../../components/Board/Calendar';
 
-export const AddMyFoodIngredients = () => {
-  const [applyIngre, setApplyIngre] = useState({
-    ingredient: null,
-    sellByDate: { year: null, month: null, day: null },
-    expirationDate: { year: null, month: null, day: null },
+export const AddMyFoodIngredients = (props) => {
+  const [purchaseDate, setPurchaseDate] = useState({
+    year: null,
+    month: null,
+    day: null,
   });
-
+  const [expirationDate, setExpirationDate] = useState({
+    year: null,
+    month: null,
+    day: null,
+  });
+  useEffect(() => {
+    props.setFoods({
+      ...props.foods,
+      purchaseDate: purchaseDate,
+      expirationDate: expirationDate,
+    });
+  }, [purchaseDate, expirationDate]);
   return (
     <div className="applyForm">
       <div className="inputForm">
@@ -20,8 +31,8 @@ export const AddMyFoodIngredients = () => {
             type="text"
             placeholder="식재료 명"
             onChange={(event) => {
-              setApplyIngre({
-                ...state,
+              props.setFoods({
+                ...props.foods,
                 ingredient: event.target.value,
               });
             }}
@@ -32,37 +43,16 @@ export const AddMyFoodIngredients = () => {
         <div>
           구매일자
           <CalendarMonthIcon />
+          <Calendar setSelectedDate={setPurchaseDate} />
         </div>
-
-        <input
-          className="form-control"
-          type="text"
-          placeholder="구매일자"
-          onChange={(event) => {
-            setApplyIngre({
-              ...state,
-              sellByDate: event.target.value,
-            });
-          }}
-        />
       </div>
       <div className="inputForm">
         <div>
           유통기한
           <CalendarMonthIcon />
+          <Calendar setSelectedDate={setExpirationDate} />
           <HelpOutlineRoundedIcon />
         </div>
-        <input
-          className="form-control"
-          type="text"
-          placeholder="유통기한"
-          onChange={(event) => {
-            setApplyIngre({
-              ...state,
-              expirationDate: event.target.value,
-            });
-          }}
-        />
       </div>
     </div>
   );
