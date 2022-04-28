@@ -109,10 +109,13 @@ $desktop: 1400px;
     }
   }
 
-  .card-img-top {
-    .card__image {
+  .cardImgWrap {
+    width: 300px;
+    height: 300px;
+    .cardImg {
       max-width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
@@ -129,9 +132,26 @@ $desktop: 1400px;
     text-align: center;
   }
 
-  .card-title {
+  .cardTitle {
     font-size: 1.25rem;
     font-weight: bolder;
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .contentDescription {
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .boardIngredientResList {
+    display: flex;
   }
 
   .likeBtn {
@@ -143,9 +163,14 @@ $desktop: 1400px;
       width: 100%;
       display: flex;
     }
-    .card-img-top {
+    .cardImgWrap {
       max-width: 50%;
       height: auto;
+      .cardImg {
+        max-width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
     }
     .status {
       width: 60px;
@@ -161,15 +186,21 @@ $desktop: 1400px;
       font-size: 16px;
       font-weight: bolder;
     }
-    .card-img-top {
+    .cardImgWrap {
       max-width: 30%;
       height: auto;
+      .cardImg {
+        max-width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
     }
     .status {
       width: 60px;
       font-size: 13px;
     }
     .contentDescription {
+      text-overflow: ellipsis;
       display: none;
     }
   }
@@ -231,4 +262,10 @@ $desktop: 1400px;
   color: white;
   background-color: #f2d17a;
   border-color: #ddd;
+}
+
+/* 검색 결과 */
+.searchNotFound {
+  margin: 30px;
+  text-align: center;
 }
