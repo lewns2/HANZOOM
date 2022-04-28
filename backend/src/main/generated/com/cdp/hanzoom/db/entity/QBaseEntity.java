@@ -1,4 +1,4 @@
-package com.ssafy.db.entity;
+package com.cdp.hanzoom.db.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -15,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.SupertypeSerializer")
 public class QBaseEntity extends EntityPathBase<BaseEntity> {
 
-    private static final long serialVersionUID = 1717725014L;
+    private static final long serialVersionUID = 1474388513L;
 
     public static final QBaseEntity baseEntity = new QBaseEntity("baseEntity");
 
