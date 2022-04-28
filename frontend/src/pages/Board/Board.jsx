@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SearchBar } from '../../components/Board/SearchBar';
 import { Contents } from '../../components/Board/Contents';
 import { Pagination } from '../../components/Board/Pagination';
@@ -19,7 +19,7 @@ export const Board = () => {
   };
 
   /* 버튼 클릭 상태 여부를 확인 */
-  const [selectedFilter, setSelectedFilter] = useState('BoardNo');
+  const [selectedFilter, setSelectedFilter] = useState('boardNo');
   const [isClickDist, setIsClickDist] = useState(false);
   const [isClickRecent, setIsClickRecent] = useState(false);
   const [isClickView, setIsClickView] = useState(false);
@@ -29,6 +29,7 @@ export const Board = () => {
       case 'dist':
         if (isClickDist) setIsClickDist(false);
         else {
+          setSelectedFilter('distance');
           setIsClickDist(true);
           setIsClickRecent(false);
           setIsClickView(false);
@@ -38,6 +39,7 @@ export const Board = () => {
       case 'recent':
         if (isClickRecent) setIsClickRecent(false);
         else {
+          setSelectedFilter('boardNo');
           setIsClickDist(false);
           setIsClickRecent(true);
           setIsClickView(false);
@@ -47,6 +49,7 @@ export const Board = () => {
       case 'view':
         if (isClickView) setIsClickView(false);
         else {
+          setSelectedFilter('viewCnt');
           setIsClickDist(false);
           setIsClickRecent(false);
           setIsClickView(true);
@@ -65,6 +68,13 @@ export const Board = () => {
   const [totalPage, setTotalPage] = useState();
   const [totalElements, setTotalElements] = useState();
 
+  /* 검색 내용 */
+  const [searchKeyword, setSearchKeyword] = useState('');
+  /* 검색 테스트용 */
+  useEffect(() => {
+    console.log(searchKeyword);
+  }, [searchKeyword]);
+
   return (
     <section className="container mt-1 px-2 py-3">
       <div className="header">
@@ -72,7 +82,7 @@ export const Board = () => {
         <button onClick={openModal}>글쓰기</button>
       </div>
 
-      <SearchBar />
+      <SearchBar setSearchKeyword={setSearchKeyword} />
 
       <ContentCreate open={modalOpen} close={closeModal}></ContentCreate>
 
@@ -106,6 +116,7 @@ export const Board = () => {
         page={page}
         size={limit}
         selectedFilter={selectedFilter}
+        searchKeyword={searchKeyword}
         setTotalPage={setTotalPage}
         setTotalElements={setTotalElements}
       />

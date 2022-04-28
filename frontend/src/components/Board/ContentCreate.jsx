@@ -3,8 +3,8 @@ import { width } from '@mui/system';
 import { useState, useRef, useEffect } from 'react';
 import Initimage from '../../assets/images/Initimage.PNG';
 import { Calendar } from './Calendar';
-// import { Axios } from '../../core/axios';
-import axios from 'axios';
+import { Axios } from '../../core/axios';
+// import axios from 'axios';
 
 export const ContentCreate = (props) => {
   /* 모달 여닫기 */
@@ -48,7 +48,7 @@ export const ContentCreate = (props) => {
   /* post 요청 보낼 데이터들 */
   const [state, setState] = useState({
     title: null,
-    ingredientList: ['고구마'],
+    ingredientList: ['반건조오징어'],
     type: null,
     description: null,
     // sellByDate: { year: null, month: null, day: null },
@@ -73,9 +73,8 @@ export const ContentCreate = (props) => {
     );
     formData.append('file', postImg);
 
-    axios
-      .post('https://localhost:8443/api/board/register', formData, header)
-      .then((res) => console.log(res))
+    Axios.post('/board/register', formData, header)
+      .then((res) => console.log(res), console.log(formData))
       .catch((err) => console.log(err));
     /* 공란 에러 발생 */
     // let errorKeyword = null;
