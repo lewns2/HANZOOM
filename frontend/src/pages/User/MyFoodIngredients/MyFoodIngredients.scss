@@ -3,6 +3,9 @@
   #myIngre {
     h3 {
       text-align: center;
+      @media only screen and (max-width: 480px) {
+        font-size: 15px;
+      }
     }
     .addFood {
       float: right;
@@ -21,18 +24,24 @@
   #barterShare {
     h3 {
       text-align: center;
+      @media only screen and (max-width: 480px) {
+        font-size: 15px;
+      }
     }
     .ingreBody {
       // background-color: #fffcf2;
       background-color: pink;
       border-radius: 15px;
       padding: 10%;
-      margin: 7% 5% 5% 5%;
+      margin: 5%;
     }
   }
   #needs {
     h3 {
       text-align: center;
+      @media only screen and (max-width: 480px) {
+        font-size: 15px;
+      }
     }
     .addNeeds {
       float: right;
@@ -47,5 +56,17 @@
       padding: 10%;
       margin: 5%;
     }
+  }
+  .ingreBtn {
+    margin: 0 auto;
+    display: block;
+    padding: 6px 12px;
+    background-color: #f7c343;
+    border: 2px solid #f7c343;
+    border-radius: 5px;
+    box-shadow: 0 4px 4px -4px #777;
+  }
+  .headWrap {
+    height: 30px;
   }
 }
