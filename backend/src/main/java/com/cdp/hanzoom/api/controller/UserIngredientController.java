@@ -7,6 +7,7 @@ import com.cdp.hanzoom.api.service.UserIngredientService;
 import com.cdp.hanzoom.common.auth.HanZoomUserDetails;
 import com.cdp.hanzoom.common.model.response.BaseResponseBody;
 import com.cdp.hanzoom.db.entity.UserIngredient;
+import com.cdp.hanzoom.db.repository.UserIngredientRepositorySupport;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,9 @@ public class UserIngredientController {
 
     @Autowired
     UserIngredientService userIngredientService;
+
+    @Autowired
+    UserIngredientRepositorySupport userIngredientRepositorySupport;
 
     /** 유저 식재료 등록 **/
     @PostMapping("/register")
@@ -73,37 +77,32 @@ public class UserIngredientController {
     }
 
     /** ingredientNo과 userEmail에 따른 유저 식재료 조회 **/
-    @GetMapping("/find/{ingredientNo}")
-    @ApiOperation(value ="유저 식재료 상세정보 조회(token)", notes = "<strong>식재료 번호(ingredientNo)과 유저 이메일</strong>을 이용하여 유저 식재료 상세 정보를 조회한다.")
+    @GetMapping("/find/{userIngredientNo}")
+    @ApiOperation(value ="유저 식재료 상세정보 조회", notes = "<strong>유저 식재료 번호(userIngredientNo)과 유저 이메일</strong>을 이용하여 유저 식재료 상세 정보를 조회한다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<UserIngredientFindRes> findByIngredientNameAndUserEmail(@PathVariable("ingredientNo") Long ingredientNo, @ApiIgnore Authentication authentication) {
-        HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
-        String userEmail = userDetails.getUsername();
-
-        UserIngredientFindRes userIngredientFindRes = userIngredientService.findByIngredientNoAndUserEmail(ingredientNo, userEmail);
+    public ResponseEntity<UserIngredientFindRes> findByIngredientNameAndUserEmail(@PathVariable("userIngredientNo") Long userIngredientNo) {
+        UserIngredientFindRes userIngredientFindRes = userIngredientService.findByUserIngredientNo(userIngredientNo);
         return new ResponseEntity<UserIngredientFindRes>(userIngredientFindRes, HttpStatus.OK);
     }
 
     /** 유저 식재료 수정 **/
     @PutMapping("/update")
-    @ApiOperation(value = "유저 식재료 정보 수정(token)", notes = "<strong>유저 식재료 정보</strong>를 수정한다.")
+    @ApiOperation(value = "유저 식재료 정보 수정", notes = "<strong>유저 식재료 정보</strong>를 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<String> updateUserIngredient(@RequestBody @ApiParam(value="유저 식재료 수정 정보", required = true) UserIngredientUpdateReq userIngredientUpdateReq, @ApiIgnore Authentication authentication) {
-        HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
-        String userEmail = userDetails.getUsername();
+    public ResponseEntity<String> updateUserIngredient(@RequestBody @ApiParam(value="유저 식재료 수정 정보", required = true) UserIngredientUpdateReq userIngredientUpdateReq) {
 
         UserIngredient userIngredient;
         try {
-            userIngredient = userIngredientService.findUserIngredientByIngredientNoAndUserEmail(userIngredientUpdateReq.getIngredientNo(), userEmail);
-            userIngredientService.updateUserIngredient(userIngredientUpdateReq, userIngredient);
+//            userIngredient = userIngredientService.findByUserIngredientNo(userIngredientUpdateReq.getUserIngredientNo());
+            userIngredientService.updateUserIngredient(userIngredientUpdateReq);
         } catch(NoSuchElementException E) {
             return  ResponseEntity.status(500).body("해당 유저 식재료 정보가 없어서 유저 식재료 정보 수정 실패");
         }
@@ -111,21 +110,19 @@ public class UserIngredientController {
     }
 
     /** 유저 식재료 삭제 **/
-    @DeleteMapping("/remove/{ingredientNo}")
-    @ApiOperation(value = "유저 식재료 정보 삭제(token)", notes = "<strong>식재료 번호</strong>를 통해 유저 식재료 정보를 삭제한다.")
+    @DeleteMapping("/remove/{userIngredientNo}")
+    @ApiOperation(value = "유저 식재료 정보 삭제", notes = "<strong>유저 식재료 번호</strong>를 통해 유저 식재료 정보를 삭제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<String> deleteUserIngredient(@PathVariable("ingredientNo") Long ingredientNo, @ApiIgnore Authentication authentication) {
-        HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
-        String userEmail = userDetails.getUsername();
+    public ResponseEntity<String> deleteUserIngredient(@PathVariable("userIngredientNo") Long userIngredientNo) {
 
         UserIngredient userIngredient;
         try {
-            userIngredient = userIngredientService.findUserIngredientByIngredientNoAndUserEmail(ingredientNo, userEmail);
+            userIngredient = userIngredientRepositorySupport.findByUserIngredientNo(userIngredientNo).orElse(null);
             userIngredientService.deleteUserIngredient(userIngredient);
         } catch (Exception e) {
             e.printStackTrace();

@@ -15,6 +15,9 @@ import java.time.LocalDate;
 @Setter
 @ApiModel("UserIngredientResponse")
 public class UserIngredientRes {
+    @ApiModelProperty(name="유저 식재료 번호")
+    Long userIngredientNo;
+
     @ApiModelProperty(name="식재료 번호")
     Long ingredientNo;
 
@@ -40,12 +43,10 @@ public class UserIngredientRes {
         Ingredient ingredient = new Ingredient();
         ingredient.setIngredientNo(ingredientNo);
 
-        UserIngredientId userIngredientId = new UserIngredientId();
-        userIngredientId.setIngredientNo(ingredient);
-        userIngredientId.setUserEmail(user);
-
         return UserIngredient.builder()
-                .userIngredientId(userIngredientId)
+                .userIngredientNo(userIngredientNo)
+                .ingredient(ingredient)
+                .user(user)
                 .type(type)
                 .expirationDate(expirationDate)
                 .purchaseDate(purchaseDate)
