@@ -21,9 +21,9 @@ public class IngredientRepositorySupport {
         return Optional.ofNullable(ingredient);
     }
 
-    public Optional<Ingredient> findByIngredientNo(Long ingredientNo) {
+    public Optional<Ingredient> findByIngredientNo(Long IngredientNo) {
         Ingredient ingredient = jpaQueryFactory.select(qIngredient).from(qIngredient)
-                .where(qIngredient.ingredientNo.eq(ingredientNo)).fetchOne();
+                .where(qIngredient.ingredientNo.eq(IngredientNo)).fetchOne();
         if(ingredient == null) return Optional.empty();
         return Optional.ofNullable(ingredient);
     }

@@ -29,9 +29,6 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     @Autowired
     UserIngredientRepositorySupport userIngredientRepositorySupport;
 
-//    @Autowired
-//    IngredientRepository ingredientRepository;
-
     @Autowired
     IngredientRepositorySupport ingredientRepositorySupport;
 
@@ -66,14 +63,15 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     @Override
     public List<UserIngredientFindRes> findAllUserIngredient(String userEmail) {
         User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
-        List<UserIngredient> userIngredientList = userIngredientRepositorySupport.findAllByUserEmail(user);
+        List<UserIngredient> userIngredientList = userIngredientRepositorySupport.findAllByUserEmail(user.getUserEmail());
 
         List<UserIngredientFindRes> userIngredientFindResList = new ArrayList<UserIngredientFindRes>();
         for(int i=0; i<userIngredientList.size(); i++) {
             UserIngredientFindRes userIngredientFindRes = new UserIngredientFindRes();
-            userIngredientFindRes.setIngredientNo(userIngredientList.get(i).getUserIngredientId().getIngredientNo().getIngredientNo());
-            userIngredientFindRes.setIngredientName(userIngredientList.get(i).getUserIngredientId().getIngredientNo().getIngredientName());
-            userIngredientFindRes.setUserEmail(userIngredientList.get(i).getUserIngredientId().getUserEmail().getUserEmail());
+            userIngredientFindRes.setUserIngredientNo(userIngredientList.get(i).getUserIngredientNo());
+            userIngredientFindRes.setIngredientNo(userIngredientList.get(i).getIngredient().getIngredientNo());
+            userIngredientFindRes.setIngredientName(userIngredientList.get(i).getIngredient().getIngredientName());
+            userIngredientFindRes.setUserEmail(userIngredientList.get(i).getUser().getUserEmail());
             userIngredientFindRes.setType(userIngredientList.get(i).getType());
             userIngredientFindRes.setPurchaseDate(userIngredientList.get(i).getPurchaseDate());
             userIngredientFindRes.setExpirationDate(userIngredientList.get(i).getExpirationDate());
@@ -83,18 +81,18 @@ public class UserIngredientServiceImpl implements UserIngredientService {
         return userIngredientFindResList;
     }
 
-    /** ingredientName과 userEmail을 이용하여 유저 식재료 디테일 조회하는 findUserIngredientByIngredientName 입니다. **/
+    /** ingredientNo을 이용하여 유저 식재료 디테일 조회하는 findUserIngredientByIngredientName 입니다. **/
     @Override
-    public UserIngredientFindRes findByIngredientNoAndUserEmail(Long ingredientNo, String userEmail) {
-        User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
-        Ingredient ingredient = ingredientRepositorySupport.findByIngredientNo(ingredientNo).orElse(null);
+    public UserIngredientFindRes findByUserIngredientNo(Long userIngredientNo) {
         // 해당 식재료 찾기
-        UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNameAndUserEmail(ingredient, user).orElse(null);
+        UserIngredient userIngredient = userIngredientRepositorySupport.findByUserIngredientNo(userIngredientNo).orElse(null);
+        Ingredient ingredient = ingredientRepositorySupport.findByIngredientNo(userIngredient.getIngredient().getIngredientNo()).orElse(null);
 
         UserIngredientFindRes userIngredientFindRes = new UserIngredientFindRes();
-        userIngredientFindRes.setIngredientNo(userIngredient.getUserIngredientId().getIngredientNo().getIngredientNo());
+        userIngredientFindRes.setUserIngredientNo(userIngredient.getUserIngredientNo());
+        userIngredientFindRes.setIngredientNo(userIngredient.getIngredient().getIngredientNo());
         userIngredientFindRes.setIngredientName(ingredient.getIngredientName());
-        userIngredientFindRes.setUserEmail(userIngredient.getUserIngredientId().getUserEmail().getUserEmail());
+        userIngredientFindRes.setUserEmail(userIngredient.getUser().getUserEmail());
         userIngredientFindRes.setType(userIngredient.getType());
         userIngredientFindRes.setPurchaseDate(userIngredient.getPurchaseDate());
         userIngredientFindRes.setExpirationDate(userIngredient.getExpirationDate());
@@ -105,23 +103,27 @@ public class UserIngredientServiceImpl implements UserIngredientService {
 
     /** ingredientName과 userEmail을 이용하여 유저 식재료 정보를 조회하는 findUserIngredientByIngredientName 입니다. **/
     @Override
-    public UserIngredient findUserIngredientByIngredientNoAndUserEmail(Long ingredientNo, String userEmail) {
+    public UserIngredient findUserIngredientByUserIngredientNoAndUserEmail(Long ingredientNo, String userEmail) {
         User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
         Ingredient ingredient = ingredientRepositorySupport.findByIngredientNo(ingredientNo).orElse(null);
 
-        return userIngredientRepositorySupport.findByIngredientNameAndUserEmail(ingredient, user).orElse(null);
+        return userIngredientRepositorySupport.findByIngredientNoAndUserEmail(ingredient.getIngredientNo(), user.getUserEmail()).orElse(null);
     }
 
     /** 유저 식재료 정보를 수정하는 updateUserIngredient 입니다. **/
     @Transactional
     @Override
-    public void updateUserIngredient(UserIngredientUpdateReq userIngredientUpdateReq, UserIngredient userIngredient) {
-        Long ingredientNo = userIngredient.getUserIngredientId().getIngredientNo().getIngredientNo();
-        String userEmail = userIngredient.getUserIngredientId().getUserEmail().getUserEmail();
+    public void updateUserIngredient(UserIngredientUpdateReq userIngredientUpdateReq) {
+//        Long ingredientNo = userIngredient.getIngredient().getIngredientNo();
+        Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(userIngredientUpdateReq.getIngredientName()).orElse(null);
+
+        Long userIngredientNo = userIngredientUpdateReq.getUserIngredientNo();
+        Long ingredientNo = ingredient.getIngredientNo();
         String type = userIngredientUpdateReq.getType();
         LocalDate purchaseDate = LocalDate.parse(userIngredientUpdateReq.getPurchaseDate().substring(0,10), DateTimeFormatter.ISO_DATE);
         LocalDate expirationDate = LocalDate.parse(userIngredientUpdateReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
-        userIngredientRepository.updateUserIngredient(ingredientNo, userEmail, type, purchaseDate, expirationDate);
+
+        userIngredientRepository.updateUserIngredient(userIngredientNo, ingredientNo, type, purchaseDate, expirationDate);
     }
 
     /** 유저 식재료 정보를 삭제하는 deleteUserIngredient 입니다. **/
