@@ -48,6 +48,7 @@ public class UserIngredientRes {
                 .userIngredientId(userIngredientId)
                 .type(type)
                 .expirationDate(expirationDate)
+                .purchaseDate(purchaseDate)
                 .boardNo(boardNo)
                 .build();
     }
