@@ -61,7 +61,7 @@ public class BoardServiceImpl implements BoardService{
         for (int i=0; i<boardRegisterReq.getIngredientList().size(); i++) {
             User user = userRepositorySupport.findUserByUserEmail(boardRegisterReq.getUserEmail()).orElse(null);
             Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(boardRegisterReq.getIngredientList().get(i)).orElse(null);
-            UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNameAndUserEmail(ingredient,user).orElse(null);;
+            UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNoAndUserEmail(ingredient.getIngredientNo(), user.getUserEmail()).orElse(null);
             userIngredient.setBoardNo(board.getBoardNo());
             userIngredient.setType(boardRegisterReq.getType());
             userIngredientRepository.save(userIngredient);
@@ -121,7 +121,7 @@ public class BoardServiceImpl implements BoardService{
             List<UserIngredient> userIngredients = userIngredientRepositorySupport.findByBoardNo(board.getBoardNo());
             List<BoardFindIngredientRes> boardFindIngredientResList = new ArrayList<>();
             for(int i=0; i<userIngredients.size(); i++) {
-                String ingredientName = userIngredients.get(i).getUserIngredientId().getIngredientNo().getIngredientName();
+                String ingredientName = userIngredients.get(i).getIngredient().getIngredientName();
                 String expirationDate = String.valueOf(userIngredients.get(i).getExpirationDate());
                 String purchaseDate = String.valueOf(userIngredients.get(i).getPurchaseDate());
                 boardFindIngredientResList.add(new BoardFindIngredientRes(ingredientName,expirationDate,purchaseDate));
@@ -185,7 +185,7 @@ public class BoardServiceImpl implements BoardService{
         List<UserIngredient> userIngredients = userIngredientRepositorySupport.findByBoardNo(board.getBoardNo());
         List<BoardFindIngredientRes> boardFindIngredientResList = new ArrayList<>();
         for(int i=0; i<userIngredients.size(); i++) {
-            String ingredientName = userIngredients.get(i).getUserIngredientId().getIngredientNo().getIngredientName();
+            String ingredientName = userIngredients.get(i).getIngredient().getIngredientName();
             String expirationDate = String.valueOf(userIngredients.get(i).getExpirationDate());
             String purchaseDate = String.valueOf(userIngredients.get(i).getPurchaseDate());
             boardFindIngredientResList.add(new BoardFindIngredientRes(ingredientName,expirationDate,purchaseDate));
@@ -244,7 +244,7 @@ public class BoardServiceImpl implements BoardService{
         for (int i=0; i<boardUpdateReq.getIngredientList().size(); i++) {
             User user = userRepositorySupport.findUserByUserEmail(boardUpdateReq.getUserEmail()).orElse(null);
             Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(boardUpdateReq.getIngredientList().get(i)).orElse(null);
-            UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNameAndUserEmail(ingredient,user).orElse(null);;
+            UserIngredient userIngredient = userIngredientRepositorySupport.findByIngredientNoAndUserEmail(ingredient.getIngredientNo(), user.getUserEmail()).orElse(null);;
             userIngredient.setBoardNo(boardUpdateReq.getBoardNo());
             userIngredient.setType(boardUpdateReq.getType());
             userIngredientRepository.save(userIngredient);

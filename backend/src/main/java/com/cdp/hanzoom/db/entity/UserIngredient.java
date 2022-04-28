@@ -3,11 +3,11 @@ package com.cdp.hanzoom.db.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
@@ -21,8 +21,22 @@ import java.time.LocalDate;
 @ToString
 @Builder
 public class UserIngredient {
-    @EmbeddedId
-    UserIngredientId userIngredientId;
+//    @EmbeddedId
+//    UserIngredientId userIngredientId;
+    @Id
+    @Column(name = "user_ingredient_no")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    Long userIngredientNo;
+
+    @ManyToOne
+    @JoinColumn(name="user_email")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
+
+    @OneToOne
+    @JoinColumn(name = "ingredient_no")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Ingredient ingredient;
 
     @Column(name = "type", length = 20)
     String type;
@@ -39,5 +53,4 @@ public class UserIngredient {
 
     @Column(name = "board_no")
     Long boardNo;
-
 }

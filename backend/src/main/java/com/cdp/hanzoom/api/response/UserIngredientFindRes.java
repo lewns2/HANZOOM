@@ -11,6 +11,9 @@ import java.time.LocalDate;
 @Setter
 @ApiModel("UserIngredientFindAllResponse")
 public class UserIngredientFindRes {
+    @ApiModelProperty(name="유저 식재료 번호")
+    Long userIngredientNo;
+
     @ApiModelProperty(name="식재료 번호")
     Long ingredientNo;
 

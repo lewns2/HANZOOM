@@ -16,12 +16,12 @@ public interface UserIngredientService {
     void registerUserIngredient(UserIngredientRegisterReq userIngredientRegisterReq, String userEmail);
     /** 유저 식재료 정보를 전체 조회하는 findAllUserIngredient 입니다. **/
     List<UserIngredientFindRes> findAllUserIngredient(String userEmail);
-    /** ingredientNo과 userEmail을 이용하여 유저 식재료 정보(식재료 명 포함)를 조회하는 findUserIngredientByIngredientName 입니다. **/
-    UserIngredientFindRes findByIngredientNoAndUserEmail(Long ingredientNo, String userEmail);
-    /** ingredientName과 userEmail을 이용하여 유저 식재료 정보를 조회하는 findUserIngredientByIngredientName 입니다. **/
-    UserIngredient findUserIngredientByIngredientNoAndUserEmail(Long ingredientNo, String userEmail);
+    /** userIngredientNo을 이용하여 유저 식재료 정보(식재료 명 포함)를 조회하는 findUserIngredientByIngredientName 입니다. **/
+    UserIngredientFindRes findByUserIngredientNo(Long userIngredientNo);
+    /** IngredientNo과 userEmail을 이용하여 유저 식재료 정보를 조회하는 findUserIngredientByIngredientName 입니다. **/
+    UserIngredient findUserIngredientByUserIngredientNoAndUserEmail(Long IngredientNo, String userEmail);
     /** 유저 식재료 정보를 수정하는 updateUserIngredient 입니다. **/
-    void updateUserIngredient(UserIngredientUpdateReq userIngredientUpdateReq,UserIngredient userIngredient);
+    void updateUserIngredient(UserIngredientUpdateReq userIngredientUpdateReq);
     /** 유저 식재료 정보를 삭제하는 deleteUserIngredient 입니다. **/
     void deleteUserIngredient(UserIngredient userIngredient);
 }

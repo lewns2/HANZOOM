@@ -68,7 +68,7 @@ public class BoardRepositorySupport {
                         JPAExpressions
                                 .select(qUserIngredient.boardNo)
                                 .from(qUserIngredient)
-                                .where(qUserIngredient.userIngredientId.ingredientNo.ingredientName.contains(ingredient))
+                                .where(qUserIngredient.ingredient.ingredientName.contains(ingredient))
                 ))
                 .orderBy(orderCondition(pageable))
                 .limit(pageable.getPageSize())

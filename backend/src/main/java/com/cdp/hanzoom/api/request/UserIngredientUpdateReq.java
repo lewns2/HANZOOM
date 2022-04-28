@@ -10,8 +10,11 @@ import lombok.Getter;
 @Getter
 @ApiModel("UserIngredientUpdateRequest")
 public class UserIngredientUpdateReq {
-    @ApiModelProperty(name="식재료 No", example="1")
-    Long ingredientNo;
+    @ApiModelProperty(name="유저 식재료 No", example="1")
+    Long userIngredientNo;
+
+    @ApiModelProperty(name="식재료 Name", example="건빵")
+    String ingredientName;
 
     @ApiModelProperty(name="종류", example="일반")
     String type;
