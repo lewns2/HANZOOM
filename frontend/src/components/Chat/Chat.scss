@@ -1,0 +1,133 @@
+$speed: 0.8s;
+
+// 채팅창 보이게 하기
+.showChatWrap {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: all $speed;
+
+  .showChatList {
+    position: fixed;
+    left: 0px;
+    background-color: #fffcf2;
+    height: calc(100vh - 70px);
+    width: 350px;
+    transition: all $speed;
+    z-index: 99;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #aaa;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #eee;
+    }
+  }
+}
+
+// 채팅창 안 보이게 하기
+.hideChatWrap {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  transition: all $speed;
+
+  .hideChatList {
+    position: fixed;
+    left: -500px;
+    background-color: #fffcf2;
+    height: calc(100vh - 70px);
+    width: 23%;
+    transition: all $speed;
+    z-index: 99;
+  }
+}
+
+// 우측 하단 채팅 아이콘
+.chatIcon {
+  position: fixed;
+  bottom: 15px;
+  right: 35px;
+  cursor: pointer;
+  z-index: 99999;
+}
+
+// 채팅창 목록
+.myChat {
+  .title {
+    position: relative;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 20px 0 0 20px;
+    height: 50px;
+
+    .closeIcon {
+      position: absolute;
+      top: 1px;
+      right: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .myChatList {
+    width: 100%;
+
+    .listWrap {
+      width: 100%;
+      padding: 10px 0 10px 10px;
+      border-bottom: 1px solid #ccc;
+      &:first-child {
+        border-top: 1px solid #ccc;
+      }
+      cursor: pointer;
+      //   margin-bottom: 15px;
+      &:hover {
+        background-color: #f2d17a;
+      }
+      // 유저 프로필 이미지
+      .profileImage {
+        margin-right: 10px;
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 70%;
+        }
+      }
+      // 채팅 정보
+      .chatInfo {
+        width: 260px;
+        // 유저 닉네임
+        .nickName {
+          font-size: 18px;
+          font-weight: 600;
+          margin-right: 7px;
+          margin-bottom: 2px;
+        }
+        // 채팅 시간
+        .chatTime {
+          color: #999;
+          font-size: 12px;
+          // line-height: -1px;
+          padding-top: 6px;
+        }
+        // 채팅 내용
+        .chatContent {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
