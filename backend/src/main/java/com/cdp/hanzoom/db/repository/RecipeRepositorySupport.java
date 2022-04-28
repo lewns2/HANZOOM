@@ -26,11 +26,13 @@ public class RecipeRepositorySupport {
         if(recipes == null) return null;
         return recipes;
     }
-
+    // 동적 sql
     private BooleanBuilder builderIngredients(List<String> ingredients) {
         BooleanBuilder builder = new BooleanBuilder();
         for(int i=0; i<ingredients.size(); i++) {
             builder.and(qRecipe.ingredients.contains(ingredients.get(i)));
+            // 아래 방법도 사용가능
+//          builder.and(qRecipe.ingredients.like("%"+ingredients.get(i)+"%"));
         }
         return builder;
     }
