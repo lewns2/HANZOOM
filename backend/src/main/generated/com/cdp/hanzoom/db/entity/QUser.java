@@ -1,4 +1,4 @@
-package com.ssafy.db.entity;
+package com.cdp.hanzoom.db.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -15,24 +15,23 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QUser extends EntityPathBase<User> {
 
-    private static final long serialVersionUID = 846542477L;
+    private static final long serialVersionUID = -2108758632L;
 
     public static final QUser user = new QUser("user");
 
-    public final QBaseEntity _super = new QBaseEntity(this);
+    public final DateTimePath<java.time.LocalDateTime> joinDate = createDateTime("joinDate", java.time.LocalDateTime.class);
 
-    public final StringPath department = createString("department");
+    public final NumberPath<Double> lat = createNumber("lat", Double.class);
 
-    //inherited
-    public final NumberPath<Long> id = _super.id;
+    public final NumberPath<Double> lng = createNumber("lng", Double.class);
 
-    public final StringPath name = createString("name");
+    public final StringPath userEmail = createString("userEmail");
 
-    public final StringPath password = createString("password");
+    public final StringPath userImage = createString("userImage");
 
-    public final StringPath position = createString("position");
+    public final StringPath userNickname = createString("userNickname");
 
-    public final StringPath userId = createString("userId");
+    public final StringPath userPassword = createString("userPassword");
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));
