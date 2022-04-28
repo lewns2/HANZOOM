@@ -16,6 +16,9 @@ public class UserIngredientRegisterReq {
     @ApiModelProperty(name="식재료 Name", example="고구마")
     String ingredientName;
 
+    @ApiModelProperty(name="종류(상태)", example="일반")
+    String type;
+
     @ApiModelProperty(name="식재료 구매일", example="2022-01-01")
     String purchaseDate;
 
