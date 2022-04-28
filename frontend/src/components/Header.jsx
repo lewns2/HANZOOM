@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
@@ -5,9 +6,15 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { clearUser } from '../Reducer/userSlice';
 import './Header.scss';
 
+import { PositioningMapModal } from './Map/PositioningMapModal';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+
 export const Header = () => {
+  const [modalShow, setModalShow] = React.useState(false);
+  const [userLocName, setUserLocName] = useState(null);
+
   const user = useSelector((state) => state.user);
-  console.log(user.userInfo);
+
   const dispatch = useDispatch();
 
   const logout = () => {
@@ -15,11 +22,58 @@ export const Header = () => {
     dispatch(clearUser());
   };
 
+  const getAddrName = () => {
+    var geocoder = new kakao.maps.services.Geocoder();
+    geocoder.coord2RegionCode(user.userInfo.lng, user.userInfo.lat, displayAddrName);
+  };
+
+  // 행정동 주소정보를 표시하는 함수
+  const displayAddrName = (result, status) => {
+    if (status === kakao.maps.services.Status.OK) {
+      for (var i = 0; i < result.length; i++) {
+        // 행정동의 region_type 값은 'H' 이므로
+        if (result[i].region_type === 'H') {
+          let addrName = result[i].address_name;
+          setUserLocName(addrName);
+          break;
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    getAddrName();
+  }, []);
+
+  useEffect(() => {
+    setModalShow(false);
+    getAddrName();
+  }, [user]);
+
   return (
     <header>
+      {console.log(userLocName)}
+      {console.log(user.userInfo)}
+      <PositioningMapModal show={modalShow} onHide={() => setModalShow(false)} />
       <Navbar collapseOnSelect expand="lg">
         <Container>
-          <Link to="/">한줌</Link>
+          <div className="logo">
+            <Link to="/">한줌</Link>
+          </div>
+          {user.userInfo.length != 0 ? (
+            <div className="positioning">
+              {/* <div className="addrName">부산광역시 강서구 명지동</div> */}
+              {user.userInfo.lat && user.userInfo.lat ? (
+                <div className="addrName">{userLocName}</div>
+              ) : (
+                <div className="addrName">위치 정보를 설정해주세요.</div>
+              )}
+
+              <span className="locationIcon">
+                <LocationOnIcon onClick={() => setModalShow(true)} />
+              </span>
+            </div>
+          ) : null}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="nav-menu ms-auto">

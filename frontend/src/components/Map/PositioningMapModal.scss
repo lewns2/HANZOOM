@@ -1,0 +1,17 @@
+.modal-content {
+  .modal-header {
+    padding: 12px;
+    .modalTitle {
+      font-size: 20px;
+    }
+  }
+  .modal-body {
+    padding: 10px 12px 7px;
+    .modalExplain {
+      color: #999;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+  }
+}
