@@ -41,15 +41,16 @@ $speed: 0.8s;
   left: 0;
   z-index: 0;
   transition: all $speed;
+  visibility: hidden;
 
   .hideChatList {
     position: fixed;
     left: -500px;
     background-color: #fffcf2;
     height: calc(100vh - 70px);
-    width: 23%;
+    width: 350px;
     transition: all $speed;
-    z-index: 99;
+    z-index: 0;
   }
 }
 
