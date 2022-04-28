@@ -30,7 +30,7 @@ public class BoardRegisterReq {
     @ApiModelProperty(name = "사용자 이메일")
     @JsonIgnore
     String userEmail;
-    List<String> ingredientList;
+    List<Long> userIngredientNo;
 
     public Board toEntity() {
         User user = new User();
