@@ -1,10 +1,6 @@
 import { useState } from 'react';
 
-export const AddNeedsIngredients = () => {
-  const [needsIngre, setApplyIngre] = useState({
-    ingredient: null,
-  });
-
+export const AddNeedsIngredients = (props) => {
   return (
     <div className="needsForm">
       <div>
@@ -14,8 +10,7 @@ export const AddNeedsIngredients = () => {
           type="text"
           placeholder="식재료 명"
           onChange={(event) => {
-            setApplyIngre({
-              ...state,
+            props.setNeeds({
               ingredient: event.target.value,
             });
           }}

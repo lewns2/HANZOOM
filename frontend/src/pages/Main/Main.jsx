@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { settings } from '../../constants/slider';
 import { ContentList } from '../../components/Board/ContentList';
@@ -106,9 +106,9 @@ export const Main = () => {
   const myIngreGo = () => {
     navigate('/my-food-ingredients');
   };
+
   return (
     <>
-      {console.log(user)}
       <section id="main1" className="d-flex justify-content-center">
         <h1 className="intro d-flex align-items-center">
           냉장고 속 남는 재료, <br /> 이제 버리지 마세요!
@@ -122,7 +122,7 @@ export const Main = () => {
           <h1>내 주변 이웃들과 나누세요!</h1>
           <p>냉장고 속 남는 재료를 필요로 하는 내 주변 이웃들과 나눌 수 있습니다.</p>
           <p>그리고 나에게 필요한 식재료를 이웃으로 부터 찾을 수도 있습니다.</p>
-          {user.userInfo ? (
+          {user.userInfo.length !== 0 ? (
             <button className="myIngreGo" onClick={myIngreGo}>
               매칭하러 가기 GO
             </button>
@@ -134,7 +134,7 @@ export const Main = () => {
         </div>
       </section>
 
-      {user.userInfo ? (
+      {user.userInfo.length !== 0 ? (
         <section id="main3">
           <h3 className="text-center">인기 게시글</h3>
 
