@@ -74,7 +74,7 @@ public class UserIngredientController {
 
     /** ingredientNo과 userEmail에 따른 유저 식재료 조회 **/
     @GetMapping("/find/{ingredientNo}")
-    @ApiOperation(value ="유저 식재료 정보 조회(token)", notes = "<strong>식재료 번호(ingredientNo)과 유저 이메일</strong>을 이용하여 유저 식재료 정보를 조회한다.")
+    @ApiOperation(value ="유저 식재료 상세정보 조회(token)", notes = "<strong>식재료 번호(ingredientNo)과 유저 이메일</strong>을 이용하여 유저 식재료 상세 정보를 조회한다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
