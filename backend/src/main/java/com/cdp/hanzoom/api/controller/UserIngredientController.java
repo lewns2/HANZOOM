@@ -2,10 +2,13 @@ package com.cdp.hanzoom.api.controller;
 
 import com.cdp.hanzoom.api.request.UserIngredientRegisterReq;
 import com.cdp.hanzoom.api.request.UserIngredientUpdateReq;
+import com.cdp.hanzoom.api.response.RecipeFindRes;
 import com.cdp.hanzoom.api.response.UserIngredientFindRes;
+import com.cdp.hanzoom.api.service.RecipeService;
 import com.cdp.hanzoom.api.service.UserIngredientService;
 import com.cdp.hanzoom.common.auth.HanZoomUserDetails;
 import com.cdp.hanzoom.common.model.response.BaseResponseBody;
+import com.cdp.hanzoom.db.entity.Recipe;
 import com.cdp.hanzoom.db.entity.UserIngredient;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -33,6 +36,8 @@ public class UserIngredientController {
 
     @Autowired
     UserIngredientService userIngredientService;
+    @Autowired
+    RecipeService recipeService;
 
     /** 유저 식재료 등록 **/
     @PostMapping("/register")
@@ -132,5 +137,20 @@ public class UserIngredientController {
             return ResponseEntity.status(400).body("Bad Request");
         }
         return ResponseEntity.status(200).body("Success");
+    }
+
+    /** MY식재료 바탕으로 레시피 추천 **/
+    @GetMapping("/recipe")
+    @ApiOperation(value = "레시피 추천", notes = "<strong>레시피 추천</strong>한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<RecipeFindRes>> findRecipe(@RequestParam(value="추천 레시피 식재료 정보", required = true) List<String> ingredients) {
+        List<Recipe> recipeList = recipeService.findRecipeByIngredients(ingredients);
+        List<RecipeFindRes> recipeFindResList = recipeService.findInfoRecipeByIngredient(recipeList);
+        return new ResponseEntity<List<RecipeFindRes>>(recipeFindResList, HttpStatus.OK);
     }
 }
