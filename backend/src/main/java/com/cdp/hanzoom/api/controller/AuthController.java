@@ -1,15 +1,17 @@
 package com.cdp.hanzoom.api.controller;
 
+import com.cdp.hanzoom.api.request.KaKaoUserRegisterReq;
 import com.cdp.hanzoom.api.request.UserLoginReq;
+import com.cdp.hanzoom.api.request.UserRegisterReq;
+import com.cdp.hanzoom.api.service.KaKaoService;
 import com.cdp.hanzoom.api.service.UserService;
 import com.cdp.hanzoom.db.entity.User;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cdp.hanzoom.api.response.UserLoginRes;
 import com.cdp.hanzoom.common.model.response.BaseResponseBody;
@@ -21,6 +23,13 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 
+import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.StringTokenizer;
+
+
 /**
  * 인증 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
@@ -30,7 +39,8 @@ import io.swagger.annotations.ApiResponse;
 public class AuthController {
     @Autowired
     UserService userService;
-
+    @Autowired
+    KaKaoService kaKaoService;
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -54,5 +64,40 @@ public class AuthController {
         }
         // 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
         return ResponseEntity.status(401).body(UserLoginRes.of(401, "Invalid Password", null));
+    }
+
+
+    @PostMapping(value="/kakao/{code}")
+    public Object login(@PathVariable("code") String code) {
+        System.out.println("code>>>>>>>>>>>>>"+ code);
+        String access_Token = kaKaoService.getAccessToken(code);
+        System.out.println("debug>>>>>>>>>>>>"+access_Token);
+        HashMap<String, Object> userInfo = kaKaoService.getUserInfo(access_Token);
+        String userEmail = (String) userInfo.get("email");
+        String nickname = (String) userInfo.get("nickname");
+        String profile = (String) userInfo.get("profile");
+        System.out.println("debug>>>>>>>>>>>>"+userEmail);
+        System.out.println("debug>>>>>>>>>>>>>>"+nickname);
+        System.out.println("debug>>>>>>>>>>>>>>"+profile);
+        User user = userService.getUserByUserEmail(userEmail);
+
+        // 카카오 정보로 회원 가입이 안 되어 있다면
+        if(user ==null) {
+             // 회원 가입 로직
+            KaKaoUserRegisterReq registerInfo = new KaKaoUserRegisterReq();
+            registerInfo.setUserEmail(userEmail);
+            registerInfo.setUserNickname(nickname);
+
+            String input = LocalTime.now().toString().toString(); // ex) 11:49:47.176
+            StringTokenizer st = new StringTokenizer(input, ":|.");
+            StringBuilder sb = new StringBuilder();
+            while (st.hasMoreTokens()) {sb.append(st.nextToken());}
+            registerInfo.setUserPassword(sb.toString());
+            registerInfo.setUserImage(profile);
+            //임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
+            user = kaKaoService.registerUser(registerInfo);
+        }
+        // 회원 가입이 되어 있다면, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
+        return ResponseEntity.ok(UserLoginRes.of(200, "Success", JwtTokenUtil.getToken(user.getUserEmail())));
     }
 }
