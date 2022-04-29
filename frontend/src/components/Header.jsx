@@ -5,7 +5,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 
 import { clearUser } from '../Reducer/userSlice';
 import './Header.scss';
-
+import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 import { PositioningMapModal } from './Map/PositioningMapModal';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
@@ -18,7 +18,10 @@ export const Header = () => {
   const dispatch = useDispatch();
 
   const logout = () => {
-    alert('로그아웃 되었습니다.');
+    swal('로그아웃 되었습니다.', '  ', 'success', {
+      buttons: false,
+      timer: 1800,
+    });
     dispatch(clearUser());
   };
 
@@ -89,7 +92,7 @@ export const Header = () => {
                 <>
                   <Link to="/my-food-ingredients">MY식재료</Link>
                   <Link to="/my-page">MY페이지</Link>
-                  <Link to="/login" onClick={logout}>
+                  <Link to="/" onClick={logout}>
                     로그아웃
                   </Link>
                 </>

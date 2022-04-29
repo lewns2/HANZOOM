@@ -4,7 +4,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import { Axios } from '../../../core/axios';
 import { Link, useNavigate } from 'react-router-dom';
-
+import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 export const SignUpForm = () => {
   const [email, setEmail] = useState('');
   const [nickName, setNickName] = useState('');
@@ -58,11 +58,11 @@ export const SignUpForm = () => {
       userPassword: password1,
     })
       .then(() => {
-        alert('회원가입이 완료되었습니다.');
+        swal('회원가입 성공', '로그인을 진행하여 서비스를 즐겨보세요!', 'success');
         navigate('/login');
       })
       .catch((error) => {
-        alert('회원가입 실패!');
+        swal('회원가입 실패', '서버가 잠시 문제가 생겨있으니 기다려주세요.', 'error');
         console.log(error);
       });
   };
