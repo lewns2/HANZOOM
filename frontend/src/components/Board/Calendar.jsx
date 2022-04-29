@@ -8,9 +8,23 @@ export const Calendar = (props) => {
   const [startDate, setStartDate] = useState();
 
   useEffect(() => {
+    var m = 0;
+    if (getMonth(startDate) + 1 < 10) {
+      m = '0' + (getMonth(startDate) + 1);
+    } else {
+      m = getMonth(startDate) + 1;
+    }
+
+    var d = 0;
+    if (getDate(startDate) < 10) {
+      d = '0' + getDate(startDate);
+    } else {
+      d = getDate(startDate);
+    }
+
     let year = getYear(startDate);
-    let month = getMonth(startDate) + 1;
-    let day = getDate(startDate);
+    let month = m;
+    let day = d;
     props.setSelectedDate({ year, month, day });
   }, [startDate]);
 

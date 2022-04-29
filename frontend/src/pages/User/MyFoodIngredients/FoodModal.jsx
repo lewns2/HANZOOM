@@ -34,6 +34,7 @@ export const FoodModal = (props) => {
     )
       .then((res) => {
         console.log(res);
+        close();
       })
       .catch((err) => {
         alert('MY식재료 등록에 실패하였습니다😓');
@@ -41,13 +42,25 @@ export const FoodModal = (props) => {
       });
   };
 
-  const registerNeeds = async () => {
-    Axios.post('/userIngredient/register', {
-      ingredientName: needs.ingredient,
-      type: '필요',
-    })
+  const registerNeeds = () => {
+    const token = localStorage.getItem('jwt-token');
+    Axios.post(
+      '/userIngredient/register',
+      {
+        expirationDate: '',
+        ingredientName: needs.ingredient,
+        purchaseDate: '',
+        type: '필요',
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
       .then((res) => {
         console.log(res);
+        close();
       })
       .catch(() => {
         alert('필요목록 등록에 실패하였습니다😓');
@@ -70,23 +83,17 @@ export const FoodModal = (props) => {
             ) : (
               <AddNeedsIngredients setNeeds={setNeeds} needs={needs} />
             )}
-            {console.log(foods)}
           </main>
           <footer>
             <button className="close" onClick={close}>
               취소
             </button>
             {props.header === '식재료 등록' ? (
-              <button className="apply" type="submit" onClick={registerIngre}>
+              <button className="apply" onClick={registerIngre}>
                 등록
               </button>
             ) : (
-              <button
-                className="apply"
-                onClick={() => {
-                  registerNeeds();
-                  close;
-                }}>
+              <button className="apply" onClick={registerNeeds}>
                 등록
               </button>
             )}
