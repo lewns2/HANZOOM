@@ -8,11 +8,13 @@ $desktop: 1400px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 70px;
 }
 
 /* 검색 창 */
 .searchBar {
   align-items: center;
+  margin-bottom: 15px;
 
   #text-area {
     width: 20rem;
@@ -45,6 +47,7 @@ $desktop: 1400px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 30px;
 }
 
 .locationBtn {
@@ -93,16 +96,25 @@ $desktop: 1400px;
 
 /* 게시글 */
 .contentsContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
   width: 100%;
-  height: auto;
+  margin: 0 auto;
+
+  overflow-x: hidden;
 
   .contentCard {
-    display: inline-block;
-    width: calc(($desktop - 200px) / 4);
-    height: auto;
-    box-shadow: 1px 1px 1px 1px gray;
-    border-radius: 1rem;
-    overflow: auto;
+    width: calc(25% - 44px);
+    margin-right: 44px;
+    margin-bottom: 56px;
+    cursor: pointer;
+    // display: inline-block;
+    // width: calc(($desktop - 200px) / 4);
+    // height: auto;
+    // box-shadow: 1px 1px 1px 1px gray;
+    // border-radius: 1rem;
+    // overflow: auto;
 
     @media only screen and (max-width: $laptopS) {
       width: calc(($laptopS - 60px) / 4);
@@ -110,45 +122,61 @@ $desktop: 1400px;
   }
 
   .cardImgWrap {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    box-shadow: inset 0px 0px 0px 1px rgb(0 0 0 / 15%);
+    box-sizing: border-box;
+    // width: 300px;
+    // height: 300px;
     .cardImg {
-      max-width: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 12px;
+      border: 1px solid transparent;
       height: 100%;
       object-fit: cover;
     }
   }
 
-  .status {
-    width: 70px;
-    font-size: 16px;
-    font-weight: bolder;
-    background-color: #f7c343;
-    border: 2px solid #f7c343;
-    border-radius: 16px;
-    padding: 3px 2px;
-    margin-right: 5px;
-    box-shadow: 0 4px 4px -4px #777;
-    text-align: center;
-  }
-
-  .cardTitle {
-    font-size: 1.25rem;
-    font-weight: bolder;
-    p {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+  .cardBodyHeader {
+    margin-top: 12px;
+    .status {
+      width: 70px;
+      font-size: 16px;
+      font-weight: bolder;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 16px;
+      padding: 3px 2px;
+      margin-right: 5px;
+      box-shadow: 0 4px 4px -4px #777;
+      text-align: center;
+    }
+    .cardTitle {
+      font-size: 1.25rem;
+      font-weight: bolder;
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 
-  .contentDescription {
-    p {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  }
+  // .contentDescription {
+  //   p {
+  //     overflow: hidden;
+  //     text-overflow: ellipsis;
+  //     white-space: nowrap;
+  //   }
+  // }
 
   .boardIngredientResList {
     display: flex;
@@ -156,6 +184,12 @@ $desktop: 1400px;
 
   .likeBtn {
     text-align: right;
+  }
+
+  .cardBodyCounts {
+    display: flex;
+    color: #868e96;
+    font-size: 14px;
   }
 
   @media only screen and (max-width: $tablet) {
@@ -264,8 +298,14 @@ $desktop: 1400px;
   border-color: #ddd;
 }
 
-/* 검색 결과 */
-.searchNotFound {
-  margin: 30px;
+/* 검색 실패 */
+
+.searchNotFoundText {
   text-align: center;
+}
+.searchNotFound {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+  height: 600px;
 }
