@@ -132,3 +132,147 @@ $speed: 0.8s;
     }
   }
 }
+
+.showChatDisplayWrap {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.hideChatDisplayWrap {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+// 내 채팅 화면
+.chatDisplayWrap {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  top: 100px;
+  bottom: 30px;
+  width: 50% !important;
+  background-color: #fffcf2;
+  box-shadow: 0 4px 4px -3px #777;
+  border-radius: 10px;
+  z-index: 9999;
+  animation: chat-show 0.3s;
+
+  .chatHeader {
+    height: 10%;
+    // background-color: #999;
+
+    .headerBtn {
+      font-size: 14px;
+      font-weight: bolder;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      margin-right: 10px;
+      padding: 3px 12px;
+      box-shadow: 0 4px 4px -4px #777;
+    }
+    .closeIcon {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      cursor: pointer;
+    }
+  }
+
+  .chatContent {
+    height: 80%;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #aaa;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #eee;
+    }
+    .userMsg {
+      margin-bottom: 20px;
+      width: 100%;
+      .profileImg {
+        margin: 0 12px;
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 70%;
+        }
+      }
+      .msgContent {
+        width: 45%;
+        padding: 5px;
+        border-radius: 10px;
+      }
+    }
+
+    .myMsg {
+      .msgContent {
+        background-color: #f2d17a;
+        border: 1px solid #f2d17a;
+      }
+    }
+    .otherMsg {
+      .msgContent {
+        background-color: #fff;
+        border: 1px solid #f2d17a;
+      }
+    }
+  }
+
+  .chatFooter {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+
+    .msgInput {
+      width: 100%;
+      height: 44px;
+      padding-left: 8px;
+      padding-right: 62px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      // outline: 1px solid #999;
+      &:focus {
+        outline: 1px solid #bbb;
+      }
+    }
+    .sendBtn {
+      position: absolute;
+      top: 7px;
+      right: 5px;
+      font-size: 14px;
+      font-weight: bolder;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      padding: 3px 8px;
+    }
+  }
+}
+
+@keyframes chat-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

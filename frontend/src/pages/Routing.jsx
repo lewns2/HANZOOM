@@ -10,21 +10,32 @@ import { FindPassword } from './User/FindPassword';
 import { Header } from '../components/Header';
 import { KaKaoCall } from '../components/User/Login/KaKaoCall';
 import { MyChat } from '../components/Chat/MyChat';
+import { MyChatDisplay } from '../components/Chat/MyChatDisplay';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import CommentsDisabledOutlinedIcon from '@mui/icons-material/CommentsDisabledOutlined';
 
 import { Route, Routes, Navigate, BrowserRouter } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 export const Routing = () => {
   const [showChatList, setShowChatList] = useState(false);
+  const chatShow = useSelector((state) => state.chat);
+  const [showChat, setShowChat] = useState(false);
 
-  const hideChat = () => {};
+  useEffect(() => {
+    setShowChat(chatShow.chatShow);
+  }, []);
+  useEffect(() => {
+    setShowChat(chatShow.chatShow);
+    console.log(chatShow);
+  }, [chatShow]);
 
   return (
     <BrowserRouter>
       <Header />
       <MyChat show={showChatList} setShow={setShowChatList} />
+      {showChat ? <MyChatDisplay setShow={setShowChatList} /> : null}
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/board" element={<Board />} />
