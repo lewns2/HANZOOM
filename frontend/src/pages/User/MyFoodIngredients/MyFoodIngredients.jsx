@@ -81,7 +81,7 @@ export const MyFoodIngredients = () => {
         <section id="barterShare" className="col">
           <h3 className="headWrap">교환 / 나눔</h3>
           <div className="ingreBody">
-            {myBarterShareIngre.map((ingre, key) => (
+            {/* {myBarterShareIngre.map((ingre, key) => (
               <div key={key}>
                 {ingre.type === '교환' || ingre.type === '나눔' ? (
                   <div>
@@ -90,7 +90,7 @@ export const MyFoodIngredients = () => {
                   </div>
                 ) : null}
               </div>
-            ))}
+            ))} */}
             <button className="ingreBtn">교환 / 나눔 등록</button>
           </div>
         </section>
