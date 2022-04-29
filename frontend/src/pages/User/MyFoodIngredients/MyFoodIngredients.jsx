@@ -3,13 +3,15 @@ import { FoodModal } from './FoodModal';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Axios } from '../../../core/axios.js';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const MyFoodIngredients = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOpen2, setModalOpen2] = useState(false);
   const [myFoodIngre, setMyFoodIngre] = useState([]);
 
-  useEffect(() => {
+  const getMyFoodIngre = () => {
     const token = localStorage.getItem('jwt-token');
     Axios.get('userIngredient/findAll', {
       headers: { Authorization: `Bearer ${token}` },
@@ -19,7 +21,25 @@ export const MyFoodIngredients = () => {
         setMyFoodIngre(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
+
+  // const getIngre = () => {
+  //   const myBarterShareIngre = [];
+  //   const myNeedsIngre = [];
+  //   myFoodIngre.map((ingre) => {
+  //     if (ingre.type === '필요') {
+  //       myNeedsIngre.push(ingre);
+  //     } else if (ingre.type === '교환' || ingre.type === '나눔') {
+  //       myBarterShareIngre.push(ingre);
+  //     }
+  //   });
+  // };
+  useEffect(() => {
+    if (modalOpen === false) {
+      getMyFoodIngre();
+      // getIngre();
+    }
+  }, [modalOpen]);
 
   const openModal = () => {
     setModalOpen(true);
@@ -46,14 +66,26 @@ export const MyFoodIngredients = () => {
           <FoodModal open={modalOpen} close={closeModal} header="식재료 등록" />
         </div>
         <div className="ingreBody">
-          {myFoodIngre.map((ingre, key) => ingre.ingredientName)}
+          {myFoodIngre.map((ingre, key) => (
+            <div key={key}>
+              <input type="checkbox" />
+              {ingre.ingredientName}
+              <EditIcon />
+              <DeleteIcon />
+            </div>
+          ))}
           <button className="ingreBtn">레시피 추천</button>
         </div>
       </section>
       <section id="barterShare" className="col">
         <h3 className="headWrap">교환 / 나눔</h3>
         <div className="ingreBody">
-          <p>식재료가 들어가겠지</p>
+          {/* {myBarterShareIngre.map((ingre, key) => (
+            <div key={key}>
+              <input type="checkbox" />
+              {ingre.ingredientName}
+            </div>
+          ))} */}
           <button className="ingreBtn">교환 / 나눔 등록</button>
         </div>
       </section>
@@ -66,7 +98,12 @@ export const MyFoodIngredients = () => {
           <FoodModal open={modalOpen2} close={closeModal2} header="필요목록 등록" />
         </div>
         <div className="ingreBody">
-          <p>식재료가 들어가겠지</p>
+          {/* {myNeedsIngre.map((ingre, key) => (
+            <div key={key}>
+              <input type="checkbox" />
+              {ingre.ingredientName}
+            </div>
+          ))} */}
           <button className="ingreBtn">선택 매칭</button>
         </div>
       </section>
