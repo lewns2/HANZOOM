@@ -6,8 +6,7 @@ import { Axios } from '../../../core/axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getUserInfo, setCode } from '../../../Reducer/userSlice';
-import Grid from '@mui/material/Grid';
-
+import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 export const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +35,10 @@ export const LoginForm = () => {
 
     const chkResult = await Axios.get(`/users/emailCheck/${email}`);
     if (chkResult.data) {
-      alert('존재하지 않는 이메일입니다.');
+      swal('로그인 실패', '존재하지 않는 이메일입니다.\n 이메일을 다시 확인해주세요!', 'error', {
+        buttons: false,
+        timer: 2000,
+      });
       emailInput.current.focus();
       return;
     }
@@ -47,15 +49,26 @@ export const LoginForm = () => {
     })
       .then((res) => {
         console.log(res);
-        alert('로그인 되었습니다.');
         if (res.data.accessToken) {
           localStorage.setItem('jwt-token', res.data.accessToken);
         }
         dispatch(getUserInfo());
+        swal('로그인 성공', '  ', 'success', {
+          buttons: false,
+          timer: 1800,
+        });
         navigate('/');
       })
       .catch(() => {
-        alert('패스워드를 다시 입력해주세요.');
+        swal(
+          '로그인 실패',
+          '비밀 번호가 일치 하지 않습니다. \n비밀 번호를 다시 입력해주세요.',
+          'error',
+          {
+            buttons: false,
+            timer: 2000,
+          },
+        );
         passwordInput.current.focus();
       });
   };
@@ -78,30 +91,11 @@ export const LoginForm = () => {
   const REST_API_KEY = '112573439184cd2fae91493c54ed80a9';
   const REDIRECT_URI = 'http://localhost:3000/oauth/kakao/callback';
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  // const code = new URL(window.location.href).searchParams.get('code');
   const onSocialLogin = async () => {
     console.log(new URL(window.location.href));
     const code = new URL(window.location.href).searchParams.get('code');
     dispatch(setCode(code));
     console.log('debug>>>>>>>>>>>>>>>>>>' + code);
-    // await getKaKaoUserInfoAPI(code);
-  };
-
-  const getKaKaoUserInfoAPI = async (code) => {
-    await Axios.post(`/auth/kakao/${code}`)
-      .then((res) => {
-        console.log(res);
-        alert('로그인 들어감');
-        if (res.data.accessToken) {
-          localStorage.setItem('jwt-token', res.data.accessToken);
-        }
-        dispatch(getUserInfo());
-        navigate('/');
-      })
-      .catch(() => {
-        alert('서머 문제');
-        passwordInput.current.focus();
-      });
   };
 
   return (

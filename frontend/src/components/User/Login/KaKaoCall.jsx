@@ -31,7 +31,7 @@ export const KaKaoCall = () => {
           localStorage.setItem('jwt-token', res.data.accessToken);
         }
         dispatch(getUserInfo());
-        swal('로그인 성공', '  ', 'success', {
+        swal('카카오 로그인 성공', '  ', 'success', {
           buttons: false,
           timer: 1800,
         });
