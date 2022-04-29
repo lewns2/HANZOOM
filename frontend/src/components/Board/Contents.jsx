@@ -27,6 +27,7 @@ export const Contents = (props) => {
         props.setTotalElements(res.data.totalElements);
       })
       .catch((err) => console.log(err));
+    console.log(props.searchKeyword.length);
   }, [props.page, props.size, props.selectedFilter, props.searchKeyword]);
 
   const moveToDetail = (num) => {
@@ -35,7 +36,7 @@ export const Contents = (props) => {
 
   return (
     <>
-      {contents.length != 0 ? (
+      {contents.length != 0 || props.searchKeyword.length == 0 ? (
         <section className="contentsContainer">
           {contents.map((content, key) => (
             <div
@@ -49,7 +50,7 @@ export const Contents = (props) => {
               {/* 본문 */}
               <div className="card-body">
                 {/* 제목, 거래 상태 */}
-                <div className="row">
+                <div className="cardBodyHeader row">
                   <div className="cardTitle col-8">
                     <p>{content.title}</p>
                   </div>
@@ -59,7 +60,7 @@ export const Contents = (props) => {
                 </div>
 
                 {/* 설명 */}
-                <div className="contentDescription">{content.description}</div>
+                {/* <div className="contentDescription">{content.description}</div> */}
 
                 {/* 나와의 거리 */}
                 <p>약 {content.distance}km</p>
@@ -68,9 +69,15 @@ export const Contents = (props) => {
                 <div className="boardIngredientResList">
                   {content.boardFindIngredientResList.map((ingre, index) => (
                     <div key={index}>
-                      <p>#{ingre.ingredientName}</p>
+                      <p>#{ingre.ingredientName}&nbsp;</p>
                     </div>
                   ))}
+                </div>
+
+                <div className="cardBodyCounts">
+                  <p>조회 {content.viewCnt} ∙</p>
+                  &nbsp;
+                  <p> 관심 {content.likeCnt}</p>
                 </div>
 
                 {/* 좋아요 표시 */}
@@ -85,8 +92,12 @@ export const Contents = (props) => {
         </section>
       ) : (
         <>
-          <h4 className="searchNotFound">검색 결과를 찾을 수 없어요</h4>
-          <SearchNotFoundLottie style={{ width: '200px', height: '200px' }} />
+          <div className="searchNotFoundText">
+            <h4>검색 결과를 찾을 수 없어요</h4>
+          </div>
+          <div className="searchNotFound">
+            <SearchNotFoundLottie />
+          </div>
         </>
       )}
     </>

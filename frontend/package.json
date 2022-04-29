@@ -30,6 +30,7 @@
     "redux-persist": "^6.0.0",
     "sass": "^1.50.0",
     "slick-carousel": "^1.8.1",
+    "sweetalert2": "^11.4.9",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
