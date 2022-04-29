@@ -8,6 +8,7 @@ import { Login } from './User/Login';
 import { FindPassword } from './User/FindPassword';
 
 import { Header } from '../components/Header';
+import { KaKaoCall } from '../components/User/Login/KaKaoCall';
 import { MyChat } from '../components/Chat/MyChat';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import CommentsDisabledOutlinedIcon from '@mui/icons-material/CommentsDisabledOutlined';
@@ -33,6 +34,7 @@ export const Routing = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/find-password" element={<FindPassword />} />
+        <Route path="/oauth/kakao/callback" element={<KaKaoCall />}></Route>
       </Routes>
       {!showChatList ? (
         <CommentOutlinedIcon
