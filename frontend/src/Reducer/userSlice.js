@@ -16,11 +16,15 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     userInfo: [],
+    code: '',
   },
   reducers: {
     clearUser: (state) => {
       state.userInfo = [];
       localStorage.removeItem('jwt-token');
+    },
+    setCode: (state, action) => {
+      state.code = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -32,6 +36,6 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearUser } = userSlice.actions;
+export const { clearUser, setCode } = userSlice.actions;
 
 export default userSlice.reducer;

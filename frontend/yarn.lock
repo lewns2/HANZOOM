@@ -3995,6 +3995,11 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
+es6-object-assign@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/es6-object-assign/-/es6-object-assign-1.1.0.tgz#c2c3582656247c39ea107cb1e6652b6f9f24523c"
+  integrity sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=
+
 escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/escalade/-/escalade-3.1.1.tgz"
@@ -6046,6 +6051,11 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
+lottie-web@^5.9.3:
+  version "5.9.3"
+  resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.9.3.tgz#d84e0176d785fcc373095ad085e3ae4e6da032d6"
+  integrity sha512-QKA31Lu57SMfS09oUvuheEL+BkzjWHuzi7VkO9gSBaynK8tOMF2EwBgRdvcn3vXvX79/Y9RFlm75mjsS8je2+w==
+
 lower-case@^2.0.2:
   version "2.0.2"
   resolved "https://registry.npmjs.org/lower-case/-/lower-case-2.0.2.tgz"
@@ -7236,6 +7246,11 @@ process@^0.11.10:
   resolved "https://registry.npmjs.org/process/-/process-0.11.10.tgz"
   integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
 
+promise-polyfill@^6.0.2:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-6.1.0.tgz#dfa96943ea9c121fca4de9b5868cb39d3472e057"
+  integrity sha1-36lpQ+qcEh/KTem1hoyznTRy4Fc=
+
 promise@^8.1.0:
   version "8.1.0"
   resolved "https://registry.npmjs.org/promise/-/promise-8.1.0.tgz"
@@ -7454,6 +7469,11 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.0.0.tgz#026f6c4a27dbe33bf4a35655b9e1327c4e55e3f5"
   integrity sha512-yUcBYdBBbo3QiPsgYDcfQcIkGZHfxOaoE6HLSnr1sPzMhdyxusbfKOSUbSd/ocGi32dxcj366PsTj+5oggeKKw==
 
+react-kakao-login@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-kakao-login/-/react-kakao-login-2.1.0.tgz#674d7824284c7f88618d397cdd760745c85d78de"
+  integrity sha512-yvwe9Qc5cG+ucDAWOoIW4QjMB55M0Y97v040pbjcmc3Ud+bYHbQ+SwcVkOBvfDynyQbLPPoGJ+iN8rCRD4lzJw==
+
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
@@ -7497,9 +7517,9 @@ react-router-dom@^6.3.0:
     history "^5.2.0"
     react-router "6.3.0"
 
-react-router@6.3.0:
+react-router@6.3.0, react-router@^6.3.0:
   version "6.3.0"
-  resolved "https://registry.npmjs.org/react-router/-/react-router-6.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.3.0.tgz#3970cc64b4cb4eae0c1ea5203a80334fdd175557"
   integrity sha512-7Wh1DzVQ+tlFjkeo+ujvjSqSJmkt1+8JO+T5xklPlgrh70y7ogx75ODRW0ThWhY7S+6yEDks8TYrtQe/aoboBQ==
   dependencies:
     history "^5.2.0"
@@ -8430,10 +8450,13 @@ svgo@^2.7.0:
     picocolors "^1.0.0"
     stable "^0.1.8"
 
-sweetalert2@^11.4.9:
-  version "11.4.9"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.4.9.tgz#a7a87b0500a0892f59d60d002818dfac8bc39f1b"
-  integrity sha512-DAQGODShPfz9cwxDIUuXZuavlq1kOR2uypXa4DxG9YxlIbcCSlbm7BEnXwP/GK9+wI+whvj5iePEByq3RbIoNg==
+sweetalert@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/sweetalert/-/sweetalert-2.1.2.tgz#010baaa80d0dbdc86f96bfcaa96b490728594b79"
+  integrity sha512-iWx7X4anRBNDa/a+AdTmvAzQtkN1+s4j/JJRWlHpYE8Qimkohs8/XnFcWeYHH2lMA8LRCa5tj2d244If3S/hzA==
+  dependencies:
+    es6-object-assign "^1.1.0"
+    promise-polyfill "^6.0.2"
 
 symbol-tree@^3.2.4:
   version "3.2.4"
