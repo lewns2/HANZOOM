@@ -18,7 +18,7 @@ export const MyChat = (props) => {
 
   return (
     <div
-      className={show ? 'myChatWrap showChatWrap' : 'hideChatWrap'}
+      className={show ? 'myChatWrap showChatWrap' : 'myChatWrap hideChatWrap'}
       ref={outSection}
       onClick={(e) => clickOutSection(e)}>
       {console.log(props)}
