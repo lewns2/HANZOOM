@@ -24,55 +24,60 @@
   padding: 4%;
   background-color: #f7c343;
 
-  .contentsContainer {
-    width: 70%;
-    margin: 0 auto;
+  .contentContainer {
     padding: 20px;
-    height: 60%;
-  }
+    // height: 800px;
+    .slick-list {
+      width: 100%;
 
-  .slick-list {
-    width: 100%;
+      .slick-slide {
+        display: flex;
+        justify-content: center;
 
-    .slick-slide {
-      display: flex;
-      justify-content: center;
-
-      .contentCard {
-        display: inline-block;
-        box-shadow: 1px 1px 1px 1px gray;
-        border-radius: 1rem;
-        background-color: white;
-      }
-
-      .card-img-top {
-        .card__image {
+        div:first-child {
+          width: 95%;
+        }
+        .contentCard {
           width: 100%;
-          // height: 100%;
-        }
-      }
-      .card-body {
-        width: 100%;
+          height: 500px;
+          box-shadow: 1px 1px 1px 1px gray;
+          border-radius: 1rem;
+          background-color: white;
+          .cardImgWrap {
+            width: 100%;
+            padding: 5%;
+            img {
+              width: 100%;
+              height: 300px;
+              border-radius: 12px;
+            }
+          }
+          .card_body {
+            width: 100%;
+            overflow: hidden;
+            padding: 5%;
+            .card-title {
+              font-size: 1.25rem;
+              font-weight: bolder;
+            }
+            .status {
+              width: 70px;
+              font-size: 16px;
+              font-weight: bolder;
+              background-color: #f7c343;
+              border: 2px solid #f7c343;
+              border-radius: 16px;
+              padding: 3px 2px;
+              // margin-right: 5px;
+              box-shadow: 0 4px 4px -4px #777;
+              text-align: center;
+            }
+          }
 
-        .card-title {
-          font-size: 1.25rem;
-          font-weight: bolder;
+          .likeBtn {
+            text-align: right;
+          }
         }
-        .status {
-          font-size: 16px;
-          font-weight: bolder;
-          background-color: #f7c343;
-          border: 2px solid #f7c343;
-          border-radius: 16px;
-          padding: 3px 2px;
-          margin-right: 5px;
-          box-shadow: 0 4px 4px -4px #777;
-          text-align: center;
-        }
-      }
-
-      .likeBtn {
-        text-align: right;
       }
     }
   }

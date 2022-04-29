@@ -1,104 +1,32 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { settings } from '../../constants/slider';
 import { ContentList } from '../../components/Board/ContentList';
-import sample from '../../assets/images/Initimage.PNG';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Main.scss';
-import { useNavigate } from 'react-router-dom';
-
-const contents = [
-  {
-    boardNo: 0,
-    description: '맛있는 닭가슴살 샐러드 소랴라솰라라라라라라라라샤랄라',
-    distance: '2km',
-    imagePath: sample,
-    like: true,
-    likeCnt: 0,
-    status: '거래중',
-    title: '닭가슴살 샐러드',
-    userNickname: '김아무개',
-    viewCnt: 0,
-  },
-  {
-    boardNo: 1,
-    description: '소랴라솰라라라라라라라라샤랄라 맛있는 닭가슴살 샐러드 ',
-    distance: '1km',
-    imagePath: sample,
-    like: false,
-    likeCnt: 1,
-    status: '거래중',
-    title: '닭가슴살 샐러드2',
-    userNickname: '박아무개',
-    viewCnt: 0,
-  },
-  {
-    boardNo: 2,
-    description: '소랴라솰라라라라라라라라샤랄라 맛있는 닭가슴살 샐러드 ',
-    distance: '1km',
-    imagePath: sample,
-    like: true,
-    likeCnt: 1,
-    status: '거래중',
-    title: '닭가슴살 샐러드2',
-    userNickname: '박아무개',
-    viewCnt: 0,
-  },
-  {
-    boardNo: 3,
-    description: '소랴라솰라라라라라라라라샤랄라 맛있는 닭가슴살 샐러드 ',
-    distance: '1km',
-    imagePath: sample,
-    like: true,
-    likeCnt: 1,
-    status: '거래중',
-    title: '닭가슴살 샐러드2',
-    userNickname: '박아무개',
-    viewCnt: 0,
-  },
-  {
-    boardNo: 4,
-    description: '소랴라솰라라라라라라라라샤랄라 맛있는 닭가슴살 샐러드 ',
-    distance: '1km',
-    imagePath: sample,
-    like: false,
-    likeCnt: 1,
-    status: '거래중',
-    title: '닭가슴살 샐러드2',
-    userNickname: '박아무개',
-    viewCnt: 0,
-  },
-  {
-    boardNo: 5,
-    description: '소랴라솰라라라라라라라라샤랄라 맛있는 닭가슴살 샐러드 ',
-    distance: '1km',
-    imagePath: sample,
-    like: true,
-    likeCnt: 1,
-    status: '거래중',
-    title: '닭가슴살 샐러드2',
-    userNickname: '박아무개',
-    viewCnt: 0,
-  },
-  {
-    boardNo: 6,
-    description: '소랴라솰라라라라라라라라샤랄라 맛있는 닭가슴살 샐러드 ',
-    distance: '1km',
-    imagePath: sample,
-    like: false,
-    likeCnt: 1,
-    status: '거래중',
-    title: '닭가슴살 샐러드2',
-    userNickname: '박아무개',
-    viewCnt: 0,
-  },
-];
+import { Axios } from '../../core/axios';
 
 export const Main = () => {
   // redux user 테스트
   const user = useSelector((state) => state.user);
+
+  const [contents, setContents] = useState([]);
+
+  const getContents = () => {
+    const token = localStorage.getItem('jwt-token');
+    Axios.get('/board/findAll?page=1&size=8&sort=viewCnt%2CDESC&ingredient=', {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((res) => {
+      setContents(res.data.content);
+    });
+  };
+  useEffect(() => {
+    getContents();
+  }, []);
+
   const navigate = useNavigate();
   const loginGo = () => {
     navigate('/login');
@@ -137,12 +65,13 @@ export const Main = () => {
       {user.userInfo.length !== 0 ? (
         <section id="main3">
           <h3 className="text-center">인기 게시글</h3>
-
-          <Slider {...settings}>
-            {contents.map((content, key) => (
-              <ContentList content={content} key={key} />
-            ))}
-          </Slider>
+          <div className="container contentContainer">
+            <Slider {...settings}>
+              {contents.map((content, key) => (
+                <ContentList content={content} key={key} />
+              ))}
+            </Slider>
+          </div>
         </section>
       ) : null}
     </>
