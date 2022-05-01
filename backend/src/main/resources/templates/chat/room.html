@@ -2,15 +2,15 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <title>Websocket Chat</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shortcut icon" href="#">
     <!-- CSS -->
     <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css">
     <style>
-        [v-cloak] {
-            display: none;
-        }
+      [v-cloak] {
+          display: none;
+      }
     </style>
 </head>
 <body>
@@ -30,8 +30,8 @@
         </div>
     </div>
     <ul class="list-group">
-        <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId" v-on:click="enterRoom(item.roomId)">
-            {{item.roomName}}
+        <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId" v-on:click="enterRoom(item.chatroomId)">
+            {{item.name}}
         </li>
     </ul>
 </div>
@@ -39,48 +39,54 @@
 <script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
 <script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
 <script>
-    var vm = new Vue({
-        el: '#app',
-        data: {
-            room_name : '',
-            chatrooms: [
-            ]
-        },
-        created() {
-            this.findAllRoom();
-        },
-        methods: {
-            findAllRoom: function() {
-                axios.get('/chat/rooms').then(response => { this.chatrooms = response.data; });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                room_name : '',
+                chatrooms: [
+                ]
             },
-            createRoom: function() {
-                if("" === this.room_name) {
-                    alert("방 제목을 입력해 주십시요.");
-                    return;
-                } else {
-                    var params = new URLSearchParams();
-                    params.append("name",this.room_name);
-                    axios.post('/chat/room', params)
+            created() {
+                this.findAllRoom();
+            },
+            methods: {
+                findAllRoom: function() {
+                    axios
+                    .get('https://localhost:8443/chat/rooms')
+                    .then(response => {
+                        this.chatrooms = response.data;
+                        console.log(">>>>>>>>>>>> all rooms : ", response.data);
+                    });
+                },
+                createRoom: function() {
+                    if("" === this.room_name) {
+                        alert("방 제목을 입력해 주십시요.");
+                        return;
+                    } else {
+                        var params = new URLSearchParams();
+                        params.append("otherUserEmail",this.room_name);
+                        axios.post('/chat/room', params)
                         .then(
                             response => {
-                                alert(response.data.roomName+"방 개설에 성공하였습니다.")
+                                alert(response.data.name+"방 개설에 성공하였습니다.")
                                 this.room_name = '';
                                 this.findAllRoom();
                             }
                         )
                         .catch( response => { alert("채팅방 개설에 실패하였습니다."); } );
-                }
-            },
-            enterRoom: function(roomId) {
-                var sender = prompt('대화명을 입력해 주세요.');
-                if(sender !== "") {
-                    localStorage.setItem('wschat.sender',sender);
-                    localStorage.setItem('wschat.roomId',roomId);
-                    location.href="/chat/room/enter/"+roomId;
+                    }
+                },
+                enterRoom: function(roomId) {
+                    var sender = prompt('대화명을 입력해 주세요.');
+                    if(sender != "") {
+                        console.log(">>>>>>>>>>> roomId : ", roomId);
+                        localStorage.setItem('wschat.sender',sender);
+                        localStorage.setItem('wschat.roomId',roomId);
+                        location.href="/chat/room/enter/"+roomId;
+                    }
                 }
             }
-        }
-    });
-</script>
+        });
+    </script>
 </body>
 </html>
