@@ -37,7 +37,7 @@ export const ContentList = (props) => {
         {/* <div className="contentDescription">{props.content.description}</div> */}
 
         {/* 나와의 거리 */}
-        <p>약 {props.content.distance.toFixed(2)}km</p>
+        {props.content.distance ? <p>약 {props.content.distance.toFixed(2)}km</p> : null}
 
         {/* 식재료 명 */}
         <div className="boardIngredientResList">
