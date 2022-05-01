@@ -57,7 +57,7 @@ export const ContentCreate = (props) => {
   /* 게시글 등록 */
   const handleSubmit = () => {
     console.log(state);
-    const token = localStorage.getItem('jwt-token');
+    const token = sessionStorage.getItem('jwt-token');
     const header = {
       headers: {
         'Content-Type': 'multipart/form-data',

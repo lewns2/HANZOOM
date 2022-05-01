@@ -133,7 +133,7 @@ export const PositioningMap = (props) => {
 
   // 유저 위치 정보 업데이트
   const updateUserLocInfo = async () => {
-    const token = localStorage.getItem('jwt-token');
+    const token = sessionStorage.getItem('jwt-token');
     await Axios.put(
       '/users/update/latAndlng',
       {

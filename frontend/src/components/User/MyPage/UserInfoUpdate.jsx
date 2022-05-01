@@ -36,7 +36,7 @@ export const UserInfoUpdate = (props) => {
   };
 
   const updateUserInfo = async () => {
-    const token = localStorage.getItem('jwt-token');
+    const token = sessionStorage.getItem('jwt-token');
     await Axios.put(
       '/users/update',
       {
