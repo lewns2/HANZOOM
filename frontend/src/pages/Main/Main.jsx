@@ -16,7 +16,7 @@ export const Main = () => {
   const [contents, setContents] = useState([]);
 
   const getContents = () => {
-    const token = localStorage.getItem('jwt-token');
+    const token = sessionStorage.getItem('jwt-token');
     Axios.get('/board/findAll?page=1&size=8&sort=viewCnt%2CDESC&ingredient=', {
       headers: { Authorization: `Bearer ${token}` },
     }).then((res) => {

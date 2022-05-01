@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Axios } from '../core/axios';
 
 export const getUserInfo = createAsyncThunk('GET/USERINFO', async () => {
-  const token = localStorage.getItem('jwt-token');
+  const token = sessionStorage.getItem('jwt-token');
   const response = await Axios.get('/users/find/me', {
     headers: {
       Authorization: `Bearer ${token}`,

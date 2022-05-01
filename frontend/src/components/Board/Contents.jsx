@@ -7,7 +7,7 @@ import Lottie from '../../components/Lottie';
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 export const Contents = (props) => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('jwt-token');
+  const token = sessionStorage.getItem('jwt-token');
 
   const [totalElements, setTotalElements] = useState(48);
   const [totalPages, setTotalPages] = useState(6);

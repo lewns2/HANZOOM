@@ -16,7 +16,7 @@ export const UserInfo = (props) => {
       return;
     }
 
-    const token = localStorage.getItem('jwt-token');
+    const token = sessionStorage.getItem('jwt-token');
     Axios.delete('/users/remove', {
       headers: {
         Authorization: `Bearer ${token}`,

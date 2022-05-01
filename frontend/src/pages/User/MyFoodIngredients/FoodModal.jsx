@@ -17,7 +17,7 @@ export const FoodModal = (props) => {
   });
 
   const registerIngre = async () => {
-    const token = localStorage.getItem('jwt-token');
+    const token = sessionStorage.getItem('jwt-token');
     Axios.post(
       '/userIngredient/register',
       {
@@ -43,7 +43,7 @@ export const FoodModal = (props) => {
   };
 
   const registerNeeds = () => {
-    const token = localStorage.getItem('jwt-token');
+    const token = sessionStorage.getItem('jwt-token');
     Axios.post(
       '/userIngredient/register',
       {
