@@ -15,7 +15,7 @@ export const BoardDetail = () => {
 
   const { id } = useParams();
   const [content, setContent] = useState(null);
-  const token = localStorage.getItem('jwt-token');
+  const token = sessionStorage.getItem('jwt-token');
   useEffect(() => {
     setUserInfo(user.userInfo);
 

@@ -13,7 +13,7 @@ export const MyFoodIngredients = () => {
   const [myBarterShareIngre, setMyBarterShareIngre] = useState([]);
 
   const getMyFoodIngre = () => {
-    const token = localStorage.getItem('jwt-token');
+    const token = sessionStorage.getItem('jwt-token');
     Axios.get('userIngredient/findAll', {
       headers: { Authorization: `Bearer ${token}` },
     })
