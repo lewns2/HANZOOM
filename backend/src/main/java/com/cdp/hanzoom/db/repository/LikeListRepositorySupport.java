@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,6 +15,7 @@ public class LikeListRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QLikeList qLikeList = QLikeList.likeList;
 
+    // 좋아요 체크
     public Optional<LikeList> findLikeListByUserEmailAndBoardNo(String userEmail, Long boardNo) {
         LikeList likeList = jpaQueryFactory
                 .select(qLikeList)
@@ -22,5 +24,18 @@ public class LikeListRepositorySupport {
                 .fetchOne();
         if(likeList == null) return Optional.empty();
         return Optional.ofNullable(likeList);
+    }
+
+
+    // 사용자대상 찜목록 조회
+    public List<LikeList> findByUserId(String userEamil) {
+        List<LikeList> likeLists = jpaQueryFactory
+                .select(qLikeList)
+                .from(qLikeList)
+                .where(qLikeList.user.userEmail.eq(userEamil))
+                .orderBy(qLikeList.board.boardNo.desc())
+                .fetch();
+        if(likeLists == null) return null;
+        return likeLists;
     }
 }
