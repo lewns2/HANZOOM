@@ -34,19 +34,18 @@ export const Calendar = (props) => {
 
   useEffect(() => {
     const my_date = new Date(props.originalDate);
-    console.log('👩‍🦰👩‍🦰👩‍🦰👩‍🦰👩‍🦰👩‍🦰👩‍🦰👩‍🦰', my_date);
+    console.log(props.originalDate);
     setMyDate(my_date);
   }, []);
+
   return (
     <>
       {myDate && (
         <DatePicker
           locale={ko}
           dateFormat="yyyy년 MM월 dd일" // 날짜 형식 설정
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}>
-          {console.log(myDate)}
-        </DatePicker>
+          selected={myDate}
+          onChange={(date) => setMyDate(date)}></DatePicker>
       )}
     </>
   );
