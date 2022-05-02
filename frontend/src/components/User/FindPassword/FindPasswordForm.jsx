@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { Axios } from '../../../core/axios';
+import { axios_apis } from '../../../core/axios';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const FindPasswordForm = () => {
@@ -24,7 +25,7 @@ export const FindPasswordForm = () => {
       return;
     }
 
-    const chkResult = await Axios.get(`/users/emailCheck/${email}`);
+    const chkResult = await Axios.get(`${axios_apis.users.emailCheck}/${email}`);
     if (chkResult.data) {
       alert('존재하지 않는 이메일입니다.');
       emailInput.current.focus();
