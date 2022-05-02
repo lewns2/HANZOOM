@@ -167,6 +167,18 @@ $speed: 0.8s;
   border-radius: 10px;
   z-index: 9999;
   animation: chat-show 0.3s;
+  @media only screen and (max-width: 1400px) {
+    width: 60% !important;
+  }
+  @media only screen and (max-width: 1200px) {
+    width: 70% !important;
+  }
+  @media only screen and (max-width: 991px) {
+    width: 60% !important;
+  }
+  @media only screen and (max-width: 767px) {
+    width: 95% !important;
+  }
 
   .chatHeader {
     height: 10%;
@@ -217,6 +229,13 @@ $speed: 0.8s;
         width: 45%;
         padding: 5px;
         border-radius: 10px;
+
+        @media only screen and (max-width: 991px) {
+          width: 60%;
+        }
+        @media only screen and (max-width: 767px) {
+          width: 65%;
+        }
       }
     }
 
