@@ -11,6 +11,7 @@ export const UserInfoUpdate = (props) => {
   const [userInfo, setUserInfo] = useState([]);
 
   const [userImg, setUserImg] = useState('');
+  const [userPreviewImg, setUserPreviewImg] = useState('');
   const [userNickname, setUserNickname] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [passwordType, setPasswordType] = useState({
@@ -22,21 +23,40 @@ export const UserInfoUpdate = (props) => {
 
   const dispatch = useDispatch();
 
-  const updateUser = () => {
+  const updateUser = async () => {
     var rule = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/;
     if (!rule.test(userPassword)) {
       alert('비밀번호는 8 ~ 12 자리수이며 문자, 숫자, 특수기호를 최소 1개씩 포함해야합니다.');
       passwordInput.current.focus();
       return;
     }
-    updateUserInfo();
+    await updateUserImage();
+    await updateUserInfo();
+    dispatch(getUserInfo());
+  };
 
-    // todo: 유저 이미지 변경
-    //   updateUserImg();
+  const updateUserImage = async () => {
+    const token = sessionStorage.getItem('jwt-token');
+    const formData = new FormData();
+    formData.append('file', userImg);
+    await Axios.put('/users/update/profileImage', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('이미지 등록 에러');
+      });
   };
 
   const updateUserInfo = async () => {
     const token = sessionStorage.getItem('jwt-token');
+
     await Axios.put(
       '/users/update',
       {
@@ -51,7 +71,6 @@ export const UserInfoUpdate = (props) => {
     )
       .then(() => {
         alert('회원 정보 수정이 완료되었습니다.');
-        dispatch(getUserInfo());
         props.setModalOpen(false);
       })
       .catch((error) => {
@@ -92,13 +111,20 @@ export const UserInfoUpdate = (props) => {
           <div className="col-lg-3 label">이미지</div>
           <div className="col-lg-9">
             <div className="uploadImage">
-              <img className="" src={userImg ? `${userImg}` : '/img/basicProfile.png'} alt="" />
+              <img
+                className=""
+                src={userPreviewImg ? `${userPreviewImg}` : '/img/basicProfile.png'}
+                alt=""
+              />
             </div>
             <input
               type="file"
               className="imgInput"
               accept="image/*"
-              onChange={(e) => setUserImg(URL.createObjectURL(e.target.files[0]))}
+              onChange={(e) => {
+                setUserPreviewImg(URL.createObjectURL(e.target.files[0]));
+                setUserImg(e.target.files[0]);
+              }}
             />
           </div>
         </div>
@@ -134,11 +160,11 @@ export const UserInfoUpdate = (props) => {
           </div>
         </div>
         <div className="d-flex justify-content-center">
-          <button className="updateBtn" onClick={updateUser}>
-            수정
-          </button>
           <button className="cancelBtn" onClick={() => props.setModalOpen(false)}>
             취소
+          </button>
+          <button className="updateBtn" onClick={updateUser}>
+            수정
           </button>
         </div>
       </div>

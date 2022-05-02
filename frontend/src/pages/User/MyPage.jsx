@@ -10,7 +10,7 @@ export const MyPage = () => {
 
   return (
     <>
-      <section className="container">
+      <section className="container mt-4">
         {modalOpen ? <UserInfoUpdate open={modalOpen} setModalOpen={setModalOpen} /> : null}
         <h1 className="pageTitle">마이페이지</h1>
         <div className="myPageWrap">
