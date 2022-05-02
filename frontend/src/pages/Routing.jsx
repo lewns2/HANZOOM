@@ -6,6 +6,7 @@ import { MyPage } from './User/MyPage';
 import { SignUp } from './User/SignUp';
 import { Login } from './User/Login';
 import { FindPassword } from './User/FindPassword';
+import { Recipe } from './Recipe/Recipe';
 
 import { Header } from '../components/Header';
 import { KaKaoCall } from '../components/User/Login/KaKaoCall';
@@ -46,6 +47,7 @@ export const Routing = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/find-password" element={<FindPassword />} />
         <Route path="/oauth/kakao/callback" element={<KaKaoCall />}></Route>
+        <Route path="/recipe" element={<Recipe />}></Route>
       </Routes>
       {!showChatList ? (
         <CommentOutlinedIcon
