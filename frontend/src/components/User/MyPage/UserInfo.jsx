@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Axios } from '../../../core/axios';
 import { clearUser } from '../../../Reducer/userSlice';
+import { BASE_IMG_URL } from '../../../core/s3';
 
 export const UserInfo = (props) => {
   const user = useSelector((state) => state.user);
@@ -47,7 +48,11 @@ export const UserInfo = (props) => {
           <div className="col-4 userImage">
             <img
               className=""
-              src={userInfo.userImage ? `${userInfo.userImage}` : '/img/basicProfile.png'}
+              src={
+                userInfo.userImage
+                  ? `${BASE_IMG_URL}${userInfo.userImage}`
+                  : '/img/basicProfile.png'
+              }
               alt=""
             />
           </div>
