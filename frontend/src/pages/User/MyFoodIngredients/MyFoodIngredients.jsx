@@ -5,10 +5,12 @@ import { useEffect } from 'react';
 import { Axios } from '../../../core/axios.js';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { FoodIngreList } from './FoodIngreList';
 
 export const MyFoodIngredients = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOpen2, setModalOpen2] = useState(false);
+
   const [myFoodIngre, setMyFoodIngre] = useState([]);
   const [myBarterShareIngre, setMyBarterShareIngre] = useState([]);
 
@@ -36,14 +38,14 @@ export const MyFoodIngredients = () => {
       getMyFoodIngre();
     }
   }, [modalOpen, modalOpen2]);
-
+  // 등록모달
   const openModal = () => {
     setModalOpen(true);
   };
   const closeModal = () => {
     setModalOpen(false);
   };
-
+  // 필요모달
   const openModal2 = () => {
     setModalOpen2(true);
   };
@@ -66,12 +68,19 @@ export const MyFoodIngredients = () => {
             {myFoodIngre.map((ingre, key) => (
               <div key={key}>
                 {ingre.type === '일반' ? (
-                  <div>
-                    <input type="checkbox" />
-                    {ingre.ingredientName}
-                    <EditIcon />
-                    <DeleteIcon />
-                  </div>
+                  // <div>
+                  //   <input type="checkbox" />
+                  //   {ingre.ingredientName}
+                  //   <EditIcon onClick={openModal3} />
+                  //   <FoodModal
+                  //     open={modalOpen3}
+                  //     close={closeModal3}
+                  //     header="식재료 수정"
+                  //     ingre={ingre}
+                  //   />
+                  //   <DeleteIcon onClick={() => deleteFoodIngre(ingre.userIngredientNo)} />
+                  // </div>
+                  <FoodIngreList ingre={ingre} />
                 ) : null}
               </div>
             ))}
