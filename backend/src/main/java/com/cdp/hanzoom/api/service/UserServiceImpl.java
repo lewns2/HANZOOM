@@ -1,7 +1,10 @@
 package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.*;
+import com.cdp.hanzoom.api.response.UserLikeListFindRes;
+import com.cdp.hanzoom.db.entity.LikeList;
 import com.cdp.hanzoom.db.entity.User;
+import com.cdp.hanzoom.db.repository.LikeListRepositorySupport;
 import com.cdp.hanzoom.db.repository.UserRepository;
 import com.cdp.hanzoom.db.repository.UserRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	S3FileUploadService s3FileUploadService;
+
+	@Autowired
+	LikeListRepositorySupport likeListRepositorySupport;
 
 	@Override
 	public User registerUser(UserRegisterReq userRegisterInfo) {
@@ -107,6 +115,23 @@ public class UserServiceImpl implements UserService {
 	public boolean deleteByUserEmail(User user) {
 		userRepository.delete(user);
 		return true;
+	}
+
+	@Override
+	public List<UserLikeListFindRes> findLikeListByUserId(String userEmail) {
+		List<LikeList> likeList = likeListRepositorySupport.findByUserId(userEmail);
+		System.out.println("debug>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.out.println(likeList);
+		List<UserLikeListFindRes> userLikeListResList = new ArrayList<UserLikeListFindRes>();
+		for(int i=0; i<likeList.size(); i++) {
+			UserLikeListFindRes userLikeListRes = new UserLikeListFindRes();
+
+			userLikeListRes.setLikeNo(likeList.get(i).getLikeNo());
+			userLikeListRes.setBoardNo(likeList.get(i).getBoard().getBoardNo());
+			userLikeListRes.setImagePath(likeList.get(i).getBoard().getImagePath());
+			userLikeListResList.add(userLikeListRes); // 리스트에 내가 찜한 리스트 저장.
+		}
+		return userLikeListResList;
 	}
 
 	@Override
