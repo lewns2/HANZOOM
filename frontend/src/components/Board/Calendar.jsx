@@ -5,7 +5,11 @@ import { ko } from 'date-fns/esm/locale';
 import { getYear, getMonth, getDate } from 'date-fns';
 
 export const Calendar = (props) => {
-  const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState(new Date());
+  const [myDate, setMyDate] = useState(null);
+  // const my_date = new Date(props.originalDate);
+  // const my_date = props.originalDate;
+  // console.log('>>>>>>>>>>>>>>', my_date);
 
   useEffect(() => {
     var m = 0;
@@ -28,11 +32,22 @@ export const Calendar = (props) => {
     props.setSelectedDate({ year, month, day });
   }, [startDate]);
 
+  useEffect(() => {
+    const my_date = new Date(props.originalDate);
+    console.log('👩‍🦰👩‍🦰👩‍🦰👩‍🦰👩‍🦰👩‍🦰👩‍🦰👩‍🦰', my_date);
+    setMyDate(my_date);
+  }, []);
   return (
-    <DatePicker
-      locale={ko}
-      dateFormat="yyyy년 MM월 dd일" // 날짜 형식 설정
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}></DatePicker>
+    <>
+      {myDate && (
+        <DatePicker
+          locale={ko}
+          dateFormat="yyyy년 MM월 dd일" // 날짜 형식 설정
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}>
+          {console.log(myDate)}
+        </DatePicker>
+      )}
+    </>
   );
 };
