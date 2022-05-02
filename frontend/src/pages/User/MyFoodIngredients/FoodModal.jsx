@@ -6,7 +6,7 @@ import './FoodModal.scss';
 
 export const FoodModal = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-  const { open, close, header, ingre } = props;
+  const { open, close, header, ingre, state, setState } = props;
   const [foods, setFoods] = useState({
     ingredient: null,
     purchaseDate: { year: null, month: null, day: null },
@@ -16,24 +16,24 @@ export const FoodModal = (props) => {
     ingredient: null,
   });
 
-  if (props.header === '식재료 수정') {
-    useEffect(() => {
-      setFoods({
-        ingredient: ingre.ingredientName,
-        purchaseDate: {
-          year: ingre.purchaseDate.slice(0, 4),
-          month: ingre.purchaseDate.slice(5, 7),
-          day: ingre.purchaseDate.slice(8, 10),
-        },
-        expirationDate: {
-          year: ingre.expirationDate.slice(0, 4),
-          month: ingre.expirationDate.slice(5, 7),
-          day: ingre.expirationDate.slice(8, 10),
-        },
-      });
-    }, []);
-    console.log(foods);
-  }
+  // if (props.header === '식재료 수정') {
+  //   useEffect(() => {
+  //     setFoods({
+  //       ingredient: ingre.ingredientName,
+  //       purchaseDate: {
+  //         year: ingre.purchaseDate.slice(0, 4),
+  //         month: ingre.purchaseDate.slice(5, 7),
+  //         day: ingre.purchaseDate.slice(8, 10),
+  //       },
+  //       expirationDate: {
+  //         year: ingre.expirationDate.slice(0, 4),
+  //         month: ingre.expirationDate.slice(5, 7),
+  //         day: ingre.expirationDate.slice(8, 10),
+  //       },
+  //     });
+  //   }, []);
+  //   console.log(foods);
+  // }
 
   const registerIngre = async () => {
     const token = sessionStorage.getItem('jwt-token');
@@ -95,36 +95,31 @@ export const FoodModal = (props) => {
   };
 
   const modifyIngre = () => {
-    const token = sessionStorage.getItem('jwt-token');
     const expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
     const purchase = `${foods.purchaseDate.year}-${foods.purchaseDate.month}-${foods.purchaseDate.day}`;
+    console.log('>>>>>>>>>수정 유통기한', expiration);
+    console.log('>>>>>>>>>수정 구매일자', purchase);
+
     if (foods.expirationDate.year === NaN) {
       expiration = '';
     }
     if (foods.purchaseDate.year === NaN) {
       purchase = '';
     }
-    Axios.put(
-      '/userIngredient/update',
-      {
-        expirationDate: expiration,
-        ingredientName: foods.ingredient,
-        purchaseDate: purchase,
-        type: '일반',
-        userIngredientNo: ingre.userIngredientNo,
-      },
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // },
-    )
+    Axios.put('/userIngredient/update', {
+      expirationDate: expiration,
+      ingredientName: foods.ingredient,
+      purchaseDate: purchase,
+      type: '일반',
+      userIngredientNo: ingre.userIngredientNo,
+    })
       .then((res) => {
         console.log(res);
+        setState(!state);
         close();
       })
       .catch((err) => {
-        alert('MY식재료 등록에 실패하였습니다😓');
+        alert('MY식재료 수정에 실패하였습니다😓');
         console.log(err);
       });
   };
@@ -155,15 +150,6 @@ export const FoodModal = (props) => {
             <button className="close" onClick={close}>
               취소
             </button>
-            {/* {props.header === '식재료 등록' ? (
-              <button className="apply" onClick={registerIngre}>
-                등록
-              </button>
-            ) : (
-              <button className="apply" onClick={registerNeeds}>
-                등록
-              </button>
-            )} */}
             {props.header === '식재료 등록' && (
               <button className="apply" onClick={registerIngre}>
                 등록
