@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Axios } from '../../../core/axios';
+import { axios_apis } from '../../../core/axios';
 import { clearUser } from '../../../Reducer/userSlice';
 import { BASE_IMG_URL } from '../../../core/s3';
 
@@ -18,7 +19,7 @@ export const UserInfo = (props) => {
     }
 
     const token = sessionStorage.getItem('jwt-token');
-    Axios.delete('/users/remove', {
+    Axios.delete(`${axios_apis.users.user}/remove`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

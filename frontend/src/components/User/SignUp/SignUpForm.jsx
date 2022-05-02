@@ -3,6 +3,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import { Axios } from '../../../core/axios';
+import { axios_apis } from '../../../core/axios';
 import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 export const SignUpForm = () => {
@@ -52,7 +53,7 @@ export const SignUpForm = () => {
       return;
     }
 
-    Axios.post('/users/register/signup', {
+    Axios.post(`${axios_apis.users.register}/signup`, {
       userEmail: email,
       userNickname: nickName,
       userPassword: password1,
@@ -81,7 +82,7 @@ export const SignUpForm = () => {
       return;
     }
 
-    const chkResult = await Axios.get(`/users/nicknameCheck/${nickName}`);
+    const chkResult = await Axios.get(`${axios_apis.users.nickNameCheck}/${nickName}`);
     if (chkResult.data) {
       alert('사용 가능한 닉네임입니다.');
       setNickNameChkState(true);
@@ -105,7 +106,7 @@ export const SignUpForm = () => {
       return;
     }
 
-    const chkResult = await Axios.get(`/users/emailCheck/${email}`);
+    const chkResult = await Axios.get(`${axios_apis.users.emailCheck}/${email}`);
     if (chkResult.data) {
       alert('사용 가능한 이메일입니다.');
       setEmailChkState(true);
@@ -142,7 +143,6 @@ export const SignUpForm = () => {
   return (
     <>
       <section className="container">
-        {console.log(nickName)}
         <div className="row">
           <h2 className="title text-center">SIGN UP</h2>
           <div className="formInput">
