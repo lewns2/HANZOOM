@@ -45,18 +45,22 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    getAddrName();
+    if (user.userInfo.lng && user.userInfo.lat) {
+      getAddrName();
+    }
   }, []);
 
   useEffect(() => {
-    setModalShow(false);
-    getAddrName();
+    if (user.userInfo.lng && user.userInfo.lat) {
+      setModalShow(false);
+      getAddrName();
+    }
   }, [user]);
 
   return (
     <header>
-      {console.log(userLocName)}
-      {console.log(user.userInfo)}
+      {/* {console.log(userLocName)}
+      {console.log(user.userInfo)} */}
       <PositioningMapModal show={modalShow} onHide={() => setModalShow(false)} />
       <Navbar collapseOnSelect expand="lg">
         <Container>
