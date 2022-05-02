@@ -67,28 +67,31 @@ export const AddMyFoodIngredients = (props) => {
     //   month: null,
     //   day: null,
     // });
-    const [modiExpirationDate, setModiExpirationDate] = useState({
-      year: null,
-      month: null,
-      day: null,
-    });
+    const [modiExpirationDate, setModiExpirationDate] = useState('');
+    // const [modiExpirationDate, setModiExpirationDate] = useState({
+    //   year: null,
+    //   month: null,
+    //   day: null,
+    // });
     const getIngreInfo = async () => {
       await Axios.get(`userIngredient/find/${props.ingre.userIngredientNo}`)
         .then((res) => {
           console.log('👩👩👩👩👩👩👩👩👩👩', res);
           setIngreName(res.data.ingredientName);
           setModiPurchaseDate(res.data.purchaseDate);
+          console.log(res.data.purchaseDate);
           // setPurchaseDate({
           //   year: res.data.purchaseDate.slice(0, 4),
           //   month: res.data.purchaseDate.slice(5, 7),
           //   day: res.data.purchaseDate.slice(8, 10),
           // });
-
-          setModiExpirationDate({
-            year: res.data.expirationDate.slice(0, 4),
-            month: res.data.expirationDate.slice(5, 7),
-            day: res.data.expirationDate.slice(8, 10),
-          });
+          setModiExpirationDate(res.data.expirationDate);
+          console.log(res.data.expirationDate);
+          // setModiExpirationDate({
+          //   year: res.data.expirationDate.slice(0, 4),
+          //   month: res.data.expirationDate.slice(5, 7),
+          //   day: res.data.expirationDate.slice(8, 10),
+          // });
         })
         .catch((err) => {
           console.log(err);
@@ -111,11 +114,13 @@ export const AddMyFoodIngredients = (props) => {
               className="form-control"
               type="text"
               placeholder={ingreName}
+              value={ingreName}
               onChange={(event) => {
                 props.setFoods({
                   ...props.foods,
                   ingredient: event.target.value,
                 });
+                setIngreName(event.target.value);
               }}
             />
           </div>
@@ -124,14 +129,18 @@ export const AddMyFoodIngredients = (props) => {
           <div>
             구매일자
             <CalendarMonthIcon />
-            <Calendar setSelectedDate={setModiPurchaseDate} originalDate={modiPurchaseDate} />
+            {modiPurchaseDate && (
+              <Calendar setSelectedDate={setModiPurchaseDate} originalDate={modiPurchaseDate} />
+            )}
           </div>
         </div>
         <div className="inputForm">
           <div>
             유통기한
             <CalendarMonthIcon />
-            <Calendar setSelectedDate={setModiExpirationDate} originalDate={modiExpirationDate} />
+            {modiExpirationDate && (
+              <Calendar setSelectedDate={setModiExpirationDate} originalDate={modiExpirationDate} />
+            )}
             <HelpOutlineRoundedIcon />
           </div>
         </div>
