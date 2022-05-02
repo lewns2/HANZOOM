@@ -3,12 +3,14 @@ package com.cdp.hanzoom.api.controller;
 import com.cdp.hanzoom.api.request.UserRegisterReq;
 import com.cdp.hanzoom.api.request.UserUpdateLatAndLngReq;
 import com.cdp.hanzoom.api.request.UserUpdateReq;
+import com.cdp.hanzoom.api.response.UserLikeListFindRes;
 import com.cdp.hanzoom.api.service.UserService;
 import com.cdp.hanzoom.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.cdp.hanzoom.api.response.UserRes;
@@ -23,6 +25,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -74,6 +77,23 @@ public class UserController {
 		
 		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
+	// 내가 찜한 게시글 보기
+	@PostMapping("/likeLlist")
+	@ApiOperation(value = "내가 찜한 게시글 조회(token)", notes = "<strong>마이 페이지에 표현할 <strong>찜 목록을 조회</strong> 한다.</strong>한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<List<UserLikeListFindRes>> boardLikeList(@ApiIgnore Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getDetails();
+		String userEmail = userDetails.getUsername();
+		List<UserLikeListFindRes> userLikeListFindRes = userService.findLikeListByUserId(userEmail);;
+
+		return new ResponseEntity<List<UserLikeListFindRes>>(userLikeListFindRes, HttpStatus.OK);
+	}
+
 	// 회원 정보 수정 (닉네임, 비밀번호 수정)
 	@ApiOperation(value = "회원 정보 수정 (닉네임, 비밀번호 수정) (token)", notes = "회원 정보 수정 (닉네임, 비밀번호 수정)")
 	@PutMapping("/update")
