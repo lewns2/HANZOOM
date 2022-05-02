@@ -62,36 +62,15 @@ export const AddMyFoodIngredients = (props) => {
   } else if (props.header === '식재료 수정') {
     const [ingreName, setIngreName] = useState();
     const [modiPurchaseDate, setModiPurchaseDate] = useState('');
-    // const [purchaseDate, setPurchaseDate] = useState({
-    //   year: null,
-    //   month: null,
-    //   day: null,
-    // });
     const [modiExpirationDate, setModiExpirationDate] = useState('');
-    // const [modiExpirationDate, setModiExpirationDate] = useState({
-    //   year: null,
-    //   month: null,
-    //   day: null,
-    // });
+
     const getIngreInfo = async () => {
       await Axios.get(`userIngredient/find/${props.ingre.userIngredientNo}`)
         .then((res) => {
           console.log('👩👩👩👩👩👩👩👩👩👩', res);
           setIngreName(res.data.ingredientName);
           setModiPurchaseDate(res.data.purchaseDate);
-          console.log(res.data.purchaseDate);
-          // setPurchaseDate({
-          //   year: res.data.purchaseDate.slice(0, 4),
-          //   month: res.data.purchaseDate.slice(5, 7),
-          //   day: res.data.purchaseDate.slice(8, 10),
-          // });
           setModiExpirationDate(res.data.expirationDate);
-          console.log(res.data.expirationDate);
-          // setModiExpirationDate({
-          //   year: res.data.expirationDate.slice(0, 4),
-          //   month: res.data.expirationDate.slice(5, 7),
-          //   day: res.data.expirationDate.slice(8, 10),
-          // });
         })
         .catch((err) => {
           console.log(err);
@@ -99,12 +78,16 @@ export const AddMyFoodIngredients = (props) => {
     };
     useEffect(() => {
       getIngreInfo();
+    }, []);
+
+    useEffect(() => {
       props.setFoods({
         ...props.foods,
         purchaseDate: modiPurchaseDate,
         expirationDate: modiExpirationDate,
       });
-    }, []);
+      console.log(props);
+    }, [modiPurchaseDate, modiExpirationDate]);
     return (
       <div className="applyForm">
         <div className="inputForm">

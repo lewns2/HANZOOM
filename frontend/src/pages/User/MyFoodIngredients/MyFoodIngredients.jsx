@@ -10,6 +10,7 @@ import { FoodIngreList } from './FoodIngreList';
 export const MyFoodIngredients = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOpen2, setModalOpen2] = useState(false);
+  const [state, setState] = useState(false);
 
   const [myFoodIngre, setMyFoodIngre] = useState([]);
   const [myBarterShareIngre, setMyBarterShareIngre] = useState([]);
@@ -37,7 +38,7 @@ export const MyFoodIngredients = () => {
     if (modalOpen === false) {
       getMyFoodIngre();
     }
-  }, [modalOpen, modalOpen2]);
+  }, [modalOpen, modalOpen2, state]);
   // 등록모달
   const openModal = () => {
     setModalOpen(true);
@@ -68,19 +69,7 @@ export const MyFoodIngredients = () => {
             {myFoodIngre.map((ingre, key) => (
               <div key={key}>
                 {ingre.type === '일반' ? (
-                  // <div>
-                  //   <input type="checkbox" />
-                  //   {ingre.ingredientName}
-                  //   <EditIcon onClick={openModal3} />
-                  //   <FoodModal
-                  //     open={modalOpen3}
-                  //     close={closeModal3}
-                  //     header="식재료 수정"
-                  //     ingre={ingre}
-                  //   />
-                  //   <DeleteIcon onClick={() => deleteFoodIngre(ingre.userIngredientNo)} />
-                  // </div>
-                  <FoodIngreList ingre={ingre} />
+                  <FoodIngreList ingre={ingre} state={state} setState={setState} />
                 ) : null}
               </div>
             ))}
