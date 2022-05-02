@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Axios } from '../../../core/axios';
 import { getUserInfo } from '../../../Reducer/userSlice';
+import { axios_apis } from '../../../core/axios';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -39,7 +40,7 @@ export const UserInfoUpdate = (props) => {
     const token = sessionStorage.getItem('jwt-token');
     const formData = new FormData();
     formData.append('file', userImg);
-    await Axios.put('/users/update/profileImage', formData, {
+    await Axios.put(`${axios_apis.users.update}/profileImage`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${token}`,
@@ -58,7 +59,7 @@ export const UserInfoUpdate = (props) => {
     const token = sessionStorage.getItem('jwt-token');
 
     await Axios.put(
-      '/users/update',
+      `${axios_apis.users.update}`,
       {
         userNickname: userNickname,
         userPassword: userPassword,

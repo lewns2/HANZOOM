@@ -3,6 +3,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import kakaoimage from '../../../assets/images/kakao_login_medium_narrow.png';
 import { Axios } from '../../../core/axios';
+import { axios_apis } from '../../../core/axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getUserInfo, setCode } from '../../../Reducer/userSlice';
@@ -33,7 +34,7 @@ export const LoginForm = () => {
       return;
     }
 
-    const chkResult = await Axios.get(`/users/emailCheck/${email}`);
+    const chkResult = await Axios.get(`${axios_apis.users.emailCheck}/${email}`);
     if (chkResult.data) {
       swal('로그인 실패', '존재하지 않는 이메일입니다.\n 이메일을 다시 확인해주세요!', 'error', {
         buttons: false,
