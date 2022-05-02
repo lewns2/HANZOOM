@@ -78,7 +78,7 @@ public class UserController {
 		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
 	// 내가 찜한 게시글 보기
-	@PostMapping("/likeLlist")
+	@PostMapping("/likeList")
 	@ApiOperation(value = "내가 찜한 게시글 조회(token)", notes = "<strong>마이 페이지에 표현할 <strong>찜 목록을 조회</strong> 한다.</strong>한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
