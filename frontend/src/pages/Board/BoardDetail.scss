@@ -140,11 +140,22 @@
       margin-right: 5px;
       box-shadow: 0 4px 4px -4px #777;
     }
-    #detailActiveBtn {
+    #detailModifyBtn {
       font-size: 16px;
       font-weight: bolder;
       background-color: #f7c343;
       border: 2px solid #f7c343;
+      border-radius: 8px;
+      padding: 3px 2px;
+      margin-right: 5px;
+      box-shadow: 0 4px 4px -4px #777;
+    }
+    #detailDeleteBtn {
+      color: white;
+      font-size: 16px;
+      font-weight: bolder;
+      background-color: rgb(223, 0, 0);
+      border: 2px solid rgb(223, 0, 0);
       border-radius: 8px;
       padding: 3px 2px;
       margin-right: 5px;
