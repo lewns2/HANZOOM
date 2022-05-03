@@ -147,12 +147,6 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:${querydslVer}")
     implementation("com.querydsl:querydsl-apt:${querydslVer}")
 
-    // redis
-    implementation 'org.springframework.boot:spring-boot-starter-redis:1.4.6.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    //embedded-redis
-    implementation 'it.ozimov:embedded-redis:0.7.2'
-
     //STOMP 웹소캣 서버 사이드 테스트를 위한 의존성 추가
     implementation 'org.springframework.boot:spring-boot-starter-mustache'
 
@@ -162,14 +156,17 @@ dependencies {
     implementation 'org.webjars:stomp-websocket:2.3.3-1'
     implementation('org.webjars:webjars-locator:0.30')
 
-    //view
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
-    implementation 'org.springframework.boot:spring-boot-devtools'
-    implementation 'org.webjars.bower:bootstrap:4.3.1'
-    implementation 'org.webjars.bower:vue:2.5.16'
-    implementation 'org.webjars.bower:axios:0.17.1'
+    //gson
+//    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+//    implementation 'org.springframework.boot:spring-boot-devtools'
+//    implementation 'org.webjars.bower:bootstrap:4.3.1'
+//    implementation 'org.webjars.bower:vue:2.5.16'
+//    implementation 'org.webjars.bower:axios:0.17.1'
     implementation 'com.google.code.gson:gson:2.8.0'
+
+    // MongoDB 추가
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     //AWS S3관련 의존성 추가
     implementation 'io.awspring.cloud:spring-cloud-aws-context:2.3.3'

@@ -1,44 +1,35 @@
 package com.cdp.hanzoom.db.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.io.Serializable;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
-@Entity
+@Slf4j
 @ToString
-@NoArgsConstructor
-public class ChatRoom implements Serializable {
-
-    private static final long serialVersionUID = 6494678977089006639L;
+@Document(collection = "chats")
+public class ChatRoom {
 
     @Id
-    @Column(name = "chatroom_id")
-    String chatroomId;
+    private String id;                      // 채팅방 아이디
+    private String userEmail1;              // 채팅 참가 유저1
+    private String userEmail2;              // 채팅 참가 유저2
+    private Long boardNo;                 // 게시글 번호
+    private List<ChatMessage> chatMessages; // 해당 채팅방의 메시지들
 
-    @Column(name = "name")
-    String name;
-
-    @Column(name = "user1")
-    String user1;
-
-    @Column(name = "user2")
-    String user2;
-
-    public static ChatRoom create(String name, String userEmail, String otherUserEmail) {
+    public static ChatRoom create(String userEmail1, String userEmail2, Long boardNo) {
         ChatRoom chatRoom = new ChatRoom();
-        chatRoom.chatroomId = UUID.randomUUID().toString();
-        chatRoom.name = name;
-        chatRoom.user1 = userEmail;
-        chatRoom.user2 = otherUserEmail;
+        chatRoom.userEmail1 = userEmail1;
+        chatRoom.userEmail2 = userEmail2;
+        chatRoom.boardNo = boardNo;
+        chatRoom.chatMessages = new ArrayList<ChatMessage>();
         return chatRoom;
     }
 }
