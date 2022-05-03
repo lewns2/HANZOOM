@@ -123,6 +123,26 @@ export const FoodModal = (props) => {
         console.log(err);
       });
   };
+  const modifyNeeds = () => {
+    console.log(needs.ingredient);
+    console.log(ingre.userIngredientNo);
+    Axios.put('/userIngredient/update', {
+      expirationDate: '',
+      ingredientName: needs.ingredient,
+      purchaseDate: '',
+      type: '필요',
+      userIngredientNo: ingre.userIngredientNo,
+    })
+      .then((res) => {
+        console.log(res);
+        setState(!state);
+        close();
+      })
+      .catch((err) => {
+        alert('필요목록 수정에 실패하였습니다😓');
+        console.log(err);
+      });
+  };
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
     <div className={open ? 'openModal modal' : 'modal'}>
@@ -143,7 +163,12 @@ export const FoodModal = (props) => {
                 ingre={ingre}
               />
             ) : (
-              <AddNeedsIngredients setNeeds={setNeeds} needs={needs} />
+              <AddNeedsIngredients
+                setNeeds={setNeeds}
+                needs={needs}
+                header={header}
+                ingre={ingre}
+              />
             )}
           </main>
           <footer>
@@ -162,6 +187,11 @@ export const FoodModal = (props) => {
             )}
             {props.header === '식재료 수정' && (
               <button className="apply" onClick={modifyIngre}>
+                수정
+              </button>
+            )}
+            {props.header === '필요목록 수정' && (
+              <button className="apply" onClick={modifyNeeds}>
                 수정
               </button>
             )}

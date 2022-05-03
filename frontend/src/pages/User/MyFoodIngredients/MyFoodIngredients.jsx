@@ -1,10 +1,9 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import './MyFoodIngredients.scss';
 import { FoodModal } from './FoodModal';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import { Axios } from '../../../core/axios.js';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { FoodIngreList } from './FoodIngreList';
 
 export const MyFoodIngredients = () => {
@@ -39,6 +38,7 @@ export const MyFoodIngredients = () => {
       getMyFoodIngre();
     }
   }, [modalOpen, modalOpen2, state]);
+
   // 등록모달
   const openModal = () => {
     setModalOpen(true);
@@ -73,7 +73,17 @@ export const MyFoodIngredients = () => {
                 ) : null}
               </div>
             ))}
-            <button className="ingreBtn">레시피 추천</button>
+            <button className="ingreBtn">
+              <Link
+                to={{
+                  pathname: '/recipe',
+                  state: {
+                    ingredient: '오이',
+                  },
+                }}>
+                레시피 추천
+              </Link>
+            </button>
           </div>
         </section>
         <section id="barterShare" className="col">
@@ -104,16 +114,14 @@ export const MyFoodIngredients = () => {
             {myFoodIngre.map((ingre, key) => (
               <div key={key}>
                 {ingre.type === '필요' ? (
-                  <div>
-                    <input type="checkbox" />
-                    {ingre.ingredientName}
-                    <EditIcon />
-                    <DeleteIcon />
-                  </div>
+                  <FoodIngreList ingre={ingre} state={state} setState={setState} />
                 ) : null}
               </div>
             ))}
-            <button className="ingreBtn">선택 매칭</button>
+            <div className="d-flex justify-content-center">
+              <button className="ingreBtn">게시글 등록</button>
+              <button className="ingreBtn">선택 매칭</button>
+            </div>
           </div>
         </section>
       </div>
