@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Axios } from '../../core/axios';
 import { useParams } from 'react-router-dom';
 import sample from '../../assets/images/Initimage.PNG';
+import needSample from '../../assets/images/need.PNG';
 import { useNavigate } from 'react-router-dom';
 import './BoardDetail.scss';
 import { BreakfastDiningRounded } from '@mui/icons-material';
@@ -77,9 +78,13 @@ export const BoardDetail = () => {
 
             <div className="detailBody row">
               <div className="detailIngredientImgWrap col-6">
-                <img
-                  className="detailIngredientImg"
-                  src={`${BASE_IMG_URL}${content.imagePath}`}></img>
+                {content.imagePath == 'need.jpg' ? (
+                  <img className="detailIngredientImg" src={needSample}></img>
+                ) : (
+                  <img
+                    className="detailIngredientImg"
+                    src={`${BASE_IMG_URL}${content.imagePath}`}></img>
+                )}
               </div>
               <div className="detailContent col-6">
                 <div className="detailTitle">{content.title}</div>

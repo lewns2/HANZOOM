@@ -1,6 +1,7 @@
 import { Main } from './Main/Main';
 import { Board } from './Board/Board';
 import { BoardDetail } from './Board/BoardDetail';
+import { BoardCreate } from './Board/BoardCreate';
 import { MyFoodIngredients } from './User/MyFoodIngredients/MyFoodIngredients';
 import { MyPage } from './User/MyPage';
 import { SignUp } from './User/SignUp';
@@ -41,6 +42,7 @@ export const Routing = () => {
         <Route path="/" element={<Main />} />
         <Route path="/board" element={<Board />} />
         <Route path="/board/:id" element={<BoardDetail />} />
+        <Route path="/board/write" element={<BoardCreate />} />
         <Route path="/my-food-ingredients" element={<MyFoodIngredients />} />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/login" element={<Login />} />
