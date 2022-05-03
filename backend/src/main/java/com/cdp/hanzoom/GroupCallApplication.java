@@ -11,7 +11,6 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.nio.charset.StandardCharsets;
 
-@EnableCaching
 @SpringBootApplication
 public class GroupCallApplication {
     public static final String APPLICATION_LOCATIONS = "spring.config.location="
