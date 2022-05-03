@@ -24,7 +24,7 @@ export const Pagination = (props) => {
 
   return (
     <div className="paginationWrap d-flex justify-content-center mt-3">
-      <nav>
+      <nav className="paginationReposive">
         <ul className="pagination">
           <li className="page-item">
             <a className="page-link" href="#" aria-label="Previous">
