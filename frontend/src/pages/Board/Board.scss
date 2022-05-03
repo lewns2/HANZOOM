@@ -31,15 +31,6 @@ $desktop: 1400px;
     border-radius: 8px;
     text-align: center;
   }
-
-  @media only screen and (max-width: $mobile) {
-    #text-area {
-      display: none;
-    }
-    #searchBtn {
-      display: none;
-    }
-  }
 }
 
 /* 내 위치, 필터(거리순, 최신순, 조회순) */
@@ -59,15 +50,8 @@ $desktop: 1400px;
   padding: 8px 0;
   margin: 10px 0;
   text-align: center;
-  @media only screen and (max-width: $mobile) {
-    display: none;
-  }
 }
-.filter {
-  @media only screen and (max-width: $mobile) {
-    visibility: hidden;
-  }
-}
+
 /* 선택되지 않은 필터 버튼 스타일 */
 .filter #filterBtn {
   width: 70px;
@@ -170,72 +154,20 @@ $desktop: 1400px;
     }
   }
 
-  // .contentDescription {
-  //   p {
-  //     overflow: hidden;
-  //     text-overflow: ellipsis;
-  //     white-space: nowrap;
-  //   }
-  // }
-
   .boardIngredientResList {
     display: flex;
   }
-
-  .likeBtn {
-    text-align: right;
-  }
-
-  .cardBodyCounts {
+  .cardBodyCountsLike {
     display: flex;
-    color: #868e96;
-    font-size: 14px;
-  }
+    justify-content: space-between;
+    .likeBtn {
+      text-align: right;
+    }
 
-  @media only screen and (max-width: $tablet) {
-    .contentCard {
-      width: 100%;
+    .cardBodyCounts {
       display: flex;
-    }
-    .cardImgWrap {
-      max-width: 50%;
-      height: auto;
-      .cardImg {
-        max-width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-    }
-    .status {
-      width: 60px;
-      font-size: 13px;
-    }
-  }
-  @media only screen and (max-width: $mobile) {
-    .contentCard {
-      width: 95%;
-      display: flex;
-    }
-    .card-title {
-      font-size: 16px;
-      font-weight: bolder;
-    }
-    .cardImgWrap {
-      max-width: 30%;
-      height: auto;
-      .cardImg {
-        max-width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-    }
-    .status {
-      width: 60px;
-      font-size: 13px;
-    }
-    .contentDescription {
-      text-overflow: ellipsis;
-      display: none;
+      color: #868e96;
+      font-size: 14px;
     }
   }
 }
@@ -308,4 +240,60 @@ $desktop: 1400px;
   justify-content: center;
   margin: 30px;
   height: 600px;
+}
+
+@media only screen and (max-width: $mobile) {
+  .searchBar {
+    #text-area {
+      display: none;
+    }
+    #searchBtn {
+      display: none;
+    }
+  }
+  .locationBtn {
+    display: none;
+    .filter {
+      visibility: hidden;
+    }
+  }
+  .body {
+    justify-content: center;
+  }
+  .paginationWrap {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: $mobile) {
+  .header {
+    display: none;
+  }
+
+  .searchBar {
+    #text-area {
+      display: none;
+    }
+    #searchBtn {
+      display: none;
+    }
+  }
+  .locationBtn {
+    display: none;
+    .filter {
+      visibility: hidden;
+    }
+  }
+  .paginationReposive {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: $tablet) {
+  .locationBtn {
+    display: none;
+    .filter {
+      visibility: hidden;
+    }
+  }
 }

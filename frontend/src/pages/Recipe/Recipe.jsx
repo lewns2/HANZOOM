@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { RecipeModal } from '../../components/Recipe/RecipeModal';
 import Slider from 'react-slick';
 import { settings } from '../../constants/slider';
-import './Recipe.scss';
 import sample from '../../assets/images/Initimage.PNG';
 import { display } from '@mui/system';
+import { Axios } from '../../core/axios';
+const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
-export const Recipe = () => {
+import './Recipe.scss';
+
+export const Recipe = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -15,6 +18,12 @@ export const Recipe = () => {
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  useEffect(() => {
+    Axios.get(`/userIngredient/recipe?${props.ingredients}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <section className="container">
@@ -33,7 +42,10 @@ export const Recipe = () => {
               <Slider {...settings}>
                 {contents.map((content, key) => (
                   <>
-                    <div className="imgHoverEvent event1" key={key} onClick={openModal}>
+                    <div
+                      className="imgHoverEvent event1"
+                      key={content.recipeNo}
+                      onClick={openModal}>
                       <div className="imgWrap">
                         <img className="imgBox" src={content.imagePath} alt="..." />
                       </div>

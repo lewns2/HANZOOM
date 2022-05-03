@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import sample from '../../assets/images/Initimage.PNG';
 import { Axios } from '../../core/axios';
+import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
 import Lottie from '../../components/Lottie';
 
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
@@ -15,7 +16,7 @@ export const Contents = (props) => {
 
   useEffect(() => {
     Axios.get(
-      `/board/findAll?page=${props.page}&size=${props.size}&sort=${props.selectedFilter}%2CDESC&ingredient=${props.searchKeyword}`,
+      `/board/findAll?page=${props.page}&size=8&sort=${props.selectedFilter}%2CDESC&ingredient=${props.searchKeyword}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       },
@@ -27,7 +28,6 @@ export const Contents = (props) => {
         props.setTotalElements(res.data.totalElements);
       })
       .catch((err) => console.log(err));
-    console.log(props.searchKeyword.length);
   }, [props.page, props.size, props.selectedFilter, props.searchKeyword]);
 
   const moveToDetail = (num) => {
@@ -48,7 +48,7 @@ export const Contents = (props) => {
                 <img src={`${BASE_IMG_URL}${content.imagePath}`} className="cardImg" alt="..." />
               </div>
               {/* 본문 */}
-              <div className="card-body">
+              <div className="cardBody">
                 {/* 제목, 거래 상태 */}
                 <div className="cardBodyHeader row">
                   <div className="cardTitle col-8">
@@ -63,28 +63,32 @@ export const Contents = (props) => {
                 {/* <div className="contentDescription">{content.description}</div> */}
 
                 {/* 나와의 거리 */}
-                <p>약 {content.distance}km</p>
+                <p>약 {content.distance.toFixed(1)}km</p>
 
                 {/* 식재료 명 */}
                 <div className="boardIngredientResList">
-                  {content.boardFindIngredientResList.map((ingre, index) => (
-                    <div key={index}>
-                      <p>#{ingre.ingredientName}&nbsp;</p>
-                    </div>
-                  ))}
+                  {content.boardFindIngredientResList.length == 0 ? (
+                    <p>-</p>
+                  ) : (
+                    content.boardFindIngredientResList.map((ingre, index) => (
+                      <div key={index}>
+                        <p>#{ingre.ingredientName}&nbsp;</p>
+                      </div>
+                    ))
+                  )}
                 </div>
 
-                <div className="cardBodyCounts">
-                  <p>조회 {content.viewCnt} ∙</p>
-                  &nbsp;
-                  <p> 관심 {content.likeCnt}</p>
-                </div>
-
-                {/* 좋아요 표시 */}
-                <div
-                  className="likeBtn"
-                  style={{ visibility: content.like ? 'visible' : 'hidden' }}>
-                  좋아요 버튼
+                <div className="cardBodyCountsLike">
+                  <div className="cardBodyCounts">
+                    <p>조회 {content.viewCnt} ∙</p>
+                    &nbsp;
+                    <p> 관심 {content.likeCnt}</p>
+                  </div>
+                  {/* <ThumbUpTwoToneIcon
+                    className="likeBtn"
+                    style={{ visibility: content.like ? 'visible' : 'hidden' }}>
+                    좋아요 버튼
+                  </ThumbUpTwoToneIcon> */}
                 </div>
               </div>
             </div>

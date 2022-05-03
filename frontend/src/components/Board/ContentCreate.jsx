@@ -48,7 +48,8 @@ export const ContentCreate = (props) => {
   /* post 요청 보낼 데이터들 */
   const [state, setState] = useState({
     title: null,
-    ingredientList: ['반건조오징어'],
+    // 유저의 식재료에 등록된 user_ingredient_no 등록
+    userIngredientNo: [7],
     type: null,
     description: null,
     // sellByDate: { year: null, month: null, day: null },
@@ -76,46 +77,56 @@ export const ContentCreate = (props) => {
     Axios.post('/board/register', formData, header)
       .then((res) => console.log(res), console.log(formData))
       .catch((err) => console.log(err));
+
     /* 공란 에러 발생 */
-    // let errorKeyword = null;
-    // const keys = Object.keys(state); // 객체의 key 추출
-    // keys.map((key) => {
-    //   if (state[key] == null) {
-    //     errorKeyword = key;
-    //   }
-    // });
+    let errorKeyword = null;
+    const keys = Object.keys(state); // 객체의 key 추출
+    keys.map((key) => {
+      if (state[key] == null) {
+        console.log(state[key]);
+        errorKeyword = key;
+      } else if (uploadImg == Initimage) {
+        errorKeyword = 'img';
+        console.log(errorKeyword);
+      }
+    });
 
-    // switch (errorKeyword) {
-    //   case 'title':
-    //     errorKeyword = '제목을 입력해주세요!';
-    //     break;
-    //   case 'img':
-    //     errorKeyword = '이미지를 등록해주세요!';
-    //     break;
-    //   case 'ingredient':
-    //     errorKeyword = '식재료를 선택해주세요!';
-    //     break;
-    //   case 'tradeType':
-    //     errorKeyword = '거래 종류를 선택해주세요!';
-    //     break;
-    //   case 'description':
-    //     errorKeyword = '내용을 입력해주세요!';
-    //     break;
-    //   default:
-    //     break;
-    // }
+    switch (errorKeyword) {
+      case 'title':
+        errorKeyword = '제목을 입력해주세요!';
+        break;
+      case 'img':
+        errorKeyword = '이미지를 등록해주세요!';
+        break;
+      case 'tradeType':
+        errorKeyword = '거래 종류를 선택해주세요!';
+        break;
+      case 'description':
+        errorKeyword = '내용을 입력해주세요!';
+        break;
+      default:
+        break;
+    }
 
-    // if (errorKeyword != null) {
-    //   alert(`${errorKeyword}`);
-    //   return;
-    // } else {
-    //   Axios.post('board/register', {
-    //     formData,
-    //     header,
-    //   })
-    //     .then((res) => alert('게시글이 성공적으로 등록되었습니다. SweetAlert2로 나중에 바꿔야지'))
-    //     .catch((err) => console.log(err));
-    // }
+    if (errorKeyword != null) {
+      swal('등록 실패', `${errorKeyword}`, 'error');
+      return;
+    } else {
+      Axios.post('board/register', {
+        formData,
+        header,
+      })
+        .then(
+          (res) => (
+            swal('등록 성공', '게시글이 성공적으로 등록되었습니다', 'success', {
+              buttons: false,
+              timer: 1800,
+            }),
+            (close = { close })
+          ),
+        )
+        .catch((err) => console.log(err));
+    }
 
     /* 성공했다면, 모달 창 닫기 */
   };
@@ -187,6 +198,13 @@ export const ContentCreate = (props) => {
                   type="button"
                   className="btn btn-outline-warning"
                   id="tradeTypeBtn1"
+                  onClick={() => selectedType('일반')}>
+                  일반
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-warning"
+                  id="tradeTypeBtn1"
                   onClick={() => selectedType('나눔')}>
                   나눔
                 </button>
@@ -201,8 +219,8 @@ export const ContentCreate = (props) => {
                   type="button"
                   className="btn btn-outline-warning"
                   id="tradeTypeBtn3"
-                  onClick={() => selectedType('원해요')}>
-                  원해요
+                  onClick={() => selectedType('필요')}>
+                  필요
                 </button>
               </div>
             </div>
