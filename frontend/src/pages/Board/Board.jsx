@@ -2,22 +2,12 @@ import { useEffect, useState } from 'react';
 import { SearchBar } from '../../components/Board/SearchBar';
 import { Contents } from '../../components/Board/Contents';
 import { Pagination } from '../../components/Board/Pagination';
-import { ContentCreate } from '../../components/Board/ContentCreate';
 import { MyLocation } from '../../components/Board/MyLocation';
+import { Link } from 'react-router-dom';
 
 import './Board.scss';
 
 export const Board = () => {
-  /* 모달을 여닫기 상태를 확인 */
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
   /* 버튼 클릭 상태 여부를 확인 */
   const [selectedFilter, setSelectedFilter] = useState('boardNo');
   const [isClickDist, setIsClickDist] = useState(false);
@@ -73,21 +63,19 @@ export const Board = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   /* 검색 테스트용 */
   useEffect(() => {
-    // console.log(searchKeyword);
     setOffset((page - 1) * limit);
-    console.log(page, offset);
   }, [searchKeyword, page]);
 
   return (
     <section className="container mt-1 px-2 py-3">
       <div className="header">
         <h1>게시판</h1>
-        <button onClick={openModal}>글쓰기</button>
+        <Link to="/board/write">
+          <button>글쓰기</button>
+        </Link>
       </div>
 
       <SearchBar setSearchKeyword={setSearchKeyword} />
-
-      <ContentCreate open={modalOpen} close={closeModal}></ContentCreate>
 
       <div className="body row px-4">
         <div className="col-5">

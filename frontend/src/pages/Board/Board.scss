@@ -172,45 +172,6 @@ $desktop: 1400px;
   }
 }
 
-/* 글 생성 시, 뒷 배경 (모달 시, dimmed 효과) */
-.content-create-form {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 99;
-  background-color: rgba(0, 0, 0, 0.8);
-  // background-color: white;
-
-  /* 글 생성 모달 내부 */
-  .formWrap {
-    width: 120vh;
-    height: 90vh;
-    padding-top: 40px;
-    padding-left: 40px;
-    padding-right: 40px;
-    border-radius: 0.8rem;
-    background-color: #fffcf2;
-    overflow: hidden;
-
-    #yellowbtn {
-      margin-right: 5px;
-      border-radius: 0.8rem;
-    }
-  }
-}
-
-/* 글 생성 모달 전체 */
-.content-create-form.openModal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* 팝업이 열릴때 스르륵 열리는 효과 */
-  // animation: content-create-form-bg-show 0.6s;
-}
-
 /* 페이지네이션 */
 .paginationWrap {
   display: fixed;
@@ -259,6 +220,11 @@ $desktop: 1400px;
   }
   .body {
     justify-content: center;
+  }
+
+  .contentCard {
+    max-width: 30%;
+    height: auto;
   }
   .paginationWrap {
     display: none;

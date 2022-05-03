@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import sample from '../../assets/images/Initimage.PNG';
+import needSample from '../../assets/images/need.PNG';
 import { Axios } from '../../core/axios';
 import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
 import Lottie from '../../components/Lottie';
@@ -45,7 +46,11 @@ export const Contents = (props) => {
               onClick={() => moveToDetail(content.boardNo)}>
               {/*  이미지  */}
               <div className="cardImgWrap">
-                <img src={`${BASE_IMG_URL}${content.imagePath}`} className="cardImg" alt="..." />
+                {content.imagePath == 'need.jpg' ? (
+                  <img src={needSample} className="cardImg" alt="..." />
+                ) : (
+                  <img src={`${BASE_IMG_URL}${content.imagePath}`} className="cardImg" alt="..." />
+                )}
               </div>
               {/* 본문 */}
               <div className="cardBody">
