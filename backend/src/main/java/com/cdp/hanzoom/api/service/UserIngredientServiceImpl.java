@@ -120,8 +120,17 @@ public class UserIngredientServiceImpl implements UserIngredientService {
         Long userIngredientNo = userIngredientUpdateReq.getUserIngredientNo();
         Long ingredientNo = ingredient.getIngredientNo();
         String type = userIngredientUpdateReq.getType();
-        LocalDate purchaseDate = LocalDate.parse(userIngredientUpdateReq.getPurchaseDate().substring(0,10), DateTimeFormatter.ISO_DATE);
-        LocalDate expirationDate = LocalDate.parse(userIngredientUpdateReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+
+        LocalDate purchaseDate = null;
+        LocalDate expirationDate = null;
+
+        if(userIngredientUpdateReq.getPurchaseDate().length() != 0) {
+            purchaseDate = LocalDate.parse(userIngredientUpdateReq.getPurchaseDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+        }
+
+        if(userIngredientUpdateReq.getExpirationDate().length() != 0) {
+            expirationDate = LocalDate.parse(userIngredientUpdateReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+        }
 
         userIngredientRepository.updateUserIngredient(userIngredientNo, ingredientNo, type, purchaseDate, expirationDate);
     }
