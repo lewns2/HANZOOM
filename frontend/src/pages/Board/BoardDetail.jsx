@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import sample from '../../assets/images/Initimage.PNG';
 import { useNavigate } from 'react-router-dom';
 import './BoardDetail.scss';
+import { BreakfastDiningRounded } from '@mui/icons-material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 export const BoardDetail = () => {
@@ -27,8 +29,32 @@ export const BoardDetail = () => {
   }, [user, id]);
 
   const clickLike = () => {
-    Axios.post(`board/like/${id}`, {
+    Axios.post(`board/like/${id}`, null, {
       headers: { Authorization: `Bearer ${token}` },
+    });
+  };
+
+  const clickDelete = () => {
+    swal({
+      title: '해당 게시글을 삭제하시겠습니까?',
+      buttons: {
+        cancel: '취소',
+        catch: {
+          text: '삭제할래요',
+          value: 'catch',
+        },
+      },
+    }).then((value) => {
+      switch (value) {
+        case 'catch':
+          Axios.delete(`board/remove/${id}`, null, {
+            headers: { Authorization: `Bearer ${token}` },
+          }).then(swal('게시글이 삭제되었습니다.').then(navigate(-1)));
+          break;
+
+        default:
+          break;
+      }
     });
   };
 
@@ -62,7 +88,7 @@ export const BoardDetail = () => {
                 <div> 나와 떨어진 거리 : 약 {content.distance} KM</div>
                 <div className="detailIcon">
                   <button id="detailLike" onClick={clickLike}>
-                    찜 {content.likeCnt}
+                    <FavoriteIcon></FavoriteIcon>&nbsp; 찜 {content.likeCnt}
                   </button>
                   <button id="detailChat">연락하기</button>
                   <button id="detailReport">신고</button>
@@ -88,11 +114,19 @@ export const BoardDetail = () => {
                 취소
               </button>
               <button
-                id="detailActiveBtn"
+                id="detailModifyBtn"
                 style={{
                   visibility: userInfo.userNickname == content.userNickname ? 'visible' : 'hidden',
                 }}>
                 수정
+              </button>
+              <button
+                id="detailDeleteBtn"
+                style={{
+                  visibility: userInfo.userNickname == content.userNickname ? 'visible' : 'hidden',
+                }}
+                onClick={clickDelete}>
+                삭제
               </button>
             </div>
           </div>
