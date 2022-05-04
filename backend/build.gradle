@@ -129,7 +129,6 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -147,8 +146,8 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:${querydslVer}")
     implementation("com.querydsl:querydsl-apt:${querydslVer}")
 
-    //STOMP 웹소캣 서버 사이드 테스트를 위한 의존성 추가
-    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+    // websocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
     //STOMP 관련 프론트 라이브러리
     implementation('org.webjars.bower:jquery:3.3.1')
@@ -156,13 +155,13 @@ dependencies {
     implementation 'org.webjars:stomp-websocket:2.3.3-1'
     implementation('org.webjars:webjars-locator:0.30')
 
-    //gson
-//    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-//    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
-//    implementation 'org.springframework.boot:spring-boot-devtools'
-//    implementation 'org.webjars.bower:bootstrap:4.3.1'
-//    implementation 'org.webjars.bower:vue:2.5.16'
-//    implementation 'org.webjars.bower:axios:0.17.1'
+    //view
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.webjars.bower:bootstrap:4.3.1'
+    implementation 'org.webjars.bower:vue:2.5.16'
+    implementation 'org.webjars.bower:axios:0.17.1'
     implementation 'com.google.code.gson:gson:2.8.0'
 
     // MongoDB 추가
