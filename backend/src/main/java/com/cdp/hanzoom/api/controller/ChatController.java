@@ -20,9 +20,9 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
-@Api(value = "채팅룸 API", tags = {"ChatRoom"})
+@Api(value = "채팅 API", tags = {"Chat"})
 @RestController
-@RequestMapping("/api/chatroom")
+@RequestMapping("/api/chat")
 public class ChatController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
@@ -64,7 +64,7 @@ public class ChatController {
 
     /** (유저의) 채팅방 전체 조회 **/
     @GetMapping("/findAll")
-    @ApiOperation(value ="채팅방 전체 조회", notes = "<strong>유저가 속한 모든 채팅방</strong>을 조회한다.")
+    @ApiOperation(value ="채팅방 전체 조회(token)", notes = "<strong>유저가 속한 모든 채팅방</strong>을 조회한다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
