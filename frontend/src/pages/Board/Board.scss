@@ -222,35 +222,28 @@ $desktop: 1400px;
     justify-content: center;
   }
 
-  .contentCard {
-    max-width: 30%;
-    height: auto;
+  .contentsContainer {
+    width: 100%;
+    margin: 0 0;
+    overflow-x: hidden;
+    display: block;
+
+    .contentCard {
+      display: flex;
+      .cardImgWrap {
+        position: relative;
+      }
+      .cardBody {
+        max-width: 300px;
+        position: absolute;
+        left: 35%;
+      }
+      .cardBodyHeader {
+        margin-top: 0;
+      }
+    }
   }
   .paginationWrap {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: $mobile) {
-  .header {
-    display: none;
-  }
-
-  .searchBar {
-    #text-area {
-      display: none;
-    }
-    #searchBtn {
-      display: none;
-    }
-  }
-  .locationBtn {
-    display: none;
-    .filter {
-      visibility: hidden;
-    }
-  }
-  .paginationReposive {
     display: none;
   }
 }
@@ -261,5 +254,9 @@ $desktop: 1400px;
     .filter {
       visibility: hidden;
     }
+  }
+  .contentCard {
+    max-width: 30%;
+    height: auto;
   }
 }
