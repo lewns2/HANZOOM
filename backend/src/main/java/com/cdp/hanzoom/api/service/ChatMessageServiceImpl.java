@@ -1,6 +1,7 @@
 package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.ChatMessageReq;
+import com.cdp.hanzoom.api.response.ChatMessageRes;
 import com.cdp.hanzoom.db.entity.ChatMessage;
 import com.cdp.hanzoom.db.entity.ChatRoom;
 import com.cdp.hanzoom.db.entity.User;
@@ -36,16 +37,18 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     /** 채팅 메시지 생성 **/
     @Override
-    public void registerChatMessage(ChatMessageReq chatMessageReq) {
+    public void registerChatMessage(ChatMessageReq chatMessageReq, String userEmail) {
         ChatRoom chatRoom = chatRoomRepository.findById(chatMessageReq.getRoomId()).orElse(null);
-        User user = userRepositorySupport.findUserByUserNickname(chatMessageReq.getSender()).orElse(null);
 
         LocalDateTime localDateTime = LocalDateTime.now();
 
         ChatMessage chatMessage = ChatMessage.create(
-                user.getUserEmail(),
+                userEmail,
                 chatMessageReq.getMessage(),
-                localDateTime);
+                localDateTime,
+                chatMessageReq.getType());
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>> " + chatMessage.toString());
 
         Update update = new Update();
         update.push("chatMessages", chatMessage);

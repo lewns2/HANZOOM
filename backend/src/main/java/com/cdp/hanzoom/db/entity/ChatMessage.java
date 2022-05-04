@@ -16,12 +16,18 @@ public class ChatMessage {
     private String message;         // 메시지 내용
     @DateTimeFormat(pattern="YYYY-MM-DD HH:mm:ss")
     private LocalDateTime createdAt;    // 메시지 전송 시간
+    private MessageType type;       // 메시지 타입
 
-    public static ChatMessage create(String sender, String message, LocalDateTime createdAt) {
+    public enum MessageType {
+        ENTER, TALK, LEAVE
+    }
+
+    public static ChatMessage create(String sender, String message, LocalDateTime createdAt, MessageType type) {
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.sender = sender;
         chatMessage.message = message;
         chatMessage.createdAt = createdAt;
+        chatMessage.type = type;
         return chatMessage;
     }
 }
