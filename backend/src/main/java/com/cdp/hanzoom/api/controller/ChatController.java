@@ -13,15 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import retrofit2.http.Path;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
-@Api(value = "채팅 API", tags = {"Chat"})
+@Api(value = "채팅룸 API", tags = {"ChatRoom"})
 @RestController
-@RequestMapping("/api/chat")
+@RequestMapping("/api/chatroom")
 public class ChatController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
@@ -32,8 +33,14 @@ public class ChatController {
     @Autowired
     ChatMessageService chatMessageService;
 
+    // 채팅 리스트 화면
+//    @GetMapping("/room")
+//    public String rooms(Model model) {
+//        return "/chat/room";
+//    }
+
     /** 채팅룸 생성 **/
-    @PostMapping("/room/register")
+    @PostMapping("/register")
     @ApiOperation(value = "채팅룸 등록", notes = "<strong>채팅 룸 정보</strong>를 생성한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -56,20 +63,23 @@ public class ChatController {
     }
 
     /** (유저의) 채팅방 전체 조회 **/
-    @GetMapping("/room/findAll")
+    @GetMapping("/findAll")
     @ApiOperation(value ="채팅방 전체 조회", notes = "<strong>유저가 속한 모든 채팅방</strong>을 조회한다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<List<ChatRoomRes>> findAllChatRoom(@RequestParam("userEmail") String userEmail) {
+    public ResponseEntity<List<ChatRoomRes>> findAllChatRoom(@ApiIgnore Authentication authentication) {
+        HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
+        String userEmail = userDetails.getUsername();
+
         List<ChatRoomRes> chatRoomResList = chatRoomService.findAllChatRoom(userEmail);
         return new ResponseEntity<List<ChatRoomRes>>(chatRoomResList, HttpStatus.OK);
     }
 
     /** 채팅방 삭제 **/
-    @DeleteMapping("/room/remove")
-    @ApiOperation(value = "채팅방에서 유저 정보 삭제", notes = "<strong>채팅방의 해당 유저의 참가 정보</strong>를 삭제한다.")
+    @DeleteMapping("/remove")
+    @ApiOperation(value = "채팅방에서 유저 정보 삭제(token)", notes = "<strong>채팅방의 해당 유저의 참가 정보</strong>를 삭제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -87,26 +97,5 @@ public class ChatController {
             return ResponseEntity.status(400).body("Bad Request");
         }
         return ResponseEntity.status(200).body("Success");
-    }
-
-    /** 메시지 생성 **/
-    @PostMapping("/message/register")
-    @ApiOperation(value = "메시지 등록", notes = "<strong>채팅 메시지 정보</strong>를 생성한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<? extends BaseResponseBody> registerChatMessage(
-            @RequestBody @ApiParam(value="채팅 메시지 정보", required = true) ChatMessageReq chatMessageReq) {
-
-        try {
-            chatMessageService.registerChatMessage(chatMessageReq);
-        } catch (Exception E) {
-            E.printStackTrace();
-            ResponseEntity.status(400).body(BaseResponseBody.of(500, "DB Transaction Failed"));
-        }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
     }
 }
