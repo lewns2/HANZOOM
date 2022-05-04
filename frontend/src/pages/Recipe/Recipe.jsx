@@ -5,29 +5,40 @@ import { settings } from '../../constants/slider';
 import sample from '../../assets/images/Initimage.PNG';
 import { display } from '@mui/system';
 import { Axios } from '../../core/axios';
+import qs from 'qs';
+
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
 import './Recipe.scss';
 
+const query = '추천 레시피 식재료 정보';
+const testData = ['김치', '오이'];
+
 export const Recipe = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [recipeList, setRecipeList] = useState([]);
 
-  const openModal = () => {
+  const [recipeDetail, setRecipeDetail] = useState();
+
+  const openModal = (data) => {
+    setRecipeDetail(data);
     setModalOpen(true);
   };
   const closeModal = () => {
     setModalOpen(false);
   };
 
+  // const postData = qs.stringify(testData);
+
   useEffect(() => {
-    Axios.get(`/userIngredient/recipe?${props.ingredients}`)
-      .then((res) => console.log(res))
+    Axios.get(`/userIngredient/recipe?${query}=${testData}`)
+      .then((res) => (setRecipeList(res.data.slice(0, 10)), console.log(res)))
       .catch((err) => console.log(err));
   }, []);
 
   return (
     <section className="container">
-      <RecipeModal open={modalOpen} close={closeModal}></RecipeModal>
+      <RecipeModal open={modalOpen} close={closeModal} info={recipeDetail}></RecipeModal>
       <div style={modalOpen ? { display: 'none' } : { display: 'grid' }}>
         <div className="recipeTextWrap">
           <div className="recipeHeader">
@@ -40,18 +51,19 @@ export const Recipe = (props) => {
           <div className="recipeListWrap">
             <div className="container recipeContainer">
               <Slider {...settings}>
-                {contents.map((content, key) => (
+                {recipeList.map((content, key) => (
                   <>
                     <div
-                      className="imgHoverEvent event1"
+                      className="recipeContentCard event1"
                       key={content.recipeNo}
-                      onClick={openModal}>
-                      <div className="imgWrap">
-                        <img className="imgBox" src={content.imagePath} alt="..." />
+                      onClick={() => openModal(content)}>
+                      <div className="recipeCardImgWrap">
+                        <div className="imgHoverEvent">
+                          <img src={content.imagePath} alt="..." />
+                        </div>
                       </div>
                       <div className="hoverBox">
                         <p className="p1">{content.recipeName}</p>
-                        <p className="p2">{content.recipe[0].description}</p>
                       </div>
                     </div>
                   </>
@@ -64,133 +76,3 @@ export const Recipe = (props) => {
     </section>
   );
 };
-
-const contents = [
-  {
-    imagePath: sample,
-    ingredients: [
-      {
-        name: 'string',
-        weight: 'string',
-      },
-    ],
-    recipe: [
-      {
-        description:
-          '돼지고기 항정살 김치찌개 간단하지만 맛있게 끓이는법 (feat.시크릿코인 활용요리)',
-        imagePath: 'string',
-      },
-    ],
-    recipeName: '김치찌개',
-    recipeNo: 0,
-    referenceNo: 0,
-  },
-  {
-    imagePath: sample,
-    ingredients: [
-      {
-        name: 'string',
-        weight: 'string',
-      },
-    ],
-    recipe: [
-      {
-        description: '(집에서 즐기는 술안주) 참치김치전 / 김치전 - 간단 술안주 전 만들기',
-        imagePath: 'string',
-      },
-    ],
-    recipeName: '김치전',
-    recipeNo: 0,
-    referenceNo: 0,
-  },
-  {
-    imagePath: sample,
-    ingredients: [
-      {
-        name: 'string',
-        weight: 'string',
-      },
-    ],
-    recipe: [
-      {
-        description: '(아이밥) 치즈김치밥 김치볶음밥 매워서 못먹는 아이 이 레시피 주목하세요!!',
-        imagePath: 'string',
-      },
-    ],
-    recipeName: '치즈김치밥',
-    recipeNo: 0,
-    referenceNo: 0,
-  },
-  {
-    imagePath: sample,
-    ingredients: [
-      {
-        name: 'string',
-        weight: 'string',
-      },
-    ],
-    recipe: [
-      {
-        description: '김치 볶음밥 완전 새로운 방식!',
-        imagePath: 'string',
-      },
-    ],
-    recipeName: '김치볶음밥',
-    recipeNo: 0,
-    referenceNo: 0,
-  },
-  {
-    imagePath: sample,
-    ingredients: [
-      {
-        name: 'string',
-        weight: 'string',
-      },
-    ],
-    recipe: [
-      {
-        description: 'string',
-        imagePath: 'string',
-      },
-    ],
-    recipeName: 'string',
-    recipeNo: 0,
-    referenceNo: 0,
-  },
-  {
-    imagePath: sample,
-    ingredients: [
-      {
-        name: 'string',
-        weight: 'string',
-      },
-    ],
-    recipe: [
-      {
-        description: 'string',
-        imagePath: 'string',
-      },
-    ],
-    recipeName: 'string',
-    recipeNo: 0,
-    referenceNo: 0,
-  },
-  {
-    imagePath: sample,
-    ingredients: [
-      {
-        name: 'string',
-        weight: 'string',
-      },
-    ],
-    recipe: [
-      {
-        description: 'string',
-        imagePath: 'string',
-      },
-    ],
-    recipeName: 'string',
-    recipeNo: 0,
-    referenceNo: 0,
-  },
-];

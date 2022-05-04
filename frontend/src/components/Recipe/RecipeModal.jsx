@@ -1,24 +1,43 @@
+import { useEffect } from 'react';
 import sample from '../../assets/images/Initimage.PNG';
 
 export const RecipeModal = (props) => {
-  const { open, close } = props;
+  const { open, close, info } = props;
+
+  useEffect(() => {
+    console.log(info);
+  });
   return (
     <div className={open ? 'recipeDetailForm openModal' : 'recipeDetailForm'}>
       {open ? (
         <>
-          <section className="recipeFormWrap">
+          <div className="recipeFormWrap">
             <div className="recipeModalTitle">
-              <h2>김치찌개</h2>
+              <h2>{info.recipeName}</h2>
               <button>자동매칭</button>
             </div>
             <hr></hr>
             <div className="recipeModalBody">
-              <div className="recipeImg">
-                <img src={sample}></img>
+              <h3>재료</h3>
+              <div className="recipeIngredients">
+                {info.ingredients.map((ingredient, key) => (
+                  <div key={key}>
+                    {ingredient.name} {ingredient.weight}&nbsp;
+                  </div>
+                ))}
+              </div>
+              <div className="recipeImgWrap">
+                <h3>레시피</h3>
+                {info.recipe.map((content, key) => (
+                  <>
+                    <img className="recipeImg" key={key} src={content.imagePath}></img>
+                    <p>{content.description}</p>
+                  </>
+                ))}
               </div>
               <button onClick={close}>취소</button>
             </div>
-          </section>
+          </div>
         </>
       ) : null}
     </div>
