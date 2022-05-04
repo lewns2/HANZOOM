@@ -2,7 +2,6 @@ package com.cdp.hanzoom.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -27,7 +26,6 @@ public class Plan {
 
     @Column(columnDefinition = "TIMESTAMP")
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
-    @CreationTimestamp
     LocalDateTime scheduleDatetime; // 일정 날짜 시간
 
     @Column(name = "lat")
@@ -47,8 +45,16 @@ public class Plan {
     @OnDelete(action = OnDeleteAction.CASCADE)
     User user;
 
-    public void updateUserLatAndLng(Double lat, Double lng) {
+    public void updatePlan(Double lat, Double lng,LocalDateTime scheduleDatetime ) {
         this.lat = lat;
         this.lng = lng;
+        this.scheduleDatetime = scheduleDatetime;
+    }
+    public void updatePlanLatAndLng(Double lat, Double lng) {
+        this.lat = lat;
+        this.lng = lng;
+    }
+    public void updatePlanScheduleDatetime(LocalDateTime scheduleDatetime ) {
+        this.scheduleDatetime = scheduleDatetime;
     }
 }

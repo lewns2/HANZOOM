@@ -1,0 +1,122 @@
+package com.cdp.hanzoom.api.controller;
+
+import com.cdp.hanzoom.api.request.*;
+import com.cdp.hanzoom.api.response.PlanInChatRoomFindRes;
+import com.cdp.hanzoom.api.service.PlanService;
+import com.cdp.hanzoom.common.auth.HanZoomUserDetails;
+import com.cdp.hanzoom.common.model.response.BaseResponseBody;
+import com.cdp.hanzoom.db.entity.Plan;
+
+import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+/**
+ * 일정 관련 API 요청 처리를 위한 컨트롤러 정의.
+ */
+@Api(value = "일정 API", tags = {"Plan"})
+@RestController
+@RequestMapping("/api/plans")
+public class PlanController {
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
+
+	@Autowired
+	PlanService planService;
+
+	// 일정 등록
+	@PostMapping("/register")
+	@ApiOperation(value = "일정 등록(token)", notes = "<strong>나눔/교환 하는 user와 받는 사람의</strong> 최종 약속장소, 날짜 시간, 상대방 이메일, 게시글 번호를 입력받아 일정을 등록 한다." )
+
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> registerPlan(@ApiIgnore Authentication authentication,
+			@RequestBody @ApiParam(value="회원가입 정보", required = true) PlanRegisterReq planRegisterReq) {
+		HanZoomUserDetails userDetails = (HanZoomUserDetails)authentication.getDetails();
+		String userEmail = userDetails.getUsername();
+		planRegisterReq.setUserEmail(userEmail);
+		Plan user = planService.registerPlan(planRegisterReq);
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+	
+	// 채팅방에서 일정 조회
+	@GetMapping("/chatroom/find/{boardNo}")
+	@ApiOperation(value = "채팅방에서 일정 조회", notes = "채팅방에서 일정을 조회한다.")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "성공"),
+        @ApiResponse(code = 401, message = "인증 실패"),
+        @ApiResponse(code = 404, message = "사용자 없음"),
+        @ApiResponse(code = 500, message = "서버 오류")
+    })
+	public ResponseEntity<PlanInChatRoomFindRes> getChatRoomInPlan(@PathVariable Long boardNo) {
+		Plan plan = planService.getPlanByBoardNo(boardNo);
+		return ResponseEntity.status(200).body(PlanInChatRoomFindRes.of(plan));
+	}
+
+	// 마이 페이지에서 일정 조회
+	@GetMapping("/mypage/find")
+	@ApiOperation(value = "마이 페이지에서 일정 조회(token)", notes = "<strong>마이 페이지에 일정 <strong>목록 조회를 약속 잡은 시간 내림차순으로 조회</strong> 한다.</strong>한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<List<PlanInChatRoomFindRes>> getUserPlanList(@ApiIgnore Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getDetails();
+		String userEmail = userDetails.getUsername();
+		List<PlanInChatRoomFindRes> userPlanFindRes = planService.findByPlanList(userEmail);
+
+		return new ResponseEntity<List<PlanInChatRoomFindRes>>(userPlanFindRes, HttpStatus.OK);
+	}
+
+	// 일정 정보 수정
+	@ApiOperation(value = "일정 정보 수정 (약속 장소(위도, 경도), 약속 날짜 시간) (token)", notes = "일정 정보 수정 (약속 장소(위도, 경도), 약속 날짜 시간)<br/>"
+			+"<strong> 위도, 경도만 수정하고 싶으면 약속 날짜 시간 = null 로 담아 요청</strong><br/>"+
+			"<strong> 약속 날짜 시간만 수정하고 싶으면 (위도= null,경도 = null) 로 담아 요청</strong> ")
+
+	@PutMapping("/update")
+	public ResponseEntity<String> updatePlan(@RequestBody PlanUpdateReq planUpdateReq, @ApiIgnore Authentication authentication) throws Exception {
+		Plan plan ;
+		try {
+			plan = planService.getPlanByBoardNo(planUpdateReq.getBoardNo());
+		}catch(NoSuchElementException E) {
+			System.out.println("일정 수정 실패");
+			return  ResponseEntity.status(500).body("해당 하는 정보가 없어서 일정 수정 실패");
+		}
+		planService.updatePlan(plan, planUpdateReq);
+		System.out.println("일정 정보 수정 성공");
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+	
+
+//	일정 취소(삭제) 기능
+	@ApiOperation(value = "일정 취소(token)", notes = "일정 취소(삭제) 기능")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "해당 회원 없음")})
+	@DeleteMapping("/remove/{boardNo}")
+	public ResponseEntity<String> deletePlan(@PathVariable Long boardNo) throws Exception {
+		boolean result;
+		try {
+			Plan plan = planService.getPlanByBoardNo(boardNo);
+			result = planService.deleteByPlan(plan);
+		}catch(Exception E) {
+			return  ResponseEntity.status(500).body("해당 일정 없어서 일정 삭제 실패");
+		}
+		return ResponseEntity.status(200).body("일정 삭제 성공");
+	}
+}

@@ -1,12 +1,10 @@
 package com.cdp.hanzoom.db.entity;
 
 import com.cdp.hanzoom.api.request.BoardUpdateReq;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
@@ -60,5 +58,8 @@ public class Board {
         this.status = boardUpdateReq.getStatus();
         this.type = boardUpdateReq.getType();
         this.description = boardUpdateReq.getDescription();
+    }
+    public void updateState(String status) {
+        this.status = status;
     }
 }
