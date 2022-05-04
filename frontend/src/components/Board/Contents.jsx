@@ -68,7 +68,11 @@ export const Contents = (props) => {
                 {/* <div className="contentDescription">{content.description}</div> */}
 
                 {/* 나와의 거리 */}
-                <p>약 {content.distance.toFixed(1)}km</p>
+                {content.distance == null ? (
+                  <h6>나와 떨어진 거리 확인을 위해선 위치 정보 설정이 필요합니다.</h6>
+                ) : (
+                  <p>약 {content.distance.toFixed(1)}km</p>
+                )}
 
                 {/* 식재료 명 */}
                 <div className="boardIngredientResList">
