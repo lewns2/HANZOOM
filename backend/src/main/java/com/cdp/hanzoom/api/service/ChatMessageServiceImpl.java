@@ -48,8 +48,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 localDateTime,
                 chatMessageReq.getType());
 
-        System.out.println(">>>>>>>>>>>>>>>>>>>> " + chatMessage.toString());
-
         Update update = new Update();
         update.push("chatMessages", chatMessage);
         Criteria criteria = Criteria.where("_id").is(chatMessageReq.getRoomId());

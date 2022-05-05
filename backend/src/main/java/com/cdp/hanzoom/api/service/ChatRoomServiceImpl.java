@@ -58,14 +58,20 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             List<ChatMessageRes> chatMessageResList = new ArrayList<ChatMessageRes>();
             for(int j=0; j<chatRoom.getChatMessages().size(); j++) {
                 String userNickname = "";
+                String userImage = "";
                 if(chatRoom.getChatMessages().get(j).getSender().equals(user1.getUserEmail())) {
                     userNickname = user1.getUserNickname();
+                    userImage = user1.getUserImage();
                 } else {
                     userNickname = user2.getUserNickname();
+                    userImage = user2.getUserImage();
+
                 }
 
                 ChatMessageRes chatMessageRes = ChatMessageRes.builder()
-                        .sender(userNickname)
+                        .id(chatRoom.getChatMessages().get(j).getId())
+                        .senderNickname(userNickname)
+                        .senderImage(userImage)
                         .message(chatRoom.getChatMessages().get(j).getMessage())
                         .createdAt(chatRoom.getChatMessages().get(j).getCreatedAt())
                         .build();
