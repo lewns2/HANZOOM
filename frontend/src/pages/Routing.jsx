@@ -37,7 +37,7 @@ export const Routing = () => {
     <BrowserRouter>
       <Header />
       <MyChat show={showChatList} setShow={setShowChatList} />
-      {showChat ? <MyChatDisplay setShow={setShowChatList} /> : null}
+      {showChat ? <MyChatDisplay /> : null}
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/board" element={<Board />} />
