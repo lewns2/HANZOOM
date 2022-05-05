@@ -1,0 +1,128 @@
+.scheduleWrap {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.8);
+
+  .schedule {
+    background-color: #fff;
+    // position: fixed;
+    // left: 0px;
+    // right: 0px;
+    // top: 120px;
+    // bottom: 50px;
+    width: 950px;
+    // width: 70% !important;
+    height: 550px;
+    margin: 0 auto;
+    // padding: 16px 20px;
+    padding: 10px 40px;
+    border-radius: 10px;
+
+    .scheduleItems {
+      background-color: #eee;
+      // padding: 60px;
+      width: 100%;
+      // height: 100%;
+      padding: 60px 0;
+
+      .row {
+        width: 100%;
+        height: 100%;
+      }
+
+      .scheduleDate {
+        position: relative;
+        .schecduleTime {
+          position: absolute;
+          top: 320px;
+
+          input {
+            width: 42px;
+          }
+          span {
+            display: inline-block;
+            font-size: 20px;
+            line-height: 32px;
+            margin: 1px;
+            padding-top: 3px;
+            margin-left: 3px;
+          }
+          div {
+            margin: 0 3px;
+          }
+        }
+      }
+
+      .scheduleMap {
+        position: relative;
+        .mapExplain {
+          position: absolute;
+          top: -25px;
+          left: 105px;
+          color: #222;
+        }
+      }
+
+      .scheduleDetailMap {
+        width: 100%;
+        height: 320px;
+      }
+    }
+
+    .scheduleDetails {
+      padding-top: 30px;
+    }
+
+    .cancelBtn {
+      font-size: 14px;
+      font-weight: bolder;
+      background-color: #fff;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      padding: 4px 10px;
+      margin-right: 5px;
+      box-shadow: 0 4px 4px -4px #777;
+    }
+    .registBtn {
+      font-size: 14px;
+      font-weight: bolder;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      padding: 4px 10px;
+      box-shadow: 0 4px 4px -4px #777;
+    }
+  }
+}
+
+// 맵
+#scheduleMap {
+  // width: 500px;
+  // height: 400px;
+  width: 90%;
+  height: 100%;
+
+  .bAddr {
+    padding: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: bolder;
+
+    .adrrName {
+      text-align: center;
+    }
+  }
+  .userImg {
+    margin-bottom: 30px;
+    // img {
+    width: 50px;
+    height: 50px;
+    border-radius: 70%;
+    // }
+  }
+}
