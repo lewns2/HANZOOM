@@ -15,9 +15,14 @@ import java.util.List;
 @Builder
 @ApiModel("ChatMessageResponse")
 public class ChatMessageRes {
+    @ApiModelProperty(name = "메시지 아이디", example = "62713ccfc7a1ef5b14c5fb15")
+    String id;
 
     @ApiModelProperty(name = "메시지 전송 유저 닉네임", example = "하이")
-    String sender;
+    String senderNickname;
+
+    @ApiModelProperty(name = "메시지 전송 유저 프로필 이미지", example = "하이")
+    String senderImage;
 
     @ApiModelProperty(name = "메시지내용", example = "this is message content.....")
     String message;

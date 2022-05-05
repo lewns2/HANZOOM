@@ -31,7 +31,7 @@ public class MessageController {
     private final SimpMessageSendingOperations messagingTemplate;
 
     /** 메시지 생성 **/
-    //    @PostMapping("/send")
+//    @PostMapping("/send")
     @MessageMapping("/chat/message")
     @ApiOperation(value = "메시지 등록(token)", notes = "<strong>채팅 메시지 정보</strong>를 생성한다.")
     @ApiResponses({
