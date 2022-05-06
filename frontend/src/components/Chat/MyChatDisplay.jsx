@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeShow } from '../../Reducer/chatSlice';
 import { Schedule } from '../Schedule/Schedule';
-import { ScheduleDetail } from '../Schedule/ScheduleDetail';
+// import { ScheduleDetail } from '../Schedule/ScheduleDetail';
 
 import CloseIcon from '@mui/icons-material/Close';
 
