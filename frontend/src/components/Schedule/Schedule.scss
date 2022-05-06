@@ -8,6 +8,7 @@
   background-color: rgba(0, 0, 0, 0.8);
 
   .schedule {
+    position: relative;
     background-color: #fff;
     // position: fixed;
     // left: 0px;
@@ -21,6 +22,19 @@
     // padding: 16px 20px;
     padding: 10px 40px;
     border-radius: 10px;
+
+    .boardButton {
+      position: absolute;
+      top: 8px;
+      right: 40px;
+      font-size: 14px;
+      font-weight: bolder;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      padding: 4px 10px;
+      box-shadow: 0 4px 4px -4px #777;
+    }
 
     .scheduleItems {
       background-color: #eee;
@@ -70,6 +84,22 @@
       .scheduleDetailMap {
         width: 100%;
         height: 320px;
+
+        #scheduleDetailMap {
+          width: 90%;
+          height: 100%;
+          .bAddr {
+            padding: 5px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-weight: bolder;
+
+            .adrrName {
+              text-align: center;
+            }
+          }
+        }
       }
     }
 

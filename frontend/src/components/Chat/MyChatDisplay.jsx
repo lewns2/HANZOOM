@@ -2,12 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeShow } from '../../Reducer/chatSlice';
 import { Schedule } from '../Schedule/Schedule';
-// import { ScheduleDetail } from '../Schedule/ScheduleDetail';
+import { ScheduleDetail } from '../Schedule/ScheduleDetail';
 
 import CloseIcon from '@mui/icons-material/Close';
 
-export const MyChatDisplay = () => {
+export const MyChatDisplay = (props) => {
   const [showSchedule, setShowSchedule] = useState(false);
+  const [showScheduleDetail, setShowScheduleDetail] = useState(false);
+
+  console.log(props);
+
+  const { setShow } = props;
 
   const msgContent = useRef();
   const dispatch = useDispatch();
@@ -29,15 +34,15 @@ export const MyChatDisplay = () => {
     <>
       <div className="showChatDisplayWrap">
         {showSchedule && <Schedule show={setShowSchedule} />}
-        {/* <ScheduleDetail show={setShowSchedule} /> */}
+        {showScheduleDetail && <ScheduleDetail show={setShowScheduleDetail} setShow={setShow} />}
         <section className="chatDisplayWrap">
           <div className="chatHeader">
             <button className="headerBtn" onClick={() => setShowSchedule(true)}>
               일정
             </button>
-            {/* <button className="headerBtn" onClick={() => setShowSchedule(true)}>
+            <button className="headerBtn" onClick={() => setShowScheduleDetail(true)}>
               일정 확인
-            </button> */}
+            </button>
             <CloseIcon className="closeIcon" style={{ fontSize: '34px' }} onClick={hideMyChat} />
           </div>
           <div className="chatContent" ref={msgContent}>
