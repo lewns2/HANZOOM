@@ -1,5 +1,5 @@
 import { Droppable } from 'react-beautiful-dnd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FoodIngreList } from './FoodIngreList';
@@ -14,6 +14,10 @@ export const MyIngreDnd = (props) => {
   const [checkedBSIngre, setCheckedBSIngre] = useState([]);
 
   // console.log(tasks);
+
+  useEffect(() => {
+    setCheckedIngre(checkedIngre);
+  }, [checkedIngre]);
 
   // 등록모달
   const openModal = () => {
@@ -78,13 +82,7 @@ export const MyIngreDnd = (props) => {
       </Droppable>
       {column.title === 'MY 식재료' ? (
         <button className="ingreBtn">
-          <Link
-            to={{
-              pathname: '/recipe',
-              state: {
-                ingredient: checkedIngre,
-              },
-            }}>
+          <Link to={'/recipe'} state={checkedIngre}>
             레시피 추천
           </Link>
         </button>

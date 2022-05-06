@@ -6,20 +6,19 @@ import sample from '../../assets/images/Initimage.PNG';
 import { display } from '@mui/system';
 import { Axios } from '../../core/axios';
 import qs from 'qs';
+import { useLocation } from 'react-router';
 
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
 import './Recipe.scss';
 
 const query = '추천 레시피 식재료 정보';
-const testData = ['김치', '오이'];
 
 export const Recipe = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [recipeList, setRecipeList] = useState([]);
-
   const [recipeDetail, setRecipeDetail] = useState();
-
+  const location = useLocation();
   const openModal = (data) => {
     setRecipeDetail(data);
     setModalOpen(true);
@@ -31,7 +30,8 @@ export const Recipe = (props) => {
   // const postData = qs.stringify(testData);
 
   useEffect(() => {
-    Axios.get(`/userIngredient/recipe?${query}=${testData}`)
+    console.log(location.state);
+    Axios.get(`/userIngredient/recipe?${query}=${location.state}`)
       .then((res) => (setRecipeList(res.data.slice(0, 10)), console.log(res)))
       .catch((err) => console.log(err));
   }, []);
