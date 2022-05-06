@@ -1,10 +1,13 @@
 package com.cdp.hanzoom.api.controller;
 
 import com.cdp.hanzoom.api.request.ChatMessageReq;
+import com.cdp.hanzoom.api.response.ChatMessageRes;
 import com.cdp.hanzoom.api.service.ChatMessageService;
 import com.cdp.hanzoom.common.auth.HanZoomUserDetails;
 import com.cdp.hanzoom.common.model.response.BaseResponseBody;
 import com.cdp.hanzoom.db.entity.ChatMessage;
+import com.cdp.hanzoom.db.entity.User;
+import com.cdp.hanzoom.db.repository.UserRepositorySupport;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,9 @@ import springfox.documentation.annotations.ApiIgnore;
 public class MessageController {
 
     @Autowired
+    UserRepositorySupport userRepositorySupport;
+
+    @Autowired
     ChatMessageService chatMessageService;
 
     private final SimpMessageSendingOperations messagingTemplate;
@@ -41,27 +47,35 @@ public class MessageController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> sendChatMessage(
-            @RequestBody @ApiParam(value="채팅 메시지 정보", required = true) ChatMessageReq chatMessageReq, @ApiIgnore Authentication authentication) {
-        HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
-        String userEmail = userDetails.getUsername();
+            @RequestBody @ApiParam(value="채팅 메시지 정보", required = true) ChatMessageReq chatMessageReq) {
 
-//        System.out.println(userEmail);
-//        System.out.println(chatMessageReq.getRoomId() + " "  + chatMessageReq.getMessage());
-//        System.out.println("=================> " + chatMessageReq.getType());
+        User user = userRepositorySupport.findUserByUserNickname(chatMessageReq.getSender()).orElse(null);
+        String userEmail = user.getUserEmail();
+        ChatMessage chatMessage = null;
+
         if(ChatMessage.MessageType.ENTER.equals(chatMessageReq.getType())) {
             chatMessageReq.setMessage(userEmail + "님이 입장하셨습니다.");
         } else if (ChatMessage.MessageType.LEAVE.equals(chatMessageReq.getType())) {
             chatMessageReq.setMessage(userEmail + "님이 퇴장하셨습니다.");
         } else {
             try {
-                chatMessageService.registerChatMessage(chatMessageReq, userEmail);  // 메시지 저장
+                chatMessage = chatMessageService.registerChatMessage(chatMessageReq, userEmail);  // 메시지 저장
             } catch (Exception E) {
                 E.printStackTrace();
                 ResponseEntity.status(400).body(BaseResponseBody.of(500, "DB Transaction Failed"));
             }
         }
 
-        messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageReq.getRoomId(), chatMessageReq);   // 원하는 채팅방에 메시지 정보 전송
+        ChatMessageRes chatMessageRes = ChatMessageRes.builder()
+                .id(chatMessage.getId())
+                .senderNickname(user.getUserNickname())
+                .senderImage(user.getUserImage())
+                .message(chatMessage.getMessage())
+                .type(chatMessage.getType())
+                .createdAt(chatMessage.getCreatedAt())
+                .build();
+
+        messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageReq.getRoomId(), chatMessageRes);   // 원하는 채팅방에 메시지 정보 전송
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
     }
 }
