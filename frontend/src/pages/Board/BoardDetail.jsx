@@ -13,23 +13,35 @@ const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 export const BoardDetail = () => {
   const user = useSelector((state) => state.user);
   const [userInfo, setUserInfo] = useState([]);
+  var [likeStatus, setLikeStatus] = useState();
+  var [likeCnt, setLikeCnt] = useState();
 
   const navigate = useNavigate();
 
   const { id } = useParams();
   const [content, setContent] = useState(null);
   const token = sessionStorage.getItem('jwt-token');
+
   useEffect(() => {
     setUserInfo(user.userInfo);
-
     Axios.get(`board/find/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((res) => (setContent(res.data), console.log(res.data)))
+      .then(
+        (res) => (
+          setContent(res.data),
+          setLikeStatus(res.data.like),
+          setLikeCnt(res.data.likeCnt),
+          console.log(res.data)
+        ),
+      )
       .catch((err) => console.log(err));
   }, [user, id]);
 
   const clickLike = () => {
+    setLikeStatus((likeStatus ^= 1));
+    if (likeStatus) setLikeCnt(likeCnt + 1);
+    else setLikeCnt(likeCnt - 1);
     Axios.post(`board/like/${id}`, null, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -90,11 +102,23 @@ export const BoardDetail = () => {
                 <div className="detailTitle">{content.title}</div>
                 <div className="detailDescription">{content.description}</div>
 
-                <div> 나와 떨어진 거리 : 약 {content.distance} KM</div>
+                {content.distance == null ? (
+                  <h6>나와 떨어진 거리 확인을 위해선 위치 정보 설정이 필요합니다.</h6>
+                ) : (
+                  <div> 나와 떨어진 거리 : 약 {content.distance.toFixed(1)} KM</div>
+                )}
                 <div className="detailIcon">
-                  <button id="detailLike" onClick={clickLike}>
-                    <FavoriteIcon></FavoriteIcon>&nbsp; 찜 {content.likeCnt}
-                  </button>
+                  {likeStatus ? (
+                    <button id="detailLike" onClick={clickLike}>
+                      <FavoriteIcon style={{ color: 'red' }} />
+                      &nbsp; 찜 {likeCnt}
+                    </button>
+                  ) : (
+                    <button id="detailUnLike" onClick={clickLike}>
+                      <FavoriteIcon />
+                      &nbsp; 찜 {likeCnt}
+                    </button>
+                  )}
                   <button id="detailChat">연락하기</button>
                   <button id="detailReport">신고</button>
                 </div>
