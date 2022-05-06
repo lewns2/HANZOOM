@@ -5,7 +5,7 @@ export const RecipeModal = (props) => {
   const { open, close, info } = props;
 
   useEffect(() => {
-    console.log(info);
+    // console.log(info);
   });
   return (
     <div className={open ? 'recipeDetailForm openModal' : 'recipeDetailForm'}>

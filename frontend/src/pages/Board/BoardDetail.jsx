@@ -136,7 +136,7 @@ export const BoardDetail = () => {
             <div className="detailCounts">
               <p>조회 {content.viewCnt} ∙</p>
               &nbsp;
-              <p>관심 {content.likeCnt}</p>
+              <p>관심 {likeCnt}</p>
             </div>
             <div className="detailFooter">
               <button id="detailCancelBtn" onClick={() => navigate(-1)}>
