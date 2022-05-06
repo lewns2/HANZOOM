@@ -37,7 +37,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     /** 채팅 메시지 생성 **/
     @Override
-    public void registerChatMessage(ChatMessageReq chatMessageReq, String userEmail) {
+    public ChatMessage registerChatMessage(ChatMessageReq chatMessageReq, String userEmail) {
         ChatRoom chatRoom = chatRoomRepository.findById(chatMessageReq.getRoomId()).orElse(null);
 
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -53,5 +53,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         Criteria criteria = Criteria.where("_id").is(chatMessageReq.getRoomId());
         mongoTemplate.updateFirst(Query.query(criteria), update, "chats");
 
+        return chatMessage;
     }
 }
