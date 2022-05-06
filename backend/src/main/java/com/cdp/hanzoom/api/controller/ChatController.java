@@ -2,6 +2,7 @@ package com.cdp.hanzoom.api.controller;
 
 import com.cdp.hanzoom.api.request.ChatMessageReq;
 import com.cdp.hanzoom.api.request.ChatRoomReq;
+import com.cdp.hanzoom.api.response.ChatRoomInfoRes;
 import com.cdp.hanzoom.api.response.ChatRoomRes;
 import com.cdp.hanzoom.api.service.ChatMessageService;
 import com.cdp.hanzoom.api.service.ChatRoomService;
@@ -9,6 +10,7 @@ import com.cdp.hanzoom.common.auth.HanZoomUserDetails;
 import com.cdp.hanzoom.common.model.response.BaseResponseBody;
 import com.cdp.hanzoom.db.entity.ChatRoom;
 import io.swagger.annotations.*;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,33 +35,30 @@ public class ChatController {
     @Autowired
     ChatMessageService chatMessageService;
 
-    // 채팅 리스트 화면
-//    @GetMapping("/room")
-//    public String rooms(Model model) {
-//        return "/chat/room";
-//    }
-
     /** 채팅룸 생성 **/
     @PostMapping("/register")
-    @ApiOperation(value = "채팅룸 등록", notes = "<strong>채팅 룸 정보</strong>를 생성한다.")
+    @ApiOperation(value = "채팅룸 등록", notes = "<strong>채팅 룸 정보</strong>를 생성한다." +
+            "true인 경우 두 유저 사이의 채팅방이 이미 존재하며, false인 경우 두 유저 사이에 채팅방이 없으므로 새로 생성한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> registerChatRoom(
+    public ResponseEntity<Boolean> registerChatRoom(
             @RequestBody @ApiParam(value="채팅룸 정보", required = true) ChatRoomReq chatRoomReq) {
 
+        boolean result = false;
         try {
-            if(!chatRoomService.findChatRoom(chatRoomReq)) {    // (true: 존재 O, false: 존재 X)
+            result = chatRoomService.findChatRoom(chatRoomReq);
+            if(!result) {    // (true: 존재 O, false: 존재 X)
                 chatRoomService.registerChatRoom(chatRoomReq);
             }
         } catch (Exception E) {
             E.printStackTrace();
             ResponseEntity.status(400).body(BaseResponseBody.of(500, "DB Transaction Failed"));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
     }
 
     /** (유저의) 채팅방 전체 조회 **/
@@ -75,6 +74,24 @@ public class ChatController {
 
         List<ChatRoomRes> chatRoomResList = chatRoomService.findAllChatRoom(userEmail);
         return new ResponseEntity<List<ChatRoomRes>>(chatRoomResList, HttpStatus.OK);
+    }
+
+    /** 선택한 채팅방 상세 정보 조회 **/
+    @GetMapping("/find/{roomId}")
+    @ApiOperation(value ="선택 채팅방 상세 조회", notes = "<strong>선택한 채팅방의 정보</strong>를 조회한다.")
+    @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류") })
+    public ResponseEntity<ChatRoomInfoRes> findChatroomInfo(@PathVariable("roomId") String roomId) {
+        ChatRoomInfoRes chatRoomInfoRes = null;
+        try {
+            chatRoomInfoRes = chatRoomService.findChatRoomInfoByRoomId(roomId);
+        } catch (Exception E) {
+            E.printStackTrace();
+            ResponseEntity.status(400).body(BaseResponseBody.of(500, "DB Transaction Failed"));
+        }
+        return new ResponseEntity<ChatRoomInfoRes>(chatRoomInfoRes, HttpStatus.OK);
     }
 
     /** 채팅방 삭제 **/
