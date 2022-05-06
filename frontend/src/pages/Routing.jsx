@@ -18,19 +18,23 @@ import CommentsDisabledOutlinedIcon from '@mui/icons-material/CommentsDisabledOu
 
 import { Route, Routes, Navigate, BrowserRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getChatInfo } from '../Reducer/chatSlice';
+
 
 export const Routing = () => {
   const [showChatList, setShowChatList] = useState(false);
   const chatShow = useSelector((state) => state.chat);
   const [showChat, setShowChat] = useState(false);
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     setShowChat(chatShow.chatShow);
   }, []);
   useEffect(() => {
     setShowChat(chatShow.chatShow);
-    console.log(chatShow);
   }, [chatShow]);
 
   return (
@@ -55,13 +59,18 @@ export const Routing = () => {
         <CommentOutlinedIcon
           className="chatIcon"
           style={{ fontSize: '50px', color: 'green' }}
-          onClick={() => setShowChatList(!showChatList)}
+          onClick={() => {
+            setShowChatList(!showChatList);
+            dispatch(getChatInfo());
+          }}
         />
       ) : (
         <CommentsDisabledOutlinedIcon
           className="chatIcon"
           style={{ fontSize: '50px', color: 'green' }}
-          onClick={() => setShowChatList(!showChatList)}
+          onClick={() => {
+            setShowChatList(!showChatList);
+          }}
         />
       )}
     </BrowserRouter>

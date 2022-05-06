@@ -1,6 +1,10 @@
 import './Chat.scss';
-import { ChatDump } from './ChatDump';
+import { useEffect, useState } from 'react';
+// import { ChatDump } from './ChatDump';
 import { MyChatList } from './MyChatList';
+import { useDispatch, useSelector } from 'react-redux';
+import { getChatInfo } from '../../Reducer/chatSlice';
+
 
 import CloseIcon from '@mui/icons-material/Close';
 import { useRef } from 'react';
@@ -8,6 +12,9 @@ import { useRef } from 'react';
 export const MyChat = (props) => {
   const { show, setShow } = props;
   const outSection = useRef();
+  const dispatch = useDispatch();
+  const chat = useSelector((state) => state.chat);
+
 
   // 바깥 화면을 클릭해도 채팅리스트를 사라지게하는 함수
   const clickOutSection = (e) => {
@@ -15,6 +22,10 @@ export const MyChat = (props) => {
       setShow(false);
     }
   };
+
+  useEffect(() => {
+    dispatch(getChatInfo());
+  }, []);
 
   return (
     <div
@@ -32,7 +43,7 @@ export const MyChat = (props) => {
           />
         </div>
         <div className="myChatList">
-          {ChatDump.map((chat, index) => (
+          {chat.chatInfo.map((chat, index) => (
             <MyChatList key={index} chat={chat} />
           ))}
         </div>
