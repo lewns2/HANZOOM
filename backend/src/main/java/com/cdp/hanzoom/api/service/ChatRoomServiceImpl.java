@@ -80,7 +80,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 //            }
 
             int size = chatRoomList.get(i).getChatMessages().size();
-            ChatMessage chatMessage = chatRoomList.get(i).getChatMessages().get(size-1);
+            ChatMessage chatMessage = null;
+            if(size > 0) {
+                chatMessage = chatRoomList.get(i).getChatMessages().get(size-1);
+            }
 
             ChatRoomRes chatRoomRes=  ChatRoomRes.builder()
                     .id(chatRoomList.get(i).getId())
