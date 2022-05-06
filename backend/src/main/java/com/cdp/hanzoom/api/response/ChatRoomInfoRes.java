@@ -12,8 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@ApiModel("ChatRoomResponse")
-public class ChatRoomRes {
+@ApiModel("ChatRoomInfoResponse")
+public class ChatRoomInfoRes {
     @ApiModelProperty(name = "채팅방 아이디", example = "62713ccfc7a1ef5b14c5fb15")
     String id;
 
@@ -26,9 +26,7 @@ public class ChatRoomRes {
     @ApiModelProperty(name = "게시글 번호", example = "1")
     Long boardNo;
 
-//    @ApiModelProperty(name = "채팅 메시지")
-//    List<ChatMessageRes> chatMessages;
+    @ApiModelProperty(name = "채팅 메시지")
+    List<ChatMessageRes> chatMessages;
 
-    @ApiModelProperty(name = "최근 메시지")
-    ChatMessage chatMessages;
 }

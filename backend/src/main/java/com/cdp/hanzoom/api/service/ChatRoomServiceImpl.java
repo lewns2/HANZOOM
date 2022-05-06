@@ -2,7 +2,9 @@ package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.ChatRoomReq;
 import com.cdp.hanzoom.api.response.ChatMessageRes;
+import com.cdp.hanzoom.api.response.ChatRoomInfoRes;
 import com.cdp.hanzoom.api.response.ChatRoomRes;
+import com.cdp.hanzoom.db.entity.ChatMessage;
 import com.cdp.hanzoom.db.entity.ChatRoom;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.repository.ChatRoomRepository;
@@ -55,39 +57,76 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             User user1 = userRepositorySupport.findUserByUserEmail(chatRoom.getUserEmail1()).orElse(null);
             User user2 = userRepositorySupport.findUserByUserEmail(chatRoom.getUserEmail2()).orElse(null);
 
-            List<ChatMessageRes> chatMessageResList = new ArrayList<ChatMessageRes>();
-            for(int j=0; j<chatRoom.getChatMessages().size(); j++) {
-                String userNickname = "";
-                String userImage = "";
-                if(chatRoom.getChatMessages().get(j).getSender().equals(user1.getUserEmail())) {
-                    userNickname = user1.getUserNickname();
-                    userImage = user1.getUserImage();
-                } else {
-                    userNickname = user2.getUserNickname();
-                    userImage = user2.getUserImage();
+//            List<ChatMessageRes> chatMessageResList = new ArrayList<ChatMessageRes>();
+//            for(int j=0; j<chatRoom.getChatMessages().size(); j++) {
+//                String userNickname = "";
+//                String userImage = "";
+//                if(chatRoom.getChatMessages().get(j).getSender().equals(user1.getUserEmail())) {
+//                    userNickname = user1.getUserNickname();
+//                    userImage = user1.getUserImage();
+//                } else {
+//                    userNickname = user2.getUserNickname();
+//                    userImage = user2.getUserImage();
+//
+//                }
+//                ChatMessageRes chatMessageRes = ChatMessageRes.builder()
+//                        .id(chatRoom.getChatMessages().get(j).getId())
+//                        .senderNickname(userNickname)
+//                        .senderImage(userImage)
+//                        .message(chatRoom.getChatMessages().get(j).getMessage())
+//                        .createdAt(chatRoom.getChatMessages().get(j).getCreatedAt())
+//                        .build();
+//                chatMessageResList.add(chatMessageRes);
+//            }
 
-                }
-
-                ChatMessageRes chatMessageRes = ChatMessageRes.builder()
-                        .id(chatRoom.getChatMessages().get(j).getId())
-                        .senderNickname(userNickname)
-                        .senderImage(userImage)
-                        .message(chatRoom.getChatMessages().get(j).getMessage())
-                        .createdAt(chatRoom.getChatMessages().get(j).getCreatedAt())
-                        .build();
-                chatMessageResList.add(chatMessageRes);
-            }
+            int size = chatRoomList.get(i).getChatMessages().size();
+            ChatMessage chatMessage = chatRoomList.get(i).getChatMessages().get(size-1);
 
             ChatRoomRes chatRoomRes=  ChatRoomRes.builder()
                     .id(chatRoomList.get(i).getId())
                     .userNickname1(user1.getUserNickname())
                     .userNickname2(user2.getUserNickname())
                     .boardNo(chatRoomList.get(i).getBoardNo())
-                    .chatMessages(chatMessageResList)
+//                    .chatMessages(chatMessageResList)
+                    .chatMessages(chatMessage)
                     .build();
             chatroomResList.add(chatRoomRes);
         }
         return chatroomResList;
+    }
+
+    @Override
+    public ChatRoomInfoRes findChatRoomInfoByRoomId(String roomId) {
+        ChatRoom chatRoom = mongoTemplate.findOne(
+                Query.query(Criteria.where("_id").is(roomId)),
+                ChatRoom.class
+        );
+
+        List<ChatMessageRes> chatMessageResList = new ArrayList<ChatMessageRes>();
+        for(int i=0; i<chatRoom.getChatMessages().size(); i++) {
+            User user = userRepositorySupport.findUserByUserEmail(chatRoom.getChatMessages().get(i).getSender()).orElse(null);
+
+            ChatMessageRes chatMessageRes = ChatMessageRes.builder()
+                    .id(chatRoom.getChatMessages().get(i).getId())
+                    .senderNickname(user.getUserNickname())
+                    .senderImage(user.getUserImage())
+                    .message(chatRoom.getChatMessages().get(i).getMessage())
+                    .type(chatRoom.getChatMessages().get(i).getType())
+                    .createdAt(chatRoom.getChatMessages().get(i).getCreatedAt())
+                    .build();
+
+            chatMessageResList.add(chatMessageRes);
+        }
+
+        ChatRoomInfoRes chatRoomInfoRes = ChatRoomInfoRes.builder()
+                .id(chatRoom.getId())
+                .userNickname1(chatRoom.getUserEmail1())
+                .userNickname2(chatRoom.getUserEmail2())
+                .boardNo(chatRoom.getBoardNo())
+                .chatMessages(chatMessageResList)
+                .build();
+
+        return chatRoomInfoRes;
     }
 
     /** 유저1과 유저2의 채팅방이 존재하는지 확인 (true: 존재 O, false: 존재 X) **/
