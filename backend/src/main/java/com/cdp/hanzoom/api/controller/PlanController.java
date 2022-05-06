@@ -2,11 +2,14 @@ package com.cdp.hanzoom.api.controller;
 
 import com.cdp.hanzoom.api.request.*;
 import com.cdp.hanzoom.api.response.PlanInChatRoomFindRes;
+import com.cdp.hanzoom.api.response.UserRes;
 import com.cdp.hanzoom.api.service.PlanService;
+import com.cdp.hanzoom.api.service.UserService;
 import com.cdp.hanzoom.common.auth.HanZoomUserDetails;
 import com.cdp.hanzoom.common.model.response.BaseResponseBody;
 import com.cdp.hanzoom.db.entity.Plan;
 
+import com.cdp.hanzoom.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +35,9 @@ public class PlanController {
 	@Autowired
 	PlanService planService;
 
+	@Autowired
+	UserService userService;
+
 	// 일정 등록
 	@PostMapping("/register")
 	@ApiOperation(value = "일정 등록(token)", notes = "<strong>나눔/교환 하는 user와 받는 사람의</strong> 최종 약속장소, 날짜 시간, 상대방 이메일, 게시글 번호를 입력받아 일정을 등록 한다." )
@@ -50,10 +56,24 @@ public class PlanController {
 		Plan user = planService.registerPlan(planRegisterReq);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
+
+	// 채팅방에서 일정 조회시 상대방 위도 경도 조회
+	@GetMapping("/chatroom/find/opponentLatAndLng")
+	@ApiOperation(value = "채팅방에서 일정 조회시 상대방 위도 경도 조회", notes = "채팅방에서 일정 조회시 상대방 위도 경도 조회를 한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<UserRes> getChatRoomInOpponentLatAndLng(@RequestParam(value = "opponentEmail", required = false) String opponentEmail) {
+		User user = userService.getUserByUserEmail(opponentEmail);
+		return ResponseEntity.status(200).body(UserRes.of(user));
+	}
 	
-	// 채팅방에서 일정 조회
+	// 채팅방에서 일정 확인 조회
 	@GetMapping("/chatroom/find/{boardNo}")
-	@ApiOperation(value = "채팅방에서 일정 조회", notes = "채팅방에서 일정을 조회한다.")
+	@ApiOperation(value = "채팅방에서 [일정 확인] 버튼으로 조회", notes = "채팅방에서 일정 확인을 조회한다.")
     @ApiResponses({
         @ApiResponse(code = 200, message = "성공"),
         @ApiResponse(code = 401, message = "인증 실패"),
