@@ -14,7 +14,10 @@ export const RecipeModal = (props) => {
           <div className="recipeFormWrap">
             <div className="recipeModalTitle">
               <h2>{info.recipeName}</h2>
-              <button>자동매칭</button>
+              <div>
+                <button className="matchingBtn">자동매칭</button>
+                <button onClick={close}>X</button>
+              </div>
             </div>
             <hr></hr>
             <div className="recipeModalBody">
@@ -22,7 +25,8 @@ export const RecipeModal = (props) => {
               <div className="recipeIngredients">
                 {info.ingredients.map((ingredient, key) => (
                   <div key={key}>
-                    {ingredient.name} {ingredient.weight}&nbsp;
+                    &nbsp;
+                    {ingredient.name} {ingredient.weight}&nbsp; /
                   </div>
                 ))}
               </div>
@@ -30,8 +34,11 @@ export const RecipeModal = (props) => {
                 <h3>레시피</h3>
                 {info.recipe.map((content, key) => (
                   <>
-                    <img className="recipeImg" key={key} src={content.imagePath}></img>
-                    <p>{content.description}</p>
+                    <div key={key} className="recipeOrder row">
+                      <p className="recipeIndex col-1">{key + 1}</p>
+                      <p className="recipeDescription col-5">{content.description}</p>
+                      <img className="recipeImg col-6" src={content.imagePath}></img>
+                    </div>
                   </>
                 ))}
               </div>

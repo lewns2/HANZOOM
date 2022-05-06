@@ -98,41 +98,69 @@
 
 // 2. 레시피 상세 정보.
 
-/* 글 생성 모달 전체 */
 .recipeDetailForm.openModal {
   display: flex;
   justify-content: center;
   align-items: center;
 
-  /* 글 생성 모달 내부 */
   .recipeFormWrap {
     width: 120vh;
-    // height: 90vh;
-    /* height: 80vh; */
     padding-top: 40px;
     padding-left: 40px;
     padding-right: 40px;
     border-radius: 0.8rem;
-    background-color: #fffcf2;
     margin-top: 40px;
 
     .recipeModalTitle {
       display: flex;
       justify-content: space-between;
+      .matchingBtn {
+        width: 90px;
+        font-size: 16px;
+        font-weight: bolder;
+        background-color: #f7c343;
+        border: 2px solid #f7c343;
+        border-radius: 16px;
+        padding: 3px 2px;
+        margin-right: 5px;
+        box-shadow: 0 4px 4px -4px #777;
+        text-align: center;
+      }
     }
     .recipeModalBody {
       text-align: center;
+      margin-top: 30px;
 
       .recipeIngredients {
         display: flex;
         justify-content: center;
+        margin-bottom: 30px;
       }
       .recipeImgWrap {
         width: 100%;
         padding: 20px 20px 20px 20px;
-        .recipeImg {
-          max-width: 100%;
-          padding: 20px 20px 20px 20px;
+        .recipeOrder {
+          display: flex;
+          .recipeIndex {
+            font-size: 20px;
+            color: white;
+            padding: 20px 20px 20px 20px;
+            width: 70px;
+            height: 70px;
+            background: #74b243;
+            border: 1px solid #68a13a;
+            border-radius: 50%;
+          }
+          .recipeDescription {
+            text-align: left;
+            font-size: 20px;
+            padding: 20px 20px 20px 20px;
+          }
+          .recipeImg {
+            max-width: 50%;
+            padding: 20px 20px 20px 20px;
+            border-radius: 2rem;
+          }
         }
       }
     }
