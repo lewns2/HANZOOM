@@ -16,25 +16,6 @@ export const FoodModal = (props) => {
     ingredient: null,
   });
 
-  // if (props.header === '식재료 수정') {
-  //   useEffect(() => {
-  //     setFoods({
-  //       ingredient: ingre.ingredientName,
-  //       purchaseDate: {
-  //         year: ingre.purchaseDate.slice(0, 4),
-  //         month: ingre.purchaseDate.slice(5, 7),
-  //         day: ingre.purchaseDate.slice(8, 10),
-  //       },
-  //       expirationDate: {
-  //         year: ingre.expirationDate.slice(0, 4),
-  //         month: ingre.expirationDate.slice(5, 7),
-  //         day: ingre.expirationDate.slice(8, 10),
-  //       },
-  //     });
-  //   }, []);
-  //   console.log(foods);
-  // }
-
   const registerIngre = async () => {
     const token = sessionStorage.getItem('jwt-token');
     const expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
@@ -87,6 +68,7 @@ export const FoodModal = (props) => {
     )
       .then((res) => {
         console.log(res);
+        setState(!state);
         close();
       })
       .catch(() => {
