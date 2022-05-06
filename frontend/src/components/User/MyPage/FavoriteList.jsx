@@ -29,13 +29,16 @@ export const FavoriteList = () => {
 
   return (
     <>
+      {console.log(likeList)}
       <div className="container favoriteList">
-        {likeList && (
+        {likeList && likeList.length != 0 ? (
           <Slider {...settings}>
             {likeList.map((like, index) => (
               <FavoriteListItem key={index} like={like} />
             ))}
           </Slider>
+        ) : (
+          <div className="text-center mt-5">찜한 게시글이 없습니다.</div>
         )}
       </div>
     </>

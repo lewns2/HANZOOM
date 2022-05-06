@@ -46,7 +46,7 @@ export const FavoriteListItem = (props) => {
       {likeState ? (
         <FavoriteIcon className="likeIcon" style={{ color: 'red' }} onClick={clickLike} />
       ) : (
-        <FavoriteBorderIcon />
+        <FavoriteBorderIcon className="likeIcon" onClick={clickLike} />
       )}
     </div>
   );
