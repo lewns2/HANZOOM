@@ -32,7 +32,7 @@ export const Schedule = (props) => {
     Axios.post(
       `${axios_apis.plans.register}`,
       {
-        boardNo: 31, // todo: 게시글 번호 받아오기
+        boardNo: 83, // todo: 게시글 번호 받아오기
         lat: lat,
         lng: lng,
         opponent: 'ehdgus@naver.com', // todo: 상대방 이메일 받아오기
@@ -64,11 +64,11 @@ export const Schedule = (props) => {
             <div className="scheduleDate col-lg-6 col-12  d-flex justify-content-center">
               <Calendar onChange={setDate} value={date} />
               <div className="schecduleTime d-flex">
-                <div className="schedulHour">
+                <div className="scheduleHour">
                   <input type="number" onChange={(e) => setHour(e.target.value)} />
                   <span>시</span>
                 </div>
-                <div className="schedulHour">
+                <div className="scheduleHour">
                   <input type="number" onChange={(e) => setMinute(e.target.value)} />
                   <span>분</span>
                 </div>
@@ -80,7 +80,7 @@ export const Schedule = (props) => {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-center mt-3">
+        <div className="d-flex justify-content-center" style={{ marginTop: '8px' }}>
           <button className="cancelBtn" onClick={() => props.show(false)}>
             취소
           </button>
