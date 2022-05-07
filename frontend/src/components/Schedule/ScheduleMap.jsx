@@ -28,10 +28,19 @@ export const ScheduleMap = (props) => {
     let map = new window.kakao.maps.Map(container, options);
     setKakaoMap(map);
 
-    let marker = new kakao.maps.Marker({
-      map: map,
-    });
-    setKakaoMarker(marker);
+    if (props.lat && props.lng) {
+      var promiseLoc = new kakao.maps.LatLng(props.lat, props.lng);
+      let marker = new kakao.maps.Marker({
+        map: map,
+        position: promiseLoc,
+      });
+      setKakaoMarker(marker);
+    } else {
+      let marker = new kakao.maps.Marker({
+        map: map,
+      });
+      setKakaoMarker(marker);
+    }
   };
 
   const setMarker = () => {
