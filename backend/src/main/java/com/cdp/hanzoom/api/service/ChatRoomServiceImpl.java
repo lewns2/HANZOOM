@@ -17,8 +17,11 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cdp.hanzoom.db.entity.ChatMessage.MessageType.LEAVE;
 
 @Service("ChatRoomService")
 public class ChatRoomServiceImpl implements ChatRoomService {
@@ -33,12 +36,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     /** 채팅방을 생성 **/
     @Override
-    public void registerChatRoom(ChatRoomReq chatRoomReq) {
+    public String registerChatRoom(ChatRoomReq chatRoomReq) {
         User user1 = userRepositorySupport.findUserByUserNickname(chatRoomReq.getUserNickname1()).orElse(null);
         User user2 = userRepositorySupport.findUserByUserNickname(chatRoomReq.getUserNickname2()).orElse(null);
 
         ChatRoom chatRoom = ChatRoom.create(user1.getUserEmail(), user2.getUserEmail(), chatRoomReq.getBoardNo());
         chatRoomRepository.save(chatRoom);
+
+        return chatRoom.getId();
     }
 
     /** 유저가 속한 채팅방을 전체 조회 **/
@@ -138,7 +143,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     /** 유저1과 유저2의 채팅방이 존재하는지 확인 (true: 존재 O, false: 존재 X) **/
     @Override
-    public Boolean findChatRoom(ChatRoomReq chatRoomReq) {
+    public String findChatRoom(ChatRoomReq chatRoomReq) {
         User user1 = userRepositorySupport.findUserByUserNickname(chatRoomReq.getUserNickname1()).orElse(null);
         User user2 = userRepositorySupport.findUserByUserNickname(chatRoomReq.getUserNickname2()).orElse(null);
 
@@ -148,12 +153,28 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         Query query = new Query(criteria);
         List<ChatRoom> chatRoomList = mongoTemplate.find(query, ChatRoom.class);
 
-        if(chatRoomList.size()==0) return false;    // 유저1과 유저2가 속한 채팅방이 존재 X
-        return true;    // 이미 유저1과 유저2가 속한 채팅방이 존재
+        if(chatRoomList.size()==0) return "";    // 유저1과 유저2가 속한 채팅방이 존재 X
+        return chatRoomList.get(0).getId();    // 이미 유저1과 유저2가 속한 채팅방이 존재
     }
 
     @Override
     public void deleteUserInfo(String id, String userEmail) {
+        // 채팅방 db에 유저 퇴장 메시지 저장
+        User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        ChatMessage chatMessage = ChatMessage.create(
+                userEmail,
+                user.getUserNickname() + "님이 퇴장하셨습니다 👋",
+                localDateTime,
+                LEAVE);
+
+        Update update = new Update();
+        update.push("chatMessages", chatMessage);
+        Criteria criteria = Criteria.where("_id").is(id);
+        mongoTemplate.updateFirst(Query.query(criteria), update, "chats");
+
+        // 채팅방에서 유저 정보 삭제
         ChatRoom chatRoom = mongoTemplate.findOne(Query.query(Criteria.where("_id").is(id)), ChatRoom.class);
 
         if(chatRoom.getUserEmail1().length()==0 || chatRoom.getUserEmail2().length()==0) { // 이미 다른 유저가 나간 경우, 채팅방을 바로 삭제
