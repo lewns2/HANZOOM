@@ -148,8 +148,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         User user2 = userRepositorySupport.findUserByUserNickname(chatRoomReq.getUserNickname2()).orElse(null);
 
         Criteria criteria = new Criteria();
-        criteria.orOperator(new Criteria().andOperator(Criteria.where("userEmail1").is(user1.getUserEmail()), Criteria.where("userEmail2").is(user2.getUserEmail()))
-                            , new Criteria().andOperator(Criteria.where("userEmail1").is(user2.getUserEmail()), Criteria.where("userEmail2").is(user1.getUserEmail())));
+        criteria.orOperator(new Criteria().andOperator(Criteria.where("userEmail1").is(user1.getUserEmail()), Criteria.where("userEmail2").is(user2.getUserEmail()), Criteria.where("boardNo").is(chatRoomReq.getBoardNo()))
+                            , new Criteria().andOperator(Criteria.where("userEmail1").is(user2.getUserEmail()), Criteria.where("userEmail2").is(user1.getUserEmail()), Criteria.where("boardNo").is(chatRoomReq.getBoardNo())));
         Query query = new Query(criteria);
         List<ChatRoom> chatRoomList = mongoTemplate.find(query, ChatRoom.class);
 
