@@ -94,6 +94,7 @@ export const Header = () => {
                 </>
               ) : (
                 <>
+                  <Link to="/martmap">마트맵</Link>
                   <Link to="/my-food-ingredients">MY식재료</Link>
                   <Link to="/my-page">MY페이지</Link>
                   <Link to="/" onClick={logout}>
