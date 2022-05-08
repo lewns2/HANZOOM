@@ -1,7 +1,7 @@
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { FoodModal } from './FoodModal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Axios } from '../../../core/axios.js';
 import { Draggable } from 'react-beautiful-dnd';
 
@@ -15,11 +15,15 @@ export const FoodIngreList = (props) => {
     setCheckedIngre,
     checkedBSIngre,
     setCheckedBSIngre,
+    checkedNeeds,
+    setCheckedNeeds,
   } = props;
+
   // 수정모달
   const [modalOpen3, setModalOpen3] = useState(false);
   const [modalOpen4, setModalOpen4] = useState(false);
 
+  // 일반식재료 체크
   const handleCheck = (checked, name) => {
     if (checked) {
       setCheckedIngre([...checkedIngre, name]);
@@ -29,6 +33,17 @@ export const FoodIngreList = (props) => {
     }
   };
 
+  // 필요 식재료 체크
+  const handleNeedsCheck = (checked, name) => {
+    if (checked) {
+      setCheckedNeeds([...checkedNeeds, name]);
+    } else {
+      // 체크 해제
+      setCheckedNeeds(checkedNeeds.filter((el) => el !== name));
+    }
+  };
+
+  // 교환/나눔 식재료 체크
   const handleBSCheck = (checked, name) => {
     if (checked) {
       setCheckedBSIngre([...checkedBSIngre, name]);
@@ -66,9 +81,13 @@ export const FoodIngreList = (props) => {
     <>
       {task.type === '필요' && (
         <div>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            onChange={(e) => handleNeedsCheck(e.target.checked, task.ingredientName)}
+            checked={checkedNeeds.includes(task.ingredientName) ? true : false}
+          />
           {task.ingredientName}
-          <EditIcon onClick={openModal4} />
+          <EditIcon onClick={openModal4} style={{ cursor: 'pointer' }} />
           <FoodModal
             open={modalOpen4}
             close={closeModal4}
@@ -77,7 +96,10 @@ export const FoodIngreList = (props) => {
             state={state}
             setState={setState}
           />
-          <DeleteIcon onClick={() => deleteFoodIngre(task.userIngredientNo)} />
+          <DeleteIcon
+            onClick={() => deleteFoodIngre(task.userIngredientNo)}
+            style={{ cursor: 'pointer' }}
+          />
         </div>
       )}
       {(task.type === '일반' || task.type === '교환/나눔') && (
@@ -90,19 +112,21 @@ export const FoodIngreList = (props) => {
 
             // isDragging={snapshot.isDragging} // 드래그 중일 때의 스타일링을 위해 snapshot 속성을 외부로 가져옴
             >
-              {task.type === '일반' ? (
+              {task.type === '일반' && (
                 <input
                   type="checkbox"
                   onChange={(e) => handleCheck(e.target.checked, task.ingredientName)}
                   checked={checkedIngre.includes(task.ingredientName) ? true : false}
                 />
-              ) : (
+              )}
+              {task.type === '교환/나눔' && (
                 <input
                   type="checkbox"
                   onChange={(e) => handleBSCheck(e.target.checked, task.ingredientName)}
                   checked={checkedBSIngre.includes(task.ingredientName) ? true : false}
                 />
               )}
+
               <span
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
