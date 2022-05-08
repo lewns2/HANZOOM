@@ -1,16 +1,13 @@
 import './MyFoodIngredients.scss';
 import { FoodModal } from './FoodModal';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Axios } from '../../../core/axios.js';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { FoodIngreList } from './FoodIngreList';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { MyIngreDnd } from './MyIngreDnd';
 
 export const MyFoodIngredients = () => {
-  const [modalOpen, setModalOpen] = useState(false);
   const [modalOpen2, setModalOpen2] = useState(false);
   const [checkedNeeds, setCheckedNeeds] = useState([]);
   const [myNeedsIngre, setMyNeedsIngre] = useState([]);
@@ -77,26 +74,7 @@ export const MyFoodIngredients = () => {
   useEffect(() => {
     getMyFoodIngre();
   }, [state]);
-  const getIngre = () => {
-    myFoodIngre.map((ingre) => {
-      if (ingre.type === '교환' || ingre.type === '나눔') {
-        setMyBarterShareIngre([...myBarterShareIngre, ingre]);
-      }
-    });
-  };
-  // useEffect(() => {
-  //   if (modalOpen === false) {
-  //     getMyFoodIngre();
-  //   }
-  // }, [modalOpen, modalOpen2, state]);
 
-  // 등록모달
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
   // 필요모달
   const openModal2 = () => {
     setModalOpen2(true);
@@ -222,6 +200,9 @@ export const MyFoodIngredients = () => {
     }
   };
 
+  const clickEvent = () => {
+    swal('식재료를 선택해주세요', '', 'error');
+  };
   return (
     <div className="container">
       <div id="myFoodIngredients">
@@ -253,13 +234,34 @@ export const MyFoodIngredients = () => {
                 <div className="ingreBody">
                   {myNeedsIngre.map((ingre, key) => (
                     <div key={key}>
-                      <FoodIngreList task={ingre} state={state} setState={setState} />
+                      <FoodIngreList
+                        task={ingre}
+                        state={state}
+                        setState={setState}
+                        checkedNeeds={checkedNeeds}
+                        setCheckedNeeds={setCheckedNeeds}
+                      />
                     </div>
                   ))}
-                  <div className="d-flex justify-content-center">
-                    <button className="ingreBtn">게시글 등록</button>
-                    <button className="ingreBtn">선택 매칭</button>
-                  </div>
+                  {checkedNeeds.length ? (
+                    <div className="d-flex justify-content-center">
+                      <button className="ingreBtn">
+                        <Link to={'/board/write'} state={{ ingre: checkedNeeds, type: '필요' }}>
+                          게시글 등록
+                        </Link>
+                      </button>
+                      <button className="ingreBtn">선택 매칭</button>
+                    </div>
+                  ) : (
+                    <div className="d-flex justify-content-center">
+                      <button className="ingreBtn" onClick={clickEvent}>
+                        게시글 등록
+                      </button>
+                      <button className="ingreBtn" onClick={clickEvent}>
+                        선택 매칭
+                      </button>
+                    </div>
+                  )}
                 </div>
               </section>
             </div>
