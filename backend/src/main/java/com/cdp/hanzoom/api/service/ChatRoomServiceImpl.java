@@ -85,10 +85,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                 chatMessage = chatRoomList.get(i).getChatMessages().get(size-1);
             }
 
+            String userNickname1 = "", userNickname2 = "";
+            if(user1 != null) userNickname1 = user1.getUserNickname();
+            if(user2 != null) userNickname2 = user2.getUserNickname();
+
             ChatRoomRes chatRoomRes=  ChatRoomRes.builder()
                     .id(chatRoomList.get(i).getId())
-                    .userNickname1(user1.getUserNickname())
-                    .userNickname2(user2.getUserNickname())
+                    .userNickname1(userNickname1)
+                    .userNickname2(userNickname2)
                     .boardNo(chatRoomList.get(i).getBoardNo())
 //                    .chatMessages(chatMessageResList)
                     .chatMessages(chatMessage)
