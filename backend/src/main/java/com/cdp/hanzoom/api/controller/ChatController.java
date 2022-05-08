@@ -38,27 +38,28 @@ public class ChatController {
     /** 채팅룸 생성 **/
     @PostMapping("/register")
     @ApiOperation(value = "채팅룸 등록", notes = "<strong>채팅 룸 정보</strong>를 생성한다." +
-            "true인 경우 두 유저 사이의 채팅방이 이미 존재하며, false인 경우 두 유저 사이에 채팅방이 없으므로 새로 생성한다.")
+            "생성하거나 기존에 있는 경우 해당 채팅룸아이디(roomId)를 리턴한다. ")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<Boolean> registerChatRoom(
+    public ResponseEntity<String> registerChatRoom(
             @RequestBody @ApiParam(value="채팅룸 정보", required = true) ChatRoomReq chatRoomReq) {
 
         boolean result = false;
+        String roomId = "";
         try {
-            result = chatRoomService.findChatRoom(chatRoomReq);
-            if(!result) {    // (true: 존재 O, false: 존재 X)
-                chatRoomService.registerChatRoom(chatRoomReq);
+            roomId = chatRoomService.findChatRoom(chatRoomReq);
+            if(roomId.length()==0) {    // (길이가 0이면 존재 X, 길이가 0이 아니면 존재 O)
+                roomId = chatRoomService.registerChatRoom(chatRoomReq);
             }
         } catch (Exception E) {
             E.printStackTrace();
             ResponseEntity.status(400).body(BaseResponseBody.of(500, "DB Transaction Failed"));
         }
-        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+        return new ResponseEntity<String>(roomId, HttpStatus.OK);
     }
 
     /** (유저의) 채팅방 전체 조회 **/
