@@ -1,12 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import './KakaoMap.scss';
 import marketimage from '../../assets/images/supermarket.png';
+import mylocation from '../../assets/images/mylocation.png';
 const { kakao } = window;
 export const NearbyMartMap = () => {
   const [userLat, setUserLat] = useState(36.19318389301);
   const [userLng, setUserLng] = useState(129.014529045975);
   const [userLoc, setUserLoc] = useState(null);
-  const getMartInfo = () => {
+
+  const myLocationInfo = (map) => {
+    var user_imageSrc = mylocation, // 마커이미지의 주소입니다
+      imageSize = new kakao.maps.Size(64, 60), // 마커이미지의 크기입니다
+      imageOption = { offset: new kakao.maps.Point(26, 49) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+    var user_markerImage = new kakao.maps.MarkerImage(user_imageSrc, imageSize, imageOption);
+    // 자신의 위치 마커를 생성합니다
+    let user_marker = new kakao.maps.Marker({
+      position: userLoc, // 자신의 위치 마커가 표시될 위치입니다
+      image: user_markerImage, // 마커이미지 설정
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    user_marker.setMap(map);
+  };
+  // 20km 반경
+  const getMartInfo = async () => {
     var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
     var markers = [];
     const container = document.getElementById('myMap');
@@ -16,7 +35,9 @@ export const NearbyMartMap = () => {
     };
 
     // 지도를 생성
-    const map = new kakao.maps.Map(container, options);
+    var map = new kakao.maps.Map(container, options);
+
+    myLocationInfo(map); //  자기 현재 위치 마커 표시 부분
 
     var imageSrc = marketimage, // 마커이미지의 주소입니다
       imageSize = new kakao.maps.Size(45, 50), // 마커이미지의 크기입니다
@@ -44,9 +65,9 @@ export const NearbyMartMap = () => {
         image: markerImage, // 마커이미지 설정
         position: new kakao.maps.LatLng(place.y, place.x),
       });
-      // console.log(place);
+      //   console.log(marker);
       var content =
-        '<div class="placeinfo">' +
+        '<div class="placeinfo onClick={onSocialLogin}">' +
         '   <a class="title" href="' +
         place.place_url +
         '" target="_blank" title="' +
@@ -80,6 +101,7 @@ export const NearbyMartMap = () => {
 
       kakao.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(content);
+        console.log(marker);
         infowindow.open(map, marker);
       });
     }
@@ -91,20 +113,19 @@ export const NearbyMartMap = () => {
       navigator.geolocation.getCurrentPosition(
         // 현 위치 정보가 받아와질 때
         function (position) {
-          let lat = position.coords.latitude;
-          let lng = position.coords.longitude;
+          console.log(position);
+          // 실수형으로 형 변환 해 주지 않으면 정확한 자기 위치 안됨
+          var lat = parseFloat(position.coords.latitude);
+          var lng = parseFloat(position.coords.longitude);
           let locPosition = new kakao.maps.LatLng(lat, lng);
-          console.log(lat + ' ' + lng);
+          console.log('현재 위도 경도' + lat + ' ' + lng);
           setUserLat(lat);
           setUserLng(lng);
           setUserLoc(locPosition);
         },
-        // 현 위치 정보가 안 받아와질 때
-        function () {
-          let locPosition = new kakao.maps.LatLng(userLat, userLng);
-          setUserLoc(locPosition);
-        },
       );
+    } else {
+      alert('GPS를 지원하지 않습니다');
     }
   };
 
