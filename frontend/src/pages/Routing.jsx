@@ -8,7 +8,7 @@ import { SignUp } from './User/SignUp';
 import { Login } from './User/Login';
 import { FindPassword } from './User/FindPassword';
 import { Recipe } from './Recipe/Recipe';
-
+import { NearbyMartMap } from '../components/Map/NearbyMartMap';
 import { Header } from '../components/Header';
 import { KaKaoCall } from '../components/User/Login/KaKaoCall';
 import { MyChat } from '../components/Chat/MyChat';
@@ -22,13 +22,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getChatInfo } from '../Reducer/chatSlice';
 
-
 export const Routing = () => {
   const [showChatList, setShowChatList] = useState(false);
   const chatShow = useSelector((state) => state.chat);
   const [showChat, setShowChat] = useState(false);
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     setShowChat(chatShow.chatShow);
@@ -51,6 +49,7 @@ export const Routing = () => {
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/martmap" element={<NearbyMartMap />} />
         <Route path="/find-password" element={<FindPassword />} />
         <Route path="/oauth/kakao/callback" element={<KaKaoCall />}></Route>
         <Route path="/recipe" element={<Recipe />}></Route>
