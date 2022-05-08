@@ -14,7 +14,7 @@ export const MyChatDisplay = (props) => {
   const [showSchedule, setShowSchedule] = useState(false);
   const [showScheduleDetail, setShowScheduleDetail] = useState(false);
 
-  console.log(props);
+  // console.log(props);
 
   const { setShow } = props;
 
@@ -27,6 +27,23 @@ export const MyChatDisplay = (props) => {
   const { chatShow, chatRoomId } = useSelector((state) => state.chat);
   const user = useSelector((state) => state.user);
   var reconnect = 0;
+
+  // var messageInfo = [];
+
+  // console.log('👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳 ', chatMessageInfo.chatMessages.length);
+
+  // for(var i=0; i<chatMessageInfo.chatMessages.length; i++) {
+  //   var createdAt = chatMessageInfo.chatMessages[i].createdAt.substring(0, 19);
+  //   messageInfo.push({
+  //     id: chatMessageInfo.chatMessages[i].id,
+  //     senderNickname: chatMessageInfo.chatMessages[i].senderNickname,
+  //     senderImage: chatMessageInfo.chatMessages[i].senderImage,
+  //     message: chatMessageInfo.chatMessages[i].message,
+  //     type: chatMessageInfo.chatMessages[i].type,
+  //     createdAt: createdAt,
+  //   });
+  // }
+
 
   // socket connect
   var sock = new SockJS('https://k6e103.p.ssafy.io:8443/ws/chat');
@@ -87,13 +104,19 @@ export const MyChatDisplay = (props) => {
   const getMessage = async () => {
     await Axios
     .get(`/chat/find/${chatRoomId}`)
-    .then(async (response) => {
-      console.log(response.data);
-      await setChatMessageInfo(response.data);
+    .then(async (res) => {
+      console.log(res.data);
+      await setChatMessageInfo(res.data);
     })
-    .catch((error) => {
-      console.log(error);
+    .catch((err) => {
+      console.log(err);
     });
+  };
+
+  const onKeyPress = (e) => {
+    if (e.key == 'Enter') {
+      sendMessage();
+    }
   };
 
   useEffect(() => {
@@ -127,13 +150,31 @@ export const MyChatDisplay = (props) => {
                 <></>
               :
                 <>
+                  {/* { messageInfo.map((message) => ( */}
                   { chatMessageInfo.chatMessages.map((message) => (
                   <div key={message.id}>
-                    { message.senderNickname === user.userInfo.userNickname ? 
-                      <div className='userMsg myMsg d-flex justify-content-end'>
-                        <div className='msgContent'>
-                          { message.message }
+                    { message.type === 'LEAVE' ?
+                    <div className='d-flex justify-content-center m-4'>
+                      { message.message }
+                    </div>
+                  :
+                    <>
+                      { message.senderNickname === user.userInfo.userNickname ?
+                        <div className='userMsg myMsg d-flex justify-content-end'>
+                          {/* <div className='msgTime'>{ message.createdAt }</div> */}
+                          <div className='msgContent'>
+                            { message.message }
+                          </div>
+                          <div className='profileImg'>
+                            <img src={
+                              message.senderImage !== null
+                                ? `${BASE_IMG_URL}${message.senderImage}`
+                                : '/img/basicProfile.png'
+                            } alt='' />
+                          </div>
                         </div>
+                      :
+                      <div className='userMsg otherMsg d-flex'>
                         <div className='profileImg'>
                           <img src={
                             message.senderImage !== null
@@ -141,20 +182,13 @@ export const MyChatDisplay = (props) => {
                               : '/img/basicProfile.png'
                           } alt='' />
                         </div>
+                        <div className='msgContent'>
+                          { message.message }
+                        </div>
+                        {/* <div className='msgTime'>{ message.createdAt }</div> */}
                       </div>
-                    :
-                    <div className='userMsg otherMsg d-flex'>
-                      <div className='profileImg'>
-                        <img src={
-                          message.senderImage !== null
-                            ? `${BASE_IMG_URL}${message.senderImage}`
-                            : '/img/basicProfile.png'
-                        } alt='' />
-                      </div>
-                      <div className='msgContent'>
-                        { message.message }
-                      </div>
-                    </div>
+                      }
+                    </>
                     }
                   </div> 
                 ))}
@@ -169,6 +203,7 @@ export const MyChatDisplay = (props) => {
                 <>
                   { m.sender === user.userInfo.userNickname ? 
                     <div className='userMsg myMsg d-flex justify-content-end'>
+                      {/* <div className='msgTime'>{ message.createdAt }</div> */}
                       <div className='msgContent'>
                         { m.message }
                       </div>
@@ -192,6 +227,7 @@ export const MyChatDisplay = (props) => {
                       <div className='msgContent'>
                         { m.message }
                       </div>
+                      <div className='msgTime'>{ message.createdAt }</div>
                     </div>
                     }
                   </>
@@ -199,7 +235,7 @@ export const MyChatDisplay = (props) => {
                   <>
                     { m.sender }
                   </>
-                }  
+                }
               </div>
             ))}
             {/* <div className="userMsg myMsg d-flex justify-content-end">
@@ -218,7 +254,13 @@ export const MyChatDisplay = (props) => {
             </div> */}
           </div>
           <div className='chatFooter'>
-            <input className='msgInput' type='text' value={msg} onChange={ (e) => setMsg(e.target.value) } />
+            <input 
+              className='msgInput' 
+              type='text' 
+              value={msg} 
+              onKeyPress={ onKeyPress }
+              onChange={ (e) => setMsg(e.target.value) } 
+            />
             {/* <input className='msgInput' type='text' /> */}
             <button className='sendBtn' onClick={ sendMessage }>전송</button>
           </div>

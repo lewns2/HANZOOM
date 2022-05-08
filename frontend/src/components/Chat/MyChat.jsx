@@ -40,11 +40,11 @@ export const MyChat = (props) => {
             onClick={() => setShow(false)}
           />
         </div>
-        {/* <div className="myChatList">
+        <div className="myChatList">
           {chat.chatInfo.map((chat, index) => (
             <MyChatList key={index} chat={chat} />
           ))}
-        </div> */}
+        </div>
       </div>
     </div>
   );
