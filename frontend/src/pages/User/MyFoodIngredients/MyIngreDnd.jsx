@@ -1,9 +1,9 @@
 import { Droppable } from 'react-beautiful-dnd';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { FoodIngreList } from './FoodIngreList';
 import { FoodModal } from './FoodModal';
+import swal from 'sweetalert';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -28,6 +28,12 @@ export const MyIngreDnd = (props) => {
     setState(!state);
   };
 
+  const clickEvent = () => {
+    if (checkedBSIngre.length == 0 || checkedIngre.length == 0) {
+      swal('식재료를 선택해주세요', '', 'error');
+      return;
+    }
+  };
   return (
     <div>
       <div className="d-flex justify-content-between">
@@ -60,10 +66,8 @@ export const MyIngreDnd = (props) => {
             // isDraggingOver={snapshot.isDraggingOver}
           >
             {tasks.map((task, index) => (
-              <>
-                {/* {console.log(task)} */}
+              <div key={index}>
                 <FoodIngreList
-                  key={index}
                   task={task}
                   index={index}
                   state={state}
@@ -73,21 +77,32 @@ export const MyIngreDnd = (props) => {
                   checkedBSIngre={checkedBSIngre}
                   setCheckedBSIngre={setCheckedBSIngre}
                 />
-                {console.log(checkedIngre)}
-              </>
+              </div>
             ))}
             {provided.placeholder}
           </div>
         )}
       </Droppable>
       {column.title === 'MY 식재료' ? (
-        <button className="ingreBtn">
-          <Link to={'/recipe'} state={checkedIngre}>
-            레시피 추천
-          </Link>
+        <button className="ingreBtn" onClick={clickEvent}>
+          {checkedIngre.length ? (
+            <Link to={'/recipe'} state={checkedIngre}>
+              레시피 추천
+            </Link>
+          ) : (
+            <div>레시피 추천</div>
+          )}
         </button>
       ) : (
-        <button className="ingreBtn">교환 / 나눔 등록</button>
+        <button className="ingreBtn" onClick={clickEvent}>
+          {checkedBSIngre.length ? (
+            <Link to={'/board/write'} state={{ ingre: checkedBSIngre, type: '교환/나눔' }}>
+              교환 / 나눔 등록
+            </Link>
+          ) : (
+            <div>교환 / 나눔 등록</div>
+          )}
+        </button>
       )}
     </div>
   );
