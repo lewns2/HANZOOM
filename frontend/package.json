@@ -17,6 +17,7 @@
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "firebase": "^9.8.0",
     "global": "^4.4.0",
     "lottie-web": "^5.9.3",
     "moment": "^2.29.3",
