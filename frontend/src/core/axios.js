@@ -15,6 +15,7 @@ export const axios_apis = {
     myPage: `${user_base}/find/me`,
     emailCheck: `${user_base}/emailCheck`,
     nickNameCheck: `${user_base}/nicknameCheck`,
+    passwordCheck: `${user_base}/checkPassword`,
     register: `${user_base}/register`,
     update: `${user_base}/update`,
   },
