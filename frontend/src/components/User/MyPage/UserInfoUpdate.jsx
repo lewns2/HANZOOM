@@ -20,6 +20,9 @@ export const UserInfoUpdate = (props) => {
     visible: false,
   });
 
+  const [passwordCheck, setPasswordCheck] = useState(false);
+  const [password, setPassword] = useState(null);
+
   const passwordInput = useRef();
 
   const dispatch = useDispatch();
@@ -55,6 +58,27 @@ export const UserInfoUpdate = (props) => {
       });
   };
 
+  const pwdCheck = () => {
+    const token = sessionStorage.getItem('jwt-token');
+    Axios.post(
+      `${axios_apis.users.passwordCheck}?userPassword=${password}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    ).then((data) => {
+      console.log(data);
+      if (data.data) {
+        setPasswordCheck(true);
+        setUserPassword(password);
+      } else {
+        alert('비밀번호가 틀렸습니다.');
+      }
+    });
+  };
+
   const updateUserInfo = async () => {
     const token = sessionStorage.getItem('jwt-token');
 
@@ -79,6 +103,11 @@ export const UserInfoUpdate = (props) => {
       });
   };
 
+  const onKeyPressCheck = (e) => {
+    if (e.key == 'Enter') {
+      pwdCheck();
+    }
+  };
   const onKeyPress = (e) => {
     if (e.key == 'Enter') {
       updateUser();
@@ -106,67 +135,87 @@ export const UserInfoUpdate = (props) => {
 
   return (
     <div className="updateModal">
-      <div className="formWrap">
-        <h4 className="text-center mb-3">정보 수정</h4>
-        <div className="row mb-4">
-          <div className="col-lg-3 label">이미지</div>
-          <div className="col-lg-9">
-            <div className="uploadImage">
-              <img
-                className=""
-                src={userPreviewImg ? `${userPreviewImg}` : '/img/basicProfile.png'}
-                alt=""
-              />
+      <div className={!passwordCheck ? 'formWrap pwdChkWrap' : 'formWrap'}>
+        <h4 className="text-center mb-3">{!passwordCheck ? <>비밀번호 확인</> : <>정보 수정</>}</h4>
+        {!passwordCheck ? (
+          <input
+            className="form-control mb-4"
+            type="password"
+            placeholder="비밀번호를 입력하세요."
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={onKeyPressCheck}
+          />
+        ) : (
+          <>
+            <div className="row mb-4">
+              <div className="col-lg-3 label">이미지</div>
+              <div className="col-lg-9">
+                <div className="uploadImage">
+                  <img
+                    className=""
+                    src={userPreviewImg ? `${userPreviewImg}` : '/img/basicProfile.png'}
+                    alt=""
+                  />
+                </div>
+                <input
+                  type="file"
+                  className="imgInput"
+                  accept="image/*"
+                  onChange={(e) => {
+                    setUserPreviewImg(URL.createObjectURL(e.target.files[0]));
+                    setUserImg(e.target.files[0]);
+                  }}
+                />
+              </div>
             </div>
-            <input
-              type="file"
-              className="imgInput"
-              accept="image/*"
-              onChange={(e) => {
-                setUserPreviewImg(URL.createObjectURL(e.target.files[0]));
-                setUserImg(e.target.files[0]);
-              }}
-            />
-          </div>
-        </div>
-        <div className="row mb-4">
-          <div className="col-lg-3 label">닉네임</div>
-          <div className="col-lg-9">
-            <input
-              className="form-control"
-              type="text"
-              value={userNickname}
-              onChange={(e) => setUserNickname(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="row mb-4">
-          <div className="col-lg-3 label">비밀번호</div>
-          <div className="col-lg-9 pwdInput">
-            <input
-              className="form-control"
-              type={passwordType.type}
-              placeholder="변경할 비밀번호를 입력하세요."
-              onChange={(e) => setUserPassword(e.target.value)}
-              onKeyPress={onKeyPress}
-              ref={passwordInput}
-            />
-            <span className="visibleIcon">
-              {!passwordType.visible ? (
-                <VisibilityIcon style={{ fontSize: '30px' }} onClick={handlePasswordType} />
-              ) : (
-                <VisibilityOffIcon style={{ fontSize: '30px' }} onClick={handlePasswordType} />
-              )}
-            </span>
-          </div>
-        </div>
+            <div className="row mb-4">
+              <div className="col-lg-3 label">닉네임</div>
+              <div className="col-lg-9">
+                <input
+                  className="form-control"
+                  type="text"
+                  value={userNickname}
+                  onChange={(e) => setUserNickname(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="row mb-4">
+              <div className="col-lg-3 label">비밀번호</div>
+              <div className="col-lg-9 pwdInput">
+                <input
+                  className="form-control"
+                  type={passwordType.type}
+                  value={userPassword}
+                  placeholder="변경할 비밀번호를 입력하세요."
+                  onChange={(e) => setUserPassword(e.target.value)}
+                  onKeyPress={onKeyPress}
+                  ref={passwordInput}
+                />
+                <span className="visibleIcon">
+                  {!passwordType.visible ? (
+                    <VisibilityIcon style={{ fontSize: '30px' }} onClick={handlePasswordType} />
+                  ) : (
+                    <VisibilityOffIcon style={{ fontSize: '30px' }} onClick={handlePasswordType} />
+                  )}
+                </span>
+              </div>
+            </div>
+          </>
+        )}
+
         <div className="d-flex justify-content-center">
           <button className="cancelBtn" onClick={() => props.setModalOpen(false)}>
             취소
           </button>
-          <button className="updateBtn" onClick={updateUser}>
-            수정
-          </button>
+          {!passwordCheck ? (
+            <button className="updateBtn" onClick={pwdCheck}>
+              확인
+            </button>
+          ) : (
+            <button className="updateBtn" onClick={updateUser}>
+              수정
+            </button>
+          )}
         </div>
       </div>
     </div>
