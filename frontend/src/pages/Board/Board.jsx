@@ -11,7 +11,7 @@ export const Board = () => {
   /* 버튼 클릭 상태 여부를 확인 */
   const [selectedFilter, setSelectedFilter] = useState('boardNo');
   const [isClickDist, setIsClickDist] = useState(false);
-  const [isClickRecent, setIsClickRecent] = useState(false);
+  const [isClickRecent, setIsClickRecent] = useState(true);
   const [isClickView, setIsClickView] = useState(false);
 
   const clickButton = (type) => {
@@ -84,15 +84,15 @@ export const Board = () => {
         <div className="filter col-3 d-flex justify-content-end">
           <button
             className="col-3 px-1"
-            id={isClickDist ? 'selectedFilterBtn' : 'filterBtn'}
-            onClick={() => clickButton('dist')}>
-            거리순
-          </button>
-          <button
-            className="col-3 px-1"
             id={isClickRecent ? 'selectedFilterBtn' : 'filterBtn'}
             onClick={() => clickButton('recent')}>
             최신순
+          </button>
+          <button
+            className="col-3 px-1"
+            id={isClickDist ? 'selectedFilterBtn' : 'filterBtn'}
+            onClick={() => clickButton('dist')}>
+            거리순
           </button>
           <button
             className="col-3 px-1"

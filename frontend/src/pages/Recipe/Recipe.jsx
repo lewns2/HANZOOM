@@ -12,8 +12,6 @@ const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
 import './Recipe.scss';
 
-const query = '추천 레시피 식재료 정보';
-
 export const Recipe = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [recipeList, setRecipeList] = useState([]);
@@ -31,7 +29,7 @@ export const Recipe = (props) => {
 
   useEffect(() => {
     console.log(location.state);
-    Axios.get(`/userIngredient/recipe?${query}=${location.state}`)
+    Axios.get(`/userIngredient/recipe?ingredients=${location.state}`)
       .then((res) => (setRecipeList(res.data.slice(0, 10)), console.log(res)))
       .catch((err) => console.log(err));
   }, []);

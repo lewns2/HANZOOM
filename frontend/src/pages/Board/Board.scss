@@ -191,6 +191,14 @@ $desktop: 1400px;
   border-color: #ddd;
 }
 
+.pagination > li > a[aria-current] {
+  background-color: #f2d17a;
+  border-color: #ddd;
+  font-weight: bold;
+  cursor: revert;
+  transform: revert;
+}
+
 /* 검색 실패 */
 
 .searchNotFoundText {
