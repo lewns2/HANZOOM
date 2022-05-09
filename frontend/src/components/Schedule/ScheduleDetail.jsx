@@ -21,8 +21,8 @@ export const ScheduleDetail = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const getSchedule = () => {
-    Axios.get(`${axios_apis.plans.find}/83`).then((res) => {
+  const getSchedule = async () => {
+    await Axios.get(`${axios_apis.plans.find}/${props.boardNo}`).then((res) => {
       console.log(res);
       setScheduleInfo(res.data);
     });
