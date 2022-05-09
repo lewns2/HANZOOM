@@ -4,14 +4,15 @@ import { Axios } from '../../core/axios';
 import { useDispatch } from 'react-redux';
 import { getUserInfo } from '../../Reducer/userSlice';
 import './KakaoMap.scss';
-
-import SearchIcon from '@mui/icons-material/Search';
-
+import DaumPostcode from 'react-daum-postcode';
+import CloseIcon from '@mui/icons-material/Close';
 // const { kakao } = window;
 export const PositioningMap = (props) => {
   const [userLat, setUserLat] = useState(35.094068611669925);
   const [userLng, setUserLng] = useState(128.85567290875736);
   const [userLoc, setUserLoc] = useState(null);
+
+  const [isOpenPost, setIsOpenPost] = useState(false);
 
   const [kakaoMap, setKakaoMap] = useState(null);
   const [kakaoGeocoder, setKakaoGeocoder] = useState(null);
@@ -19,10 +20,29 @@ export const PositioningMap = (props) => {
   const [kakaoInfoWindow, setKakaoInfoWindow] = useState(null);
   const [kakaoCustomOverlay, setKakaoCustomOverlay] = useState(null);
 
-  const [searchAddr, setSearchAddr] = useState('');
-
   const dispatch = useDispatch();
 
+  const onCompletePost = async (data) => {
+    console.log(data);
+    console.log(data.jibunAddress);
+    setIsOpenPost(false);
+    addrSearch(data.jibunAddress);
+  };
+  // 유저 위치 정보 업데이트
+  const toggle = () => {
+    setIsOpenPost(true);
+    console.log(isOpenPost);
+  };
+  const postCodeStyle = {
+    display: 'block',
+    position: 'relative',
+    top: '0%',
+    width: '400px',
+    height: '400px',
+    padding: '7px',
+  };
+
+  ///////////////////
   const initMap = () => {
     let container = document.getElementById('map');
 
@@ -155,10 +175,12 @@ export const PositioningMap = (props) => {
       });
   };
 
-  const addrSearch = () => {
-    kakaoGeocoder.addressSearch(searchAddr, function (result, status) {
+  const addrSearch = (data) => {
+    kakaoGeocoder.addressSearch(data, function (result, status) {
+      // consol.log('들어옴' + searchAddr);
       // 정상적으로 검색이 완료됐으면
       if (status === kakao.maps.services.Status.OK) {
+        // consol.log('들어옴' + searchAddr);
         kakaoInfoWindow.close();
 
         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -205,16 +227,25 @@ export const PositioningMap = (props) => {
       {/* {console.log(userLat)}
       {console.log(userLng)} */}
       <div className="searchInput">
-        <input
+        {/* <input
           className="form-control"
           type="text"
           placeholder="주소를 입력하세요."
           onChange={(e) => setSearchAddr(e.target.value)}
           onKeyPress={onKeyPress}
-        />
-        <span className="searchIcon">
-          <SearchIcon style={{ fontSize: '28px' }} onClick={addrSearch} />
-        </span>
+        /> */}
+        {isOpenPost ? (
+          <span>
+            <CloseIcon title="닫기" onClick={() => setIsOpenPost(false)}>
+              닫기
+            </CloseIcon>
+            <DaumPostcode style={postCodeStyle} autoClose onComplete={onCompletePost} />
+          </span>
+        ) : null}
+
+        <button className="" onClick={toggle}>
+          주소로 검색
+        </button>
       </div>
       <div id="map" style={{ width: '100%', height: '400px' }}></div>
 
