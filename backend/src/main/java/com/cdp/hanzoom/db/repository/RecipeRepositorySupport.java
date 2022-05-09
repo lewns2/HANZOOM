@@ -37,4 +37,12 @@ public class RecipeRepositorySupport {
         return builder;
     }
 
+    public String findRecipeByRecipeNo(Long recipeNo) {
+        String ingredients = jpaQueryFactory
+                .select(qRecipe.ingredients)
+                .from(qRecipe)
+                .where(qRecipe.recipeNo.eq(recipeNo))
+                .fetchOne();
+        return ingredients;
+    }
 }

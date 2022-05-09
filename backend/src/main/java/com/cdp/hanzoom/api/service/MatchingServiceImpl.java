@@ -4,6 +4,7 @@ import com.cdp.hanzoom.api.response.MatchingFindRes;
 import com.cdp.hanzoom.api.response.MatchingRes;
 import com.cdp.hanzoom.api.response.UserIngredientMatchingRes;
 import com.cdp.hanzoom.db.entity.User;
+import com.cdp.hanzoom.db.repository.RecipeRepositorySupport;
 import com.cdp.hanzoom.db.repository.UserIngredientRepositorySupport;
 import com.cdp.hanzoom.db.repository.UserRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class MatchingServiceImpl implements MatchingService{
     UserRepositorySupport userRepositorySupport;
     @Autowired
     UserIngredientRepositorySupport userIngredientRepositorySupport;
+    @Autowired
+    RecipeRepositorySupport recipeRepositorySupport;
 
     // 모든 경우 찾기
     int ingCase[][];
@@ -30,6 +33,7 @@ public class MatchingServiceImpl implements MatchingService{
     Double map[][];
     Double dp[][];
 
+    // 선택 매칭
     @Override
     public MatchingRes findMatchingList(String userEmail, List<String> ingredients, Double distance) {
         User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
@@ -134,6 +138,29 @@ public class MatchingServiceImpl implements MatchingService{
             // 식재료 매칭된 리스트 담기
             matchingList.setMatchingList(matchingFindRes);
         }
+        return matchingList;
+    }
+
+    // 레시피 추천 바탕으로 자동 매칭
+    @Override
+    public MatchingRes findRecipeMatchingList(String userEmail, Long recipeNo, Double distance) {
+        String ingredients = recipeRepositorySupport.findRecipeByRecipeNo(recipeNo);
+        ingredients = ingredients.replace("[","").replace("]","").replace("'","").replace("\\\\ufeff","");
+        String[] ingredient = ingredients.substring(1,ingredients.length()-1).split(",");
+        List<String> ingredientList = new ArrayList<String>();
+        for(int i=0; i<ingredient.length; i++) {
+            if(i%2==0) ingredientList.add(ingredient[i].replace(" ",""));
+        }
+        List<String> normalUserIngredients = userIngredientRepositorySupport.findNormalUserIngredientsByUserEmail(userEmail);
+        for(int i=ingredientList.size()-1; i>=0; i--) {
+            for(int j=0; j< normalUserIngredients.size(); j++) {
+                if(ingredientList.get(i).equals(normalUserIngredients.get(j))) {
+                    ingredientList.remove(i);
+                    break;
+                }
+            }
+        }
+        MatchingRes matchingList = findMatchingList(userEmail, ingredientList, distance);
         return matchingList;
     }
 

@@ -24,6 +24,8 @@ public class BoardFindRes {
     Long viewCnt;
     @ApiModelProperty(name="Board likeCnt")
     Long likeCnt;
+    @ApiModelProperty(name="Board userEmail")
+    String userEmail;
     @ApiModelProperty(name="Board userNickname")
     String userNickname;
     @ApiModelProperty(name="Board userImage")
