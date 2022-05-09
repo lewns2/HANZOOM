@@ -34,6 +34,7 @@ public class UserReportHistoryServiceImpl implements UserReportHistoryService {
             userReportHistoryFindAllRes.setReporter(userReportHistoryList.get(i).getUser().getUserEmail());
             userReportHistoryFindAllRes.setReported(userReportHistoryList.get(i).getReported());
             userReportHistoryFindAllRes.setContent(userReportHistoryList.get(i).getContent());
+            userReportHistoryFindAllRes.setCreatedAt(userReportHistoryList.get(i).getCreatedAt());
 
             userReportHistoryFindAllResList.add(userReportHistoryFindAllRes);
         }
