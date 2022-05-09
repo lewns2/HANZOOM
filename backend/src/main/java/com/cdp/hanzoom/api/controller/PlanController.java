@@ -85,6 +85,21 @@ public class PlanController {
 		return ResponseEntity.status(200).body(PlanInChatRoomFindRes.of(plan));
 	}
 
+	// 채팅방에서 일정이 잡혔는지 안 잡혔는지 체크
+	@GetMapping("/chatroom/checkPlan/{boardNo}")
+	@ApiOperation(value = "채팅방에서 일정이 잡혔는지 안 잡혔는지 체크", notes = "채팅방에서 일정이 잡혔는지 안 잡혔는지 체크 <br/>"+
+			"<strong> 잡혔으면 true 안 잡혔으면 false </strong>")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<Boolean> checkUserPlan(@PathVariable Long boardNo) {
+		Plan plan = planService.getPlanByBoardNo(boardNo);
+		if(plan !=null) return ResponseEntity.status(200).body(true);
+		return ResponseEntity.status(200).body(false);
+	}
 	// 마이 페이지에서 일정 조회
 	@GetMapping("/mypage/find")
 	@ApiOperation(value = "마이 페이지에서 일정 조회(token)", notes = "<strong>마이 페이지에 일정 <strong>목록 조회를 약속 잡은 시간 내림차순으로 조회</strong> 한다.</strong>한다.")
