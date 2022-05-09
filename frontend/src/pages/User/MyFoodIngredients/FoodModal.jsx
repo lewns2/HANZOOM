@@ -71,7 +71,8 @@ export const FoodModal = (props) => {
         setState(!state);
         close();
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         alert('필요목록 등록에 실패하였습니다😓');
       });
   };
