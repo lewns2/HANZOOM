@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MatchingService {
     MatchingRes findMatchingList(String userEmail, List<String> ingredients, Double distance);
+    MatchingRes findRecipeMatchingList(String userEmail, Long recipeNo, Double distance);
 }

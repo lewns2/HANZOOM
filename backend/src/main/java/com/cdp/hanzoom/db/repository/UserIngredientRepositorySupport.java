@@ -96,4 +96,11 @@ public class UserIngredientRepositorySupport {
         }
         return builder;
     }
+
+    public List<String> findNormalUserIngredientsByUserEmail(String userEmail) {
+        List<String> normalUserIngredients = jpaQueryFactory.select(qUserIngredient.ingredient.ingredientName).from(qUserIngredient)
+                .where(qUserIngredient.user.userEmail.eq(userEmail).and(qUserIngredient.type.eq("일반"))).fetch();
+        if(normalUserIngredients == null) return null;
+        return normalUserIngredients;
+    }
 }

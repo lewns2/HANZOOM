@@ -150,7 +150,7 @@ public class UserIngredientController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<RecipeFindRes>> findRecipe(@RequestParam(value="추천 레시피 식재료 정보", required = true) List<String> ingredients) {
+    public ResponseEntity<List<RecipeFindRes>> findRecipe(@RequestParam(value="ingredients", required = true) List<String> ingredients) {
         List<Recipe> recipeList = recipeService.findRecipeByIngredients(ingredients);
         List<RecipeFindRes> recipeFindResList = recipeService.findInfoRecipeByIngredient(recipeList);
         return new ResponseEntity<List<RecipeFindRes>>(recipeFindResList, HttpStatus.OK);
@@ -158,8 +158,9 @@ public class UserIngredientController {
 
     // 제한 거리 입력받아서
     /** 매칭 알고리즘 **/
+    // 선택 매칭
     @GetMapping("/matching")
-    @ApiOperation(value = "매칭", notes = "<strong>입력받은 거리와 식재료를 바탕으로 매칭된 결과를 조회</strong>한다.")
+    @ApiOperation(value = "선택 매칭{token}", notes = "<strong>입력받은 거리와 식재료를 바탕으로 매칭된 결과를 조회</strong>한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -167,13 +168,33 @@ public class UserIngredientController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<MatchingRes> matchingAlgorithm(
-            @RequestParam(value="매칭에 사용할 식재료", required = true) List<String> ingredients
-            , @RequestParam(value="매칭에 사용할 거리", required = false) Double distance
+            @RequestParam(value="ingredients", required = true) List<String> ingredients
+            , @RequestParam(value="distance", required = false) Double distance
             , @ApiIgnore Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userEmail = userDetails.getUsername();
-        if(distance == null) distance = Double.valueOf(5);
+        if(distance == null) distance = Double.valueOf(10);
         MatchingRes matchingList = matchingService.findMatchingList(userEmail, ingredients, distance);
+        return new ResponseEntity<MatchingRes>(matchingList, HttpStatus.OK);
+    }
+
+    // 추천 레시피 바탕 자동 매칭
+    @GetMapping("/recipe/matching")
+    @ApiOperation(value = "자동 매칭{token}", notes = "<strong>입력받은 거리와 레시피 번호를 바탕으로 매칭된 결과를 조회</strong>한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<MatchingRes> recipeMatchingAlgorithm(
+            @RequestParam(value="recipeNo", required = true) Long recipeNo
+            , @RequestParam(value="distance", required = false) Double distance
+            , @ApiIgnore Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userEmail = userDetails.getUsername();
+        if(distance == null) distance = Double.valueOf(10);
+        MatchingRes matchingList = matchingService.findRecipeMatchingList(userEmail, recipeNo, distance);
         return new ResponseEntity<MatchingRes>(matchingList, HttpStatus.OK);
     }
 }
