@@ -4,10 +4,10 @@ import com.cdp.hanzoom.api.request.ChatRoomReq;
 import com.cdp.hanzoom.api.response.ChatMessageRes;
 import com.cdp.hanzoom.api.response.ChatRoomInfoRes;
 import com.cdp.hanzoom.api.response.ChatRoomRes;
-import com.cdp.hanzoom.db.entity.ChatMessage;
-import com.cdp.hanzoom.db.entity.ChatRoom;
-import com.cdp.hanzoom.db.entity.User;
+import com.cdp.hanzoom.db.entity.*;
+import com.cdp.hanzoom.db.repository.BoardRepositorySupport;
 import com.cdp.hanzoom.db.repository.ChatRoomRepository;
+import com.cdp.hanzoom.db.repository.UserIngredientRepositorySupport;
 import com.cdp.hanzoom.db.repository.UserRepositorySupport;
 import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Autowired
+    UserIngredientRepositorySupport userIngredientRepositorySupport;
 
     /** 채팅방을 생성 **/
     @Override
@@ -94,6 +97,13 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             if(user1 != null) userNickname1 = user1.getUserNickname();
             if(user2 != null) userNickname2 = user2.getUserNickname();
 
+            List<UserIngredient> userIngredientList = userIngredientRepositorySupport.findByBoardNo(chatRoomList.get(i).getBoardNo());
+            List<String> ingredientList = new ArrayList<String>();
+
+            for(int j=0; j<userIngredientList.size(); j++) {
+                ingredientList.add(userIngredientList.get(j).getIngredient().getIngredientName());
+            }
+
             ChatRoomRes chatRoomRes=  ChatRoomRes.builder()
                     .id(chatRoomList.get(i).getId())
                     .userNickname1(userNickname1)
@@ -101,6 +111,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                     .boardNo(chatRoomList.get(i).getBoardNo())
 //                    .chatMessages(chatMessageResList)
                     .chatMessages(chatMessage)
+                    .ingredientList(ingredientList)
                     .build();
             chatroomResList.add(chatRoomRes);
         }
