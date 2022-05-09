@@ -3,6 +3,7 @@ import { width } from '@mui/system';
 import { useState, useRef, useEffect } from 'react';
 import Initimage from '../../assets/images/Initimage.PNG';
 import { Calendar } from '../../components/Board/Calendar';
+import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { Axios } from '../../core/axios';
 // import axios from 'axios';
@@ -11,6 +12,24 @@ import './BoardCreate.scss';
 
 export const BoardCreate = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [ingredients, setIngredients] = useState([]);
+
+  const setInfo = () => {
+    let ingreList = [];
+    let noList = [];
+    location.state.map((info) => {
+      noList.push(info.userIngredientNo);
+      ingreList.push(info.ingredientName);
+    });
+    setState({ ...state, userIngredientNo: noList });
+    setIngredients(ingreList);
+  };
+
+  useEffect(() => {
+    setInfo();
+  }, []);
   /* POST 요청 보낼 이미지 */
   const [postImg, setPostImg] = useState();
 
@@ -30,32 +49,22 @@ export const BoardCreate = () => {
   };
 
   /* 버튼 선택에 따라 거래 종류 바꾸기 */
-  const [isNomal, setIsNormal] = useState(true);
   const [isShare, setIsShare] = useState(false);
   const [isExchange, setIsExchange] = useState(false);
   const [isNeed, setIsNeed] = useState(false);
   const selectedType = (selected) => {
     switch (selected) {
-      case '일반':
-        setIsNormal(true);
-        setIsShare(false);
-        setIsExchange(false);
-        setIsNeed(false);
-        break;
       case '나눔':
-        setIsNormal(false);
         setIsShare(true);
         setIsExchange(false);
         setIsNeed(false);
         break;
       case '교환':
-        setIsNormal(false);
         setIsShare(false);
         setIsExchange(true);
         setIsNeed(false);
         break;
       case '필요':
-        setIsNormal(false);
         setIsShare(false);
         setIsExchange(false);
         setIsNeed(true);
@@ -65,17 +74,11 @@ export const BoardCreate = () => {
     return setState({ ...state, type: selected });
   };
 
-  const [ingredientList, setIngredientList] = useState([]);
-  const addIngredient = (data) => {
-    setIngredientList([...ingredientList, data]);
-    return setState({ ...state, ingredientList: ingredientList });
-  };
-
   /* post 요청 보낼 데이터들 */
   const [state, setState] = useState({
     title: null,
     // 유저의 식재료에 등록된 user_ingredient_no 등록
-    userIngredientNo: [18],
+    userIngredientNo: null,
     type: null,
     description: null,
     // sellByDate: { year: null, month: null, day: null },
@@ -83,7 +86,7 @@ export const BoardCreate = () => {
 
   /* 게시글 등록 */
   const handleSubmit = () => {
-    console.log(state);
+    // console.log(state);
     const token = sessionStorage.getItem('jwt-token');
     const header = {
       headers: {
@@ -189,12 +192,6 @@ export const BoardCreate = () => {
             <div className="col-9">
               <button
                 type="button"
-                id={isNomal ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
-                onClick={() => selectedType('일반')}>
-                일반
-              </button>
-              <button
-                type="button"
                 id={isShare ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
                 onClick={() => selectedType('나눔')}>
                 나눔
@@ -241,7 +238,13 @@ export const BoardCreate = () => {
           <div className="row mb-4">
             <div className="col-3">식재료 명</div>
             <div className="col-9">
-              <input className="form-control" type="text" placeholder="식재료 명" />
+              <input
+                className="form-control"
+                type="text"
+                placeholder="식재료 명"
+                value={ingredients}
+                readOnly
+              />
             </div>
           </div>
 

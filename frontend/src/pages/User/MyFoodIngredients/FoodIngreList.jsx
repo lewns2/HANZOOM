@@ -34,22 +34,26 @@ export const FoodIngreList = (props) => {
   };
 
   // 필요 식재료 체크
-  const handleNeedsCheck = (checked, name) => {
+  const handleNeedsCheck = (checked, name, num) => {
     if (checked) {
-      setCheckedNeeds([...checkedNeeds, name]);
+      const arr = [...checkedNeeds];
+      arr.push({ ingredientName: name, userIngredientNo: num });
+      setCheckedNeeds([...arr]);
     } else {
       // 체크 해제
-      setCheckedNeeds(checkedNeeds.filter((el) => el !== name));
+      setCheckedNeeds(checkedNeeds.filter((el) => el.ingredientName !== name));
     }
   };
 
   // 교환/나눔 식재료 체크
-  const handleBSCheck = (checked, name) => {
+  const handleBSCheck = (checked, name, num) => {
     if (checked) {
-      setCheckedBSIngre([...checkedBSIngre, name]);
+      const arr2 = [...checkedBSIngre];
+      arr2.push({ ingredientName: name, userIngredientNo: num });
+      setCheckedBSIngre([...arr2]);
     } else {
       // 체크 해제
-      setCheckedBSIngre(checkedBSIngre.filter((el) => el !== name));
+      setCheckedBSIngre(checkedBSIngre.filter((el) => el.ingredientName !== name));
     }
   };
 
@@ -83,8 +87,9 @@ export const FoodIngreList = (props) => {
         <div>
           <input
             type="checkbox"
-            onChange={(e) => handleNeedsCheck(e.target.checked, task.ingredientName)}
-            checked={checkedNeeds.includes(task.ingredientName) ? true : false}
+            onChange={(e) =>
+              handleNeedsCheck(e.target.checked, task.ingredientName, task.userIngredientNo)
+            }
           />
           {task.ingredientName}
           <EditIcon onClick={openModal4} style={{ cursor: 'pointer' }} />
@@ -116,14 +121,14 @@ export const FoodIngreList = (props) => {
                 <input
                   type="checkbox"
                   onChange={(e) => handleCheck(e.target.checked, task.ingredientName)}
-                  checked={checkedIngre.includes(task.ingredientName) ? true : false}
                 />
               )}
               {task.type === '교환/나눔' && (
                 <input
                   type="checkbox"
-                  onChange={(e) => handleBSCheck(e.target.checked, task.ingredientName)}
-                  checked={checkedBSIngre.includes(task.ingredientName) ? true : false}
+                  onChange={(e) =>
+                    handleBSCheck(e.target.checked, task.ingredientName, task.userIngredientNo)
+                  }
                 />
               )}
 
