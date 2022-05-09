@@ -9,6 +9,7 @@ import { BASE_IMG_URL } from '../../../core/s3';
 export const UserInfo = (props) => {
   const user = useSelector((state) => state.user);
   const [userInfo, setUserInfo] = useState([]);
+  const [loginType, setLoginType] = useState('');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export const UserInfo = (props) => {
       .then(() => {
         alert('회원 탈퇴가 왼료되었습니다.');
         dispatch(clearUser());
-        navigate('/main');
+        navigate('/');
       })
       .catch((error) => {
         alert('회원 탈퇴 실패');
@@ -37,6 +38,8 @@ export const UserInfo = (props) => {
 
   useEffect(() => {
     setUserInfo(user.userInfo);
+    setLoginType(user.loginType);
+    console.log(user.loginType);
   }, []);
   useEffect(() => {
     setUserInfo(user.userInfo);
@@ -50,9 +53,11 @@ export const UserInfo = (props) => {
             <img
               className=""
               src={
-                userInfo.userImage
-                  ? `${BASE_IMG_URL}${userInfo.userImage}`
-                  : '/img/basicProfile.png'
+                loginType == '일반'
+                  ? userInfo.userImage
+                    ? `${BASE_IMG_URL}${userInfo.userImage}`
+                    : '/img/basicProfile.png'
+                  : userInfo.userImage
               }
               alt=""
             />
@@ -64,9 +69,11 @@ export const UserInfo = (props) => {
               <button className="withdrawBtn" onClick={withdrawUser}>
                 회원 탈퇴
               </button>
-              <button className="updateBtn" onClick={() => props.setModalOpen(true)}>
-                정보 수정
-              </button>
+              {loginType == '일반' && (
+                <button className="updateBtn" onClick={() => props.setModalOpen(true)}>
+                  정보 수정
+                </button>
+              )}
             </div>
           </div>
         </div>
