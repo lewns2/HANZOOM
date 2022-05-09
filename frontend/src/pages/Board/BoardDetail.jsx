@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Axios } from '../../core/axios';
 import { useParams } from 'react-router-dom';
 import sample from '../../assets/images/Initimage.PNG';
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import './BoardDetail.scss';
 import { BreakfastDiningRounded } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { changeShow, setRoomId, getChatMessageInfo } from '../../Reducer/chatSlice';
 
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 export const BoardDetail = () => {
@@ -20,7 +21,11 @@ export const BoardDetail = () => {
 
   const { id } = useParams();
   const [content, setContent] = useState(null);
+
   const token = sessionStorage.getItem('jwt-token');
+
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     setUserInfo(user.userInfo);
@@ -71,6 +76,29 @@ export const BoardDetail = () => {
     });
   };
 
+  // 채팅방 등록
+  const registerChat = async () => {
+    await Axios
+      .post('/chat/register', {
+        boardNo: content.boardNo,
+        userNickname1: user.userInfo.userNickname,
+        userNickname2: content.userNickname,
+      })
+      .then((res) => {
+        startChat(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // 채팅 시작
+  const startChat = (roomId) => {
+    dispatch(setRoomId(roomId));  // store에 선택한 roomId 세팅
+    dispatch(getChatMessageInfo()); // store에 저장된 roomId에 해당하는 채팅방 메시지 정보 가져오기
+    dispatch(changeShow(true)); // 채팅 모달 show
+  };
+
   return (
     <>
       {content && (
@@ -119,7 +147,7 @@ export const BoardDetail = () => {
                       &nbsp; 찜 {likeCnt}
                     </button>
                   )}
-                  <button id="detailChat">연락하기</button>
+                  <button id="detailChat" onClick={ registerChat }>채팅</button>
                   <button id="detailReport">신고</button>
                 </div>
               </div>

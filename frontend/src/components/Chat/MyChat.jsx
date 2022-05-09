@@ -1,6 +1,7 @@
 import './Chat.scss';
-import { useEffect, useState } from 'react';
-// import { ChatDump } from './ChatDump';
+import '../../assets/style.scss';
+import chatImg from '../../assets/images/chat.gif';
+import { useEffect } from 'react';
 import { MyChatList } from './MyChatList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChatInfo } from '../../Reducer/chatSlice';
@@ -41,9 +42,22 @@ export const MyChat = (props) => {
           />
         </div>
         <div className="myChatList">
-          {chat.chatInfo.map((chat, index) => (
-            <MyChatList key={index} chat={chat} />
-          ))}
+          { chat.chatInfo.length > 0 ?
+            <>
+              {chat.chatInfo.map((chat, index) => (
+                <MyChatList key={index} chat={chat} />
+              ))}
+            </>
+          :
+            <div className='text-center mt-5'>
+              <img className='chatImage' src={chatImg}></img>
+              <div className='emptyChat'>
+                채팅 목록이 없습니다.
+                <br/>
+                교환/나눔을 통해 채팅을 시작해보세요!!
+              </div>
+            </div>
+          } 
         </div>
       </div>
     </div>
