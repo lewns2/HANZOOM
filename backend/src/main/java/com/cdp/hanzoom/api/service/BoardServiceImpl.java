@@ -158,6 +158,7 @@ public class BoardServiceImpl implements BoardService{
         res.setTitle(board.getTitle());
         res.setViewCnt(board.getViewCnt());
         res.setLikeCnt(board.getLikeCnt());
+        res.setUserEmail(board.getUser().getUserEmail());
         res.setUserNickname(board.getUser().getUserNickname());
         res.setUserImage(board.getUser().getUserImage());
 
