@@ -3,7 +3,6 @@ package com.cdp.hanzoom.api.response;
 import com.cdp.hanzoom.db.entity.Ingredient;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.entity.UserIngredient;
-import com.cdp.hanzoom.db.entity.UserIngredientId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
