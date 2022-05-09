@@ -48,6 +48,9 @@ export const Header = () => {
     if (user.userInfo.lng && user.userInfo.lat) {
       getAddrName();
     }
+    const token = sessionStorage.getItem('jwt-token');
+    console.log(token);
+    if (!token) dispatch(clearUser());
   }, []);
 
   useEffect(() => {
