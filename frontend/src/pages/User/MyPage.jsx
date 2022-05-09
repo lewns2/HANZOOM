@@ -15,7 +15,7 @@ export const MyPage = () => {
         <h1 className="pageTitle">마이페이지</h1>
         <div className="myPageWrap">
           <div className="row">
-            <div className="col-lg-6 col-sm-12">
+            <div className="col-lg-6 col-sm-12 d-flex align-items-center">
               <UserInfo setModalOpen={setModalOpen} />
             </div>
             <div className="col-lg-6 col-sm-12 d-flex justify-content-center">
