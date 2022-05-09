@@ -125,7 +125,7 @@ public class UserController {
 			@ApiResponse(code = 404, message = "사용자 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
-	public ResponseEntity<String> checkUserPassword(
+	public ResponseEntity<Boolean> checkUserPassword(
 			@RequestParam @ApiParam(value="비밀번호 확인", required = true) String userPassword, @ApiIgnore Authentication authentication) {
 
 		UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -133,9 +133,9 @@ public class UserController {
 		User user = userService.getUserByUserEmail(userEmail);
 
 		if(passwordEncoder.matches(userPassword, user.getUserPassword())) {
-			return ResponseEntity.status(200).body("Success");
+			return ResponseEntity.status(200).body(true);
 		}
-		return ResponseEntity.status(401).body("Invalid Password");
+		return ResponseEntity.status(200).body(false);
 	}
 	@PutMapping("/update/profileImage")
 	@ApiOperation(value = "프로필 이미지 정보 수정(token)", notes = "<strong>프로필 이미지 정보</strong>를 수정한다.")
