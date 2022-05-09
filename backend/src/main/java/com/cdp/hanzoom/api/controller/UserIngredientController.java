@@ -2,8 +2,10 @@ package com.cdp.hanzoom.api.controller;
 
 import com.cdp.hanzoom.api.request.UserIngredientRegisterReq;
 import com.cdp.hanzoom.api.request.UserIngredientUpdateReq;
+import com.cdp.hanzoom.api.response.MatchingRes;
 import com.cdp.hanzoom.api.response.RecipeFindRes;
 import com.cdp.hanzoom.api.response.UserIngredientFindRes;
+import com.cdp.hanzoom.api.service.MatchingService;
 import com.cdp.hanzoom.api.service.RecipeService;
 import com.cdp.hanzoom.api.service.UserIngredientService;
 import com.cdp.hanzoom.common.auth.HanZoomUserDetails;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -39,6 +42,8 @@ public class UserIngredientController {
     UserIngredientService userIngredientService;
     @Autowired
     RecipeService recipeService;
+    @Autowired
+    MatchingService matchingService;
 
     @Autowired
     UserIngredientRepositorySupport userIngredientRepositorySupport;
@@ -149,5 +154,26 @@ public class UserIngredientController {
         List<Recipe> recipeList = recipeService.findRecipeByIngredients(ingredients);
         List<RecipeFindRes> recipeFindResList = recipeService.findInfoRecipeByIngredient(recipeList);
         return new ResponseEntity<List<RecipeFindRes>>(recipeFindResList, HttpStatus.OK);
+    }
+
+    // 제한 거리 입력받아서
+    /** 매칭 알고리즘 **/
+    @GetMapping("/matching")
+    @ApiOperation(value = "매칭", notes = "<strong>입력받은 거리와 식재료를 바탕으로 매칭된 결과를 조회</strong>한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<MatchingRes> matchingAlgorithm(
+            @RequestParam(value="매칭에 사용할 식재료", required = true) List<String> ingredients
+            , @RequestParam(value="매칭에 사용할 거리", required = false) Double distance
+            , @ApiIgnore Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userEmail = userDetails.getUsername();
+        if(distance == null) distance = Double.valueOf(5);
+        MatchingRes matchingList = matchingService.findMatchingList(userEmail, ingredients, distance);
+        return new ResponseEntity<MatchingRes>(matchingList, HttpStatus.OK);
     }
 }
