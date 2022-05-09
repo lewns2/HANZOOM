@@ -1,22 +1,24 @@
 import { useEffect } from 'react';
 import sample from '../../assets/images/Initimage.PNG';
+import { Link } from 'react-router-dom';
 
 export const RecipeModal = (props) => {
   const { open, close, info } = props;
 
-  useEffect(() => {
-    // console.log(info);
-  });
   return (
     <div className={open ? 'recipeDetailForm openModal' : 'recipeDetailForm'}>
       {open ? (
         <>
           <div className="recipeFormWrap">
+            <div className="recipeCancleBtn1">
+              <button className="btn-close" aria-label="Close" onClick={close}></button>
+            </div>
             <div className="recipeModalTitle">
               <h2>{info.recipeName}</h2>
               <div>
-                <button className="matchingBtn">자동매칭</button>
-                <button onClick={close}>X</button>
+                <Link to="/match">
+                  <button className="matchingBtn">자동매칭</button>
+                </Link>
               </div>
             </div>
             <hr></hr>
