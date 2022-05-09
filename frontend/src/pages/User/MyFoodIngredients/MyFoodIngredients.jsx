@@ -229,7 +229,13 @@ export const MyFoodIngredients = () => {
                   <button className="addNeeds col-1" onClick={openModal2}>
                     +
                   </button>
-                  <FoodModal open={modalOpen2} close={closeModal2} header="필요목록 등록" />
+                  <FoodModal
+                    open={modalOpen2}
+                    close={closeModal2}
+                    header="필요목록 등록"
+                    state={state}
+                    setState={setState}
+                  />
                 </div>
                 <div className="ingreBody">
                   {myNeedsIngre.map((ingre, key) => (

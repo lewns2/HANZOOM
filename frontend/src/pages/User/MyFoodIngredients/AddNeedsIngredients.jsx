@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { AutoComplete } from './AutoComplete';
 
 export const AddNeedsIngredients = (props) => {
   if (props.header === '필요목록 등록') {
@@ -9,7 +10,7 @@ export const AddNeedsIngredients = (props) => {
       <div className="needsForm">
         <div>
           <div className="">식재료 명</div>
-          <input
+          {/* <input
             className="form-control"
             type="text"
             placeholder="식재료 명"
@@ -18,7 +19,8 @@ export const AddNeedsIngredients = (props) => {
                 ingredient: event.target.value,
               });
             }}
-          />
+          /> */}
+          <AutoComplete setNeeds={props.setNeeds} />
         </div>
       </div>
     );
