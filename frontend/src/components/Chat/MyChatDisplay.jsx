@@ -238,20 +238,6 @@ export const MyChatDisplay = (props) => {
                 }
               </div>
             ))}
-            {/* <div className="userMsg myMsg d-flex justify-content-end">
-              <div className="msgContent">
-                테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테
-              </div>
-              <div className="profileImg">
-                <img src="/img/basicProfile.png" alt="" />
-              </div>
-            </div>
-            <div className="userMsg otherMsg d-flex">
-              <div className="profileImg">
-                <img src="/img/basicProfile.png" alt="" />
-              </div>
-              <div className="msgContent">테스트</div>
-            </div> */}
           </div>
           <div className='chatFooter'>
             <input 
