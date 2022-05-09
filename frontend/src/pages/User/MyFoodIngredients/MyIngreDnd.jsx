@@ -29,11 +29,19 @@ export const MyIngreDnd = (props) => {
   };
 
   const clickEvent = () => {
-    if (checkedBSIngre.length == 0 || checkedIngre.length == 0) {
+    if (checkedIngre.length == 0) {
       swal('식재료를 선택해주세요', '', 'error');
       return;
     }
   };
+
+  const clickEvent2 = () => {
+    if (checkedBSIngre.length == 0) {
+      swal('식재료를 선택해주세요', '', 'error');
+      return;
+    }
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-between">
@@ -94,9 +102,9 @@ export const MyIngreDnd = (props) => {
           )}
         </button>
       ) : (
-        <button className="ingreBtn" onClick={clickEvent}>
+        <button className="ingreBtn" onClick={clickEvent2}>
           {checkedBSIngre.length ? (
-            <Link to={'/board/write'} state={{ ingre: checkedBSIngre, type: '교환/나눔' }}>
+            <Link to={'/board/write'} state={checkedBSIngre}>
               교환 / 나눔 등록
             </Link>
           ) : (
