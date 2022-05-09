@@ -17,14 +17,19 @@ export const userSlice = createSlice({
   initialState: {
     userInfo: [],
     code: '',
+    loginType: '',
   },
   reducers: {
     clearUser: (state) => {
       state.userInfo = [];
-      localStorage.removeItem('jwt-token');
+      state.loginType = '';
+      sessionStorage.removeItem('jwt-token');
     },
     setCode: (state, action) => {
       state.code = action.payload;
+    },
+    setLoginType: (state, action) => {
+      state.loginType = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -36,6 +41,6 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearUser, setCode } = userSlice.actions;
+export const { clearUser, setCode, setLoginType } = userSlice.actions;
 
 export default userSlice.reducer;

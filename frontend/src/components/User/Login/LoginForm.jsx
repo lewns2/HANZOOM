@@ -6,7 +6,7 @@ import { Axios } from '../../../core/axios';
 import { axios_apis } from '../../../core/axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getUserInfo, setCode } from '../../../Reducer/userSlice';
+import { getUserInfo, setCode, setLoginType } from '../../../Reducer/userSlice';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 export const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -54,6 +54,7 @@ export const LoginForm = () => {
           sessionStorage.setItem('jwt-token', res.data.accessToken);
         }
         dispatch(getUserInfo());
+        dispatch(setLoginType('일반'));
         swal('로그인 성공', '  ', 'success', {
           buttons: false,
           timer: 1800,

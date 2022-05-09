@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Axios } from '../../../core/axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserInfo } from '../../../Reducer/userSlice';
+import { getUserInfo, setLoginType } from '../../../Reducer/userSlice';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 export const KaKaoCall = () => {
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ export const KaKaoCall = () => {
           sessionStorage.setItem('jwt-token', res.data.accessToken);
         }
         dispatch(getUserInfo());
+        dispatch(setLoginType('카카오'));
         swal('카카오 로그인 성공', '  ', 'success', {
           buttons: false,
           timer: 1800,
