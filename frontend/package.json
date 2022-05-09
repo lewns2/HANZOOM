@@ -34,6 +34,7 @@
     "react-bootstrap": "^2.2.2",
     "react-calendar": "^3.7.0",
     "react-datepicker": "^4.7.0",
+    "react-daum-postcode": "^3.0.1",
     "react-dom": "^18.0.0",
     "react-kakao-login": "^2.1.0",
     "react-redux": "^8.0.0",

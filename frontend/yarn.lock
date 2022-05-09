@@ -8693,6 +8693,14 @@ react-datepicker@^4.7.0:
     react-onclickoutside "^6.12.0"
     react-popper "^2.2.5"
 
+react-daum-postcode@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-daum-postcode/-/react-daum-postcode-3.0.1.tgz#1d87145a4c82fe107ad041c855b857e45c0555e1"
+  integrity sha512-TBA6p+5yFy4YrH3jneNPyqNR+9igCb/XhQfnDBOABX38Hgf4n5EMmXf3NZptPSqg3UldHQ+8HPHCJ5L6zjskkg==
+  dependencies:
+    prop-types "^15.7.2"
+    react "^17.0.2"
+
 react-dev-utils@^12.0.1:
   version "12.0.1"
   resolved "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-12.0.1.tgz"
@@ -8898,6 +8906,14 @@ react-transition-group@^4.4.2:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react@^17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
+  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
 
 react@^18.0.0:
   version "18.0.0"
