@@ -1,6 +1,10 @@
 package com.cdp.hanzoom.db.repository;
 
+import com.cdp.hanzoom.api.response.UserIngredientMatchingRes;
 import com.cdp.hanzoom.db.entity.*;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -43,5 +47,53 @@ public class UserIngredientRepositorySupport {
                 .fetch();
         if(userIngredients == null) return null;
         return userIngredients;
+    }
+
+    public List<UserIngredientMatchingRes> findMatchingList(User user, List<String> ingredients, Double distance) {
+        List<UserIngredientMatchingRes> userIngredients = jpaQueryFactory
+                .select(Projections.bean(UserIngredientMatchingRes.class,
+                                            qUserIngredient.userIngredientNo,
+                                            qUserIngredient.user.userEmail,
+                                            qUserIngredient.user.userNickname,
+                                            qUserIngredient.user.lat,
+                                            qUserIngredient.user.lng,
+                                            qUserIngredient.ingredient.ingredientNo,
+                                            qUserIngredient.ingredient.ingredientName,
+                                            qUserIngredient.type,
+                                            qUserIngredient.purchaseDate,
+                                            qUserIngredient.expirationDate,
+                                            qUserIngredient.boardNo,
+                                            Expressions.numberTemplate(
+                                                Double.class
+                                                ,"{4}*acos(cos(radians({2}))*cos(radians({0}))*cos(radians({1})-radians({3}))+sin(radians({2}))*sin(radians({0})))"
+                                                ,Expressions.constant(user.getLat()),Expressions.constant(user.getLng()),qUserIngredient.user.lat,qUserIngredient.user.lng,Expressions.constant(6371)).as("distance")
+                                            )
+                )
+                .from(qUserIngredient)
+                .where(qUserIngredient.type.ne("일반")
+                      .and(qUserIngredient.user.userEmail.ne(user.getUserEmail()))
+                            .and(qUserIngredient.type.eq("나눔").or(qUserIngredient.type.eq("교환")))
+                                .and(qUserIngredient.boardNo.isNotNull())
+                                    .and(Expressions.numberTemplate(
+                                                        Double.class
+                                                        ,"{4}*acos(cos(radians({2}))*cos(radians({0}))*cos(radians({1})-radians({3}))+sin(radians({2}))*sin(radians({0})))"
+                                                        ,Expressions.constant(user.getLat()),Expressions.constant(user.getLng()),qUserIngredient.user.lat,qUserIngredient.user.lng,Expressions.constant(6371))
+                                                        .loe(distance)
+                                        )
+                                        .and(builderIngredients(ingredients))
+                        )
+                .orderBy(qUserIngredient.ingredient.ingredientName.desc())
+                .fetch();
+
+        if(userIngredients == null) return null;
+        return userIngredients;
+    }
+
+    private BooleanBuilder builderIngredients(List<String> ingredients) {
+        BooleanBuilder builder = new BooleanBuilder();
+        for(int i=0; i<ingredients.size(); i++) {
+            builder.or(qUserIngredient.ingredient.ingredientName.eq(ingredients.get(i)));
+        }
+        return builder;
     }
 }
