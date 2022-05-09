@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.cdp.hanzoom.api.response.UserRes;
@@ -39,6 +40,9 @@ public class UserController {
 	private static final String FAIL = "fail";
 	@Autowired
     UserService userService;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	// 회원 가입
 	@PostMapping("/register/signup")
@@ -112,6 +116,27 @@ public class UserController {
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 
+	// 비밀번호 확인
+	@PostMapping("/checkPassword")
+	@ApiOperation(value = "비밀번호 확인(token)(param)", notes = "유저 정보 수정을 위한 <strong>비밀번호 확인</strong> 한다.<br/> 비밀번호(userPassword)를 입력받는다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<String> checkUserPassword(
+			@RequestParam @ApiParam(value="비밀번호 확인", required = true) String userPassword, @ApiIgnore Authentication authentication) {
+
+		UserDetails userDetails = (UserDetails) authentication.getDetails();
+		String userEmail = userDetails.getUsername();
+		User user = userService.getUserByUserEmail(userEmail);
+
+		if(passwordEncoder.matches(userPassword, user.getUserPassword())) {
+			return ResponseEntity.status(200).body("Success");
+		}
+		return ResponseEntity.status(401).body("Invalid Password");
+	}
 	@PutMapping("/update/profileImage")
 	@ApiOperation(value = "프로필 이미지 정보 수정(token)", notes = "<strong>프로필 이미지 정보</strong>를 수정한다.")
 	@ApiResponses({
