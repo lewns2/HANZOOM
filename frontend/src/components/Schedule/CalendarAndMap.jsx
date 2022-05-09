@@ -4,6 +4,9 @@ import { ScheduleMap } from './ScheduleMap';
 import moment from 'moment';
 import swal from 'sweetalert';
 
+import 'react-calendar/dist/Calendar.css'; // css import
+import './ReactCalendar.scss';
+
 import { Axios } from '../../core/axios';
 import { axios_apis } from '../../core/axios';
 
