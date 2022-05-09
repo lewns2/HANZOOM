@@ -1,0 +1,33 @@
+.matchWrap {
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+
+  .matchingLottie {
+    max-width: 500px;
+    height: 500px;
+    margin-bottom: 50px;
+  }
+
+  .matchingMessage {
+    font-size: 30px;
+  }
+}
+
+.matchBody {
+  height: 85vh;
+}
+
+/* 매칭 완료 창 */
+.matchIngredients {
+  display: flex;
+  justify-content: center;
+}
+
+.matchResultMap {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}

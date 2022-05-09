@@ -109,7 +109,11 @@ export const BoardDetail = () => {
                 <img
                   className="detailProfileImg"
                   // src="/img/basicProfile.png"
-                  src={content.userImage ? `${content.userImage}` : '/img/basicProfile.png'}
+                  src={
+                    content.userImage
+                      ? `${BASE_IMG_URL}${content.userImage}`
+                      : '/img/basicProfile.png'
+                  }
                   alt="/img/basicProfile.png"></img>
                 <p className="detailUserName">{content.userNickname}</p>
               </div>
