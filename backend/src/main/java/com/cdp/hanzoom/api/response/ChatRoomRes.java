@@ -31,4 +31,7 @@ public class ChatRoomRes {
 
     @ApiModelProperty(name = "최근 메시지")
     ChatMessage chatMessages;
+
+    @ApiModelProperty(name = "식재료 목록")
+    List<String> ingredientList;
 }
