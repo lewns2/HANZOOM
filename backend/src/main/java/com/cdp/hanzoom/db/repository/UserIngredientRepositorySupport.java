@@ -1,5 +1,6 @@
 package com.cdp.hanzoom.db.repository;
 
+import com.cdp.hanzoom.api.response.UserIngredientFindRes;
 import com.cdp.hanzoom.api.response.UserIngredientMatchingRes;
 import com.cdp.hanzoom.db.entity.*;
 import com.querydsl.core.BooleanBuilder;
@@ -103,5 +104,22 @@ public class UserIngredientRepositorySupport {
                 .where(qUserIngredient.user.userEmail.eq(userEmail).and(qUserIngredient.type.eq("일반"))).fetch();
         if(normalUserIngredients == null) return null;
         return normalUserIngredients;
+    }
+
+    public List<UserIngredientFindRes> findAllPendingUserIngredient() {
+        List<UserIngredientFindRes> userIngredientFindResList = jpaQueryFactory.select(
+                Projections.bean(UserIngredientFindRes.class,
+                qUserIngredient.userIngredientNo,
+                qUserIngredient.ingredient.ingredientNo,
+                qUserIngredient.ingredient.ingredientName,
+                qUserIngredient.user.userEmail,
+                qUserIngredient.type,
+                qUserIngredient.purchaseDate,
+                qUserIngredient.expirationDate,
+                qUserIngredient.boardNo,
+                qUserIngredient.status)).from(qUserIngredient).where(qUserIngredient.status.eq("대기")).fetch();
+
+        if(userIngredientFindResList == null) return null;
+        return userIngredientFindResList;
     }
 }

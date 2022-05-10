@@ -1,9 +1,9 @@
 package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.UserIngredientRegisterReq;
-import com.cdp.hanzoom.api.request.UserIngredientUpdateReq;
+import com.cdp.hanzoom.api.request.UserIngredientStatusUpdateReq;
+import com.cdp.hanzoom.api.request.UserIngredientTypeUpdateReq;
 import com.cdp.hanzoom.api.response.UserIngredientFindRes;
-import com.cdp.hanzoom.api.response.UserIngredientRes;
 import com.cdp.hanzoom.db.entity.Ingredient;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.entity.UserIngredient;
@@ -127,23 +127,23 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     /** 유저 식재료 정보를 수정하는 updateUserIngredient 입니다. **/
     @Transactional
     @Override
-    public void updateUserIngredient(UserIngredientUpdateReq userIngredientUpdateReq) {
+    public void updateUserIngredient(UserIngredientTypeUpdateReq userIngredientTypeUpdateReq) {
 //        Long ingredientNo = userIngredient.getIngredient().getIngredientNo();
-        Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(userIngredientUpdateReq.getIngredientName()).orElse(null);
+        Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(userIngredientTypeUpdateReq.getIngredientName()).orElse(null);
 
-        Long userIngredientNo = userIngredientUpdateReq.getUserIngredientNo();
+        Long userIngredientNo = userIngredientTypeUpdateReq.getUserIngredientNo();
         Long ingredientNo = ingredient.getIngredientNo();
-        String type = userIngredientUpdateReq.getType();
+        String type = userIngredientTypeUpdateReq.getType();
 
         LocalDate purchaseDate = null;
         LocalDate expirationDate = null;
 
-        if(userIngredientUpdateReq.getPurchaseDate().length() != 0) {
-            purchaseDate = LocalDate.parse(userIngredientUpdateReq.getPurchaseDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+        if(userIngredientTypeUpdateReq.getPurchaseDate().length() != 0) {
+            purchaseDate = LocalDate.parse(userIngredientTypeUpdateReq.getPurchaseDate().substring(0,10), DateTimeFormatter.ISO_DATE);
         }
 
-        if(userIngredientUpdateReq.getExpirationDate().length() != 0) {
-            expirationDate = LocalDate.parse(userIngredientUpdateReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+        if(userIngredientTypeUpdateReq.getExpirationDate().length() != 0) {
+            expirationDate = LocalDate.parse(userIngredientTypeUpdateReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
         }
 
         userIngredientRepository.updateUserIngredient(userIngredientNo, ingredientNo, type, purchaseDate, expirationDate);
@@ -151,13 +151,25 @@ public class UserIngredientServiceImpl implements UserIngredientService {
 
     /** 유저 식재료 등록상태(status) 정보를 수정하는 updateUserIngredientStatus 입니다. **/
     @Override
-    public void updateUserIngredientStatus(Long userIngredientNo) {
-        userIngredientRepository.updateUserIngredientStatus(userIngredientNo);
+    public void updateUserIngredientStatus(UserIngredientStatusUpdateReq userIngredientStatusUpdateReq) {
+        if(userIngredientStatusUpdateReq.getResult().equals("승인")) {
+            userIngredientRepository.updateUserIngredientStatus(userIngredientStatusUpdateReq.getUserIngredientNo());
+        } else if(userIngredientStatusUpdateReq.getResult().equals("거절")) {
+            UserIngredient userIngredient = userIngredientRepositorySupport.findByUserIngredientNo(userIngredientStatusUpdateReq.getUserIngredientNo()).orElse(null);
+            userIngredientRepository.delete(userIngredient);
+        }
     }
 
     /** 유저 식재료 정보를 삭제하는 deleteUserIngredient 입니다. **/
     @Override
     public void deleteUserIngredient(UserIngredient userIngredient) {
         userIngredientRepository.delete(userIngredient);
+    }
+
+    /** 식재료 등록 요청한 정보들을 전체 조회하는 findAllPendingUserIngredient 입니다. **/
+    @Override
+    public List<UserIngredientFindRes> findAllPendingUserIngredient() {
+        List<UserIngredientFindRes> userIngredientFindResList = userIngredientRepositorySupport.findAllPendingUserIngredient();
+        return userIngredientFindResList;
     }
 }
