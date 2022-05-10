@@ -3,7 +3,9 @@ package com.cdp.hanzoom.api.service;
 import com.cdp.hanzoom.api.response.MatchingFindRes;
 import com.cdp.hanzoom.api.response.MatchingRes;
 import com.cdp.hanzoom.api.response.UserIngredientMatchingRes;
+import com.cdp.hanzoom.db.entity.Board;
 import com.cdp.hanzoom.db.entity.User;
+import com.cdp.hanzoom.db.repository.BoardRepositorySupport;
 import com.cdp.hanzoom.db.repository.RecipeRepositorySupport;
 import com.cdp.hanzoom.db.repository.UserIngredientRepositorySupport;
 import com.cdp.hanzoom.db.repository.UserRepositorySupport;
@@ -21,6 +23,8 @@ public class MatchingServiceImpl implements MatchingService{
     UserIngredientRepositorySupport userIngredientRepositorySupport;
     @Autowired
     RecipeRepositorySupport recipeRepositorySupport;
+    @Autowired
+    BoardRepositorySupport boardRepositorySupport;
 
     // 모든 경우 찾기
     int ingCase[][];
@@ -52,6 +56,9 @@ public class MatchingServiceImpl implements MatchingService{
         for(int i=0; i<userIngredients.size(); i++) {
             String temp = userIngredients.get(i).getIngredientName();
             matchingCount.put(temp, matchingCount.getOrDefault(temp, 0)+1);
+            Long boardNo = userIngredients.get(i).getBoardNo();
+            Board board = boardRepositorySupport.findBoardByBoardNo(boardNo).orElse(null);
+            userIngredients.get(i).setImagePath(board.getImagePath());
         }
 
         // 매칭할 수 있는 식재료(found)와 매칭할 수 없는 식재료(notFound) 구분
