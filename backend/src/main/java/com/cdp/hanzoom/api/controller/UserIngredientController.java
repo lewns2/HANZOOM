@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Path;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -113,6 +114,24 @@ public class UserIngredientController {
         try {
 //            userIngredient = userIngredientService.findByUserIngredientNo(userIngredientUpdateReq.getUserIngredientNo());
             userIngredientService.updateUserIngredient(userIngredientUpdateReq);
+        } catch(NoSuchElementException E) {
+            return  ResponseEntity.status(500).body("해당 유저 식재료 정보가 없어서 유저 식재료 정보 수정 실패");
+        }
+        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+    }
+
+    /** 유저 식재료 등록 상태(status) 수정 **/
+    @PutMapping("/update/{userIngredientNo}")
+    @ApiOperation(value = "유저 식재료 등록 상태(status) 수정", notes = "<strong>유저 식재료 등록 상태 정보</strong>를 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<String> updateUserIngredientStatus(@PathVariable("userIngredientNo") Long userIngredientNo) {
+        try {
+            userIngredientService.updateUserIngredientStatus(userIngredientNo);
         } catch(NoSuchElementException E) {
             return  ResponseEntity.status(500).body("해당 유저 식재료 정보가 없어서 유저 식재료 정보 수정 실패");
         }

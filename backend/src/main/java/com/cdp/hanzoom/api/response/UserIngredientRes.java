@@ -3,6 +3,7 @@ package com.cdp.hanzoom.api.response;
 import com.cdp.hanzoom.db.entity.Ingredient;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.entity.UserIngredient;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -35,6 +36,9 @@ public class UserIngredientRes {
     @ApiModelProperty(name="게시글 번호")
     Long boardNo;
 
+    @ApiModelProperty(name="등록 상태")
+    String status;
+
     public UserIngredient toEntity() {
         User user = new User();
         user.setUserEmail(userEmail);
@@ -50,6 +54,7 @@ public class UserIngredientRes {
                 .expirationDate(expirationDate)
                 .purchaseDate(purchaseDate)
                 .boardNo(boardNo)
+                .status(status)
                 .build();
     }
 }
