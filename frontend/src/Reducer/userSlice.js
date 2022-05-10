@@ -18,6 +18,7 @@ export const userSlice = createSlice({
     userInfo: [],
     code: '',
     loginType: '',
+    beforeLogin: 'false',
   },
   reducers: {
     clearUser: (state) => {
@@ -31,6 +32,9 @@ export const userSlice = createSlice({
     setLoginType: (state, action) => {
       state.loginType = action.payload;
     },
+    setBeforeLogin: (state, action) => {
+      state.beforeLogin = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserInfo.fulfilled, (state, action) => {
@@ -41,6 +45,6 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearUser, setCode, setLoginType } = userSlice.actions;
+export const { clearUser, setCode, setLoginType, setBeforeLogin } = userSlice.actions;
 
 export default userSlice.reducer;
