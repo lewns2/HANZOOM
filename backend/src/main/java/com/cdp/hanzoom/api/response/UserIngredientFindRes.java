@@ -34,4 +34,7 @@ public class UserIngredientFindRes {
 
     @ApiModelProperty(name="게시글 번호")
     Long boardNo;
+
+    @ApiModelProperty(name="등록 상태")
+    String status;
 }
