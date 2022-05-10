@@ -3,8 +3,8 @@ import { Axios } from '../../../core/axios';
 
 export const AutoComplete = (props) => {
   const [allIngredient, setAllIngredient] = useState();
-  const [keyword, setKeyword] = useState('');
   const [keyList, setKeyList] = useState([]);
+  const [keyword, setKeyword] = useState('');
 
   const getIngredient = () => {
     Axios.get('/ingredient/findAll')
@@ -14,10 +14,10 @@ export const AutoComplete = (props) => {
       .catch((err) => console.log(err));
   };
 
-  // 입력된 텍스트로 data 배열에서 찾아 매칭되는 결과들을 저장
+  // 입력된 텍스트로 allIngredient 배열에서 찾아 매칭되는 결과들을 저장
   const onSearch = (text) => {
     var results = allIngredient.filter((item) => true === matchName(item.ingredientName, text));
-    console.log(results);
+
     setKeyList(results);
   };
 
@@ -32,22 +32,36 @@ export const AutoComplete = (props) => {
   useEffect(() => {
     getIngredient();
   }, []);
+  useEffect(() => {
+    if (props.header === '필요목록 수정') {
+      setKeyword(props.needsName);
+    } else if (props.header === '식재료 수정') {
+      setKeyword(props.ingreName);
+    }
+  }, []);
 
   return (
     <>
       <input
         className="form-control"
         type="text"
-        placeholder="식재료 명"
+        placeholder={keyword ? keyword : '식재료 명'}
         onChange={(event) => {
-          props.setNeeds({
-            ingredient: event.target.value,
-          }),
-            onSearch(event.target.value),
-            setKeyword(event.target.value);
+          if (props.header === '필요목록 등록' || props.header === '필요목록 수정') {
+            props.setNeeds({
+              ingredient: event.target.value,
+            });
+          } else {
+            props.setFoods({
+              ...props.foods,
+              ingredient: event.target.value,
+            });
+          }
+          onSearch(event.target.value), setKeyword(event.target.value);
         }}
         value={keyword}
       />
+
       {keyList.length !== 0 && (
         <>
           {keyList.map(

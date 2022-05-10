@@ -3,6 +3,7 @@ import { AddMyFoodIngredients } from './AddMyFoodIngredients';
 import { AddNeedsIngredients } from './AddNeedsIngredients';
 import { Axios } from '../../../core/axios.js';
 import './FoodModal.scss';
+import { ModiMyFoodIngredients } from './ModiMyFoodIngredients';
 
 export const FoodModal = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
@@ -139,12 +140,21 @@ export const FoodModal = (props) => {
           </header>
           <main>
             {props.header === '식재료 등록' || props.header === '식재료 수정' ? (
-              <AddMyFoodIngredients
-                setFoods={setFoods}
-                foods={foods}
-                header={header}
-                ingre={ingre}
-              />
+              props.header === '식재료 등록' ? (
+                <AddMyFoodIngredients
+                  setFoods={setFoods}
+                  foods={foods}
+                  header={header}
+                  ingre={ingre}
+                />
+              ) : (
+                <ModiMyFoodIngredients
+                  setFoods={setFoods}
+                  foods={foods}
+                  header={header}
+                  ingre={ingre}
+                />
+              )
             ) : (
               <AddNeedsIngredients
                 setNeeds={setNeeds}
