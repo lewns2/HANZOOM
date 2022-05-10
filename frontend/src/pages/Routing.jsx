@@ -17,6 +17,8 @@ import { MyChatDisplay } from '../components/Chat/MyChatDisplay';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import CommentsDisabledOutlinedIcon from '@mui/icons-material/CommentsDisabledOutlined';
 
+import { Admin } from './Admin/Admin';
+
 import { Route, Routes, Navigate, BrowserRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -55,6 +57,7 @@ export const Routing = () => {
         <Route path="/oauth/kakao/callback" element={<KaKaoCall />}></Route>
         <Route path="/recipe" element={<Recipe />}></Route>
         <Route path="/match" element={<Match />}></Route>
+        <Route path="/admin" element={<Admin />}></Route>
       </Routes>
       {!showChatList ? (
         <CommentOutlinedIcon
