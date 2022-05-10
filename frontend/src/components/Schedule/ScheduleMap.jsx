@@ -1,20 +1,39 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { BASE_IMG_URL } from '../../core/s3';
+import { Axios, axios_apis } from '../../core/axios';
 import './Schedule.scss';
 
 export const ScheduleMap = (props) => {
+  const { otherEmail } = props;
   const { userInfo } = useSelector((state) => state.user);
   const [myImg, setMyImg] = useState(null);
   const [myLat, setMyLat] = useState(null);
   const [myLng, setMyLng] = useState(null);
   // todo : 상대방 위치 정보 받아오기
   const [otherImg, setOtherImg] = useState(null);
-  const [otherLat, setOtherLat] = useState(35.094068611669925);
-  const [otherLng, setOtherLng] = useState(128.85567290875736);
+  // const [otherLat, setOtherLat] = useState(35.094068611669925);
+  // const [otherLng, setOtherLng] = useState(128.85567290875736);
+  const [otherLat, setOtherLat] = useState(null);
+  const [otherLng, setOtherLng] = useState(null);
+
+  const [middelLat, setMiddleLat] = useState(null);
+  const [middelLng, setMiddleLng] = useState(null);
 
   const [kakaoMap, setKakaoMap] = useState(null);
   const [kakaoMarker, setKakaoMarker] = useState(null);
+
+  const setOtherPosition = () => {
+    Axios.get(`${axios_apis.plans.findPosition}?opponentEmail=${otherEmail}`)
+      .then((data) => {
+        console.log(data.data);
+        setOtherLat(data.data.lat);
+        setOtherLng(data.data.lng);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const initMap = () => {
     let container = document.getElementById('scheduleMap');
@@ -72,6 +91,14 @@ export const ScheduleMap = (props) => {
       position: otherLoc,
     });
 
+    // if (middelLat && middelLng) kakaoMarker.setPosition(middelLat, middelLng);
+    var middleLoc = new kakao.maps.LatLng(middelLat, middelLng);
+    console.log(middelLat);
+    new kakao.maps.Marker({
+      map: kakaoMap,
+      position: middleLoc,
+    });
+
     var otherImgUrl;
     if (otherImg) {
       otherImgUrl = `${BASE_IMG_URL}${otherImg}`;
@@ -118,14 +145,35 @@ export const ScheduleMap = (props) => {
     setMyImg(userInfo.userImage);
     setMyLat(userInfo.lat);
     setMyLng(userInfo.lng);
+    setOtherPosition();
   }, []);
 
   useEffect(() => {
     initMap();
-  }, [myLat, myLng]);
+    // if (myLat && myLng && otherLat && otherLng) {
+    //   const newLat1 = (myLat * Math.PI) / 180;
+    //   const newLat2 = (otherLat * Math.PI) / 180;
+    //   const newLng1 = (myLng * Math.PI) / 180;
+    //   const newLng2 = (otherLng * Math.PI) / 180;
+
+    //   const Bx = Math.cos(newLat2) * Math.cos(newLng2 - newLng1);
+    //   const By = Math.cos(newLat2) * Math.sin(newLng2 - newLng1);
+    //   const newLat3 = Math.atan2(
+    //     Math.sin(newLat1) + Math.sin(newLat2),
+    //     Math.sqrt((Math.cos(newLat1) + Bx) * (Math.cos(newLat1) + Bx) + By * By),
+    //   );
+    //   const newLng3 = newLng1 + Math.atan2(By, Math.cos(newLat1) + Bx);
+
+    //   const lat3 = (newLat3 * 180) / Math.PI;
+    //   let lng3 = (newLng3 * 180) / Math.PI;
+
+    //   setMiddleLat(lat3);
+    //   setMiddleLng(lng3);
+    // }
+  }, [myLat, myLng, otherLat, otherLng]);
 
   useEffect(() => {
-    if (kakaoMap) {
+    if (kakaoMap && kakaoMarker && otherLat && otherLng) {
       setMarker();
       addEventListener();
     }
