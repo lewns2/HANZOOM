@@ -2,6 +2,7 @@ package com.cdp.hanzoom.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -46,6 +47,10 @@ public class User {
 
     @Column(name = "lng")
     Double lng;  // 경도
+
+    @Column(name = "reported_number")
+    @ColumnDefault("0")
+    Integer reportedNumber;
 
     @Column(columnDefinition = "TIMESTAMP")
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")

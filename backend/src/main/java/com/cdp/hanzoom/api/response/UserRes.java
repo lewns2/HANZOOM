@@ -38,6 +38,10 @@ public class UserRes{
 
 	@ApiModelProperty(name="User JoinDate")
 	LocalDateTime joinDate; // 가입일
+
+	@ApiModelProperty(name="Reported Number")
+	Integer reportedNumber;	// 신고당한 횟수
+
 	public static UserRes of(User user) {
 		UserRes res = new UserRes();
 		res.setUserEmail(user.getUserEmail());
@@ -46,6 +50,7 @@ public class UserRes{
 		res.setLat(user.getLat());
 		res.setLng(user.getLng());
 		res.setJoinDate(user.getJoinDate());
+		res.setReportedNumber(user.getReportedNumber());
 		return res;
 	}
 }
