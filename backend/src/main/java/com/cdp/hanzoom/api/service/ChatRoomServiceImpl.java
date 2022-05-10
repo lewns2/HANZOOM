@@ -37,7 +37,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Autowired
     UserIngredientRepositorySupport userIngredientRepositorySupport;
 
-    /** 채팅방을 생성 **/
+    /** 채팅방을 생성하는 registerChatRoom 입니다. **/
     @Override
     public String registerChatRoom(ChatRoomReq chatRoomReq) {
         User user1 = userRepositorySupport.findUserByUserNickname(chatRoomReq.getUserNickname1()).orElse(null);
@@ -49,7 +49,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return chatRoom.getId();
     }
 
-    /** 유저가 속한 채팅방을 전체 조회 **/
+    /** 유저가 속한 채팅방을 전체 조회하는 findAllChatRoom 입니다. **/
     @Override
     public List<ChatRoomRes> findAllChatRoom(String userEmail) {
 
@@ -118,6 +118,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return chatroomResList;
     }
 
+    /** 채팅방 아이디(roomId)를 이용하여 채팅방 정보를 조회하는 findChatRoomInfoByRoomId 입니다. **/
     @Override
     public ChatRoomInfoRes findChatRoomInfoByRoomId(String roomId) {
         ChatRoom chatRoom = mongoTemplate.findOne(
@@ -143,8 +144,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
         ChatRoomInfoRes chatRoomInfoRes = ChatRoomInfoRes.builder()
                 .id(chatRoom.getId())
-                .userNickname1(chatRoom.getUserEmail1())
-                .userNickname2(chatRoom.getUserEmail2())
+                .userEmail1(chatRoom.getUserEmail1())
+                .userEmail2(chatRoom.getUserEmail2())
                 .boardNo(chatRoom.getBoardNo())
                 .chatMessages(chatMessageResList)
                 .build();
@@ -152,7 +153,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return chatRoomInfoRes;
     }
 
-    /** 유저1과 유저2의 채팅방이 존재하는지 확인 (true: 존재 O, false: 존재 X) **/
+    /** 유저1과 유저2의 채팅방이 존재하는지 확인하는 findChatRoom 입니다. (true: 존재 O, false: 존재 X) **/
     @Override
     public String findChatRoom(ChatRoomReq chatRoomReq) {
         User user1 = userRepositorySupport.findUserByUserNickname(chatRoomReq.getUserNickname1()).orElse(null);
@@ -168,6 +169,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return chatRoomList.get(0).getId();    // 이미 유저1과 유저2가 속한 채팅방이 존재
     }
 
+    /** 채팅방에서 유저 참가 정보를 삭제하는 deleteUserInfo 입니다. **/
     @Override
     public void deleteUserInfo(String id, String userEmail) {
         // 채팅방 db에 유저 퇴장 메시지 저장
