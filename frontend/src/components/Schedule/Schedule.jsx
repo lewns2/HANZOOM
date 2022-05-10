@@ -7,6 +7,8 @@ import { axios_apis } from '../../core/axios';
 import swal from 'sweetalert';
 
 export const Schedule = (props) => {
+  const { otherEmail } = props;
+
   const [date, setDate] = useState(new Date());
   const [hour, setHour] = useState(null);
   const [minute, setMinute] = useState(null);
@@ -76,7 +78,7 @@ export const Schedule = (props) => {
             </div>
             <div className="scheduleMap col-lg-6 col-12 d-flex justify-content-center">
               <div className="mapExplain">약속 장소를 지도에 표시해주세요.</div>
-              <ScheduleMap setLat={setLat} setLng={setLng} />
+              <ScheduleMap setLat={setLat} setLng={setLng} otherEmail={otherEmail} />
             </div>
           </div>
         </div>
