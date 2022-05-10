@@ -4,6 +4,7 @@ import com.cdp.hanzoom.api.request.UserReportHistoryRegisterReq;
 import com.cdp.hanzoom.api.response.UserReportHistoryFindAllRes;
 import com.cdp.hanzoom.db.entity.UserReportHistory;
 import com.cdp.hanzoom.db.repository.UserReportHistoryRepository;
+import com.cdp.hanzoom.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,18 @@ import java.util.List;
 public class UserReportHistoryServiceImpl implements UserReportHistoryService {
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     UserReportHistoryRepository userReportHistoryRepository;
 
     /** 유저 신고 내용 정보를 생성하는 registerUserReportHistory 입니다. **/
     @Override
     public void registerUserReportHistory(UserReportHistoryRegisterReq userReportHistoryRegisterReq, String userEmail) {
+        // 신고당한 유저 신고당한 횟수 1 증가
+        userRepository.plusUserReportedNumber(userReportHistoryRegisterReq.getReported());
+
+        // 신고 기록 저장
         userReportHistoryRepository.save(userReportHistoryRegisterReq.toEntity(userEmail));
     }
 
@@ -45,6 +53,10 @@ public class UserReportHistoryServiceImpl implements UserReportHistoryService {
     /** 신고 번호를 이용하여 유저 신고 기록 정보를 삭제하는 deleteUserReportHistory 입니다. **/
     @Override
     public void deleteUserReportHistory(UserReportHistory userReportHistory) {
+        // 신고당한 유저 신고당한 횟수 1 감소
+        userRepository.minusUserReportedNumber(userReportHistory.getReported());
+
+        // 해당 신고 내역 삭제
         userReportHistoryRepository.delete(userReportHistory);
     }
 }
