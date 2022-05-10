@@ -17,6 +17,7 @@ public class UserIngredientMatchingRes {
     Long userIngredientNo;
     String userEmail;
     String userNickname;
+    String userImage;
     Double lat;
     Double lng;
     Long ingredientNo;
@@ -25,5 +26,6 @@ public class UserIngredientMatchingRes {
     LocalDate purchaseDate;
     LocalDate expirationDate;
     Long boardNo;
+    String imagePath;
     Double distance;
 }
