@@ -1,6 +1,7 @@
 package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.UserReportHistoryRegisterReq;
+import com.cdp.hanzoom.api.request.UserReportHistoryUpdateReq;
 import com.cdp.hanzoom.api.response.UserReportHistoryFindAllRes;
 import com.cdp.hanzoom.db.entity.UserReportHistory;
 
@@ -16,4 +17,6 @@ public interface UserReportHistoryService {
     List<UserReportHistoryFindAllRes> findAllUserReportHistory();
     /** 신고 번호를 이용하여 유저 신고 기록 정보를 삭제하는 deleteUserReportHistory 입니다. **/
     void deleteUserReportHistory(UserReportHistory userReportHistory);
+    /** 유저 신고 처리 상태를 변경하는 updateStatus 입니다. **/
+    void updateStatus(UserReportHistoryUpdateReq userReportHistoryUpdateReq);
 }
