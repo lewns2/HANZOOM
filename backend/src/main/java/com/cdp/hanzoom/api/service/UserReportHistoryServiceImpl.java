@@ -8,7 +8,6 @@ import com.cdp.hanzoom.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("UserReportHistoryService")
@@ -23,9 +22,6 @@ public class UserReportHistoryServiceImpl implements UserReportHistoryService {
     /** 유저 신고 내용 정보를 생성하는 registerUserReportHistory 입니다. **/
     @Override
     public void registerUserReportHistory(UserReportHistoryRegisterReq userReportHistoryRegisterReq, String userEmail) {
-        // 신고당한 유저 신고당한 횟수 1 증가
-        userRepository.plusUserReportedNumber(userReportHistoryRegisterReq.getReported());
-
         // 신고 기록 저장
         userReportHistoryRepository.save(userReportHistoryRegisterReq.toEntity(userEmail));
     }
@@ -33,19 +29,18 @@ public class UserReportHistoryServiceImpl implements UserReportHistoryService {
     /** 유저 신고 기록 정보를 모두 조회하는 UserReportHistoryFindAllRes 입니다. **/
     @Override
     public List<UserReportHistoryFindAllRes> findAllUserReportHistory() {
-        List<UserReportHistory> userReportHistoryList = userReportHistoryRepository.findAll();
+//        List<UserReportHistory> userReportHistoryList = userReportHistoryRepository.findAll();
 
-        List<UserReportHistoryFindAllRes> userReportHistoryFindAllResList = new ArrayList<UserReportHistoryFindAllRes>();
-        for(int i=0; i<userReportHistoryList.size(); i++) {
-            UserReportHistoryFindAllRes userReportHistoryFindAllRes = new UserReportHistoryFindAllRes();
-            userReportHistoryFindAllRes.setReportNo(userReportHistoryList.get(i).getReportNo());
-            userReportHistoryFindAllRes.setReporter(userReportHistoryList.get(i).getUser().getUserEmail());
-            userReportHistoryFindAllRes.setReported(userReportHistoryList.get(i).getReported());
-            userReportHistoryFindAllRes.setContent(userReportHistoryList.get(i).getContent());
-            userReportHistoryFindAllRes.setCreatedAt(userReportHistoryList.get(i).getCreatedAt());
-
-            userReportHistoryFindAllResList.add(userReportHistoryFindAllRes);
-        }
+        List<UserReportHistoryFindAllRes> userReportHistoryFindAllResList = userReportHistoryRepository.findAllUserReportHistory();
+//        for(int i=0; i<userReportHistoryList.size(); i++) {
+//            UserReportHistoryFindAllRes userReportHistoryFindAllRes = new UserReportHistoryFindAllRes();
+//            userReportHistoryFindAllRes.setReportNo(userReportHistoryList.get(i).getReportNo());
+//            userReportHistoryFindAllRes.setReporter(userReportHistoryList.get(i).getUser().getUserEmail());
+//            userReportHistoryFindAllRes.setReported(userReportHistoryList.get(i).getReported());
+//            userReportHistoryFindAllRes.setContent(userReportHistoryList.get(i).getContent());
+//            userReportHistoryFindAllRes.setCreatedAt(userReportHistoryList.get(i).getCreatedAt());
+//            userReportHistoryFindAllResList.add(userReportHistoryFindAllRes);
+//        }
 
         return userReportHistoryFindAllResList;
     }
@@ -53,9 +48,6 @@ public class UserReportHistoryServiceImpl implements UserReportHistoryService {
     /** 신고 번호를 이용하여 유저 신고 기록 정보를 삭제하는 deleteUserReportHistory 입니다. **/
     @Override
     public void deleteUserReportHistory(UserReportHistory userReportHistory) {
-        // 신고당한 유저 신고당한 횟수 1 감소
-        userRepository.minusUserReportedNumber(userReportHistory.getReported());
-
         // 해당 신고 내역 삭제
         userReportHistoryRepository.delete(userReportHistory);
     }

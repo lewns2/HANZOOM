@@ -7,22 +7,26 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
 @ApiModel("UserReportHistoryFindAllResponse")
-public class UserReportHistoryFindAllRes {
+public interface UserReportHistoryFindAllRes {
     @ApiModelProperty(name="신고 번호")
-    Long reportNo;
+    Long getReportNo();
 
     @ApiModelProperty(name="신고자 이메일")
-    String reporter;
+    String getReporter();
 
     @ApiModelProperty(name="피신고자 이메일")
-    String reported;
+    String getReported();
 
     @ApiModelProperty(name="신고 내용")
-    String content;
+    String getContent();
+
+    @ApiModelProperty(name="피신고자 총 신고 당한 횟수")
+    Integer getReportedNumber();
+
+    @ApiModelProperty(name="처리 상태")
+    String getStatus();
 
     @ApiModelProperty(name="신고 시간")
-    LocalDateTime createdAt;
+    LocalDateTime getCreatedAt();
 }
