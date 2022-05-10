@@ -12,6 +12,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 export const Header = () => {
   const [modalShow, setModalShow] = React.useState(false);
   const [userLocName, setUserLocName] = useState(null);
+  const [beforeLoginPage, setBeforeLoginPage] = useState(false);
 
   const user = useSelector((state) => state.user);
 
@@ -58,6 +59,7 @@ export const Header = () => {
       setModalShow(false);
       getAddrName();
     }
+    setBeforeLoginPage(user.beforeLogin);
   }, [user]);
 
   return (
@@ -87,14 +89,16 @@ export const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="nav-menu ms-auto">
-              <Link to="/board">게시판</Link>
+              {!beforeLoginPage && <Link to="/board">게시판</Link>}
               {user.userInfo.length == 0 ? (
-                <>
-                  <Link to="/login">로그인</Link>
-                  <Link to="/signup" className="hi">
-                    회원가입
-                  </Link>
-                </>
+                !beforeLoginPage && (
+                  <>
+                    <Link to="/login">로그인</Link>
+                    <Link to="/signup" className="hi">
+                      회원가입
+                    </Link>
+                  </>
+                )
               ) : (
                 <>
                   <Link to="/martmap">마트맵</Link>
