@@ -3,7 +3,9 @@ package com.cdp.hanzoom.api.service;
 import com.cdp.hanzoom.api.request.UserIngredientRegisterReq;
 import com.cdp.hanzoom.api.request.UserIngredientStatusUpdateReq;
 import com.cdp.hanzoom.api.request.UserIngredientTypeUpdateReq;
+import com.cdp.hanzoom.api.response.UserIngredientBoardRes;
 import com.cdp.hanzoom.api.response.UserIngredientFindRes;
+import com.cdp.hanzoom.db.entity.Board;
 import com.cdp.hanzoom.db.entity.Ingredient;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.entity.UserIngredient;
@@ -15,7 +17,9 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("userIngredientService")
 public class UserIngredientServiceImpl implements UserIngredientService {
@@ -31,6 +35,9 @@ public class UserIngredientServiceImpl implements UserIngredientService {
 
     @Autowired
     IngredientRepositorySupport ingredientRepositorySupport;
+
+    @Autowired
+    BoardRepositorySupport boardRepositorySupport;
 
     /** 유저 식재료 정보를 생성하는 registerUserIngredient 입니다. **/
     @Override
@@ -171,5 +178,38 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     public List<UserIngredientFindRes> findAllPendingUserIngredient() {
         List<UserIngredientFindRes> userIngredientFindResList = userIngredientRepositorySupport.findAllPendingUserIngredient();
         return userIngredientFindResList;
+    }
+
+    @Override
+    public List<UserIngredientBoardRes> findUserIngredientSortingBoardNo(String userEmail) {
+        List<UserIngredient> userIngredients = userIngredientRepositorySupport.findAllByUserEmail(userEmail);
+        HashMap<Long, List<String>> groupByBoardNo = new HashMap<Long, List<String>>();
+        for(int i=0; i< userIngredients.size(); i++) {
+            if(userIngredients.get(i).getBoardNo() == null) continue;
+            if(groupByBoardNo.containsKey(userIngredients.get(i).getBoardNo())) {
+                List<String> temp = groupByBoardNo.get(userIngredients.get(i).getBoardNo());
+                temp.add(userIngredients.get(i).getIngredient().getIngredientName());
+                groupByBoardNo.put(userIngredients.get(i).getBoardNo(), temp);
+            } else {
+                List<String> temp = new ArrayList<String>();
+                temp.add(userIngredients.get(i).getIngredient().getIngredientName());
+                groupByBoardNo.put(userIngredients.get(i).getBoardNo(), temp);
+            }
+        }
+
+        List<UserIngredientBoardRes> userIngredientBoardResList = new ArrayList<>();
+        for(Map.Entry<Long, List<String>> entrySet : groupByBoardNo.entrySet()) {
+            UserIngredientBoardRes userIngredientBoardRes = new UserIngredientBoardRes();
+
+            Long boardNo = entrySet.getKey();
+            Board board = boardRepositorySupport.findBoardByBoardNo(boardNo).orElse(null);
+            if(board == null) continue;
+            userIngredientBoardRes.setBoard(board);
+            userIngredientBoardRes.setIngredients(entrySet.getValue());
+
+            userIngredientBoardResList.add(userIngredientBoardRes);
+        }
+
+        return userIngredientBoardResList;
     }
 }
