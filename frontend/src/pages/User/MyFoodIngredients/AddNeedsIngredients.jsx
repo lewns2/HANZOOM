@@ -10,22 +10,11 @@ export const AddNeedsIngredients = (props) => {
       <div className="needsForm">
         <div>
           <div className="">식재료 명</div>
-          {/* <input
-            className="form-control"
-            type="text"
-            placeholder="식재료 명"
-            onChange={(event) => {
-              props.setNeeds({
-                ingredient: event.target.value,
-              });
-            }}
-          /> */}
-          <AutoComplete setNeeds={props.setNeeds} />
+          <AutoComplete setNeeds={props.setNeeds} header={props.header} />
         </div>
       </div>
     );
   } else {
-    console.log(props);
     const [needsName, setNeedsName] = useState(props.ingre.ingredientName);
     useEffect(() => {
       props.setNeeds();
@@ -34,17 +23,11 @@ export const AddNeedsIngredients = (props) => {
       <div className="needsForm">
         <div className="inputForm">
           <div>식재료 명</div>
-          <input
-            className="form-control"
-            type="text"
-            placeholder={props.ingre.ingredientName}
-            value={needsName}
-            onChange={(event) => {
-              props.setNeeds({
-                ingredient: event.target.value,
-              });
-              setNeedsName(event.target.value);
-            }}
+          <AutoComplete
+            header={props.header}
+            setNeeds={props.setNeeds}
+            needsName={needsName}
+            setNeedsName={setNeedsName}
           />
         </div>
       </div>
