@@ -55,6 +55,7 @@ public class UserIngredientRepositorySupport {
                                             qUserIngredient.userIngredientNo,
                                             qUserIngredient.user.userEmail,
                                             qUserIngredient.user.userNickname,
+                                            qUserIngredient.user.userImage,
                                             qUserIngredient.user.lat,
                                             qUserIngredient.user.lng,
                                             qUserIngredient.ingredient.ingredientNo,
