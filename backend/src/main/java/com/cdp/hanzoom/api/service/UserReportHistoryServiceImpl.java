@@ -1,6 +1,7 @@
 package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.UserReportHistoryRegisterReq;
+import com.cdp.hanzoom.api.request.UserReportHistoryUpdateReq;
 import com.cdp.hanzoom.api.response.UserReportHistoryFindAllRes;
 import com.cdp.hanzoom.db.entity.UserReportHistory;
 import com.cdp.hanzoom.db.repository.UserReportHistoryRepository;
@@ -50,5 +51,18 @@ public class UserReportHistoryServiceImpl implements UserReportHistoryService {
     public void deleteUserReportHistory(UserReportHistory userReportHistory) {
         // 해당 신고 내역 삭제
         userReportHistoryRepository.delete(userReportHistory);
+    }
+
+    /** 유저 신고 처리 상태를 변경하는 updateStatus 입니다. **/
+    @Override
+    public void updateStatus(UserReportHistoryUpdateReq userReportHistoryUpdateReq) {
+        String result = userReportHistoryUpdateReq.getResult();
+        userReportHistoryRepository.updateState(userReportHistoryUpdateReq.getReportNo(), result);
+
+        if(result.equals("승인")) {
+            userRepository.plusUserReportedNumber(userReportHistoryUpdateReq.getReported());
+        } else if(result.equals("거절")) {
+            userRepository.minusUserReportedNumber(userReportHistoryUpdateReq.getReported());
+        }
     }
 }

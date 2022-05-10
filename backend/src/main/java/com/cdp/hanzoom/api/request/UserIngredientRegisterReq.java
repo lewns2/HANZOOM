@@ -14,15 +14,15 @@ import java.time.LocalDate;
 @ApiModel("UserIngredientRegisterRequest")
 public class UserIngredientRegisterReq {
     @ApiModelProperty(name="식재료 Name", example="고구마")
-    String ingredientName;
+    private String ingredientName;
 
     @ApiModelProperty(name="종류(상태)", example="일반")
-    String type;
+    private String type;
 
     @ApiModelProperty(name="식재료 구매일", example="2022-01-01")
-    String purchaseDate;
+    private String purchaseDate;
 
     @ApiModelProperty(name="식재료 유통기한", example="2022-01-01")
-    String expirationDate;
+    private String expirationDate;
 
 }

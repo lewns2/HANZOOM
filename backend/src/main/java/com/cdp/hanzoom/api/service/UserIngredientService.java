@@ -1,9 +1,9 @@
 package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.UserIngredientRegisterReq;
-import com.cdp.hanzoom.api.request.UserIngredientUpdateReq;
+import com.cdp.hanzoom.api.request.UserIngredientStatusUpdateReq;
+import com.cdp.hanzoom.api.request.UserIngredientTypeUpdateReq;
 import com.cdp.hanzoom.api.response.UserIngredientFindRes;
-import com.cdp.hanzoom.api.response.UserIngredientRes;
 import com.cdp.hanzoom.db.entity.UserIngredient;
 
 import java.util.List;
@@ -21,9 +21,11 @@ public interface UserIngredientService {
     /** IngredientNo과 userEmail을 이용하여 유저 식재료 정보를 조회하는 findUserIngredientByIngredientName 입니다. **/
     UserIngredient findUserIngredientByUserIngredientNoAndUserEmail(Long IngredientNo, String userEmail);
     /** 유저 식재료 정보를 수정하는 updateUserIngredient 입니다. **/
-    void updateUserIngredient(UserIngredientUpdateReq userIngredientUpdateReq);
+    void updateUserIngredient(UserIngredientTypeUpdateReq userIngredientTypeUpdateReq);
     /** 유저 식재료 등록상태(status) 정보를 수정하는 updateUserIngredientStatus 입니다. **/
-    void updateUserIngredientStatus(Long userIngredientNo);
+    void updateUserIngredientStatus(UserIngredientStatusUpdateReq userIngredientStatusUpdateReq);
     /** 유저 식재료 정보를 삭제하는 deleteUserIngredient 입니다. **/
     void deleteUserIngredient(UserIngredient userIngredient);
+    /** 식재료 등록 요청한 정보들을 전체 조회하는 findAllPendingUserIngredient 입니다. **/
+    List<UserIngredientFindRes> findAllPendingUserIngredient();
 }
