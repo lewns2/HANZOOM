@@ -2,6 +2,7 @@ package com.cdp.hanzoom.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -36,10 +37,13 @@ public class UserReportHistory {
     @Column(name="content", length = 600)
     String content;
 
+    @Column(name="status", length = 20)
+    @ColumnDefault("'대기'")
+    String status;
+
     @Column(name = "created_at")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
     @CreationTimestamp
     LocalDateTime createdAt;
-
 }

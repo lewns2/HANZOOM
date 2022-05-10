@@ -2,11 +2,13 @@ package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.*;
 import com.cdp.hanzoom.api.response.UserLikeListFindRes;
+import com.cdp.hanzoom.api.response.UserRes;
 import com.cdp.hanzoom.db.entity.LikeList;
 import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.repository.LikeListRepositorySupport;
 import com.cdp.hanzoom.db.repository.UserRepository;
 import com.cdp.hanzoom.db.repository.UserRepositorySupport;
+import jdk.nashorn.api.tree.ArrayLiteralTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -115,6 +117,22 @@ public class UserServiceImpl implements UserService {
 	public boolean deleteByUserEmail(User user) {
 		userRepository.delete(user);
 		return true;
+	}
+
+	// 회원 전체 목록 조회
+
+
+	@Override
+	public List<UserRes> getAllUser() {
+		List<User> userList = userRepository.findAll();
+
+		List<UserRes> userResList = new ArrayList<UserRes>();
+		for(int i=0; i<userList.size(); i++) {
+			UserRes userRes = UserRes.of(userList.get(i));
+			userResList.add(userRes);
+		}
+
+		return userResList;
 	}
 
 	@Override
