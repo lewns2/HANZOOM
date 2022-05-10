@@ -2,6 +2,7 @@ package com.cdp.hanzoom.api.service;
 
 import com.cdp.hanzoom.api.request.*;
 import com.cdp.hanzoom.api.response.UserLikeListFindRes;
+import com.cdp.hanzoom.api.response.UserRes;
 import com.cdp.hanzoom.db.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,7 @@ public interface UserService {
 	boolean checkUserEmail(String userEmail); // 이메일 중복 체크
 	boolean checkUserNickName(String userNickname); // 닉네임 중복 체크
 	boolean deleteByUserEmail(User user);//  회원 탈퇴
+	List<UserRes> getAllUser();	// 회원 전체 목록 조회
 	/** 내가 찜한 목록 리스트 반환**/
 	List<UserLikeListFindRes> findLikeListByUserId(String userEmail);
 }
