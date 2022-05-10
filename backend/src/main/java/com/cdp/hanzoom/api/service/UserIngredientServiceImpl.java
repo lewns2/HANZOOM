@@ -49,14 +49,21 @@ public class UserIngredientServiceImpl implements UserIngredientService {
 
         Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(userIngredientRegisterReq.getIngredientName()).orElse(null);
 
-        UserIngredientRes userIngredientRes = new UserIngredientRes();
-        userIngredientRes.setUserEmail(userEmail);
-        userIngredientRes.setIngredientNo(ingredient.getIngredientNo());
-        userIngredientRes.setType(userIngredientRegisterReq.getType());
-        userIngredientRes.setPurchaseDate(purchaseDate);
-        userIngredientRes.setExpirationDate(expirationDate);
+        User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
+        UserIngredient userIngredient = new UserIngredient();
+        userIngredient.setUser(user);
+        if(ingredient == null) {
+            userIngredient.setIngredient(null);
+            userIngredient.setStatus("대기");
+        } else {
+            userIngredient.setIngredient(ingredient);
+            userIngredient.setStatus("일반");
+        }
+        userIngredient.setType(userIngredientRegisterReq.getType());
+        userIngredient.setPurchaseDate(purchaseDate);
+        userIngredient.setExpirationDate(expirationDate);
 
-        userIngredientRepository.save(userIngredientRes.toEntity());
+        userIngredientRepository.save(userIngredient);
     }
 
     /** 유저 식재료 정보를 전체 조회하는 findAllUserIngredient 입니다. **/
@@ -69,13 +76,19 @@ public class UserIngredientServiceImpl implements UserIngredientService {
         for(int i=0; i<userIngredientList.size(); i++) {
             UserIngredientFindRes userIngredientFindRes = new UserIngredientFindRes();
             userIngredientFindRes.setUserIngredientNo(userIngredientList.get(i).getUserIngredientNo());
-            userIngredientFindRes.setIngredientNo(userIngredientList.get(i).getIngredient().getIngredientNo());
-            userIngredientFindRes.setIngredientName(userIngredientList.get(i).getIngredient().getIngredientName());
+            if(userIngredientList.get(i).getIngredient() == null) {
+                userIngredientFindRes.setIngredientNo(null);
+                userIngredientFindRes.setIngredientName(null);
+            } else {
+                userIngredientFindRes.setIngredientNo(userIngredientList.get(i).getIngredient().getIngredientNo());
+                userIngredientFindRes.setIngredientName(userIngredientList.get(i).getIngredient().getIngredientName());
+            }
             userIngredientFindRes.setUserEmail(userIngredientList.get(i).getUser().getUserEmail());
             userIngredientFindRes.setType(userIngredientList.get(i).getType());
             userIngredientFindRes.setPurchaseDate(userIngredientList.get(i).getPurchaseDate());
             userIngredientFindRes.setExpirationDate(userIngredientList.get(i).getExpirationDate());
             userIngredientFindRes.setBoardNo(userIngredientList.get(i).getBoardNo());
+            userIngredientFindRes.setStatus(userIngredientList.get(i).getStatus());
             userIngredientFindResList.add(userIngredientFindRes);
         }
         return userIngredientFindResList;
@@ -97,6 +110,7 @@ public class UserIngredientServiceImpl implements UserIngredientService {
         userIngredientFindRes.setPurchaseDate(userIngredient.getPurchaseDate());
         userIngredientFindRes.setExpirationDate(userIngredient.getExpirationDate());
         userIngredientFindRes.setBoardNo(userIngredient.getBoardNo());
+        userIngredientFindRes.setStatus(userIngredient.getStatus());
 
         return userIngredientFindRes;
     }
@@ -133,6 +147,12 @@ public class UserIngredientServiceImpl implements UserIngredientService {
         }
 
         userIngredientRepository.updateUserIngredient(userIngredientNo, ingredientNo, type, purchaseDate, expirationDate);
+    }
+
+    /** 유저 식재료 등록상태(status) 정보를 수정하는 updateUserIngredientStatus 입니다. **/
+    @Override
+    public void updateUserIngredientStatus(Long userIngredientNo) {
+        userIngredientRepository.updateUserIngredientStatus(userIngredientNo);
     }
 
     /** 유저 식재료 정보를 삭제하는 deleteUserIngredient 입니다. **/

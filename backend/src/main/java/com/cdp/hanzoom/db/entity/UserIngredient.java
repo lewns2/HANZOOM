@@ -21,8 +21,6 @@ import java.time.LocalDate;
 @ToString
 @Builder
 public class UserIngredient {
-//    @EmbeddedId
-//    UserIngredientId userIngredientId;
     @Id
     @Column(name = "user_ingredient_no")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -53,4 +51,7 @@ public class UserIngredient {
 
     @Column(name = "board_no")
     Long boardNo;
+
+    @Column(name = "status", length = 20)
+    String status;
 }

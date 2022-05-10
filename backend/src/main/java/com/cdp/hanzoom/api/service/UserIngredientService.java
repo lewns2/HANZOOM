@@ -22,6 +22,8 @@ public interface UserIngredientService {
     UserIngredient findUserIngredientByUserIngredientNoAndUserEmail(Long IngredientNo, String userEmail);
     /** 유저 식재료 정보를 수정하는 updateUserIngredient 입니다. **/
     void updateUserIngredient(UserIngredientUpdateReq userIngredientUpdateReq);
+    /** 유저 식재료 등록상태(status) 정보를 수정하는 updateUserIngredientStatus 입니다. **/
+    void updateUserIngredientStatus(Long userIngredientNo);
     /** 유저 식재료 정보를 삭제하는 deleteUserIngredient 입니다. **/
     void deleteUserIngredient(UserIngredient userIngredient);
 }
