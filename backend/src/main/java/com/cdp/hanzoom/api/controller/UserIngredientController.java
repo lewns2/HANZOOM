@@ -4,6 +4,7 @@ import com.cdp.hanzoom.api.request.UserIngredientRegisterReq;
 import com.cdp.hanzoom.api.request.UserIngredientTypeUpdateReq;
 import com.cdp.hanzoom.api.response.MatchingRes;
 import com.cdp.hanzoom.api.response.RecipeFindRes;
+import com.cdp.hanzoom.api.response.UserIngredientBoardRes;
 import com.cdp.hanzoom.api.response.UserIngredientFindRes;
 import com.cdp.hanzoom.api.service.MatchingService;
 import com.cdp.hanzoom.api.service.RecipeService;
@@ -214,5 +215,22 @@ public class UserIngredientController {
         if(distance == null) distance = Double.valueOf(10);
         MatchingRes matchingList = matchingService.findRecipeMatchingList(userEmail, recipeNo, distance);
         return new ResponseEntity<MatchingRes>(matchingList, HttpStatus.OK);
+    }
+
+    /** 게시글 올라간 유저 식재료 정돈해서 보내기 **/
+    @GetMapping("/board")
+    @ApiOperation(value = "게시글 등록된 식재료{token}", notes = "<strong>게시글 등록된 식재료를 게시글 번호로 정리해 출력</strong>한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<UserIngredientBoardRes>> findUserIngredientSortingBoardNo (
+            @ApiIgnore Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userEmail = userDetails.getUsername();
+        List<UserIngredientBoardRes> userIngredientBoardResList = userIngredientService.findUserIngredientSortingBoardNo(userEmail);
+        return new ResponseEntity<List<UserIngredientBoardRes>>(userIngredientBoardResList, HttpStatus.OK);
     }
 }
