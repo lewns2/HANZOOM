@@ -98,14 +98,16 @@ export const BoardDetail = () => {
     dispatch(changeShow(true)); // 채팅 모달 show
   };
 
-  /* 수정 페이지로 식재료명을 넘기기 위함 */
+  /* 수정 페이지로 식재료명, 번호를 넘기기 위함 */
+  const [ingredientNumber, setIngredientNumber] = useState();
   const [ingredientNameList, setIngredientNameList] = useState();
   const pasingIngredientName = (data) => {
-    var temp = [];
+    var tempNumber = [];
+    var tempName = [];
     for (let i = 0; i < data.boardFindIngredientResList.length; i++) {
-      temp.push(data.boardFindIngredientResList[i].ingredientName);
+      tempName.push(data.boardFindIngredientResList[i].ingredientName);
     }
-    setIngredientNameList(temp);
+    setIngredientNameList(tempName);
   };
 
   return (
@@ -185,13 +187,13 @@ export const BoardDetail = () => {
                   <p className="detailTag">#{ingre.ingredientName}</p>
                   <p
                     style={{
-                      visibility: ingre.purchaseDate == null ? 'visible' : 'hidden',
+                      visibility: ingre.purchaseDate == 'null' ? 'hidden' : 'visible',
                     }}>
                     구매일 : {ingre.purchaseDate}
                   </p>
                   <p
                     style={{
-                      visibility: ingre.expirationDate == null ? 'visible' : 'hidden',
+                      visibility: ingre.expirationDate == 'null' ? 'hidden' : 'visible',
                     }}>
                     유통기한 : {ingre.expirationDate}
                   </p>
