@@ -8,20 +8,20 @@ import lombok.Getter;
  * 유저 식재료 API ([POST] /api/userIngredient) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
-@ApiModel("UserIngredientUpdateRequest")
-public class UserIngredientUpdateReq {
+@ApiModel("UserIngredientTypeUpdateRequest")
+public class UserIngredientTypeUpdateReq {
     @ApiModelProperty(name="유저 식재료 No", example="1")
-    Long userIngredientNo;
+    private Long userIngredientNo;
 
     @ApiModelProperty(name="식재료 Name", example="건빵")
-    String ingredientName;
+    private String ingredientName;
 
     @ApiModelProperty(name="종류", example="일반")
-    String type;
+    private String type;
 
     @ApiModelProperty(name="식재료 구매일", example="2022-01-01")
-    String purchaseDate;
+    private String purchaseDate;
 
     @ApiModelProperty(name="식재료 유통기한", example="2022-01-01")
-    String expirationDate;
+    private String expirationDate;
 }

@@ -1,12 +1,12 @@
 package com.cdp.hanzoom.api.service;
 
+import com.cdp.hanzoom.api.request.PendingIngredientReq;
 import com.cdp.hanzoom.api.request.UserIngredientRegisterReq;
-import com.cdp.hanzoom.api.request.UserIngredientUpdateReq;
+import com.cdp.hanzoom.api.request.UserIngredientTypeUpdateReq;
+import com.cdp.hanzoom.api.response.PendingIngredientRes;
+import com.cdp.hanzoom.api.response.UserIngredientBoardRes;
 import com.cdp.hanzoom.api.response.UserIngredientFindRes;
-import com.cdp.hanzoom.api.response.UserIngredientRes;
-import com.cdp.hanzoom.db.entity.Ingredient;
-import com.cdp.hanzoom.db.entity.User;
-import com.cdp.hanzoom.db.entity.UserIngredient;
+import com.cdp.hanzoom.db.entity.*;
 import com.cdp.hanzoom.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,9 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("userIngredientService")
 public class UserIngredientServiceImpl implements UserIngredientService {
@@ -30,11 +32,25 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     UserIngredientRepositorySupport userIngredientRepositorySupport;
 
     @Autowired
+    IngredientRepository ingredientRepository;
+
+    @Autowired
     IngredientRepositorySupport ingredientRepositorySupport;
+
+    @Autowired
+    BoardRepositorySupport boardRepositorySupport;
+
+    @Autowired
+    PendingIngredientRepository pendingIngredientRepository;
+
+    @Autowired
+    PendingIngredientRepositorySupport pendingIngredientRepositorySupport;
 
     /** 유저 식재료 정보를 생성하는 registerUserIngredient 입니다. **/
     @Override
     public void registerUserIngredient(UserIngredientRegisterReq userIngredientRegisterReq, String userEmail) {
+
+        Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(userIngredientRegisterReq.getIngredientName()).orElse(null);
 
         LocalDate purchaseDate = null;
         LocalDate expirationDate = null;
@@ -47,23 +63,30 @@ public class UserIngredientServiceImpl implements UserIngredientService {
             expirationDate = LocalDate.parse(userIngredientRegisterReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
         }
 
-        Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(userIngredientRegisterReq.getIngredientName()).orElse(null);
+        if(ingredient == null) {    // 식재료 종류 테이블에 없는 식재료인 경우
+            PendingIngredient pendingIngredient = PendingIngredient.builder()
+                    .requestor(userEmail)
+                    .ingredientName(userIngredientRegisterReq.getIngredientName())
+                    .type(userIngredientRegisterReq.getType())
+                    .purchaseDate(purchaseDate)
+                    .expirationDate(expirationDate)
+                    .status("대기")
+                    .build();
 
-        User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
-        UserIngredient userIngredient = new UserIngredient();
-        userIngredient.setUser(user);
-        if(ingredient == null) {
-            userIngredient.setIngredient(null);
-            userIngredient.setStatus("대기");
-        } else {
+            pendingIngredientRepository.save(pendingIngredient);
+        } else {    // 식재료 종류 테이블에 있는 식재료인 경우
+
+
+            User user = userRepositorySupport.findUserByUserEmail(userEmail).orElse(null);
+            UserIngredient userIngredient = new UserIngredient();
+            userIngredient.setUser(user);
             userIngredient.setIngredient(ingredient);
-            userIngredient.setStatus("일반");
-        }
-        userIngredient.setType(userIngredientRegisterReq.getType());
-        userIngredient.setPurchaseDate(purchaseDate);
-        userIngredient.setExpirationDate(expirationDate);
+            userIngredient.setType(userIngredientRegisterReq.getType());
+            userIngredient.setPurchaseDate(purchaseDate);
+            userIngredient.setExpirationDate(expirationDate);
 
-        userIngredientRepository.save(userIngredient);
+            userIngredientRepository.save(userIngredient);
+        }
     }
 
     /** 유저 식재료 정보를 전체 조회하는 findAllUserIngredient 입니다. **/
@@ -88,7 +111,6 @@ public class UserIngredientServiceImpl implements UserIngredientService {
             userIngredientFindRes.setPurchaseDate(userIngredientList.get(i).getPurchaseDate());
             userIngredientFindRes.setExpirationDate(userIngredientList.get(i).getExpirationDate());
             userIngredientFindRes.setBoardNo(userIngredientList.get(i).getBoardNo());
-            userIngredientFindRes.setStatus(userIngredientList.get(i).getStatus());
             userIngredientFindResList.add(userIngredientFindRes);
         }
         return userIngredientFindResList;
@@ -110,7 +132,6 @@ public class UserIngredientServiceImpl implements UserIngredientService {
         userIngredientFindRes.setPurchaseDate(userIngredient.getPurchaseDate());
         userIngredientFindRes.setExpirationDate(userIngredient.getExpirationDate());
         userIngredientFindRes.setBoardNo(userIngredient.getBoardNo());
-        userIngredientFindRes.setStatus(userIngredient.getStatus());
 
         return userIngredientFindRes;
     }
@@ -127,23 +148,23 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     /** 유저 식재료 정보를 수정하는 updateUserIngredient 입니다. **/
     @Transactional
     @Override
-    public void updateUserIngredient(UserIngredientUpdateReq userIngredientUpdateReq) {
+    public void updateUserIngredient(UserIngredientTypeUpdateReq userIngredientTypeUpdateReq) {
 //        Long ingredientNo = userIngredient.getIngredient().getIngredientNo();
-        Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(userIngredientUpdateReq.getIngredientName()).orElse(null);
+        Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(userIngredientTypeUpdateReq.getIngredientName()).orElse(null);
 
-        Long userIngredientNo = userIngredientUpdateReq.getUserIngredientNo();
+        Long userIngredientNo = userIngredientTypeUpdateReq.getUserIngredientNo();
         Long ingredientNo = ingredient.getIngredientNo();
-        String type = userIngredientUpdateReq.getType();
+        String type = userIngredientTypeUpdateReq.getType();
 
         LocalDate purchaseDate = null;
         LocalDate expirationDate = null;
 
-        if(userIngredientUpdateReq.getPurchaseDate().length() != 0) {
-            purchaseDate = LocalDate.parse(userIngredientUpdateReq.getPurchaseDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+        if(userIngredientTypeUpdateReq.getPurchaseDate().length() != 0) {
+            purchaseDate = LocalDate.parse(userIngredientTypeUpdateReq.getPurchaseDate().substring(0,10), DateTimeFormatter.ISO_DATE);
         }
 
-        if(userIngredientUpdateReq.getExpirationDate().length() != 0) {
-            expirationDate = LocalDate.parse(userIngredientUpdateReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+        if(userIngredientTypeUpdateReq.getExpirationDate().length() != 0) {
+            expirationDate = LocalDate.parse(userIngredientTypeUpdateReq.getExpirationDate().substring(0,10), DateTimeFormatter.ISO_DATE);
         }
 
         userIngredientRepository.updateUserIngredient(userIngredientNo, ingredientNo, type, purchaseDate, expirationDate);
@@ -151,13 +172,84 @@ public class UserIngredientServiceImpl implements UserIngredientService {
 
     /** 유저 식재료 등록상태(status) 정보를 수정하는 updateUserIngredientStatus 입니다. **/
     @Override
-    public void updateUserIngredientStatus(Long userIngredientNo) {
-        userIngredientRepository.updateUserIngredientStatus(userIngredientNo);
+    public void updateUserIngredientStatus(PendingIngredientReq pendingIngredientReq) {
+        PendingIngredient pendingIngredient = pendingIngredientRepository.findById(pendingIngredientReq.getRequestNo()).orElse(null);
+
+        if(pendingIngredientReq.getResult().equals("승인")) {
+
+            // 새로 ingredient 정보 저장
+            Ingredient ingredient = Ingredient.builder()
+                    .ingredientName(pendingIngredient.getIngredientName())
+                    .build();
+
+            ingredientRepository.save(ingredient);
+
+            // 새로 등록된 ingredient 정보 가져오기
+            ingredient = ingredientRepositorySupport.findByIngredientName(pendingIngredient.getIngredientName()).orElse(null);
+
+            // 요청한 유저의 userIngredient 정보 저장
+            User user = userRepositorySupport.findUserByUserEmail(pendingIngredient.getRequestor()).orElse(null);
+            UserIngredient userIngredient = UserIngredient.builder()
+                    .user(user)
+                    .ingredient(ingredient)
+                    .type(pendingIngredient.getType())
+                    .purchaseDate(pendingIngredient.getPurchaseDate())
+                    .expirationDate(pendingIngredient.getExpirationDate())
+                    .build();
+
+            userIngredientRepository.save(userIngredient);
+
+            // pendingIngredient 테이블에서 제거
+            pendingIngredientRepository.delete(pendingIngredient);
+
+        } else if(pendingIngredientReq.getResult().equals("거절")) {
+            pendingIngredientRepository.delete(pendingIngredient);
+        }
     }
 
     /** 유저 식재료 정보를 삭제하는 deleteUserIngredient 입니다. **/
     @Override
     public void deleteUserIngredient(UserIngredient userIngredient) {
         userIngredientRepository.delete(userIngredient);
+    }
+
+    /** 식재료 등록 요청한 정보들을 전체 조회하는 findAllPendingUserIngredient 입니다. **/
+    @Override
+    public List<PendingIngredientRes> findAllPendingIngredient() {
+        List<PendingIngredientRes> pendingIngredientResList = pendingIngredientRepositorySupport.findAllPendingIngredient();
+        return pendingIngredientResList;
+    }
+
+    @Override
+    public List<UserIngredientBoardRes> findUserIngredientSortingBoardNo(String userEmail) {
+        List<UserIngredient> userIngredients = userIngredientRepositorySupport.findAllByUserEmail(userEmail);
+        HashMap<Long, List<String>> groupByBoardNo = new HashMap<Long, List<String>>();
+        for(int i=0; i< userIngredients.size(); i++) {
+            if(userIngredients.get(i).getBoardNo() == null) continue;
+            if(groupByBoardNo.containsKey(userIngredients.get(i).getBoardNo())) {
+                List<String> temp = groupByBoardNo.get(userIngredients.get(i).getBoardNo());
+                temp.add(userIngredients.get(i).getIngredient().getIngredientName());
+                groupByBoardNo.put(userIngredients.get(i).getBoardNo(), temp);
+            } else {
+                List<String> temp = new ArrayList<String>();
+                temp.add(userIngredients.get(i).getIngredient().getIngredientName());
+                groupByBoardNo.put(userIngredients.get(i).getBoardNo(), temp);
+            }
+        }
+
+        List<UserIngredientBoardRes> userIngredientBoardResList = new ArrayList<>();
+        for(Map.Entry<Long, List<String>> entrySet : groupByBoardNo.entrySet()) {
+            UserIngredientBoardRes userIngredientBoardRes = new UserIngredientBoardRes();
+
+            Long boardNo = entrySet.getKey();
+            Board board = boardRepositorySupport.findBoardByBoardNo(boardNo).orElse(null);
+            if(board == null) continue;
+            userIngredientBoardRes.setBoard(board);
+            userIngredientBoardRes.setIngredients(entrySet.getValue());
+
+            userIngredientBoardResList.add(userIngredientBoardRes);
+        }
+
+        return userIngredientBoardResList;
     }
 }

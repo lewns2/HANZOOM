@@ -16,7 +16,7 @@ export const RecipeModal = (props) => {
             <div className="recipeModalTitle">
               <h2>{info.recipeName}</h2>
               <div>
-                <Link to="/match">
+                <Link to="/match" state={{ recipeNo: info.recipeNo, recipeName: info.recipeName }}>
                   <button className="matchingBtn">자동매칭</button>
                 </Link>
               </div>

@@ -70,9 +70,6 @@ export const Board = () => {
     <section className="container mt-1 px-2 py-3">
       <div className="header">
         <h1>게시판</h1>
-        <Link to="/board/write">
-          <button>글쓰기</button>
-        </Link>
       </div>
 
       <SearchBar setSearchKeyword={setSearchKeyword} />

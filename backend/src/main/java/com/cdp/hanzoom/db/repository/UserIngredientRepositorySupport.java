@@ -1,5 +1,6 @@
 package com.cdp.hanzoom.db.repository;
 
+import com.cdp.hanzoom.api.response.UserIngredientFindRes;
 import com.cdp.hanzoom.api.response.UserIngredientMatchingRes;
 import com.cdp.hanzoom.db.entity.*;
 import com.querydsl.core.BooleanBuilder;
