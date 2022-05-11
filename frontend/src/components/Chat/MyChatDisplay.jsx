@@ -4,7 +4,7 @@ import { changeShow } from '../../Reducer/chatSlice';
 import { Schedule } from '../Schedule/Schedule';
 import { ScheduleDetail } from '../Schedule/ScheduleDetail';
 import { BASE_IMG_URL } from '../../core/s3';
-import { Axios } from '../../core/axios';
+import { Axios, axios_apis } from '../../core/axios';
 import StompJS from 'stompjs';
 import SockJS from 'sockjs-client';
 
@@ -13,6 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 export const MyChatDisplay = (props) => {
   const [showSchedule, setShowSchedule] = useState(false);
   const [showScheduleDetail, setShowScheduleDetail] = useState(false);
+  const [planState, setPlanState] = useState(false);
 
   // console.log(props);
 
@@ -139,6 +140,17 @@ export const MyChatDisplay = (props) => {
     }
   };
 
+  const checkPlan = () => {
+    Axios.get(`${axios_apis.plans.checkPlan}/${chatMessageInfo.boardNo}`)
+      .then((data) => {
+        console.log(data);
+        setPlanState(data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     getMessage();
     connect(); // web socket connect
@@ -146,13 +158,19 @@ export const MyChatDisplay = (props) => {
 
   useEffect(() => {
     let email;
-    if (user.userInfo.userEmail !== chatMessageInfo.userNickname1) {
-      email = chatMessageInfo.userNickname1;
+    if (user.userInfo.userEmail !== chatMessageInfo.userEmail1) {
+      email = chatMessageInfo.userEmail1;
     } else {
-      email = chatMessageInfo.userNickname2;
+      email = chatMessageInfo.userEmail2;
     }
     setOtherEmail(email);
+
+    if (chatMessageInfo.boardNo) checkPlan();
   }, [chatMessageInfo]);
+
+  useEffect(() => {
+    if (chatMessageInfo.boardNo) checkPlan();
+  }, [showSchedule, showScheduleDetail]);
 
   useEffect(() => {
     scrollToBottom();
@@ -162,16 +180,32 @@ export const MyChatDisplay = (props) => {
     <>
       {console.log(chatMessageInfo)}
       <div className="showChatDisplayWrap">
-        {showSchedule && <Schedule show={setShowSchedule} otherEmail={otherEmail} />}
-        {showScheduleDetail && <ScheduleDetail show={setShowScheduleDetail} setShow={setShow} />}
+        {showSchedule && (
+          <Schedule
+            show={setShowSchedule}
+            otherEmail={otherEmail}
+            boardNo={chatMessageInfo.boardNo}
+          />
+        )}
+        {showScheduleDetail && (
+          <ScheduleDetail
+            show={setShowScheduleDetail}
+            setShow={setShow}
+            boardNo={chatMessageInfo.boardNo}
+          />
+        )}
         <section className="chatDisplayWrap">
           <div className="chatHeader">
-            <button className="headerBtn" onClick={() => setShowSchedule(true)}>
-              일정
-            </button>
-            <button className="headerBtn" onClick={() => setShowScheduleDetail(true)}>
-              일정 확인
-            </button>
+            {!planState ? (
+              <button className="headerBtn" onClick={() => setShowSchedule(true)}>
+                일정 잡기
+              </button>
+            ) : (
+              <button className="headerBtn" onClick={() => setShowScheduleDetail(true)}>
+                일정 확인
+              </button>
+            )}
+
             <CloseIcon className="closeIcon" style={{ fontSize: '34px' }} onClick={hideMyChat} />
           </div>
           <div className="chatContent" ref={msgContent}>

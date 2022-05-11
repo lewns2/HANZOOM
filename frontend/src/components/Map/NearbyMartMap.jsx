@@ -31,7 +31,7 @@ export const NearbyMartMap = () => {
     const container = document.getElementById('myMap');
     const options = {
       center: new kakao.maps.LatLng(userLat, userLng),
-      level: 5,
+      level: 3,
     };
 
     // 지도를 생성

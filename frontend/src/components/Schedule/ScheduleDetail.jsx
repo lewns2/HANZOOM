@@ -8,7 +8,10 @@ import { changeShow } from '../../Reducer/chatSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { CalendarAndMap } from './CalendarAndMap';
 
+import swal from 'sweetalert';
+
 export const ScheduleDetail = (props) => {
+  const { boardNo } = props;
   const [scheduleInfo, setScheduleInfo] = useState([]);
   const [authority, setAuthority] = useState(false);
   const [myEmail, setMyEmail] = useState('');
@@ -22,7 +25,7 @@ export const ScheduleDetail = (props) => {
   const dispatch = useDispatch();
 
   const getSchedule = async () => {
-    await Axios.get(`${axios_apis.plans.find}/${props.boardNo}`).then((res) => {
+    await Axios.get(`${axios_apis.plans.find}/${boardNo}`).then((res) => {
       console.log(res);
       setScheduleInfo(res.data);
     });
@@ -35,11 +38,38 @@ export const ScheduleDetail = (props) => {
     props.setShow(false); // 채팅 리스트 모달 숨기기
   };
 
+  const token = sessionStorage.getItem('jwt-token');
   // 게시글 작성자가 일정 수정 권한 갖기
   const checkAuthority = () => {
-    if (myEmail === scheduleInfo.userEmail) {
-      setAuthority(true);
-    }
+    Axios.get(`board/find/${scheduleInfo.boardNo}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((data) => {
+        console.log(data);
+        let writer = data.data.userEmail;
+        if (myEmail === writer) {
+          setAuthority(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const removePlan = () => {
+    Axios.delete(`${axios_apis.plans.remove}/${scheduleInfo.boardNo}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(() => {
+        swal('일정 취소 완료', '  ', 'success', {
+          buttons: false,
+          timer: 1000,
+        });
+        props.show(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -49,7 +79,7 @@ export const ScheduleDetail = (props) => {
   }, []);
 
   useEffect(() => {
-    checkAuthority();
+    if (scheduleInfo.boardNo) checkAuthority();
   }, [myEmail, scheduleInfo]);
 
   return (
@@ -91,6 +121,7 @@ export const ScheduleDetail = (props) => {
                 update={updateSignal}
                 updateSignal={setUpdateSignal}
                 show={props.show}
+                boardNo={boardNo}
               />
             </>
           )}
@@ -106,6 +137,9 @@ export const ScheduleDetail = (props) => {
                   일정 수정
                 </button>
               )}
+              <button className="removeBtn" onClick={removePlan}>
+                일정 취소
+              </button>
             </>
           ) : (
             <>
