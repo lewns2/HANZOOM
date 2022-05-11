@@ -121,9 +121,15 @@ public class PlanController {
 	@ApiOperation(value = "일정 정보 수정 (약속 장소(위도, 경도), 약속 날짜 시간) (token)", notes = "일정 정보 수정 (약속 장소(위도, 경도), 약속 날짜 시간)<br/>"
 			+"<strong> 위도, 경도만 수정하고 싶으면 약속 날짜 시간 = null 로 담아 요청</strong><br/>"+
 			"<strong> 약속 날짜 시간만 수정하고 싶으면 (위도= null,경도 = null) 로 담아 요청</strong> ")
-
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "해당 회원 없음")})
 	@PutMapping("/update")
 	public ResponseEntity<String> updatePlan(@RequestBody PlanUpdateReq planUpdateReq, @ApiIgnore Authentication authentication) throws Exception {
+		User user = null;
+		HanZoomUserDetails userDetails = (HanZoomUserDetails)authentication.getDetails();
+		String userEmail = userDetails.getUsername();
 		Plan plan ;
 		try {
 			plan = planService.getPlanByBoardNo(planUpdateReq.getBoardNo());
@@ -135,6 +141,31 @@ public class PlanController {
 		System.out.println("일정 정보 수정 성공");
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
+
+	// 거래 완료 버튼 클릭시 -> 해당 게시글 상태 거래 완료로 변경.
+	@ApiOperation(value = "거래 완료 버튼 클릭 시 해당 게시글 상태 '거래 완료'로 변경", notes = "<strong> 채팅방 안의 일정 확인 버튼을 누른 뒤 <br/>" +
+			" '거래 완료 버튼'을 클릭 시 해당 게시글 상태 '거래 완료'로 변경.</strong> ")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "해당 회원 없음")})
+	@PutMapping("/update/boardStatus/{boardNo}")
+	public ResponseEntity<String> updateBoardStatus(@PathVariable Long boardNo, @ApiIgnore Authentication authentication) throws Exception {
+		User user = null;
+		HanZoomUserDetails userDetails = (HanZoomUserDetails)authentication.getDetails();
+		String userEmail = userDetails.getUsername();
+		try {
+			user = userService.getUserByUserEmail(userEmail); // user 정보를 조회 token 가지고
+		} catch(Exception e) {
+			return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+		}
+		boolean state = planService.updateBoardStatus(user, boardNo);
+		if(state == true ){
+			System.out.println("해당 게시글 상태 '거래 완료로' 수정 성공");
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+	}
 	
 
 //	일정 취소(삭제) 기능
@@ -144,13 +175,17 @@ public class PlanController {
 			@ApiResponse(code = 404, message = "사용자 없음"),
 			@ApiResponse(code = 500, message = "해당 회원 없음")})
 	@DeleteMapping("/remove/{boardNo}")
-	public ResponseEntity<String> deletePlan(@PathVariable Long boardNo) throws Exception {
+	public ResponseEntity<String> deletePlan(@PathVariable Long boardNo, @ApiIgnore Authentication authentication) throws Exception {
+		User user = null;
 		boolean result;
+		HanZoomUserDetails userDetails = (HanZoomUserDetails)authentication.getDetails();
+		String userEmail = userDetails.getUsername();
 		try {
-			Plan plan = planService.getPlanByBoardNo(boardNo);
+			user = userService.getUserByUserEmail(userEmail); // user 정보를 조회 token 가지고
+			Plan plan = planService.CheckPlanByBoardNoAndUserEmail(user, boardNo);
 			result = planService.deleteByPlan(plan);
 		}catch(Exception E) {
-			return  ResponseEntity.status(500).body("해당 일정 없어서 일정 삭제 실패");
+			return  ResponseEntity.status(500).body("일정을 잡은 사람이 아닌 경우 또는 해당 일정 없어서 일정 삭제 실패");
 		}
 		return ResponseEntity.status(200).body("일정 삭제 성공");
 	}

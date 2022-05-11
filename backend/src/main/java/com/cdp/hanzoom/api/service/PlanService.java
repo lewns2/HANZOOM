@@ -15,10 +15,19 @@ import java.util.List;
 public interface PlanService {
 	/** 일정 등록 **/
 	Plan registerPlan(PlanRegisterReq planRegisterReq);
+
 	/** 채팅방에서 일정 조회 **/
 	Plan getPlanByBoardNo(Long boardNo);
+
 	/** 일정 수정 **/
 	void updatePlan(Plan plan, PlanUpdateReq planUpdateReq);
+
+	/** 해당 user의 일정이 있는지 체크 **/
+	Plan CheckPlanByBoardNoAndUserEmail(User user,Long boardNo);
+
+	/** 해당 게시글 상태 거래완료로 수정 **/
+	Boolean updateBoardStatus(User user,Long boardNo);
+
 	/** 일정 삭제 **/
 	boolean deleteByPlan(Plan plan);
 	/** 나의 일정 목록 리스트 반환**/
