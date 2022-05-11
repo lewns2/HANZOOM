@@ -120,10 +120,11 @@ public class BoardServiceImpl implements BoardService{
             List<UserIngredient> userIngredients = userIngredientRepositorySupport.findByBoardNo(board.getBoardNo());
             List<BoardFindIngredientRes> boardFindIngredientResList = new ArrayList<>();
             for(int i=0; i<userIngredients.size(); i++) {
+                Long userIngredientNo = userIngredients.get(i).getUserIngredientNo();
                 String ingredientName = userIngredients.get(i).getIngredient().getIngredientName();
                 String expirationDate = String.valueOf(userIngredients.get(i).getExpirationDate());
                 String purchaseDate = String.valueOf(userIngredients.get(i).getPurchaseDate());
-                boardFindIngredientResList.add(new BoardFindIngredientRes(ingredientName,expirationDate,purchaseDate));
+                boardFindIngredientResList.add(new BoardFindIngredientRes(userIngredientNo,ingredientName,expirationDate,purchaseDate));
             }
             boardFindAllRes.setBoardFindIngredientResList(boardFindIngredientResList);
 
@@ -185,10 +186,11 @@ public class BoardServiceImpl implements BoardService{
         List<UserIngredient> userIngredients = userIngredientRepositorySupport.findByBoardNo(board.getBoardNo());
         List<BoardFindIngredientRes> boardFindIngredientResList = new ArrayList<>();
         for(int i=0; i<userIngredients.size(); i++) {
+            Long userIngredientNo = userIngredients.get(i).getUserIngredientNo();
             String ingredientName = userIngredients.get(i).getIngredient().getIngredientName();
             String expirationDate = String.valueOf(userIngredients.get(i).getExpirationDate());
             String purchaseDate = String.valueOf(userIngredients.get(i).getPurchaseDate());
-            boardFindIngredientResList.add(new BoardFindIngredientRes(ingredientName,expirationDate,purchaseDate));
+            boardFindIngredientResList.add(new BoardFindIngredientRes(userIngredientNo,ingredientName,expirationDate,purchaseDate));
         }
         res.setBoardFindIngredientResList(boardFindIngredientResList);
 
