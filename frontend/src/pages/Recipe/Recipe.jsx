@@ -52,25 +52,34 @@ export const Recipe = (props) => {
               </div>
               <div className="recipeListWrap">
                 <div className="container recipeContainer">
-                  <Slider {...settings}>
-                    {recipeList.map((content, key) => (
-                      <>
-                        <div
-                          className="recipeContentCard event1"
-                          key={content.recipeNo}
-                          onClick={() => openModal(content)}>
-                          <div className="recipeCardImgWrap">
-                            <div className="imgHoverEvent">
-                              <img src={content.imagePath} alt="..." />
+                  {recipeList.length == 0 ? (
+                    <>
+                      <p className="recipeNotFound">조건에 만족하는 레시피를 찾지 못했어요</p>
+                      <div className="searchNotFound">
+                        <SearchNotFoundLottie />
+                      </div>
+                    </>
+                  ) : (
+                    <Slider {...settings}>
+                      {recipeList.map((content, key) => (
+                        <>
+                          <div
+                            className="recipeContentCard event1"
+                            key={content.recipeNo}
+                            onClick={() => openModal(content)}>
+                            <div className="recipeCardImgWrap">
+                              <div className="imgHoverEvent">
+                                <img src={content.imagePath} alt="..." />
+                              </div>
+                            </div>
+                            <div className="hoverBox">
+                              <p className="p1">{content.recipeName}</p>
                             </div>
                           </div>
-                          <div className="hoverBox">
-                            <p className="p1">{content.recipeName}</p>
-                          </div>
-                        </div>
-                      </>
-                    ))}
-                  </Slider>
+                        </>
+                      ))}
+                    </Slider>
+                  )}
                 </div>
               </div>
             </div>
@@ -94,5 +103,13 @@ const LoadingLottie = (props) => (
     {...props}
     data-testid="completeLottie"
     src="https://assets9.lottiefiles.com/packages/lf20_6yhhrbk6.json"
+  />
+);
+
+const SearchNotFoundLottie = (props) => (
+  <Lottie
+    {...props}
+    data-testid="searchNotFound"
+    src="https://assets6.lottiefiles.com/packages/lf20_uqfbsoei.json"
   />
 );

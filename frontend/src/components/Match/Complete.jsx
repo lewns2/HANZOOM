@@ -10,12 +10,11 @@ export const Complete = (props) => {
 
   const renderIngredient = () => {
     const findIngredient = [];
-    for (let i = 0; i < matchingList.length; i++) {
-      for (let j = 0; j < matchingList[i].userIngredientMatchingRes.length; j++) {
-        var ingre = matchingList[i].userIngredientMatchingRes[0].ingredientName;
-        findIngredient.push(<p className="matchTag">#{ingre}</p>);
-      }
+    for (let i = 0; i < matchingList[0].userIngredientMatchingRes.length; i++) {
+      var ingre = matchingList[0].userIngredientMatchingRes[i].ingredientName;
+      findIngredient.push(<p className="matchTag">#{ingre}</p>);
     }
+
     return findIngredient;
   };
 
@@ -43,7 +42,7 @@ export const Complete = (props) => {
           <hr />
         </div>
         <div className="matchMessage">
-          <p>총 {matchingList.length}건을 찾았어요!</p>
+          <p>총 {matchingList[0].userIngredientMatchingRes.length}건을 찾았어요!</p>
         </div>
         <div className="matchIngredients">{renderIngredient()}</div>
         <div className="matchResultMap">
