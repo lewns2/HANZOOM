@@ -214,6 +214,8 @@ export const BoardDetail = () => {
               <Link
                 to={`/board/modify/${id}`}
                 state={{
+                  boardNo: id,
+                  status: content.status,
                   title: content.title,
                   imagePath: content.imagePath,
                   description: content.description,

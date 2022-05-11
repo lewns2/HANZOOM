@@ -42,6 +42,7 @@ export const BoardModify = () => {
   const [isShare, setIsShare] = useState(false);
   const [isExchange, setIsExchange] = useState(false);
   const [isNeed, setIsNeed] = useState(false);
+
   const selectedType = (selected) => {
     switch (selected) {
       case '나눔':
@@ -70,11 +71,14 @@ export const BoardModify = () => {
     userIngredientNo: location.state.userIngreNo,
     type: null,
     description: location.state.description,
+    boardNo: location.state.boardNo,
+    imagePath: location.state.imagePath,
+    status: location.state.status,
   });
 
   /* 게시글 등록 */
   const handleSubmit = () => {
-    // console.log(state);
+    console.log(state);
     const token = sessionStorage.getItem('jwt-token');
     const header = {
       headers: {
@@ -89,7 +93,9 @@ export const BoardModify = () => {
         type: 'application/json',
       }),
     );
-    formData.append('file', postImg);
+    if (postImg != null) {
+      formData.append('file', postImg);
+    }
 
     /* 공란 에러 발생 */
     let errorKeyword = null;
@@ -122,13 +128,13 @@ export const BoardModify = () => {
     }
 
     if ((errorKeyword === '이미지를 등록해주세요!' && isNeed) || errorKeyword === null) {
-      console.log(errorKeyword, isNeed);
       Axios.put('/board/update', formData, header)
-        .then((res) =>
+        .then(
+          (res) => console.log(res),
           swal('등록 성공', '게시글이 성공적으로 수정되었습니다', 'success', {
             buttons: false,
             timer: 1800,
-          }).then(navigate('/board')),
+          }).then(navigate('/board'), location.reload()),
         )
         .catch((err) => console.log(err));
     } else {
