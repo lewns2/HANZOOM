@@ -17,7 +17,11 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import dayjs from 'dayjs';
+
+import './Report.scss';
+import admin_empty from '../../assets/images/admin_empty.gif';
 
 const columns = [
   { id: 'reporter', label: '신고자', minWidth: 170, maxWidth: 200 },
@@ -39,69 +43,20 @@ const columns = [
   },
 ];
 
-const handleApprove = (event) => {
-  console.log(event);
-};
-
-const handleReject = (event) => {
-  console.log(event);
-};
-
-function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <React.Fragment>
-      <TableRow hover role="checkbox" tabIndex={-1} key={row.reportNo}>
-        <TableCell>
-          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        {columns.map((column) => {
-          const value = row[column.id];
-          return (
-            <TableCell key={column.id} align={column.align}>
-              {column.format ? column.format(value) : value}
-            </TableCell>
-          );
-        })}
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingTop: '0', paddingBottom: '0', paddingLeft: '7%' }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 3 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                내용
-              </Typography>
-              <textarea
-                style={{ width: '100%', height: '9.25em', border: 'none', resize: 'none' }}
-                defaultValue={row.content}></textarea>
-              <div style={{ float: 'right', margin: '3% 0' }}>
-                <button onClick={() => handleApprove(row.reportNo)}>승인</button>
-                <button onClick={() => handleReject(row.reportNo)}>거절</button>
-              </div>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
-}
-
 export const Report = () => {
   const token = sessionStorage.getItem('jwt-token');
   const header = { headers: { 'Content-Type': 'multipart/form-data' } };
   const [rows, setRows] = React.useState([]);
 
+  const [change, setChange] = React.useState(true);
+
   useEffect(() => {
-    Axios.get('userReportHistory/findAll')
+    Axios.get('/admin/findAll/userReportHistory')
       .then((res) => {
         setRows(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [change]);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -115,20 +70,130 @@ export const Report = () => {
     setPage(0);
   };
 
+  const handleApprove = (event) => {
+    Axios.put('/admin/update/userReportHistoryStatus', {
+      reportNo: event.reportNo,
+      reported: event.reported,
+      result: '승인',
+    })
+      .then((res) => {
+        // console.log(res);
+        setChange(!change);
+      })
+      .then((err) => console.log(err));
+  };
+
+  const handleReject = (event) => {
+    Axios.put('/admin/update/userReportHistoryStatus', {
+      reportNo: event.reportNo,
+      reported: event.reported,
+      result: '거절',
+    })
+      .then((res) => {
+        // console.log(res);
+        setChange(!change);
+      })
+      .then((err) => console.log(err));
+  };
+
+  const handleDelete = (event) => {
+    Axios.delete(`/userReportHistory/remove/${event.reportNo}`)
+      .then((res) => {
+        // console.log(res);
+        setChange(!change);
+      })
+      .then((err) => console.log(err));
+  };
+
+  function Row(props) {
+    const { row } = props;
+    const [open, setOpen] = React.useState(false);
+
+    return (
+      <React.Fragment>
+        <TableRow hover role="checkbox" tabIndex={-1} key={row.reportNo}>
+          <TableCell>
+            <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          {columns.map((column) => {
+            const value = row[column.id];
+            return (
+              <TableCell
+                key={column.id}
+                align={column.align}
+                style={{ fontFamily: 'GmarketSansBold' }}>
+                {column.format ? column.format(value) : value}
+              </TableCell>
+            );
+          })}
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ paddingTop: '0', paddingBottom: '0', paddingLeft: '4%' }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 3, fontFamily: 'GmarketSansBold' }}>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  component="div"
+                  style={{ fontFamily: 'GmarketSansBold' }}>
+                  신고 이유
+                </Typography>
+                <textarea
+                  style={{ width: '100%', height: '8.25em', border: 'none', resize: 'none' }}
+                  defaultValue={row.content}></textarea>
+                {row.status === null ? (
+                  <div style={{ float: 'right', margin: '3% 0' }}>
+                    <button className="reportApproveBtn" onClick={() => handleApprove(row)}>
+                      승인
+                    </button>
+                    <button className="reportRejectBtn" onClick={() => handleReject(row)}>
+                      거절
+                    </button>
+                  </div>
+                ) : (
+                  <div style={{ float: 'right', margin: '3% 0' }}>
+                    <button className="reportRejectBtn" onClick={() => handleDelete(row)}>
+                      삭제
+                    </button>
+                  </div>
+                )}
+                <div style={{ marginTop: '5%' }}>
+                  <WarningAmberRoundedIcon style={{ color: 'red' }} />
+                  {row.reported}님의 신고 누적 횟수: {row.reportedNumber}
+                </div>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </React.Fragment>
+    );
+  }
+
   return (
     <>
       {rows.length !== 0 ? (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <Paper
+          sx={{
+            width: '100%',
+            overflow: 'hidden',
+            marginTop: '10%',
+          }}>
           <TableContainer sx={{ maxHeight: 600 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <TableCell style={{ maxWidth: '20' }}></TableCell>
+                  <TableCell style={{ width: '20px' }}></TableCell>
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}>
+                      style={{
+                        minWidth: column.minWidth,
+                        maxWidth: column.maxWidth,
+                        fontFamily: 'GmarketSansBold',
+                      }}>
                       {column.label}
                     </TableCell>
                   ))}
@@ -153,7 +218,10 @@ export const Report = () => {
         </Paper>
       ) : (
         <>
-          <h1>신고내역이 없다</h1>
+          <div style={{ textAlign: 'center' }}>
+            <img src={admin_empty} alt="empty"></img>
+            <h6>신고내역이 없습니다.</h6>
+          </div>
         </>
       )}
     </>
