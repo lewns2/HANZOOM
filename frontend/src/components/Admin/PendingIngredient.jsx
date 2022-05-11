@@ -12,36 +12,25 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
-import dayjs from 'dayjs';
 
-import './Report.scss';
+import './PendingIngredient.scss';
 import admin_empty from '../../assets/images/admin_empty.gif';
 
 const columns = [
-  { id: 'reporter', label: '신고자', minWidth: 170, maxWidth: 200 },
-  { id: 'reported', label: '피신고자', minWidth: 170, maxWidth: 200 },
-  {
-    id: 'createdAt',
-    label: '신고날짜',
-    minWidth: 170,
-    maxWidth: 200,
-    align: 'center',
-    format: (value) => dayjs(value).format('YYYY-MM-DD HH:mm:ss'),
-  },
+  { id: 'ingredientName', label: '식재료명', align: 'center', minWidth: 170, maxWidth: 200 },
+  { id: 'requestor', label: '요청자', align: 'center', minWidth: 170, maxWidth: 200 },
   {
     id: 'status',
     label: '상태',
     align: 'center',
-    minWidth: 100,
+    minWidth: 150,
     maxWidth: 200,
   },
 ];
 
-export const Report = () => {
+export const PendingIngredient = () => {
   const token = sessionStorage.getItem('jwt-token');
   const header = { headers: { 'Content-Type': 'multipart/form-data' } };
   const [rows, setRows] = React.useState([]);
@@ -49,7 +38,7 @@ export const Report = () => {
   const [change, setChange] = React.useState(true);
 
   useEffect(() => {
-    Axios.get('/admin/findAll/userReportHistory')
+    Axios.get('/admin/findAll/pendingIngredient')
       .then((res) => {
         setRows(res.data);
       })
@@ -69,9 +58,8 @@ export const Report = () => {
   };
 
   const handleApprove = (event) => {
-    Axios.put('/admin/update/userReportHistoryStatus', {
-      reportNo: event.reportNo,
-      reported: event.reported,
+    Axios.put('/admin/update/userIngredientStatus', {
+      requestNo: event.requestNo,
       result: '승인',
     })
       .then((res) => {
@@ -82,20 +70,10 @@ export const Report = () => {
   };
 
   const handleReject = (event) => {
-    Axios.put('/admin/update/userReportHistoryStatus', {
-      reportNo: event.reportNo,
-      reported: event.reported,
+    Axios.put('/admin/update/userIngredientStatus', {
+      requestNo: event.requestNo,
       result: '거절',
     })
-      .then((res) => {
-        // console.log(res);
-        setChange(!change);
-      })
-      .then((err) => console.log(err));
-  };
-
-  const handleDelete = (event) => {
-    Axios.delete(`/userReportHistory/remove/${event.reportNo}`)
       .then((res) => {
         // console.log(res);
         setChange(!change);
@@ -109,7 +87,7 @@ export const Report = () => {
 
     return (
       <React.Fragment>
-        <TableRow hover role="checkbox" tabIndex={-1} key={row.reportNo}>
+        <TableRow hover role="checkbox" tabIndex={-1} key={row.requestNo}>
           <TableCell>
             <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -131,35 +109,13 @@ export const Report = () => {
           <TableCell style={{ paddingTop: '0', paddingBottom: '0', paddingLeft: '4%' }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 3, fontFamily: 'GmarketSansBold' }}>
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  component="div"
-                  style={{ fontFamily: 'GmarketSansBold' }}>
-                  신고 이유
-                </Typography>
-                <textarea
-                  style={{ width: '100%', height: '8.25em', border: 'none', resize: 'none' }}
-                  defaultValue={row.content}></textarea>
-                {row.status === null ? (
-                  <div style={{ float: 'right', margin: '3% 0' }}>
-                    <button className="reportApproveBtn" onClick={() => handleApprove(row)}>
-                      승인
-                    </button>
-                    <button className="reportRejectBtn" onClick={() => handleReject(row)}>
-                      거절
-                    </button>
-                  </div>
-                ) : (
-                  <div style={{ float: 'right', margin: '3% 0' }}>
-                    <button className="reportRejectBtn" onClick={() => handleDelete(row)}>
-                      삭제
-                    </button>
-                  </div>
-                )}
-                <div style={{ marginTop: '5%' }}>
-                  <WarningAmberRoundedIcon style={{ color: 'red' }} />
-                  {row.reported}님의 신고 누적 횟수: {row.reportedNumber}
+                <div style={{ float: 'right', margin: '3% 5%' }}>
+                  <button className="pendingApproveBtn" onClick={() => handleApprove(row)}>
+                    승인
+                  </button>
+                  <button className="pendingRejectBtn" onClick={() => handleReject(row)}>
+                    거절
+                  </button>
                 </div>
               </Box>
             </Collapse>
@@ -199,7 +155,7 @@ export const Report = () => {
               </TableHead>
               <TableBody>
                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                  return <Row key={row.reportNo} row={row} />;
+                  return <Row key={row.requestNo} row={row} />;
                 })}
               </TableBody>
             </Table>
@@ -218,7 +174,7 @@ export const Report = () => {
         <>
           <div style={{ textAlign: 'center' }}>
             <img src={admin_empty} alt="empty"></img>
-            <h6>신고내역이 없습니다.</h6>
+            <h6>식재료 등록 요청이 없습니다.</h6>
           </div>
         </>
       )}
