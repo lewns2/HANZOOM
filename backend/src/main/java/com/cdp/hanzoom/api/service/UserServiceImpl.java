@@ -8,7 +8,6 @@ import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.repository.LikeListRepositorySupport;
 import com.cdp.hanzoom.db.repository.UserRepository;
 import com.cdp.hanzoom.db.repository.UserRepositorySupport;
-import jdk.nashorn.api.tree.ArrayLiteralTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -4,6 +4,7 @@ import com.cdp.hanzoom.api.request.*;
 import com.cdp.hanzoom.api.response.PlanInChatRoomFindRes;
 import com.cdp.hanzoom.db.entity.Board;
 import com.cdp.hanzoom.db.entity.Plan;
+import com.cdp.hanzoom.db.entity.User;
 import com.cdp.hanzoom.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,30 @@ public class PlanServiceImpl implements PlanService {
 				&& planUpdateReq.getScheduleDatetime() == null ){ //약속 장소만 변경 했을 때
 			plan.updatePlanLatAndLng(planUpdateReq.getLat(),planUpdateReq.getLng());
 		}
+	}
+
+	@Transactional
+	@Override
+	public Plan CheckPlanByBoardNoAndUserEmail(User user, Long boardNo) {
+		Plan plan ;
+		plan = planRepositorySupport.CheckPlanByBoardNoAndUserEmail(boardNo, user.getUserEmail()).orElse(null);
+		if(plan != null) return plan;
+		else {
+			plan = planRepositorySupport.CheckPlanByBoardNoAndOpponentEmail(boardNo, user.getUserEmail()).orElse(null);
+			return plan;
+		}
+	}
+
+	@Transactional
+	@Override
+	public Boolean updateBoardStatus(User user, Long boardNo) {
+		Plan plan= CheckPlanByBoardNoAndUserEmail(user, boardNo);
+		if(plan != null){
+			Board board = boardRepository.findById(boardNo).get();
+			// 해당 게시글의 상태는 -> '거래완료'로 변경하기
+			board.updateState("거래완료");
+			return true;
+		} else return false;
 	}
 
 	@Transactional

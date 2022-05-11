@@ -25,6 +25,28 @@ public class PlanRepositorySupport {
         return Optional.ofNullable(plan);
     }
 
+    // 게시글 번호와, User 이메일을 가지고 일정이 있는지 확인.
+    public Optional<Plan> CheckPlanByBoardNoAndUserEmail(Long boardNo, String userEmail) {
+        Plan plan = jpaQueryFactory
+                .select(qPlan)
+                .from(qPlan)
+                .where(qPlan.boardNo.eq(boardNo).and(qPlan.user.userEmail.eq(userEmail)))
+                .fetchOne();
+        if(plan == null) return Optional.empty();
+        return Optional.ofNullable(plan);
+    }
+
+    // 게시글 번호와, 상대방 이메일을 가지고 일정이 있는지 확인.
+    public Optional<Plan> CheckPlanByBoardNoAndOpponentEmail(Long boardNo, String userEmail) {
+        Plan plan = jpaQueryFactory
+                .select(qPlan)
+                .from(qPlan)
+                .where(qPlan.boardNo.eq(boardNo).and(qPlan.opponent.eq(userEmail)))
+                .fetchOne();
+        if(plan == null) return Optional.empty();
+        return Optional.ofNullable(plan);
+    }
+
     // 본인 이메일로 일정 목록 조회
     public List<Plan> findPlanByMyEmailOrOpponentEmail(String userEmail) {
         List<Plan> planLists = jpaQueryFactory
