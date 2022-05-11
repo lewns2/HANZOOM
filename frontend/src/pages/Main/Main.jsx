@@ -7,6 +7,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Main.scss';
+// import { Footer } from '../../components/Main/Footer';
 import { Axios } from '../../core/axios';
 
 export const Main = () => {
@@ -74,6 +75,7 @@ export const Main = () => {
           </div>
         </section>
       ) : null}
+      {/* <Footer></Footer> */}
     </>
   );
 };
