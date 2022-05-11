@@ -106,8 +106,10 @@ export const BoardDetail = () => {
     var tempName = [];
     for (let i = 0; i < data.boardFindIngredientResList.length; i++) {
       tempName.push(data.boardFindIngredientResList[i].ingredientName);
+      tempNumber.push(data.boardFindIngredientResList[i].userIngredientNo);
     }
     setIngredientNameList(tempName);
+    setIngredientNumber(tempNumber);
   };
 
   return (
@@ -216,6 +218,7 @@ export const BoardDetail = () => {
                   imagePath: content.imagePath,
                   description: content.description,
                   ingredient: ingredientNameList,
+                  userIngreNo: ingredientNumber,
                 }}>
                 <button
                   id="detailModifyBtn"

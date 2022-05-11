@@ -67,11 +67,9 @@ export const BoardModify = () => {
   /* post 요청 보낼 데이터들 */
   const [state, setState] = useState({
     title: location.state.title,
-    // 유저의 식재료에 등록된 user_ingredient_no 등록
-    userIngredientNo: null,
+    userIngredientNo: location.state.userIngreNo,
     type: null,
     description: location.state.description,
-    // sellByDate: { year: null, month: null, day: null },
   });
 
   /* 게시글 등록 */
