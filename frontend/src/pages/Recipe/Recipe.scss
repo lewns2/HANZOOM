@@ -46,6 +46,16 @@
         justify-content: center;
       }
     }
+
+    .recipeNotFound {
+      font-size: 20px;
+      color: gray;
+    }
+    .searchNotFound {
+      display: flex;
+      justify-content: center;
+      height: 500px;
+    }
   }
 }
 
@@ -157,6 +167,7 @@
         display: flex;
         justify-content: center;
         margin-bottom: 30px;
+        white-space: nowrap;
       }
       .recipeImgWrap {
         width: 100%;

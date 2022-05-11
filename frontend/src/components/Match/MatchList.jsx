@@ -23,30 +23,30 @@ export const MatchList = (props) => {
   const renderList = (type) => {
     const shareResult = [];
     const exchangeResult = [];
-    for (let i = 0; i < matchingArr.length; i++) {
-      for (let j = 0; j < matchingArr[i].userIngredientMatchingRes.length; j++) {
-        var it = matchingArr[i].userIngredientMatchingRes[0];
-        if (it.type == '나눔') {
-          shareResult.push(
-            <div key={j} className="matchContentCard">
-              <div className="matchCardImgWrap">
-                <img src={`${BASE_IMG_URL}${it.imagePath}`}></img>
-              </div>
-              <p>{it.userNickname}</p>
-            </div>,
-          );
-        } else if (it.type == '교환') {
-          exchangeResult.push(
-            <div key={j} className="matchContentCard">
-              <div className="matchCardImgWrap">
-                <img src={sample}></img>
-              </div>
-              <p>{it.userNickname}</p>
-            </div>,
-          );
-        }
+
+    for (let i = 0; i < matchingArr[0].userIngredientMatchingRes.length; i++) {
+      var it = matchingArr[0].userIngredientMatchingRes[i];
+      if (it.type == '나눔') {
+        shareResult.push(
+          <div key={i} className="matchContentCard">
+            <div className="matchCardImgWrap">
+              <img src={`${BASE_IMG_URL}${it.imagePath}`}></img>
+            </div>
+            <p>{it.userNickname}</p>
+          </div>,
+        );
+      } else if (it.type == '교환') {
+        exchangeResult.push(
+          <div key={i} className="matchContentCard">
+            <div className="matchCardImgWrap">
+              <img src={sample}></img>
+            </div>
+            <p>{it.userNickname}</p>
+          </div>,
+        );
       }
     }
+
     if (type == '나눔') return shareResult;
     else if (type == '교환') return exchangeResult;
   };
