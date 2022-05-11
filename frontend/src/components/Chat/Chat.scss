@@ -24,7 +24,7 @@ $speed: 0.8s;
       width: 10px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #aaa;
+      background-color: #f7c343;
     }
     &::-webkit-scrollbar-track {
       background-color: #eee;
@@ -87,8 +87,9 @@ $speed: 0.8s;
     .chatImage {
       width: 300px;
       height: 300px;
+      border-radius: 150px;
     }
-    // 채팅 목록이 빈 경우 
+    // 채팅 목록이 빈 경우
     .emptyChat {
       font-family: 'GmarketSansMedium';
     }
@@ -103,6 +104,9 @@ $speed: 0.8s;
       //   margin-bottom: 15px;
       &:hover {
         background-color: #f2d17a;
+      }
+      .emptyImage {
+        border-radius: 30px;
       }
       // 유저 프로필 이미지
       .profileImage {
@@ -125,10 +129,11 @@ $speed: 0.8s;
         }
         // 채팅 시간
         .chatTime {
-          color: #999;
+          // color: #999;
           font-size: 5px;
           // line-height: -1px;
           padding-top: 6px;
+          width: 100px;
         }
         // 채팅 삭제
         .chatDelete {
@@ -142,6 +147,7 @@ $speed: 0.8s;
           white-space: nowrap;
           text-overflow: ellipsis;
           font-size: 14px;
+          font-family: 'GmarketSansMedium';
         }
       }
     }
@@ -224,17 +230,36 @@ $speed: 0.8s;
       width: 10px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #aaa;
+      border-radius: 10px;
+      background-color: #f7c343;
     }
     &::-webkit-scrollbar-track {
       background-color: #eee;
     }
     .userMsg {
-      margin-bottom: 20px;
+      margin: 30px 0px;
       width: 100%;
-      .msgTime {
-        font-size: 10px;
+
+      .msgWrapper {
+        width: 100%;
+        .msgTime {
+          font-size: 10px;
+          margin-top: auto;
+          font-family: 'GmarketSansMedium';
+        }
+        .msgContent {
+          padding: 10px;
+          border-radius: 10px;
+
+          @media only screen and (max-width: 991px) {
+            width: 60%;
+          }
+          @media only screen and (max-width: 767px) {
+            width: 65%;
+          }
+        }
       }
+
       .profileImg {
         margin: 0 12px;
         img {
@@ -243,33 +268,24 @@ $speed: 0.8s;
           border-radius: 70%;
         }
       }
-      .msgContent {
-        width: 45%;
-        padding: 5px;
-        border-radius: 10px;
-
-        @media only screen and (max-width: 991px) {
-          width: 60%;
-        }
-        @media only screen and (max-width: 767px) {
-          width: 65%;
-        }
-      }
     }
 
     .myMsg {
       .msgContent {
+        max-width: 45%;
+        margin-left: 10px;
         background-color: #f2d17a;
         border: 1px solid #f2d17a;
-      }
-      .msgTime {
-        font-size: 10px;
+        font-family: 'GmarketSansMedium';
       }
     }
     .otherMsg {
       .msgContent {
+        max-width: 45%;
+        margin-right: 10px;
         background-color: #fff;
         border: 1px solid #f2d17a;
+        font-family: 'GmarketSansMedium';
       }
     }
   }

@@ -42,22 +42,22 @@ export const MyChat = (props) => {
           />
         </div>
         <div className="myChatList">
-          { chat.chatInfo.length > 0 ?
+          {chat.chatInfo.length > 0 ? (
             <>
               {chat.chatInfo.map((chat, index) => (
                 <MyChatList key={index} chat={chat} />
               ))}
             </>
-          :
-            <div className='text-center mt-5'>
-              <img className='chatImage' src={chatImg}></img>
-              <div className='emptyChat'>
+          ) : (
+            <div className="text-center mt-5">
+              <img className="chatImage" src={chatImg}></img>
+              <div className="emptyChat">
                 채팅 목록이 없습니다.
-                <br/>
+                <br />
                 교환/나눔을 통해 채팅을 시작해보세요!!
               </div>
             </div>
-          } 
+          )}
         </div>
       </div>
     </div>
