@@ -27,6 +27,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     backgroundColor: '#f7c343',
     color: theme.palette.common.black,
     fontWeight: 'bold',
+    fontFamily: 'GmarketSansBold',
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontFamily: 'GmarketSansMedium',
   },
 }));
 
@@ -43,10 +47,10 @@ const BasicTable = () => {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
+              <StyledTableCell component="th" scope="row">
                 {row.name}
-              </TableCell>
-              <TableCell align="right">{row.expiration}</TableCell>
+              </StyledTableCell>
+              <StyledTableCell align="right">{row.expiration}</StyledTableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -92,6 +96,7 @@ export const AddMyFoodIngredients = (props) => {
       <div className="inputForm">
         <div>
           유통기한
+          <CalendarMonthIcon />
           <a
             data-bs-toggle="collapse"
             href="#collapseExample"
@@ -100,11 +105,11 @@ export const AddMyFoodIngredients = (props) => {
             <HelpOutlineRoundedIcon />
           </a>
           <div className="collapse" id="collapseExample">
-            <div className="card card-body">
+            <div className="p-3">
+              {/* <div className="card card-body"> */}
               <BasicTable />
             </div>
           </div>
-          <CalendarMonthIcon />
           <Calendar setSelectedDate={setExpirationDate} />
         </div>
       </div>
