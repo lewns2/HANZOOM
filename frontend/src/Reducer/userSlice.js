@@ -25,6 +25,7 @@ export const userSlice = createSlice({
       state.userInfo = [];
       state.loginType = '';
       sessionStorage.removeItem('jwt-token');
+      state.beforeLogin = false;
     },
     setCode: (state, action) => {
       state.code = action.payload;
