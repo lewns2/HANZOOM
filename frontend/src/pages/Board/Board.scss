@@ -176,12 +176,14 @@ $desktop: 1400px;
 .paginationWrap {
   display: fixed;
   bottom: 0;
+  margin-bottom: 50px;
 }
 
 .pagination > li > a {
   background-color: white;
   color: black;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .pagination > li > a:focus,
@@ -189,13 +191,14 @@ $desktop: 1400px;
   color: white;
   background-color: #f2d17a;
   border-color: #ddd;
+  cursor: pointer;
 }
 
 .pagination > li > a[aria-current] {
   background-color: #f2d17a;
   border-color: #ddd;
   font-weight: bold;
-  cursor: revert;
+  cursor: pointer;
   transform: revert;
 }
 

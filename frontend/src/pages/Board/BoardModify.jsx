@@ -1,4 +1,9 @@
-import { AddLink, ConstructionOutlined, ConstructionRounded } from '@mui/icons-material';
+import {
+  AddLink,
+  ConstructionOutlined,
+  ConstructionRounded,
+  LocationCity,
+} from '@mui/icons-material';
 import { width } from '@mui/system';
 import { useState, useRef, useEffect } from 'react';
 import Initimage from '../../assets/images/Initimage.PNG';
@@ -6,40 +11,26 @@ import { Calendar } from '../../components/Board/Calendar';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { Axios } from '../../core/axios';
-// import axios from 'axios';
 
-import './BoardCreate.scss';
+const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
-export const BoardCreate = () => {
-  const navigate = useNavigate();
+export const BoardModify = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [ingredients, setIngredients] = useState([]);
 
-  const setInfo = () => {
-    let ingreList = [];
-    let noList = [];
-    location.state.map((info) => {
-      noList.push(info.userIngredientNo);
-      ingreList.push(info.ingredientName);
-    });
-    setState({ ...state, userIngredientNo: noList });
-    setIngredients(ingreList);
-  };
-
-  useEffect(() => {
-    setInfo();
-  }, []);
   /* POST 요청 보낼 이미지 */
   const [postImg, setPostImg] = useState();
 
   /* 이미지 미리보기 */
-  const [uploadImg, setUploadImg] = useState(Initimage);
+  const [uploadImg, setUploadImg] = useState(BASE_IMG_URL + location.state.imagePath);
 
   const saveUploadImg = (e) => {
     setUploadImg(URL.createObjectURL(e.target.files[0]));
     setPostImg(e.target.files[0]);
     return;
+    // return setState({ ...state, img: e });
   };
 
   const deleteUploadImg = () => {
@@ -51,6 +42,7 @@ export const BoardCreate = () => {
   const [isShare, setIsShare] = useState(false);
   const [isExchange, setIsExchange] = useState(false);
   const [isNeed, setIsNeed] = useState(false);
+
   const selectedType = (selected) => {
     switch (selected) {
       case '나눔':
@@ -75,17 +67,18 @@ export const BoardCreate = () => {
 
   /* post 요청 보낼 데이터들 */
   const [state, setState] = useState({
-    title: null,
-    // 유저의 식재료에 등록된 user_ingredient_no 등록
-    userIngredientNo: null,
+    title: location.state.title,
+    userIngredientNo: location.state.userIngreNo,
     type: null,
-    description: null,
-    // sellByDate: { year: null, month: null, day: null },
+    description: location.state.description,
+    boardNo: location.state.boardNo,
+    imagePath: location.state.imagePath,
+    status: location.state.status,
   });
 
   /* 게시글 등록 */
   const handleSubmit = () => {
-    // console.log(state);
+    console.log(state);
     const token = sessionStorage.getItem('jwt-token');
     const header = {
       headers: {
@@ -100,7 +93,9 @@ export const BoardCreate = () => {
         type: 'application/json',
       }),
     );
-    formData.append('file', postImg);
+    if (postImg != null) {
+      formData.append('file', postImg);
+    }
 
     /* 공란 에러 발생 */
     let errorKeyword = null;
@@ -133,13 +128,13 @@ export const BoardCreate = () => {
     }
 
     if ((errorKeyword === '이미지를 등록해주세요!' && isNeed) || errorKeyword === null) {
-      console.log(errorKeyword, isNeed);
-      Axios.post('/board/register', formData, header)
-        .then((res) =>
-          swal('등록 성공', '게시글이 성공적으로 등록되었습니다', 'success', {
+      Axios.put('/board/update', formData, header)
+        .then(
+          (res) => console.log(res),
+          swal('등록 성공', '게시글이 성공적으로 수정되었습니다', 'success', {
             buttons: false,
             timer: 1800,
-          }).then(navigate('/board')),
+          }).then(navigate('/board'), location.reload()),
         )
         .catch((err) => console.log(err));
     } else {
@@ -163,11 +158,15 @@ export const BoardCreate = () => {
     });
   };
 
+  useEffect(() => {
+    console.log(location.state);
+  }, []);
+
   return (
     <>
       <section className="container">
         <div className="createFormWrap">
-          <h2 className="d-flex justify-content-center mb-4">게시글 등록</h2>
+          <h2 className="d-flex justify-content-center mb-4">게시글 수정</h2>
 
           <div className="row mb-4">
             <div className="col-3">제목</div>
@@ -176,6 +175,7 @@ export const BoardCreate = () => {
                 className="form-control"
                 type="text"
                 placeholder="제목"
+                value={state.title}
                 onChange={(e) => {
                   setState({
                     ...state,
@@ -241,7 +241,7 @@ export const BoardCreate = () => {
                 className="form-control"
                 type="text"
                 placeholder="식재료 명"
-                value={ingredients}
+                value={location.state.ingredient}
                 readOnly
               />
             </div>
@@ -254,6 +254,7 @@ export const BoardCreate = () => {
                 className="form-control"
                 type="text"
                 placeholder="내용"
+                value={state.description}
                 onChange={(e) => {
                   setState({
                     ...state,
@@ -269,7 +270,7 @@ export const BoardCreate = () => {
               취소
             </button>
             <button type="submit" id="createBtn" onClick={handleSubmit}>
-              등록
+              수정
             </button>
           </div>
         </div>

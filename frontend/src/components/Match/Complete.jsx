@@ -37,19 +37,21 @@ export const Complete = (props) => {
 
   return (
     <section className="container">
-      <div className="matchTitle">
-        <h2>{props.title}</h2>
-        <hr />
-      </div>
-      <div className="matchMessage">
-        <p>총 {matchingList.length}건을 찾았어요!</p>
-      </div>
-      <div className="matchIngredients">{renderIngredient()}</div>
-      <div className="matchResultMap">
-        <MatchMap matchArr={matchingList} />
-      </div>
-      <div className="matchResultList">
-        <MatchList matchArr={matchingList} />
+      <div className="matchFormWrap">
+        <div className="matchTitle">
+          <h2>{props.title}</h2>
+          <hr />
+        </div>
+        <div className="matchMessage">
+          <p>총 {matchingList.length}건을 찾았어요!</p>
+        </div>
+        <div className="matchIngredients">{renderIngredient()}</div>
+        <div className="matchResultMap">
+          <MatchMap matchArr={matchingList} />
+        </div>
+        <div className="matchResultList">
+          <MatchList matchArr={matchingList} />
+        </div>
       </div>
     </section>
   );
