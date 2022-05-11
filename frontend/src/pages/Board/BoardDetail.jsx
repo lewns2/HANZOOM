@@ -26,7 +26,6 @@ export const BoardDetail = () => {
 
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     setUserInfo(user.userInfo);
     Axios.get(`board/find/${id}`, {
@@ -78,12 +77,11 @@ export const BoardDetail = () => {
 
   // 채팅방 등록
   const registerChat = async () => {
-    await Axios
-      .post('/chat/register', {
-        boardNo: content.boardNo,
-        userNickname1: user.userInfo.userNickname,
-        userNickname2: content.userNickname,
-      })
+    await Axios.post('/chat/register', {
+      boardNo: content.boardNo,
+      userNickname1: user.userInfo.userNickname,
+      userNickname2: content.userNickname,
+    })
       .then((res) => {
         startChat(res.data);
       })
@@ -94,7 +92,7 @@ export const BoardDetail = () => {
 
   // 채팅 시작
   const startChat = (roomId) => {
-    dispatch(setRoomId(roomId));  // store에 선택한 roomId 세팅
+    dispatch(setRoomId(roomId)); // store에 선택한 roomId 세팅
     dispatch(getChatMessageInfo()); // store에 저장된 roomId에 해당하는 채팅방 메시지 정보 가져오기
     dispatch(changeShow(true)); // 채팅 모달 show
   };
@@ -139,7 +137,19 @@ export const BoardDetail = () => {
                 ) : (
                   <div> 나와 떨어진 거리 : 약 {content.distance.toFixed(1)} KM</div>
                 )}
-                <div className="detailIcon">
+                <div
+                  className="detailMyContent"
+                  style={{
+                    display: userInfo.userNickname == content.userNickname ? '' : 'none',
+                  }}>
+                  <p>내가 작성한 게시글입니다.</p>
+                </div>
+                <div
+                  className="detailIcon"
+                  style={{
+                    visibility:
+                      userInfo.userNickname == content.userNickname ? 'hidden' : 'visible',
+                  }}>
                   {likeStatus ? (
                     <button id="detailLike" onClick={clickLike}>
                       <FavoriteIcon style={{ color: 'red' }} />
@@ -151,7 +161,9 @@ export const BoardDetail = () => {
                       &nbsp; 찜 {likeCnt}
                     </button>
                   )}
-                  <button id="detailChat" onClick={ registerChat }>채팅</button>
+                  <button id="detailChat" onClick={registerChat}>
+                    채팅
+                  </button>
                   <button id="detailReport">신고</button>
                 </div>
               </div>

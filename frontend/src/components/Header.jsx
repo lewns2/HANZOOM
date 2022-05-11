@@ -45,6 +45,13 @@ export const Header = () => {
     }
   };
 
+  const boardHandler = (e) => {
+    if (user.userInfo.length == 0) {
+      e.preventDefault();
+      swal('로그인 필요', '한줌 서비스를 이용하기 위해 로그인이 필요합니다');
+    }
+  };
+
   useEffect(() => {
     if (user.userInfo.lng && user.userInfo.lat) {
       getAddrName();
@@ -89,7 +96,11 @@ export const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="nav-menu ms-auto">
-              {!beforeLoginPage && <Link to="/board">게시판</Link>}
+              {!beforeLoginPage && (
+                <Link to="/board" onClick={(event) => boardHandler(event)}>
+                  게시판
+                </Link>
+              )}
               {user.userInfo.length == 0 ? (
                 !beforeLoginPage && (
                   <>
