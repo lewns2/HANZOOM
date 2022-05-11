@@ -93,9 +93,15 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                 chatMessage = chatRoomList.get(i).getChatMessages().get(size-1);
             }
 
-            String userNickname1 = "", userNickname2 = "";
-            if(user1 != null) userNickname1 = user1.getUserNickname();
-            if(user2 != null) userNickname2 = user2.getUserNickname();
+            String userNickname1 = "", userNickname2 = "", userImage1 = "", userImage2 = "";
+            if(user1 != null) {
+                userNickname1 = user1.getUserNickname();
+                userImage1 = user1.getUserImage();
+            }
+            if(user2 != null) {
+                userNickname2 = user2.getUserNickname();
+                userImage2 = user2.getUserImage();
+            }
 
             List<UserIngredient> userIngredientList = userIngredientRepositorySupport.findByBoardNo(chatRoomList.get(i).getBoardNo());
             List<String> ingredientList = new ArrayList<String>();
@@ -108,6 +114,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                     .id(chatRoomList.get(i).getId())
                     .userNickname1(userNickname1)
                     .userNickname2(userNickname2)
+                    .userImage1(userImage1)
+                    .userImage2(userImage2)
                     .boardNo(chatRoomList.get(i).getBoardNo())
 //                    .chatMessages(chatMessageResList)
                     .chatMessages(chatMessage)
