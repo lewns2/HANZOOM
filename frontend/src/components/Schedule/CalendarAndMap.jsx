@@ -11,6 +11,7 @@ import { Axios } from '../../core/axios';
 import { axios_apis } from '../../core/axios';
 
 export const CalendarAndMap = (props) => {
+  const { boardNo } = props;
   const [date, setDate] = useState(new Date());
   const [hour, setHour] = useState(null);
   const [minute, setMinute] = useState(null);
@@ -26,7 +27,7 @@ export const CalendarAndMap = (props) => {
     Axios.put(
       `${axios_apis.plans.update}`,
       {
-        boardNo: 83,
+        boardNo: boardNo,
         lat: lat,
         lng: lng,
         scheduleDatetime: time,
@@ -87,7 +88,13 @@ export const CalendarAndMap = (props) => {
       </div>
       <div className="scheduleMap col-lg-6 col-12 d-flex justify-content-center">
         <div className="mapExplain">약속 장소를 지도에 표시해주세요.</div>
-        <ScheduleMap setLat={setLat} setLng={setLng} lat={lat} lng={lng} />
+        <ScheduleMap
+          setLat={setLat}
+          setLng={setLng}
+          lat={lat}
+          lng={lng}
+          // otherEmail={props.otherEmail}
+        />
       </div>
     </div>
   );

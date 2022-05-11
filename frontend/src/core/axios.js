@@ -26,5 +26,6 @@ export const axios_apis = {
     remove: `${plan_base}/remove`,
     update: `${plan_base}/update`,
     findPosition: `${plan_base}/chatroom/find/opponentLatAndLng`,
+    checkPlan: `${plan_base}/chatroom/checkPlan`,
   },
 };
