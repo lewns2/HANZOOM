@@ -10,6 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @ApiModel("BoardFindIngredientRes")
 public class BoardFindIngredientRes {
+    @ApiModelProperty(name="user_ingredient_no")
+    Long userIngredientNo;
     @ApiModelProperty(name="ingredient_name")
     String ingredientName;
     @ApiModelProperty(name="expiration_date")
