@@ -1,5 +1,12 @@
 body {
   padding-top: 70px;
+  height: calc(100vh - 200px);
+}
+#root {
+  height: 100%;
+}
+.App {
+  height: 100%;
 }
 a {
   text-decoration: none;

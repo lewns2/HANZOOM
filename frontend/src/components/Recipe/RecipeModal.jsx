@@ -44,7 +44,9 @@ export const RecipeModal = (props) => {
                   </>
                 ))}
               </div>
-              <button onClick={close}>취소</button>
+              <button className="recipeCancleBtn" onClick={close}>
+                취소
+              </button>
             </div>
           </div>
         </>
