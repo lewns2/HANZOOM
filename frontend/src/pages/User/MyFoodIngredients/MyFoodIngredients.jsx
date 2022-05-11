@@ -1,7 +1,7 @@
 import './MyFoodIngredients.scss';
 import { FoodModal } from './FoodModal';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Axios } from '../../../core/axios.js';
 import { FoodIngreList } from './FoodIngreList';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -11,6 +11,7 @@ export const MyFoodIngredients = () => {
   const [modalOpen2, setModalOpen2] = useState(false);
   const [checkedNeeds, setCheckedNeeds] = useState([]);
   const [myNeedsIngre, setMyNeedsIngre] = useState([]);
+  const [myBoard, setMyBoard] = useState([]);
 
   const [state, setState] = useState(false);
   const [info, setInfo] = useState({
@@ -71,8 +72,21 @@ export const MyFoodIngredients = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  const getMyBoard = () => {
+    const token = sessionStorage.getItem('jwt-token');
+    Axios.get('/userIngredient/board', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        console.log(res.data);
+        setMyBoard(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     getMyFoodIngre();
+    getMyBoard();
   }, [state]);
 
   // 필요모달
@@ -203,6 +217,10 @@ export const MyFoodIngredients = () => {
   const clickEvent = () => {
     swal('식재료를 선택해주세요', '', 'error');
   };
+  const navigate = useNavigate();
+  const goBoardDetail = (boardNo) => {
+    navigate(`/board/${boardNo}`);
+  };
   return (
     <div className="container">
       <div id="myFoodIngredients">
@@ -273,6 +291,26 @@ export const MyFoodIngredients = () => {
             </div>
           ) : null}
         </DragDropContext>
+      </div>
+      <div className="myBoard">
+        <h2>등록된 식재료</h2>
+        {myBoard &&
+          myBoard.map((ingre, index) => (
+            <div
+              key={index}
+              onClick={() => goBoardDetail(ingre.board.boardNo)}
+              style={{ cursor: 'pointer' }}>
+              {ingre.ingredients &&
+                ingre.ingredients.map((ingredient, index) =>
+                  index === ingre.ingredients.length - 1 ? (
+                    <span key={index}>{ingredient}</span>
+                  ) : (
+                    <span key={index}>{ingredient}, </span>
+                  ),
+                )}
+              <span> ({ingre.board.type})</span>
+            </div>
+          ))}
       </div>
     </div>
   );

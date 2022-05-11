@@ -83,31 +83,38 @@ export const FoodIngreList = (props) => {
   };
   return (
     <>
-      {task.type === '필요' && (
-        <div>
-          <input
-            type="checkbox"
-            onChange={(e) =>
-              handleNeedsCheck(e.target.checked, task.ingredientName, task.userIngredientNo)
-            }
-          />
-          {task.ingredientName}
-          <EditIcon onClick={openModal4} style={{ cursor: 'pointer' }} />
-          <FoodModal
-            open={modalOpen4}
-            close={closeModal4}
-            header="필요목록 수정"
-            ingre={task}
-            state={state}
-            setState={setState}
-          />
-          <DeleteIcon
-            onClick={() => deleteFoodIngre(task.userIngredientNo)}
-            style={{ cursor: 'pointer' }}
-          />
-        </div>
-      )}
-      {(task.type === '일반' || task.type === '교환/나눔') && (
+      {task.type === '필요' &&
+        (task.status === '일반' ? (
+          <div>
+            <input
+              type="checkbox"
+              onChange={(e) =>
+                handleNeedsCheck(e.target.checked, task.ingredientName, task.userIngredientNo)
+              }
+            />
+            {task.ingredientName}
+            <EditIcon onClick={openModal4} style={{ cursor: 'pointer' }} />
+            <FoodModal
+              open={modalOpen4}
+              close={closeModal4}
+              header="필요목록 수정"
+              ingre={task}
+              state={state}
+              setState={setState}
+            />
+            <DeleteIcon
+              onClick={() => deleteFoodIngre(task.userIngredientNo)}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
+        ) : (
+          // status 대기,
+          <div>
+            <input type="checkbox" disabled />
+            {task.ingredientName}
+          </div>
+        ))}
+      {(task.type === '일반' || task.type === '교환/나눔') && task.statue !== '거절' && (
         <Draggable
           draggableId={String(task.userIngredientNo)}
           index={index}
@@ -117,13 +124,13 @@ export const FoodIngreList = (props) => {
 
             // isDragging={snapshot.isDragging} // 드래그 중일 때의 스타일링을 위해 snapshot 속성을 외부로 가져옴
             >
-              {task.type === '일반' && (
+              {task.status === '일반' && task.type === '일반' && (
                 <input
                   type="checkbox"
                   onChange={(e) => handleCheck(e.target.checked, task.ingredientName)}
                 />
               )}
-              {task.type === '교환/나눔' && (
+              {task.status === '일반' && task.type === '교환/나눔' && (
                 <input
                   type="checkbox"
                   onChange={(e) =>
@@ -131,13 +138,14 @@ export const FoodIngreList = (props) => {
                   }
                 />
               )}
-
+              {task.status === '대기' && <input type="checkbox" disabled />}
               <span
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
                 ref={provided.innerRef}>
                 {task.ingredientName}
               </span>
+
               {task.type === '교환/나눔' ? null : (
                 <span>
                   <EditIcon onClick={openModal3} style={{ cursor: 'pointer' }} />
