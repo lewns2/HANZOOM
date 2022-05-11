@@ -30,22 +30,6 @@ export const MyChatDisplay = (props) => {
   const user = useSelector((state) => state.user);
   var reconnect = 0;
 
-  // var messageInfo = [];
-
-  // console.log('👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳 ', chatMessageInfo.chatMessages.length);
-
-  // for(var i=0; i<chatMessageInfo.chatMessages.length; i++) {
-  //   var createdAt = chatMessageInfo.chatMessages[i].createdAt.substring(0, 19);
-  //   messageInfo.push({
-  //     id: chatMessageInfo.chatMessages[i].id,
-  //     senderNickname: chatMessageInfo.chatMessages[i].senderNickname,
-  //     senderImage: chatMessageInfo.chatMessages[i].senderImage,
-  //     message: chatMessageInfo.chatMessages[i].message,
-  //     type: chatMessageInfo.chatMessages[i].type,
-  //     createdAt: createdAt,
-  //   });
-  // }
-
   // socket connect
   var sock = new SockJS('https://k6e103.p.ssafy.io:8443/ws/chat');
   var ws = StompJS.over(sock);
@@ -92,6 +76,7 @@ export const MyChatDisplay = (props) => {
         roomId: chatRoomId,
         message: msg,
         sender: user.userInfo.userNickname,
+        createdAt: new Date(),
       }),
     );
     setMsg('');
@@ -108,6 +93,7 @@ export const MyChatDisplay = (props) => {
         sender: recv.senderNickname,
         message: recv.type == 'ENTER' ? '[알림]' + recv.senderNickname : recv.message,
         senderImage: recv.senderImage,
+        createdAt: recv.createdAt,
       },
     ]);
     // setNewMessages.push({'type':recv.type,'sender':recv.type=='ENTER'?'[알림]':recv.sender,'message':recv.message});
@@ -222,20 +208,29 @@ export const MyChatDisplay = (props) => {
                     ) : (
                       <>
                         {message.senderNickname === user.userInfo.userNickname ? (
-                          <div className="userMsg myMsg d-flex justify-content-end">
-                            {/* <div className='msgTime'>{ message.createdAt }</div> */}
-                            <div className="msgContent">{message.message}</div>
-                            <div className="profileImg">
-                              <img
-                                src={
-                                  message.senderImage !== null
-                                    ? `${BASE_IMG_URL}${message.senderImage}`
-                                    : '/img/basicProfile.png'
-                                }
-                                alt=""
-                              />
+                          <>
+                            <div className="userMsg myMsg d-flex justify-content-end">
+                              <div className="msgWrapper">
+                                <div className="d-flex justify-content-end">
+                                  <div>{message.senderNickname}</div>
+                                </div>
+                                <div className="d-flex justify-content-end">
+                                  <div className="msgTime">{message.createdAt.slice(0, 19)}</div>
+                                  <div className="msgContent">{message.message}</div>
+                                </div>
+                              </div>
+                              <div className="profileImg">
+                                <img
+                                  src={
+                                    message.senderImage !== null
+                                      ? `${BASE_IMG_URL}${message.senderImage}`
+                                      : '/img/basicProfile.png'
+                                  }
+                                  alt=""
+                                />
+                              </div>
                             </div>
-                          </div>
+                          </>
                         ) : (
                           <div className="userMsg otherMsg d-flex">
                             <div className="profileImg">
@@ -248,8 +243,15 @@ export const MyChatDisplay = (props) => {
                                 alt=""
                               />
                             </div>
-                            <div className="msgContent">{message.message}</div>
-                            {/* <div className='msgTime'>{ message.createdAt }</div> */}
+                            <div className="msgWrapper">
+                              <div className="d-flex">
+                                <div>{message.senderNickname}</div>
+                              </div>
+                              <div className="d-flex">
+                                <div className="msgContent">{message.message}</div>
+                                <div className="msgTime">{message.createdAt.slice(0, 19)}</div>
+                              </div>
+                            </div>
                           </div>
                         )}
                       </>
@@ -266,8 +268,15 @@ export const MyChatDisplay = (props) => {
                   <>
                     {m.sender === user.userInfo.userNickname ? (
                       <div className="userMsg myMsg d-flex justify-content-end">
-                        {/* <div className='msgTime'>{ message.createdAt }</div> */}
-                        <div className="msgContent">{m.message}</div>
+                        <div className="msgWrapper">
+                          <div className="d-flex justify-content-end">
+                            <div>{m.sender}</div>
+                          </div>
+                          <div className="d-flex justify-content-end">
+                            <div className="msgTime">{m.createdAt.slice(0, 19)}</div>
+                            <div className="msgContent">{m.message}</div>
+                          </div>
+                        </div>
                         <div className="profileImg">
                           <img
                             src={
@@ -291,8 +300,15 @@ export const MyChatDisplay = (props) => {
                             alt=""
                           />
                         </div>
-                        <div className="msgContent">{m.message}</div>
-                        <div className="msgTime">{message.createdAt}</div>
+                        <div className="msgWrapper">
+                          <div className="d-flex">
+                            <div>{m.sender}</div>
+                          </div>
+                          <div className="d-flex">
+                            <div className="msgContent">{m.message.slice(0, 19)}</div>
+                            <div className="msgTime">{m.createdAt}</div>
+                          </div>
+                        </div>
                       </div>
                     )}
                   </>

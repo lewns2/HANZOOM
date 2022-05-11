@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
 import { clearUser } from '../Reducer/userSlice';
+import { clearChat } from '../Reducer/chatSlice';
 import './Header.scss';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 import { PositioningMapModal } from './Map/PositioningMapModal';
@@ -24,6 +25,7 @@ export const Header = () => {
       timer: 1800,
     });
     dispatch(clearUser());
+    dispatch(clearChat());
   };
 
   const getAddrName = () => {

@@ -32,7 +32,14 @@ export const chatSlice = createSlice({
     },
     setRoomId: (state, action) => {
       state.chatRoomId = action.payload;
-    }
+    },
+    clearChat: (state) => {
+      state.chatShow = false;
+      state.chatInfo = [];
+      state.chatRoomId = '';
+      state.chatMessageInfo = [];
+      console.log('cleared!!');
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -45,8 +52,7 @@ export const chatSlice = createSlice({
   },
 });
 
-
 // Action creators are generated for each case reducer function
-export const { changeShow, setRoomId } = chatSlice.actions;
+export const { changeShow, setRoomId, clearChat } = chatSlice.actions;
 
 export default chatSlice.reducer;
