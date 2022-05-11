@@ -1,8 +1,8 @@
 package com.cdp.hanzoom.api.controller;
 
-import com.cdp.hanzoom.api.request.UserIngredientStatusUpdateReq;
+import com.cdp.hanzoom.api.request.PendingIngredientReq;
 import com.cdp.hanzoom.api.request.UserReportHistoryUpdateReq;
-import com.cdp.hanzoom.api.response.UserIngredientFindRes;
+import com.cdp.hanzoom.api.response.PendingIngredientRes;
 import com.cdp.hanzoom.api.response.UserReportHistoryFindAllRes;
 import com.cdp.hanzoom.api.response.UserRes;
 import com.cdp.hanzoom.api.service.UserIngredientService;
@@ -87,15 +87,15 @@ public class AdminController {
 
     /** 식재료 등록 요청 관련 **/
     /** 식재료 등록 요청 전체 목록 **/
-    @GetMapping("/findAll/pendingUserIngredient")
+    @GetMapping("/findAll/pendingIngredient")
     @ApiOperation(value ="식재료 등록 요청 전체 조회", notes = "<strong>식재료 등록 요청 전체 목록</strong>을 조회한다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<List<UserIngredientFindRes>> findAllPendingUserIngredient() {
-        List<UserIngredientFindRes> userIngredientFindResList = userIngredientService.findAllPendingUserIngredient();
-        return new ResponseEntity<List<UserIngredientFindRes>>(userIngredientFindResList, HttpStatus.OK);
+    public ResponseEntity<List<PendingIngredientRes>> findAllPendingIngredient() {
+        List<PendingIngredientRes> pendingIngredientResList = userIngredientService.findAllPendingIngredient();
+        return new ResponseEntity<List<PendingIngredientRes>>(pendingIngredientResList, HttpStatus.OK);
     }
 
     /** 유저 식재료 등록 요청 상태 수정 **/
@@ -108,10 +108,10 @@ public class AdminController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<String> updateUserIngredientStatus(@RequestBody @ApiParam(value = "유저 신고 상태 정보 수정", required = true) UserIngredientStatusUpdateReq userIngredientStatusUpdateReq) {
+    public ResponseEntity<String> updateUserIngredientStatus(@RequestBody @ApiParam(value = "유저 신고 상태 정보 수정", required = true) PendingIngredientReq pendingIngredientReq) {
 
         try {
-            userIngredientService.updateUserIngredientStatus(userIngredientStatusUpdateReq);
+            userIngredientService.updateUserIngredientStatus(pendingIngredientReq);
         } catch(NoSuchElementException E) {
             return  ResponseEntity.status(500).body("해당 유저 신고 기록이 없어서 유저 신고 상태 정보 수정 실패");
         }
