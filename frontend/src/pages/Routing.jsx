@@ -21,7 +21,7 @@ import { Footer } from '../components/Main/Footer';
 import { Admin } from './Admin/Admin';
 
 import { Route, Routes, Navigate, BrowserRouter } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getChatInfo } from '../Reducer/chatSlice';
@@ -69,7 +69,9 @@ export const Routing = () => {
           <Route path="/oauth/kakao/callback" element={<KaKaoCall />}></Route>
           <Route path="/recipe" element={<Recipe />}></Route>
           <Route path="/match" element={<Match />}></Route>
-          <Route path="/admin" element={<Admin />}></Route>
+          <Route
+            path="/admin"
+            element={user.userInfo.userNickname === 'admin' ? <Admin /> : <Main />}></Route>
         </Routes>
       </div>
       {!showChatList ? (
