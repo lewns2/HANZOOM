@@ -1,74 +1,91 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Slider from 'react-slick';
+import { settings } from '../../constants/slider';
+import sample from '../../assets/images/need.PNG';
+import { RestoreOutlined } from '@mui/icons-material';
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}>
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
+export const MatchList = (props) => {
+  const [selectedType, setSelectedType] = useState('나눔');
+  const matchingArr = props.matchArr;
 
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-export const MatchList = () => {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleChange = (e) => {
+    // console.log(e.target.value);
+    setSelectedType(e.target.value);
   };
+  useEffect(() => {}, [selectedType]);
 
-  const settings = {
-    dots: false, // 점은 안 보이게
-    infinite: true, // 무한으로 즐기게
-    speed: 500,
-    slidesToShow: 4, //4장씩 보이게 해주세요
-    slidesToScroll: 4, //1장씩 넘어가세요
+  const renderList = (type) => {
+    const shareResult = [];
+    const exchangeResult = [];
+    for (let i = 0; i < matchingArr.length; i++) {
+      for (let j = 0; j < matchingArr[i].userIngredientMatchingRes.length; j++) {
+        var it = matchingArr[i].userIngredientMatchingRes[0];
+        if (it.type == '나눔') {
+          shareResult.push(
+            <div key={j} className="matchContentCard">
+              <div className="matchCardImgWrap">
+                <img src={`${BASE_IMG_URL}${it.imagePath}`}></img>
+              </div>
+              <p>{it.userNickname}</p>
+            </div>,
+          );
+        } else if (it.type == '교환') {
+          exchangeResult.push(
+            <div key={j} className="matchContentCard">
+              <div className="matchCardImgWrap">
+                <img src={sample}></img>
+              </div>
+              <p>{it.userNickname}</p>
+            </div>,
+          );
+        }
+      }
+    }
+    if (type == '나눔') return shareResult;
+    else if (type == '교환') return exchangeResult;
   };
 
   return (
     <>
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange}>
-            <Tab label="나눔" />
-            <Tab label="교환" />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
+      <div className="matchFilterContainer">
+        <div className="tabs">
+          <input type="radio" id="radio-1" name="tabs" value="나눔" onChange={handleChange} />
+          <label className="tab" htmlFor="radio-1">
+            나눔
+          </label>
+          <input type="radio" id="radio-2" name="tabs" value="교환" onChange={handleChange} />
+          <label className="tab" htmlFor="radio-2">
+            교환
+          </label>
+          <span className="glider"></span>
+        </div>
+      </div>
+
+      <div className="matchContainer">
+        {selectedType == '나눔' ? (
           <Slider {...settings}>
-            <div>가가가</div>
-            <div>나나나</div>
-            <div>다다다</div>
-            <div>라라라</div>
-            <div>마마마</div>
+            {renderList('나눔').length == 0 ? (
+              <p className="notFound">조건에 맞는 유저가 없어요</p>
+            ) : (
+              renderList('나눔')
+            )}
           </Slider>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
+        ) : (
           <Slider {...settings}>
-            <div>AAA</div>
-            <div>BBB</div>
-            <div>CCC</div>
-            <div>DDD</div>
-            <div>EEE</div>
+            {renderList('교환').length == 0 ? (
+              <p className="notFound">조건에 맞는 유저가 없어요</p>
+            ) : (
+              renderList('교환')
+            )}
           </Slider>
-        </TabPanel>
-      </Box>
+        )}
+      </div>
     </>
   );
 };
