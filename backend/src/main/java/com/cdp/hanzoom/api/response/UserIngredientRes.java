@@ -36,9 +36,6 @@ public class UserIngredientRes {
     @ApiModelProperty(name="게시글 번호")
     Long boardNo;
 
-    @ApiModelProperty(name="등록 상태")
-    String status;
-
     public UserIngredient toEntity() {
         User user = new User();
         user.setUserEmail(userEmail);
@@ -54,7 +51,6 @@ public class UserIngredientRes {
                 .expirationDate(expirationDate)
                 .purchaseDate(purchaseDate)
                 .boardNo(boardNo)
-                .status(status)
                 .build();
     }
 }

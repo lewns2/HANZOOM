@@ -17,7 +17,7 @@ import { MyChat } from '../components/Chat/MyChat';
 import { MyChatDisplay } from '../components/Chat/MyChatDisplay';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import CommentsDisabledOutlinedIcon from '@mui/icons-material/CommentsDisabledOutlined';
-
+import { Footer } from '../components/Main/Footer';
 import { Admin } from './Admin/Admin';
 
 import { Route, Routes, Navigate, BrowserRouter } from 'react-router-dom';
@@ -79,6 +79,7 @@ export const Routing = () => {
           }}
         />
       )}
+      <Footer></Footer>
     </BrowserRouter>
   );
 };
