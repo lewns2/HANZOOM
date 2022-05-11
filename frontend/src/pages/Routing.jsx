@@ -29,36 +29,46 @@ export const Routing = () => {
   const [showChatList, setShowChatList] = useState(false);
   const chatShow = useSelector((state) => state.chat);
   const [showChat, setShowChat] = useState(false);
+  const [beforeLoginPage, setBeforeLoginPage] = useState(false);
+
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setShowChat(chatShow.chatShow);
   }, []);
+
   useEffect(() => {
     setShowChat(chatShow.chatShow);
   }, [chatShow]);
+
+  useEffect(() => {
+    setBeforeLoginPage(user.beforeLogin);
+  }, [user]);
 
   return (
     <BrowserRouter>
       <Header />
       <MyChat show={showChatList} setShow={setShowChatList} />
       {showChat ? <MyChatDisplay setShow={setShowChatList} /> : null}
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/board" element={<Board />} />
-        <Route path="/board/:id" element={<BoardDetail />} />
-        <Route path="/board/write" element={<BoardCreate />} />
-        <Route path="/my-food-ingredients" element={<MyFoodIngredients />} />
-        <Route path="/my-page" element={<MyPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/martmap" element={<NearbyMartMap />} />
-        <Route path="/find-password" element={<FindPassword />} />
-        <Route path="/oauth/kakao/callback" element={<KaKaoCall />}></Route>
-        <Route path="/recipe" element={<Recipe />}></Route>
-        <Route path="/match" element={<Match />}></Route>
-        <Route path="/admin" element={<Admin />}></Route>
-      </Routes>
+      <div style={{ minHeight: '100%' }}>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/board" element={<Board />} />
+          <Route path="/board/:id" element={<BoardDetail />} />
+          <Route path="/board/write" element={<BoardCreate />} />
+          <Route path="/my-food-ingredients" element={<MyFoodIngredients />} />
+          <Route path="/my-page" element={<MyPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/martmap" element={<NearbyMartMap />} />
+          <Route path="/find-password" element={<FindPassword />} />
+          <Route path="/oauth/kakao/callback" element={<KaKaoCall />}></Route>
+          <Route path="/recipe" element={<Recipe />}></Route>
+          <Route path="/match" element={<Match />}></Route>
+          <Route path="/admin" element={<Admin />}></Route>
+        </Routes>
+      </div>
       {!showChatList ? (
         <CommentOutlinedIcon
           className="chatIcon"
@@ -77,7 +87,7 @@ export const Routing = () => {
           }}
         />
       )}
-      <Footer></Footer>
+      {!beforeLoginPage && <Footer></Footer>}
     </BrowserRouter>
   );
 };
