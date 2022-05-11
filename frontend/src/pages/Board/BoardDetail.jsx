@@ -4,7 +4,7 @@ import { Axios } from '../../core/axios';
 import { useParams } from 'react-router-dom';
 import sample from '../../assets/images/Initimage.PNG';
 import needSample from '../../assets/images/need.PNG';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './BoardDetail.scss';
 import { BreakfastDiningRounded } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -36,6 +36,7 @@ export const BoardDetail = () => {
           setContent(res.data),
           setLikeStatus(res.data.like),
           setLikeCnt(res.data.likeCnt),
+          pasingIngredientName(res.data),
           console.log(res.data)
         ),
       )
@@ -95,6 +96,16 @@ export const BoardDetail = () => {
     dispatch(setRoomId(roomId)); // store에 선택한 roomId 세팅
     dispatch(getChatMessageInfo()); // store에 저장된 roomId에 해당하는 채팅방 메시지 정보 가져오기
     dispatch(changeShow(true)); // 채팅 모달 show
+  };
+
+  /* 수정 페이지로 식재료명을 넘기기 위함 */
+  const [ingredientNameList, setIngredientNameList] = useState();
+  const pasingIngredientName = (data) => {
+    var temp = [];
+    for (let i = 0; i < data.boardFindIngredientResList.length; i++) {
+      temp.push(data.boardFindIngredientResList[i].ingredientName);
+    }
+    setIngredientNameList(temp);
   };
 
   return (
@@ -172,8 +183,18 @@ export const BoardDetail = () => {
               {content.boardFindIngredientResList.map((ingre, index) => (
                 <div className="detailInfo" key={index}>
                   <p className="detailTag">#{ingre.ingredientName}</p>
-                  <p>구매일 : {ingre.purchaseDate}</p>
-                  <p>유통기한 : {ingre.expirationDate}</p>
+                  <p
+                    style={{
+                      visibility: ingre.purchaseDate == null ? 'visible' : 'hidden',
+                    }}>
+                    구매일 : {ingre.purchaseDate}
+                  </p>
+                  <p
+                    style={{
+                      visibility: ingre.expirationDate == null ? 'visible' : 'hidden',
+                    }}>
+                    유통기한 : {ingre.expirationDate}
+                  </p>
                 </div>
               ))}
             </div>
@@ -186,13 +207,23 @@ export const BoardDetail = () => {
               <button id="detailCancelBtn" onClick={() => navigate(-1)}>
                 취소
               </button>
-              <button
-                id="detailModifyBtn"
-                style={{
-                  visibility: userInfo.userNickname == content.userNickname ? 'visible' : 'hidden',
+              <Link
+                to={`/board/modify/${id}`}
+                state={{
+                  title: content.title,
+                  imagePath: content.imagePath,
+                  description: content.description,
+                  ingredient: ingredientNameList,
                 }}>
-                수정
-              </button>
+                <button
+                  id="detailModifyBtn"
+                  style={{
+                    visibility:
+                      userInfo.userNickname == content.userNickname ? 'visible' : 'hidden',
+                  }}>
+                  수정
+                </button>
+              </Link>
               <button
                 id="detailDeleteBtn"
                 style={{
