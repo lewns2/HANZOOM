@@ -74,23 +74,27 @@ export const Routing = () => {
             element={user.userInfo.userNickname === 'admin' ? <Admin /> : <Main />}></Route>
         </Routes>
       </div>
-      {!showChatList ? (
-        <CommentOutlinedIcon
-          className="chatIcon"
-          style={{ fontSize: '50px', color: 'green' }}
-          onClick={() => {
-            setShowChatList(!showChatList);
-            dispatch(getChatInfo());
-          }}
-        />
-      ) : (
-        <CommentsDisabledOutlinedIcon
-          className="chatIcon"
-          style={{ fontSize: '50px', color: 'green' }}
-          onClick={() => {
-            setShowChatList(!showChatList);
-          }}
-        />
+      {user.userInfo.length !== 0 && (
+        <>
+          {!showChatList ? (
+            <CommentOutlinedIcon
+              className="chatIcon"
+              style={{ fontSize: '50px', color: 'green' }}
+              onClick={() => {
+                setShowChatList(!showChatList);
+                dispatch(getChatInfo());
+              }}
+            />
+          ) : (
+            <CommentsDisabledOutlinedIcon
+              className="chatIcon"
+              style={{ fontSize: '50px', color: 'green' }}
+              onClick={() => {
+                setShowChatList(!showChatList);
+              }}
+            />
+          )}
+        </>
       )}
       {!beforeLoginPage && <Footer></Footer>}
     </BrowserRouter>
