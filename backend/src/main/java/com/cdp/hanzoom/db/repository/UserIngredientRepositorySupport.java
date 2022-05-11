@@ -105,21 +105,4 @@ public class UserIngredientRepositorySupport {
         if(normalUserIngredients == null) return null;
         return normalUserIngredients;
     }
-
-    public List<UserIngredientFindRes> findAllPendingUserIngredient() {
-        List<UserIngredientFindRes> userIngredientFindResList = jpaQueryFactory.select(
-                Projections.bean(UserIngredientFindRes.class,
-                qUserIngredient.userIngredientNo,
-                qUserIngredient.ingredient.ingredientNo,
-                qUserIngredient.ingredient.ingredientName,
-                qUserIngredient.user.userEmail,
-                qUserIngredient.type,
-                qUserIngredient.purchaseDate,
-                qUserIngredient.expirationDate,
-                qUserIngredient.boardNo,
-                qUserIngredient.status)).from(qUserIngredient).where(qUserIngredient.status.eq("대기")).fetch();
-
-        if(userIngredientFindResList == null) return null;
-        return userIngredientFindResList;
-    }
 }
