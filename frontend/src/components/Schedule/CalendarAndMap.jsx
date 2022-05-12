@@ -71,7 +71,7 @@ export const CalendarAndMap = (props) => {
 
   return (
     <div className="row">
-      <div className="scheduleDate col-lg-6 col-12  d-flex justify-content-center">
+      <div className="scheduleDate col-lg-6 col-12 d-flex justify-content-center">
         <Calendar onChange={setDate} value={date} />
         <div className="schecduleTime d-flex">
           <div className="scheduleHour">

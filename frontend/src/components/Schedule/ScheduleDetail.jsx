@@ -167,29 +167,29 @@ export const ScheduleDetail = (props) => {
         <div className="d-flex justify-content-center" style={{ marginTop: '8px' }}>
           {!updateState ? (
             <>
-              <button className="cancelBtn" onClick={() => props.show(false)}>
+              <button className="btn cancelBtn" onClick={() => props.show(false)}>
                 닫기
               </button>
               {authority && (
-                <button className="updateBtn" onClick={() => setUpdateState(true)}>
+                <button className="btn updateBtn" onClick={() => setUpdateState(true)}>
                   일정 수정
                 </button>
               )}
-              <button className="removeBtn" onClick={removePlan}>
+              <button className="btn removeBtn" onClick={removePlan}>
                 일정 취소
               </button>
-              <button className="shareBtn" onClick={shareKakao}>
+              <button className="btn shareBtn" onClick={shareKakao}>
                 <img src="img/kakaolink_btn_medium.png" alt="" />
                 공유하기
               </button>
             </>
           ) : (
             <>
-              <button className="cancelBtn" onClick={() => setUpdateState(false)}>
+              <button className="btn cancelBtn" onClick={() => setUpdateState(false)}>
                 취소
               </button>
               {authority && (
-                <button className="updateBtn" onClick={() => setUpdateSignal(true)}>
+                <button className="btn updateBtn" onClick={() => setUpdateSignal(true)}>
                   수정 완료
                 </button>
               )}
