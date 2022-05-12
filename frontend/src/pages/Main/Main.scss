@@ -37,6 +37,15 @@
         div:first-child {
           width: 95%;
         }
+        /* Tablet &amp; Desktop Device */
+        @media (max-width: 990px) {
+          //사용자 해상도가 990px 이하일 때 이 코드가 실행됨.
+          // 테블릿과 데스크톱의 공통 코드를 작성한다.
+          div:first-child {
+            width: 1000px;
+          }
+        }
+
         .contentCard {
           width: 100%;
           height: 500px;
@@ -60,6 +69,7 @@
               font-size: 1.25rem;
               font-weight: bolder;
             }
+
             .status {
               width: 70px;
               font-size: 16px;
