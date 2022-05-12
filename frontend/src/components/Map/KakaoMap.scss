@@ -49,27 +49,8 @@
   .closeIcon {
     position: absolute;
     top: 0px;
-    right: 40px;
-    font-size: 40px;
+    right: 0;
     z-index: 1;
-  }
-  @media all and (min-width: 413px) and (max-width: 590px) {
-    .closeIcon {
-      // position: absolute;
-      top: 0px;
-      right: 35px;
-      font-size: 40px;
-      z-index: 1;
-    }
-  }
-  @media (max-width: 412px) {
-    .closeIcon {
-      // position: absolute;
-      top: 0px;
-      right: 0px;
-      font-size: 35px;
-      z-index: 1;
-    }
   }
 }
 

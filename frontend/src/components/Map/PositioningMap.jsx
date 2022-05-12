@@ -4,7 +4,6 @@ import { Axios } from '../../core/axios';
 import { useDispatch } from 'react-redux';
 import { getUserInfo } from '../../Reducer/userSlice';
 import './KakaoMap.scss';
-
 import DaumPostcode from 'react-daum-postcode';
 import CloseIcon from '@mui/icons-material/Close';
 // const { kakao } = window;
@@ -38,8 +37,8 @@ export const PositioningMap = (props) => {
     display: 'block',
     position: 'relative',
     top: '0%',
-    width: '82%',
-    height: '370px',
+    width: '95%',
+    height: '390px',
     padding: '0px',
   };
 
