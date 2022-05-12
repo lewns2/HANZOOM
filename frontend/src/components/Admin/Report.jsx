@@ -121,7 +121,7 @@ export const Report = () => {
               <TableCell
                 key={column.id}
                 align={column.align}
-                style={{ fontFamily: 'GmarketSansBold' }}>
+                style={{ fontFamily: 'GmarketSansMedium' }}>
                 {column.format ? column.format(value) : value}
               </TableCell>
             );
@@ -139,7 +139,13 @@ export const Report = () => {
                   신고 이유
                 </Typography>
                 <textarea
-                  style={{ width: '100%', height: '8.25em', border: 'none', resize: 'none' }}
+                  style={{
+                    width: '100%',
+                    height: '8.25em',
+                    border: 'none',
+                    resize: 'none',
+                    fontFamily: 'GmarketSansMedium',
+                  }}
                   defaultValue={row.content}></textarea>
                 {row.status === null ? (
                   <div style={{ float: 'right', margin: '3% 0' }}>
@@ -177,7 +183,7 @@ export const Report = () => {
             width: '100%',
             overflow: 'hidden',
             marginTop: '5%',
-            marginBottom: '7%',
+            marginBottom: '15%',
           }}>
           <TableContainer sx={{ maxHeight: 600 }}>
             <Table stickyHeader aria-label="sticky table">
@@ -217,7 +223,7 @@ export const Report = () => {
         </Paper>
       ) : (
         <>
-          <div style={{ textAlign: 'center', marginBottom: '7%' }}>
+          <div style={{ textAlign: 'center', marginBottom: '15%' }}>
             <img src={admin_empty} alt="empty"></img>
             <h6>신고내역이 없습니다.</h6>
           </div>

@@ -99,7 +99,7 @@ export const PendingIngredient = () => {
               <TableCell
                 key={column.id}
                 align={column.align}
-                style={{ fontFamily: 'GmarketSansBold' }}>
+                style={{ fontFamily: 'GmarketSansMedium' }}>
                 {column.format ? column.format(value) : value}
               </TableCell>
             );
@@ -133,7 +133,7 @@ export const PendingIngredient = () => {
             width: '100%',
             overflow: 'hidden',
             marginTop: '5%',
-            marginBottom: '7%',
+            marginBottom: '15%',
           }}>
           <TableContainer sx={{ maxHeight: 600 }}>
             <Table stickyHeader aria-label="sticky table">
@@ -173,7 +173,7 @@ export const PendingIngredient = () => {
         </Paper>
       ) : (
         <>
-          <div style={{ textAlign: 'center', marginBottom: '7%' }}>
+          <div style={{ textAlign: 'center', marginBottom: '15%' }}>
             <img src={admin_empty} alt="empty"></img>
             <h6>식재료 등록 요청이 없습니다.</h6>
           </div>
