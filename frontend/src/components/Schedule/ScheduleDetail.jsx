@@ -15,6 +15,7 @@ export const ScheduleDetail = (props) => {
   const [scheduleInfo, setScheduleInfo] = useState([]);
   const [authority, setAuthority] = useState(false);
   const [myEmail, setMyEmail] = useState('');
+  const [address, setAddress] = useState('');
 
   const [updateState, setUpdateState] = useState(false);
   const [updateSignal, setUpdateSignal] = useState(false);
@@ -72,6 +73,38 @@ export const ScheduleDetail = (props) => {
       });
   };
 
+  const shareKakao = () => {
+    const sharedUrl = 'https://k6e103.p.ssafy.io';
+    console.log(window.location.href);
+    const imgUrl = user.userInfo.userImage;
+
+    const scheduleTitle = scheduleInfo.opponent + '님과의 일정';
+
+    const date = moment(scheduleInfo.scheduleDatetime).format('YYYY년 MM월 DD일 LT');
+    const scheduleDescription = '날짜: ' + date + '\n장소: ' + address;
+    Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: scheduleTitle,
+        description: scheduleDescription,
+        imageUrl: '',
+        link: {
+          webUrl: sharedUrl,
+          mobileWebUrl: sharedUrl,
+        },
+      },
+      buttons: [
+        {
+          title: '한줌 바로가기',
+          link: {
+            webUrl: sharedUrl,
+            mobileWebUrl: sharedUrl,
+          },
+        },
+      ],
+    });
+  };
+
   useEffect(() => {
     getSchedule();
     setMyEmail(user.userInfo.userEmail);
@@ -85,6 +118,7 @@ export const ScheduleDetail = (props) => {
   return (
     <div className="scheduleWrap d-flex align-items-center">
       {console.log(scheduleInfo)}
+      {console.log(address)}
       <div className="schedule">
         {!updateState ? (
           <h3 className="text-center">일정 상세정보</h3>
@@ -108,7 +142,11 @@ export const ScheduleDetail = (props) => {
               </div>
               <div className="scheduleDetailMap d-flex justify-content-center">
                 {scheduleInfo.lat && scheduleInfo.lng && (
-                  <ScheduleDetailMap lat={scheduleInfo.lat} lng={scheduleInfo.lng} />
+                  <ScheduleDetailMap
+                    lat={scheduleInfo.lat}
+                    lng={scheduleInfo.lng}
+                    setAddress={setAddress}
+                  />
                 )}
               </div>
             </>
@@ -139,6 +177,10 @@ export const ScheduleDetail = (props) => {
               )}
               <button className="removeBtn" onClick={removePlan}>
                 일정 취소
+              </button>
+              <button className="shareBtn" onClick={shareKakao}>
+                <img src="img/kakaolink_btn_medium.png" alt="" />
+                공유하기
               </button>
             </>
           ) : (
