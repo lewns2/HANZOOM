@@ -163,11 +163,27 @@
       text-align: center;
       margin-top: 30px;
 
+      .recipeIngreTitle {
+        margin: 40px 0 20px 0;
+      }
+
       .recipeIngredients {
         display: flex;
         justify-content: center;
         margin-bottom: 30px;
-        white-space: nowrap;
+        flex-wrap: wrap;
+
+        .recipeIngredient {
+          font-size: 16px;
+          font-weight: bolder;
+          background-color: #f2d17a;
+          border: 2px solid #f7c343;
+          border-radius: 16px;
+          padding: 3px 2px;
+          margin-right: 10px;
+          box-shadow: 0 4px 4px -4px #777;
+          text-align: center;
+        }
       }
       .recipeImgWrap {
         width: 100%;
