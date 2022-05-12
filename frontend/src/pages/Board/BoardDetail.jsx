@@ -164,7 +164,7 @@ export const BoardDetail = () => {
                   className="detailProfileImg"
                   // src="/img/basicProfile.png"
                   src={
-                    content.userImage
+                    content.userImage != null
                       ? `${BASE_IMG_URL}${content.userImage}`
                       : '/img/basicProfile.png'
                   }

@@ -156,6 +156,9 @@ $desktop: 1400px;
 
   .boardIngredientResList {
     display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .cardBodyCountsLike {
     display: flex;

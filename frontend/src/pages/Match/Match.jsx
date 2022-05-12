@@ -46,7 +46,6 @@ export const Match = () => {
         ingreList.push(location.state.matchNeeds[i].ingredientName);
       }
       let url = `userIngredient/matching?distance=20&ingredients=${ingreList}`;
-      // let url = 'userIngredient/matching?distance=20&ingredients=가지';
       requestData(url, '선택');
     }
   }, []);
