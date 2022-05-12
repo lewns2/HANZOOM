@@ -13,7 +13,7 @@ const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
 export const MatchList = (props) => {
   const [selectedType, setSelectedType] = useState('나눔');
-  const [isMove, setIsMove] = useState(false);
+  const [isMove, setIsMove] = useState(true);
   const navigate = useNavigate();
   const matchingArr = props.matchArr;
 
@@ -24,10 +24,24 @@ export const MatchList = (props) => {
 
   const handleClick = (num) => {
     console.log(num);
-    setIsMove(false);
+    setIsMove(true);
     swal('해당 게시글로 이동하시겠습니까?', {
-      buttons: ['아니오', setIsMove(true)],
-      buttons: ['이동할래요', setIsMove(false)],
+      buttons: {
+        cancel: '아니오',
+        catch: {
+          text: '이동할래요',
+          value: 'move',
+        },
+      },
+    }).then((value) => {
+      switch (value) {
+        case 'move':
+          setIsMove(false);
+          break;
+
+        default:
+          break;
+      }
     });
     if (!isMove) {
       navigate(`/board/${num}`);
