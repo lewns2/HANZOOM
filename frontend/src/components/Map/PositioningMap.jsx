@@ -37,8 +37,8 @@ export const PositioningMap = (props) => {
     display: 'block',
     position: 'relative',
     top: '0%',
-    width: '95%',
-    height: '390px',
+    width: '82%',
+    height: '370px',
     padding: '0px',
   };
 
