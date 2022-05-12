@@ -4,6 +4,7 @@ import { AddNeedsIngredients } from './AddNeedsIngredients';
 import { Axios } from '../../../core/axios.js';
 import './FoodModal.scss';
 import { ModiMyFoodIngredients } from './ModiMyFoodIngredients';
+import swal from 'sweetalert';
 
 export const FoodModal = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
@@ -43,6 +44,13 @@ export const FoodModal = (props) => {
     )
       .then((res) => {
         console.log(res);
+        if (res.data.message === 'Pending') {
+          swal({
+            title: '저장되지 않은 식재료 입니다.',
+            text: '관리자 승인 후, MY식재료에서 확인할 수 있습니다.\n(소요시간: 2-3일)',
+            icon: 'info',
+          });
+        }
         close();
       })
       .catch((err) => {
@@ -69,6 +77,13 @@ export const FoodModal = (props) => {
     )
       .then((res) => {
         console.log(res);
+        if (res.data.message === 'Pending') {
+          swal({
+            title: '저장되지 않은 식재료 입니다.',
+            text: '관리자 승인 후, 필요목록에서 확인할 수 있습니다.\n(소요시간: 2-3일)',
+            icon: 'info',
+          });
+        }
         setState(!state);
         close();
       })
