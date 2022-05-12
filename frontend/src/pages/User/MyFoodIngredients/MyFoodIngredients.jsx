@@ -6,11 +6,14 @@ import { Axios } from '../../../core/axios.js';
 import { FoodIngreList } from './FoodIngreList';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { MyIngreDnd } from './MyIngreDnd';
+import { Grid } from '@mui/material';
+import { Col, Row } from 'react-bootstrap';
 
 export const MyFoodIngredients = () => {
   const [modalOpen2, setModalOpen2] = useState(false);
   const [checkedNeeds, setCheckedNeeds] = useState([]);
   const [myNeedsIngre, setMyNeedsIngre] = useState([]);
+  const [matchNeeds, setMatchNeeds] = useState([]);
   const [myBoard, setMyBoard] = useState([]);
 
   const [state, setState] = useState(false);
@@ -31,8 +34,8 @@ export const MyFoodIngredients = () => {
     columnOrder: ['column-1', 'column-2'],
   });
 
+  const token = sessionStorage.getItem('jwt-token');
   const getMyFoodIngre = async () => {
-    const token = sessionStorage.getItem('jwt-token');
     let normal = [];
     let bartershare = [];
     let needs = [];
@@ -74,7 +77,6 @@ export const MyFoodIngredients = () => {
   };
 
   const getMyBoard = () => {
-    const token = sessionStorage.getItem('jwt-token');
     Axios.get('/userIngredient/board', {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -221,12 +223,19 @@ export const MyFoodIngredients = () => {
   const goBoardDetail = (boardNo) => {
     navigate(`/board/${boardNo}`);
   };
+
+  const goMatching = () => {
+    var ingreNames = [];
+    checkedNeeds.map((ingre) => ingreNames.push(ingre.ingredientName));
+    setMatchNeeds(ingreNames);
+  };
+
   return (
     <div className="container">
       <div id="myFoodIngredients">
         <DragDropContext onDragEnd={onDragEnd}>
           {info.tasks ? (
-            <div className="d-flex justify-content-around">
+            <Row>
               {info.columnOrder.map((columnId, index) => {
                 const column = info.columns[columnId];
                 const tasks = column.taskIds.map((taskId) => info.tasks[taskId]);
@@ -241,10 +250,10 @@ export const MyFoodIngredients = () => {
                   />
                 );
               })}
-              <section id="needs" className="col">
-                <div className="d-flex justify-content-center headWrap">
-                  <h2 className="col-9">필요목록</h2>
-                  <button className="addNeeds col-1" onClick={openModal2}>
+              <Col id="needs">
+                <div className="d-flex justify-content-center px-4">
+                  <h2>필요목록</h2>
+                  <button className="addNeeds" onClick={openModal2}>
                     +
                   </button>
                   <FoodModal
@@ -269,30 +278,34 @@ export const MyFoodIngredients = () => {
                   ))}
                   {checkedNeeds.length ? (
                     <div className="d-flex justify-content-center">
-                      <button className="ingreBtn">
+                      <button className="ingreBtn mt-3">
                         <Link to={'/board/write'} state={checkedNeeds}>
                           게시글 등록
                         </Link>
                       </button>
-                      <button className="ingreBtn">선택 매칭</button>
+                      <button className="ingreBtn mt-3" onClick={goMatching}>
+                        <Link to={'/match'} state={matchNeeds}>
+                          선택 매칭
+                        </Link>
+                      </button>
                     </div>
                   ) : (
                     <div className="d-flex justify-content-center">
-                      <button className="ingreBtn" onClick={clickEvent}>
+                      <button className="ingreBtn mt-3" onClick={clickEvent}>
                         게시글 등록
                       </button>
-                      <button className="ingreBtn" onClick={clickEvent}>
+                      <button className="ingreBtn mt-3" onClick={clickEvent}>
                         선택 매칭
                       </button>
                     </div>
                   )}
                 </div>
-              </section>
-            </div>
+              </Col>
+            </Row>
           ) : null}
         </DragDropContext>
       </div>
-      <div className="myBoard">
+      <div id="myBoard">
         <h2>등록된 식재료</h2>
         {myBoard &&
           myBoard.map((ingre, index) => (
