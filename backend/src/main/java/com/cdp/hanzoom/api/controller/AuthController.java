@@ -110,7 +110,7 @@ public class AuthController {
         }
 
         if(userRepositorySupport.findReportedNumber(user.getUserEmail()) > 2) {
-            return ResponseEntity.status(406).body(UserLoginRes.of(406, "Banned User", null));
+            return ResponseEntity.status(403).body(UserLoginRes.of(403, "Banned User", null));
         }
 
         // 회원 가입이 되어 있다면, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
