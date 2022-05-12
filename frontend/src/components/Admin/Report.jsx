@@ -177,6 +177,7 @@ export const Report = () => {
             width: '100%',
             overflow: 'hidden',
             marginTop: '5%',
+            marginBottom: '7%',
           }}>
           <TableContainer sx={{ maxHeight: 600 }}>
             <Table stickyHeader aria-label="sticky table">
@@ -216,7 +217,7 @@ export const Report = () => {
         </Paper>
       ) : (
         <>
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: 'center', marginBottom: '7%' }}>
             <img src={admin_empty} alt="empty"></img>
             <h6>신고내역이 없습니다.</h6>
           </div>
