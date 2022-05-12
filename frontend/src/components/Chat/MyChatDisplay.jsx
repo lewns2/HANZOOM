@@ -14,6 +14,7 @@ export const MyChatDisplay = (props) => {
   const [showSchedule, setShowSchedule] = useState(false);
   const [showScheduleDetail, setShowScheduleDetail] = useState(false);
   const [planState, setPlanState] = useState(false);
+  const token = sessionStorage.getItem('jwt-token');
 
   // console.log(props);
 
@@ -37,21 +38,27 @@ export const MyChatDisplay = (props) => {
   // Socket connection
   const connect = () => {
     ws.connect(
-      {},
+      {
+        token: token,
+      },
       () => {
-        ws.subscribe('/sub/chat/room/' + chatRoomId, function (message) {
-          var recv = JSON.parse(message.body);
-          recvMessage(recv);
-        });
-        ws.send(
-          '/pub/chat/message',
-          {},
-          JSON.stringify({
-            type: 'ENTER',
-            roomId: chatRoomId,
-            sender: user.userInfo.userNickname,
-          }),
+        ws.subscribe(
+          '/sub/chat/room/' + chatRoomId,
+          function (message) {
+            var recv = JSON.parse(message.body);
+            recvMessage(recv);
+          },
+          { token: token },
         );
+        // ws.send(
+        //   '/pub/chat/message',
+        //   {},
+        //   JSON.stringify({
+        //     type: 'ENTER',
+        //     roomId: chatRoomId,
+        //     sender: user.userInfo.userNickname,
+        //   }),
+        // );
       },
       (error) => {
         if (reconnect++ <= 5) {
@@ -62,6 +69,18 @@ export const MyChatDisplay = (props) => {
           }, 10 * 1000);
         }
         console.log(error);
+      },
+    );
+  };
+
+  // Socket Disconnection
+  const disconnect = () => {
+    ws.disconnect(
+      () => {
+        ws.unsubscribe('/sub/chat/room/' + chatRoomId);
+      },
+      {
+        token: token,
       },
     );
   };
@@ -84,7 +103,6 @@ export const MyChatDisplay = (props) => {
 
   // message setting
   const recvMessage = (recv) => {
-    // console.log('>>>>>>>>>>> 받은 메시지 축척', recv);
     setNewMessages((oldArray) => [
       ...oldArray,
       {
@@ -105,6 +123,7 @@ export const MyChatDisplay = (props) => {
   };
 
   const hideMyChat = () => {
+    disconnect();
     dispatch(changeShow(false));
   };
 
@@ -112,7 +131,6 @@ export const MyChatDisplay = (props) => {
   const getMessage = async () => {
     await Axios.get(`/chat/find/${chatRoomId}`)
       .then(async (res) => {
-        console.log(res.data);
         await setChatMessageInfo(res.data);
       })
       .catch((err) => {
@@ -164,7 +182,7 @@ export const MyChatDisplay = (props) => {
 
   return (
     <>
-      {console.log(chatMessageInfo)}
+      {/* {console.log(chatMessageInfo)} */}
       <div className="showChatDisplayWrap">
         {showSchedule && (
           <Schedule
