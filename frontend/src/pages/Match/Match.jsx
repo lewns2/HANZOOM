@@ -25,12 +25,10 @@ export const Match = () => {
     })
       .then((res) => {
         console.log(res),
-          type == '자동'
-            ? (setMatchingRes(res.data),
-              res.data.matchingList[0].userIngredientMatchingRes.length != 0
-                ? setIsComplete(true)
-                : setIsComplete(false))
-            : console.log('여기는 선택 매칭');
+          (setMatchingRes(res.data),
+          res.data.matchingList[0].userIngredientMatchingRes.length != 0
+            ? setIsComplete(true)
+            : setIsComplete(false));
       })
       .catch((err) => console.log(err));
   };
@@ -40,13 +38,15 @@ export const Match = () => {
     const handle = setTimeout(() => setIsLoading(false), 8500);
 
     if (location.state.type == '자동') {
-      // setUrl();
       let url = `userIngredient/recipe/matching?distance=20&recipeNo=${location.state.recipeNo}`;
       requestData(url, '자동');
     } else if (location.state.type == '선택') {
-      // setUrl();
-      // let url = `userIngredient/matching?distance=20&ingredients=${location.state.matchNeeds}`;
-      let url = 'userIngredient/matching?distance=20&ingredients=가지';
+      let ingreList = [];
+      for (let i = 0; i < location.state.matchNeeds.length; i++) {
+        ingreList.push(location.state.matchNeeds[i].ingredientName);
+      }
+      let url = `userIngredient/matching?distance=20&ingredients=${ingreList}`;
+      // let url = 'userIngredient/matching?distance=20&ingredients=가지';
       requestData(url, '선택');
     }
   }, []);
