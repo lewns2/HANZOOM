@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeShow, setRoomId, getChatMessageInfo, getChatInfo } from '../../Reducer/chatSlice';
 import { Axios } from '../../core/axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { BASE_IMG_URL } from '../../core/s3';
+import dayjs from 'dayjs';
 
 export const MyChatList = (chat) => {
   const dispatch = useDispatch();
@@ -18,8 +19,6 @@ export const MyChatList = (chat) => {
   };
 
   const handleDeleteChat = async (id) => {
-    // alert(id);
-    console.log('>>>>>>>>>>> token : ', token, ' && id : ', id);
     await Axios.delete('/chat/remove', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -45,18 +44,22 @@ export const MyChatList = (chat) => {
           {chat.chat.userNickname1 === user.userInfo.userNickname ? (
             <img
               src={
-                chat.chat.userImage2
-                  ? `${BASE_IMG_URL}${chat.chat.userImage2}`
-                  : '/img/basicProfile.png'
+                !chat.chat.userImage1.includes('kakao')
+                  ? chat.chat.userImage1
+                    ? `${BASE_IMG_URL}${chat.chat.userImage1}`
+                    : '/img/basicProfile.png'
+                  : chat.chat.userImage1
               }
               alt="userProfileImage"
             />
           ) : (
             <img
               src={
-                chat.chat.userImage1
-                  ? `${BASE_IMG_URL}${chat.chat.userImage1}`
-                  : '/img/basicProfile.png'
+                !chat.chat.userImage2.includes('kakao')
+                  ? chat.chat.userImage2
+                    ? `${BASE_IMG_URL}${chat.chat.userImage2}`
+                    : '/img/basicProfile.png'
+                  : chat.chat.userImage2
               }
               alt="userProfileImage"
             />
@@ -77,28 +80,32 @@ export const MyChatList = (chat) => {
               <>
                 {chat.chat.chatMessages.createdAt.slice(0, 4) == today.getFullYear() ? (
                   <div className="chatTime">
-                    {chat.chat.chatMessages.createdAt.slice(5, 7)}/
-                    {chat.chat.chatMessages.createdAt.slice(8, 10)}{' '}
-                    {chat.chat.chatMessages.createdAt.slice(10, 16)}
+                    {dayjs(chat.chat.chatMessages.createdAt).format('MM/DD HH:mm')}
                   </div>
                 ) : (
-                  <div className="chatTime">{chat.chat.chatMessages.createdAt.slice(0, 16)}</div>
+                  <div className="chatTime">
+                    {dayjs(chat.chat.chatMessages.createdAt).format('YY/MM/DD HH:mm')}
+                  </div>
                 )}
               </>
             )}
-            {/* <div className="chatIngredient mx-auto">{chat.chat.ingredientList[0]}</div> */}
             <DeleteIcon
               className="chatDelete ms-auto"
-              onClick={() => handleDeleteChat(chat.chat.id)}
+              onClick={(event) => {
+                handleDeleteChat(chat.chat.id);
+                event.stopPropagation();
+              }}
             />
           </div>
-          <div className="chatIngredientList">
-            {chat.chat.ingredientList.map((ingredient, index) => (
-              <span className="chatIngredient" key={index}>
-                {ingredient}
-              </span>
-            ))}
-          </div>
+          {chat.chat.ingredientList.length > 0 && (
+            <div className="chatIngredientList">
+              {chat.chat.ingredientList.map((ingredient, index) => (
+                <span className="chatIngredient" key={index}>
+                  {ingredient}
+                </span>
+              ))}
+            </div>
+          )}
           {chat.chat.chatMessages === null ? (
             <div className="chatContent">채팅을 시작해보세요!</div>
           ) : (

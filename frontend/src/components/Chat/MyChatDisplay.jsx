@@ -7,6 +7,9 @@ import { BASE_IMG_URL } from '../../core/s3';
 import { Axios, axios_apis } from '../../core/axios';
 import StompJS from 'stompjs';
 import SockJS from 'sockjs-client';
+import messageImg from '../../assets/images/message.gif';
+import { getChatInfo } from '../../Reducer/chatSlice';
+import dayjs from 'dayjs';
 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -125,6 +128,7 @@ export const MyChatDisplay = (props) => {
   const hideMyChat = () => {
     disconnect();
     dispatch(changeShow(false));
+    dispatch(getChatInfo());
   };
 
   // 메시지 정보 요청 axios
@@ -218,123 +222,147 @@ export const MyChatDisplay = (props) => {
               <></>
             ) : (
               <>
-                {/* { messageInfo.map((message) => ( */}
-                {chatMessageInfo.chatMessages.map((message) => (
-                  <div key={message.id}>
-                    {message.type === 'LEAVE' ? (
-                      <div className="d-flex justify-content-center m-4">{message.message}</div>
-                    ) : (
-                      <>
-                        {message.senderNickname === user.userInfo.userNickname ? (
+                {chatMessageInfo.chatMessages.length === 0 && newMessages.length === 0 ? (
+                  <div className="imageWrapper">
+                    <img className="messageImage" src={messageImg}></img>
+                    <div>대화를 시작해보세요!</div>
+                  </div>
+                ) : (
+                  <>
+                    {chatMessageInfo.chatMessages.map((message) => (
+                      <div key={message.id}>
+                        {message.type === 'LEAVE' ? (
+                          <div className="d-flex justify-content-center m-4">{message.message}</div>
+                        ) : (
                           <>
-                            <div className="userMsg myMsg d-flex justify-content-end">
-                              <div className="msgWrapper">
-                                <div className="d-flex justify-content-end">
-                                  <div>{message.senderNickname}</div>
+                            {message.senderNickname === user.userInfo.userNickname ? (
+                              <>
+                                <div className="userMsg myMsg d-flex justify-content-end">
+                                  <div className="msgWrapper">
+                                    <div className="d-flex justify-content-end">
+                                      <div>{message.senderNickname}</div>
+                                    </div>
+                                    <div className="d-flex justify-content-end">
+                                      <div className="msgTime">
+                                        {dayjs(message.createdAt).format('YY/MM/DD HH:mm')}
+                                      </div>
+                                      <div className="msgContent">{message.message}</div>
+                                    </div>
+                                  </div>
+                                  <div className="profileImg">
+                                    <img
+                                      src={
+                                        !message.senderImage.includes('kakao')
+                                          ? message.senderImage
+                                            ? `${BASE_IMG_URL}${message.senderImage}`
+                                            : '/img/basicProfile.png'
+                                          : message.senderImage
+                                      }
+                                      alt=""
+                                    />
+                                  </div>
                                 </div>
-                                <div className="d-flex justify-content-end">
-                                  <div className="msgTime">{message.createdAt.slice(0, 19)}</div>
-                                  <div className="msgContent">{message.message}</div>
+                              </>
+                            ) : (
+                              <div className="userMsg otherMsg d-flex">
+                                <div className="profileImg">
+                                  <img
+                                    src={
+                                      !message.senderImage.includes('kakao')
+                                        ? message.senderImage
+                                          ? `${BASE_IMG_URL}${message.senderImage}`
+                                          : '/img/basicProfile.png'
+                                        : message.senderImage
+                                    }
+                                    alt=""
+                                  />
+                                </div>
+                                <div className="msgWrapper">
+                                  <div className="d-flex">
+                                    <div>{message.senderNickname}</div>
+                                  </div>
+                                  <div className="d-flex">
+                                    <div className="msgContent">{message.message}</div>
+                                    <div className="msgTime">
+                                      {dayjs(message.createdAt).format('YY/MM/DD HH:mm')}
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                              <div className="profileImg">
-                                <img
-                                  src={
-                                    message.senderImage !== null
-                                      ? `${BASE_IMG_URL}${message.senderImage}`
-                                      : '/img/basicProfile.png'
-                                  }
-                                  alt=""
-                                />
+                            )}
+                          </>
+                        )}
+                      </div>
+                    ))}
+
+                    {/* 새로 추가된 메시지 */}
+                    {newMessages.map((m) => (
+                      <div key={m.id}>
+                        {m.type === 'TALK' ? (
+                          <>
+                            {m.sender === user.userInfo.userNickname ? (
+                              <div className="userMsg myMsg d-flex justify-content-end">
+                                <div className="msgWrapper">
+                                  <div className="d-flex justify-content-end">
+                                    <div>{m.sender}</div>
+                                  </div>
+                                  <div className="d-flex justify-content-end">
+                                    <div className="msgTime">
+                                      {dayjs(m.createdAt).format('YY/MM/DD HH:mm')}
+                                    </div>
+                                    <div className="msgContent">{m.message}</div>
+                                  </div>
+                                </div>
+                                <div className="profileImg">
+                                  <img
+                                    src={
+                                      !m.senderImage.includes('kakao')
+                                        ? m.senderImage
+                                          ? `${BASE_IMG_URL}${m.senderImage}`
+                                          : '/img/basicProfile.png'
+                                        : m.senderImage
+                                    }
+                                    alt=""
+                                  />
+                                </div>
                               </div>
-                            </div>
+                            ) : (
+                              <div className="userMsg otherMsg d-flex">
+                                <div className="profileImg">
+                                  <img
+                                    src={
+                                      !m.senderImage.includes('kakao')
+                                        ? m.senderImage
+                                          ? `${BASE_IMG_URL}${m.senderImage}`
+                                          : '/img/basicProfile.png'
+                                        : m.senderImage
+                                    }
+                                    alt=""
+                                  />
+                                </div>
+                                <div className="msgWrapper">
+                                  <div className="d-flex">
+                                    <div>{m.sender}</div>
+                                  </div>
+                                  <div className="d-flex">
+                                    <div className="msgContent">{m.message}</div>
+                                    <div className="msgTime">
+                                      {dayjs(m.createdAt).toShortTimeString()}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </>
                         ) : (
-                          <div className="userMsg otherMsg d-flex">
-                            <div className="profileImg">
-                              <img
-                                src={
-                                  message.senderImage !== null
-                                    ? `${BASE_IMG_URL}${message.senderImage}`
-                                    : '/img/basicProfile.png'
-                                }
-                                alt=""
-                              />
-                            </div>
-                            <div className="msgWrapper">
-                              <div className="d-flex">
-                                <div>{message.senderNickname}</div>
-                              </div>
-                              <div className="d-flex">
-                                <div className="msgContent">{message.message}</div>
-                                <div className="msgTime">{message.createdAt.slice(0, 19)}</div>
-                              </div>
-                            </div>
-                          </div>
+                          <>{m.sender}</>
                         )}
-                      </>
-                    )}
-                  </div>
-                ))}
+                      </div>
+                    ))}
+                  </>
+                )}
               </>
             )}
-
-            {/* 새로 추가된 메시지 */}
-            {newMessages.map((m) => (
-              <div key={m.id}>
-                {m.type === 'TALK' ? (
-                  <>
-                    {m.sender === user.userInfo.userNickname ? (
-                      <div className="userMsg myMsg d-flex justify-content-end">
-                        <div className="msgWrapper">
-                          <div className="d-flex justify-content-end">
-                            <div>{m.sender}</div>
-                          </div>
-                          <div className="d-flex justify-content-end">
-                            <div className="msgTime">{m.createdAt.slice(0, 19)}</div>
-                            <div className="msgContent">{m.message}</div>
-                          </div>
-                        </div>
-                        <div className="profileImg">
-                          <img
-                            src={
-                              m.senderImage !== null
-                                ? `${BASE_IMG_URL}${m.senderImage}`
-                                : '/img/basicProfile.png'
-                            }
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="userMsg otherMsg d-flex">
-                        <div className="profileImg">
-                          <img
-                            src={
-                              m.senderImage !== null
-                                ? `${BASE_IMG_URL}${m.senderImage}`
-                                : '/img/basicProfile.png'
-                            }
-                            alt=""
-                          />
-                        </div>
-                        <div className="msgWrapper">
-                          <div className="d-flex">
-                            <div>{m.sender}</div>
-                          </div>
-                          <div className="d-flex">
-                            <div className="msgContent">{m.message.slice(0, 19)}</div>
-                            <div className="msgTime">{m.createdAt}</div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <>{m.sender}</>
-                )}
-              </div>
-            ))}
           </div>
           <div className="chatFooter">
             <input

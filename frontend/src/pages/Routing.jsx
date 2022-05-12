@@ -19,6 +19,8 @@ import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import CommentsDisabledOutlinedIcon from '@mui/icons-material/CommentsDisabledOutlined';
 import { Footer } from '../components/Main/Footer';
 import { Admin } from './Admin/Admin';
+import ChatIcon from '../assets/images/chat.png';
+import NoChatIcon from '../assets/images/nochat.png';
 
 import { Route, Routes, Navigate, BrowserRouter } from 'react-router-dom';
 import { useState, useEffect, useReducer } from 'react';
@@ -77,18 +79,20 @@ export const Routing = () => {
       {user.userInfo.length !== 0 && (
         <>
           {!showChatList ? (
-            <CommentOutlinedIcon
+            <img
+              src={ChatIcon}
               className="chatIcon"
-              style={{ fontSize: '50px', color: 'green' }}
+              style={{ width: '70px', height: '70px' }}
               onClick={() => {
                 setShowChatList(!showChatList);
                 dispatch(getChatInfo());
               }}
             />
           ) : (
-            <CommentsDisabledOutlinedIcon
+            <img
+              src={NoChatIcon}
               className="chatIcon"
-              style={{ fontSize: '50px', color: 'green' }}
+              style={{ width: '70px', height: '70px' }}
               onClick={() => {
                 setShowChatList(!showChatList);
               }}
