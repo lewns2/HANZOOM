@@ -61,8 +61,6 @@ public class UserReportHistoryServiceImpl implements UserReportHistoryService {
 
         if(result.equals("승인")) {
             userRepository.plusUserReportedNumber(userReportHistoryUpdateReq.getReported());
-        } else if(result.equals("거절")) {
-            userRepository.minusUserReportedNumber(userReportHistoryUpdateReq.getReported());
         }
     }
 }
