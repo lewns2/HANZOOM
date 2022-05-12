@@ -1,7 +1,14 @@
-importScripts('https://www.gstatic.com/firebasejs/9.8.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/9.8.0/firebase-messaging.js');
+// import { initializeApp } from 'firebase/app';
+// import { getMessaging } from 'firebase/messaging/sw';
+// 9.8.1
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js';
+import {
+  getMessaging,
+  isSupported,
+  onBackgroundMessage,
+} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-messaging.js';
 
-const config = {
+const firebaseApp = initializeApp({
   apiKey: 'AIzaSyDgXmj3E2LXDfu-4jSY2tH1lHlRc-YmV9I',
   authDomain: 'ssafy-103.firebaseapp.com',
   projectId: 'ssafy-103',
@@ -9,10 +16,9 @@ const config = {
   messagingSenderId: '1021924460606',
   appId: '1:1021924460606:web:4f7ce148a1dd1f2a8be96f',
   measurementId: 'G-EM19M4FZ5Q',
-};
+});
 
-firebase.initializeApp(config);
-const messaging = firebase.messaging();
+const messaging = getMessaging(firebaseApp);
 
 //백그라운드 서비스워커 설정
 messaging.onBackgroundMessage(messaging, (payload) => {
