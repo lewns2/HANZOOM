@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { RecipeModal } from '../../components/Recipe/RecipeModal';
 import Slider from 'react-slick';
-import { settings } from '../../constants/slider';
+// import { settings } from '../../constants/slider';
 import sample from '../../assets/images/Initimage.PNG';
 import { display } from '@mui/system';
 import { Axios } from '../../core/axios';
@@ -32,7 +32,7 @@ export const Recipe = (props) => {
   useEffect(() => {
     console.log(location.state);
     Axios.get(`/userIngredient/recipe?ingredients=${location.state}`)
-      .then((res) => (setRecipeList(res.data.slice(0, 15)), setIsPending(true), console.log(res)))
+      .then((res) => (setRecipeList(res.data.slice(0, 52)), setIsPending(true), console.log(res)))
       .catch((err) => console.log(err));
   }, []);
 
@@ -67,10 +67,8 @@ export const Recipe = (props) => {
                             className="recipeContentCard event1"
                             key={content.recipeNo}
                             onClick={() => openModal(content)}>
-                            <div className="recipeCardImgWrap">
-                              <div className="imgHoverEvent">
-                                <img src={content.imagePath} alt="..." />
-                              </div>
+                            <div className="recipeCardImgWrap" id="imgHoverEvent">
+                              <img src={content.imagePath} alt="..." />
                             </div>
                             <div className="hoverBox">
                               <p className="p1">{content.recipeName}</p>
@@ -113,3 +111,49 @@ const SearchNotFoundLottie = (props) => (
     src="https://assets6.lottiefiles.com/packages/lf20_uqfbsoei.json"
   />
 );
+
+const settings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  initialSlide: 0,
+  responsive: [
+    {
+      breakpoint: 1300,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+      },
+    },
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+      },
+    },
+    {
+      breakpoint: 720,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 320,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};

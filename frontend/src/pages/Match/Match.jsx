@@ -7,6 +7,7 @@ import { Axios } from '../../core/axios';
 import { useLocation } from 'react-router';
 
 import './Match.scss';
+import { getAccordionDetailsUtilityClass } from '@mui/material';
 
 export const Match = () => {
   const location = useLocation();
@@ -15,23 +16,39 @@ export const Match = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isComplete, setIsComplete] = useState(false);
   const [matchingRes, setMatchingRes] = useState();
+  // const [url, setUrl] = useState();
 
-  useEffect(() => {
-    // console.log(location.state.recipeNo);
-    // console.log(location.state.recipeName);
-    const handle = setTimeout(() => setIsLoading(false), 8500);
-    Axios.get(`userIngredient/recipe/matching?distance=20&recipeNo=${location.state.recipeNo}`, {
+  const requestData = (url, type) => {
+    console.log(url);
+    Axios.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(
-        (res) => (
-          setMatchingRes(res.data),
-          res.data.matchingList[0].userIngredientMatchingRes.length != 0
-            ? setIsComplete(true)
-            : setIsComplete(false)
-        ),
-      )
+      .then((res) => {
+        console.log(res),
+          type == '자동'
+            ? (setMatchingRes(res.data),
+              res.data.matchingList[0].userIngredientMatchingRes.length != 0
+                ? setIsComplete(true)
+                : setIsComplete(false))
+            : console.log('여기는 선택 매칭');
+      })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    console.log('넘어오는 거', location.state);
+    const handle = setTimeout(() => setIsLoading(false), 8500);
+
+    if (location.state.type == '자동') {
+      // setUrl();
+      let url = `userIngredient/recipe/matching?distance=20&recipeNo=${location.state.recipeNo}`;
+      requestData(url, '자동');
+    } else if (location.state.type == '선택') {
+      // setUrl();
+      // let url = `userIngredient/matching?distance=20&ingredients=${location.state.matchNeeds}`;
+      let url = 'userIngredient/matching?distance=20&ingredients=가지';
+      requestData(url, '선택');
+    }
   }, []);
 
   return (
