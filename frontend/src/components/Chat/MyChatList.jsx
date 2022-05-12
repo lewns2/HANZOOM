@@ -44,22 +44,22 @@ export const MyChatList = (chat) => {
           {chat.chat.userNickname1 === user.userInfo.userNickname ? (
             <img
               src={
-                !chat.chat.userImage1.includes('kakao')
-                  ? chat.chat.userImage1
-                    ? `${BASE_IMG_URL}${chat.chat.userImage1}`
+                !chat.chat.userImage2.includes('kakao')
+                  ? chat.chat.userImage2
+                    ? `${BASE_IMG_URL}${chat.chat.userImage2}`
                     : '/img/basicProfile.png'
-                  : chat.chat.userImage1
+                  : chat.chat.userImage2
               }
               alt="userProfileImage"
             />
           ) : (
             <img
               src={
-                !chat.chat.userImage2.includes('kakao')
-                  ? chat.chat.userImage2
-                    ? `${BASE_IMG_URL}${chat.chat.userImage2}`
+                !chat.chat.userImage1.includes('kakao')
+                  ? chat.chat.userImage1
+                    ? `${BASE_IMG_URL}${chat.chat.userImage1}`
                     : '/img/basicProfile.png'
-                  : chat.chat.userImage2
+                  : chat.chat.userImage1
               }
               alt="userProfileImage"
             />
