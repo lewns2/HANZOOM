@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { settings } from '../../constants/slider';
-import { ContentList } from '../../components/Board/ContentList';
+import { ContentList } from '../../components/Main/ContentList';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Main.scss';
-// import { Footer } from '../../components/Main/Footer';
+import { Feature } from '../../components/Main/Feature';
+import { Banner } from '../../components/Main/Banner';
+import { Effect } from '../../components/Main/Effect';
 import { Axios } from '../../core/axios';
 
 export const Main = () => {
@@ -28,24 +29,17 @@ export const Main = () => {
     getContents();
   }, []);
 
-  const navigate = useNavigate();
-  const loginGo = () => {
-    navigate('/login');
-  };
-  const myIngreGo = () => {
-    navigate('/my-food-ingredients');
-  };
-
   return (
     <>
-      <section id="main1" className="d-flex justify-content-center">
+      {/* <section id="main1" className="d-flex justify-content-center">
         <h1 className="intro d-flex align-items-center">
           냉장고 속 남는 재료, <br /> 이제 버리지 마세요!
         </h1>
         <img src="/img/fridge.png" alt="fridge" id="fridge" />
-      </section>
-
-      <section id="main2" className="d-flex justify-content-center">
+      </section> */}
+      <Banner />
+      <Feature />
+      {/* <section id="main2" className="d-flex justify-content-center">
         <img src="/img/map.png" alt="map" />
         <div className="">
           <h1>내 주변 이웃들과 나누세요!</h1>
@@ -61,9 +55,9 @@ export const Main = () => {
             </button>
           )}
         </div>
-      </section>
-
-      {user.userInfo.length !== 0 ? (
+      </section> */}
+      <Effect />
+      {/* {user.userInfo.length !== 0 ? (
         <section id="main3">
           <h3 className="text-center">인기 게시글</h3>
           <div className="container contentContainer">
@@ -74,8 +68,7 @@ export const Main = () => {
             </Slider>
           </div>
         </section>
-      ) : null}
-      {/* <Footer></Footer> */}
+      ) : null} */}
     </>
   );
 };
