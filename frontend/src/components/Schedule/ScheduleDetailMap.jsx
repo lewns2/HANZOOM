@@ -46,6 +46,8 @@ export const ScheduleDetailMap = (props) => {
           var content = '<div class="bAddr"><div class="adrrName">' + detailAddr + '</div></div>';
           infowindow.setContent(content);
           infowindow.open(map, marker);
+
+          props.setAddress(detailAddr);
         }
       });
     }
