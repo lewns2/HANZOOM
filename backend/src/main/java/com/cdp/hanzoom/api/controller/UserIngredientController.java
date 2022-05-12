@@ -62,13 +62,20 @@ public class UserIngredientController {
         HanZoomUserDetails userDetails = (HanZoomUserDetails) authentication.getDetails();
         String userEmail = userDetails.getUsername();
 
+        boolean newIngredient = false;  // false : 기존에 있는 식재료, true : 새로운 식재료
         UserIngredient userIngredient;
         try {
-            userIngredientService.registerUserIngredient(userIngredientRegisterReq, userEmail);
+            newIngredient = userIngredientService.registerUserIngredient(userIngredientRegisterReq, userEmail);
         } catch (Exception e) {
             e.printStackTrace();
             ResponseEntity.status(400).body(BaseResponseBody.of(500, "DB Transaction Failed"));
         }
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>" + newIngredient);
+
+        // 등록하려는 식재료가 기존에 없는 식재료라면, message로 Pending 리턴
+        if(newIngredient) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Pending"));
+        // 등록하려는 식재료가 기존에 없는 식재료라면, message로 Success 리턴
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface UserIngredientService {
     /** 유저 식재료 정보를 생성하는 registerUserIngredient 입니다. **/
-    void registerUserIngredient(UserIngredientRegisterReq userIngredientRegisterReq, String userEmail);
+    boolean registerUserIngredient(UserIngredientRegisterReq userIngredientRegisterReq, String userEmail);
     /** 유저 식재료 정보를 전체 조회하는 findAllUserIngredient 입니다. **/
     List<UserIngredientFindRes> findAllUserIngredient(String userEmail);
     /** userIngredientNo을 이용하여 유저 식재료 정보(식재료 명 포함)를 조회하는 findUserIngredientByIngredientName 입니다. **/

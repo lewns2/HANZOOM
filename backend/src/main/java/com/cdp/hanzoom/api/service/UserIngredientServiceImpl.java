@@ -48,8 +48,7 @@ public class UserIngredientServiceImpl implements UserIngredientService {
 
     /** 유저 식재료 정보를 생성하는 registerUserIngredient 입니다. **/
     @Override
-    public void registerUserIngredient(UserIngredientRegisterReq userIngredientRegisterReq, String userEmail) {
-
+    public boolean registerUserIngredient(UserIngredientRegisterReq userIngredientRegisterReq, String userEmail) {
         Ingredient ingredient = ingredientRepositorySupport.findByIngredientName(userIngredientRegisterReq.getIngredientName()).orElse(null);
 
         LocalDate purchaseDate = null;
@@ -74,6 +73,7 @@ public class UserIngredientServiceImpl implements UserIngredientService {
                     .build();
 
             pendingIngredientRepository.save(pendingIngredient);
+            return true;
         } else {    // 식재료 종류 테이블에 있는 식재료인 경우
 
 
@@ -86,6 +86,7 @@ public class UserIngredientServiceImpl implements UserIngredientService {
             userIngredient.setExpirationDate(expirationDate);
 
             userIngredientRepository.save(userIngredient);
+            return false;
         }
     }
 
