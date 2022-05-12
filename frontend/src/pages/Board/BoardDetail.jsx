@@ -10,6 +10,11 @@ import { BreakfastDiningRounded } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { changeShow, setRoomId, getChatMessageInfo } from '../../Reducer/chatSlice';
 
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import { Row, Col } from 'react-bootstrap';
+
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 export const BoardDetail = () => {
   const user = useSelector((state) => state.user);
@@ -112,6 +117,42 @@ export const BoardDetail = () => {
     setIngredientNumber(tempNumber);
   };
 
+  // 신고 모달 관련
+  const [report, setReport] = useState(false);
+  const reportOpen = () => {
+    setReport(true);
+  };
+  const reportClose = () => {
+    setReportDescription('');
+    setReport(false);
+  };
+  const [reportDescription, setReportDescription] = useState('');
+  const handleReportDescription = (e) => {
+    setReportDescription(e.target.value);
+  };
+  const handleReport = () => {
+    if (reportDescription === '') {
+      alert('신고 내용을 작성해주세요.');
+      return;
+    } else {
+      Axios.post(
+        '/userReportHistory/register',
+        {
+          content: reportDescription,
+          reported: content.userEmail,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+        .then((res) => {
+          // console.log(res);
+          setReport(false);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <>
       {content && (
@@ -179,7 +220,70 @@ export const BoardDetail = () => {
                   <button id="detailChat" onClick={registerChat}>
                     채팅
                   </button>
-                  <button id="detailReport">신고</button>
+                  <button id="detailReport" onClick={reportOpen}>
+                    신고
+                  </button>
+                  <Modal
+                    open={report}
+                    onClose={reportClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description">
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 400,
+                        bgcolor: 'background.paper',
+                        border: '1px solid #000',
+                        boxShadow: 24,
+                        p: 4,
+                        borderRadius: '20px',
+                        fontFamily: 'GmarketSansBold',
+                      }}>
+                      <Typography
+                        id="modal-modal-title"
+                        variant="h5"
+                        component="h5"
+                        style={{ fontFamily: 'GmarketSansBold', textAlign: 'center' }}>
+                        신고하기
+                      </Typography>
+                      <hr />
+                      <div style={{ fontSize: '15px' }}>
+                        <Row style={{ marginBottom: '3%' }}>
+                          <Col md="4">작성자</Col>
+                          <Col md="8">{userInfo.userNickname}</Col>
+                        </Row>
+                        <Row style={{ marginBottom: '3%' }}>
+                          <Col md="4">신고대상</Col>
+                          <Col md="8">{content.userNickname}</Col>
+                        </Row>
+                        <Row style={{ marginBottom: '3%' }}>
+                          <Col md="4">신고내용</Col>
+                          <Col md="8">
+                            <textarea
+                              style={{
+                                width: '100%',
+                                borderRadius: '5px',
+                                border: 'none',
+                                backgroundColor: '#fffcf2',
+                                minHeight: '6.25em',
+                              }}
+                              onChange={handleReportDescription}></textarea>
+                          </Col>
+                        </Row>
+                      </div>
+                      <div style={{ float: 'right' }}>
+                        <button className="closeBtn" onClick={reportClose}>
+                          닫기
+                        </button>
+                        <button className="reportBtn" onClick={handleReport}>
+                          신고
+                        </button>
+                      </div>
+                    </Box>
+                  </Modal>
                 </div>
               </div>
             </div>
