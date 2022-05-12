@@ -67,7 +67,7 @@ public class AuthController {
         if(passwordEncoder.matches(userPassword, user.getUserPassword())) {
             // 해당 유저의 신고 누적횟수가 3회 이상이면, 이용 제한
             if(userRepositorySupport.findReportedNumber(user.getUserEmail()) > 2) {
-                return ResponseEntity.status(406).body(UserLoginRes.of(406, "Banned User", null));
+                return ResponseEntity.status(403).body(UserLoginRes.of(403, "Banned User", null));
             }
             // 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
             return ResponseEntity.ok(UserLoginRes.of(200, "Success", JwtTokenUtil.getToken(userEmail)));
