@@ -11,7 +11,7 @@ const BannerLayoutRoot = styled('section')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   [theme.breakpoints.up('sm')]: {
-    height: '80vh',
+    height: '75vh',
     minHeight: 500,
     maxHeight: 1300,
   },
@@ -30,10 +30,6 @@ const Background = styled(Box)({
 
 export default function BannerLayout(props) {
   const { sxBackground, children } = props;
-
-  const handleSlideDown = () => {
-    window.scrollTo(0, 600);
-  };
 
   return (
     <BannerLayoutRoot>
@@ -59,14 +55,6 @@ export default function BannerLayout(props) {
           }}
         />
         <Background sx={sxBackground} />
-        <Box
-          height="16"
-          width="12"
-          alt="arrow down"
-          sx={{ position: 'absolute', bottom: 32 }}
-          style={{ cursor: 'pointer' }}
-          onClick={handleSlideDown}
-        />
       </Container>
     </BannerLayoutRoot>
   );

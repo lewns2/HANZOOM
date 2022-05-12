@@ -44,38 +44,44 @@ export const Feature = () => {
           }}
         />
 
-        <div>
-          {/** xs 는 반응형 사이즈에서 차지하는 column의 수를 말함*/}
-          <Grid container spacing={5}>
-            <Grid item xs={12} md={3}>
-              <Box sx={item}>
-                <Box component="img" src={feature} alt="suitcase" sx={image} />
-              </Box>
-            </Grid>
-
-            <Grid item xs={14} md={9}>
-              <Box sx={item}>
-                <Box sx={number}>
-                  <section>
-                    <h1 style={{ paddingTop: '50px' }}>내 주변 이웃들과 나누세요!</h1>
-                    <p>냉장고 속 남는 재료를 필요로 하는 내 주변 이웃들과 나눌 수 있습니다.</p>
-                    <p>그리고 나에게 필요한 식재료를 이웃으로 부터 찾을 수도 있습니다.</p>
-                  </section>
-                </Box>
-
-                {user.userInfo.length !== 0 ? (
-                  <button className="myIngreGo" style={mainButton} onClick={myIngreGo}>
-                    매칭하러 가기 GO
-                  </button>
-                ) : (
-                  <button className="loginGo" style={mainButton} onClick={loginGo}>
-                    한줌 즐기러 가기 GO
-                  </button>
-                )}
-              </Box>
-            </Grid>
+        {/** xs 는 반응형 사이즈에서 차지하는 column의 수를 말함*/}
+        <Grid container spacing={5}>
+          <Grid item xs={12} md={3}>
+            <Box sx={item}>
+              <Box
+                className="featureimage"
+                component="img"
+                src={feature}
+                alt="suitcase"
+                sx={image}
+              />
+            </Box>
           </Grid>
-        </div>
+
+          <Grid item xs={14} md={9}>
+            <Box sx={item}>
+              <Box sx={number}>
+                <section id="main2">
+                  <h1 className="featuretitle" style={{ paddingTop: '20px' }}>
+                    내 주변 이웃들과 나누세요!
+                  </h1>
+                  <p>냉장고 속 남는 재료를 필요로 하는 내 주변 이웃들과 나눌 수 있습니다.</p>
+                  <p>그리고 나에게 필요한 식재료를 이웃으로 부터 찾을 수도 있습니다.</p>
+                </section>
+              </Box>
+
+              {user.userInfo.length !== 0 ? (
+                <button className="myIngreGo" style={mainButton} onClick={myIngreGo}>
+                  매칭하러 가기 GO
+                </button>
+              ) : (
+                <button className="loginGo" style={mainButton} onClick={loginGo}>
+                  한줌 즐기러 가기 GO
+                </button>
+              )}
+            </Box>
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );

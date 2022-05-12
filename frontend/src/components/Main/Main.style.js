@@ -73,9 +73,10 @@ const Featurejs = styled.div`
   }
 `;
 const image = {
-  height: 450,
+  height: '400px',
   my: 1,
 };
+
 const BoardImage = styled.img`
   @media screen and (max-width: 1244px) {
     width: 278px;
