@@ -87,7 +87,6 @@ $speed: 0.8s;
     .chatImage {
       width: 300px;
       height: 300px;
-      border-radius: 150px;
     }
     // 채팅 목록이 빈 경우
     .emptyChat {
@@ -265,6 +264,15 @@ $speed: 0.8s;
     }
     &::-webkit-scrollbar-track {
       background-color: #eee;
+    }
+    .imageWrapper {
+      text-align: center;
+      .messageImage {
+        margin-top: 50px;
+        margin-bottom: 20px;
+        width: 80%;
+        height: 80%;
+      }
     }
     .userMsg {
       margin: 30px 0px;

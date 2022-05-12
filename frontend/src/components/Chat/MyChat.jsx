@@ -34,7 +34,7 @@ export const MyChat = (props) => {
       {console.log(props)}
       <div className={show ? 'myChat showChatList' : 'myChat hideChatList'}>
         <div className="title">
-          MY채팅
+          MY채팅 리스트
           <CloseIcon
             className="closeIcon"
             style={{ fontSize: '28px' }}
