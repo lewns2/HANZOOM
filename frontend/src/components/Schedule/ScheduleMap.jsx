@@ -5,6 +5,7 @@ import { Axios, axios_apis } from '../../core/axios';
 import './Schedule.scss';
 import { max } from 'moment';
 import CloseIcon from '@mui/icons-material/Close';
+import swal from 'sweetalert';
 
 export const ScheduleMap = (props) => {
   const { otherEmail, lat, lng } = props;
@@ -21,6 +22,7 @@ export const ScheduleMap = (props) => {
 
   const [middleLat, setMiddleLat] = useState(null);
   const [middleLng, setMiddleLng] = useState(null);
+  const [usersRadius, setUsersRadius] = useState(null);
 
   const [kakaoMap, setKakaoMap] = useState(null);
   const [kakaoMarker, setKakaoMarker] = useState(null);
@@ -152,9 +154,8 @@ export const ScheduleMap = (props) => {
     });
   };
 
+  // 장소 상세 정보를 클릭하기 위한 함수
   const mapClickListenerSet = (e) => {
-    console.log(e.target.getAttribute('class'));
-
     if (e.target.getAttribute('class') === 'placeUrl') {
       kakao.maps.event.removeListener(kakaoMap, 'click', handler);
     } else {
@@ -164,7 +165,6 @@ export const ScheduleMap = (props) => {
 
   // 맵 클릭 함수
   const mapClickListener = (mouseEvent) => {
-    console.log(mouseEvent.target);
     // 클릭한 위도, 경도 정보를 가져옵니다
     var latlng = mouseEvent.latLng;
 
@@ -173,13 +173,10 @@ export const ScheduleMap = (props) => {
 
     let lat = latlng.getLat();
     let lng = latlng.getLng();
-    console.log(lat);
-    console.log(lng);
 
     props.setLat(lat);
     props.setLng(lng);
 
-    console.log(props);
     if (!props.lat && !props.lng) {
       const tag1 = document.getElementsByClassName('cafe');
       const tag2 = document.getElementsByClassName('subway');
@@ -214,6 +211,24 @@ export const ScheduleMap = (props) => {
       setMiddleLat(lat3);
       setMiddleLng(lng3);
     }
+  };
+
+  const radians = (degrees) => {
+    return (degrees * Math.PI) / 180;
+  };
+  // 두 유저 거리의 반지름을 구하는 함수
+  const getRadius = () => {
+    let radius =
+      6371 *
+      Math.acos(
+        Math.cos(radians(myLat)) *
+          Math.cos(radians(middleLat)) *
+          Math.cos(radians(middleLng) - radians(myLng)) +
+          Math.sin(radians(myLat)) * Math.sin(radians(middleLat)),
+      );
+
+    radius *= 1000; // 미터로 변환
+    setUsersRadius(radius);
   };
 
   const recommendMiddleLoc = () => {
@@ -262,14 +277,27 @@ export const ScheduleMap = (props) => {
   };
 
   const recommendCallback = (result, status) => {
-    console.log(status);
     if (status === kakao.maps.services.Status.OK) {
       console.log(result);
-      var nearPlace = result[0];
+      var nearPlace = null;
+
+      // 일정 반경에 장소가 있는지, 가장 가까운 장소 구하기
+      if (result[0].distance <= usersRadius) nearPlace = result[0];
       for (let i = 1; i < result.length; i++) {
-        if (Number(result[i].distance) < Number(nearPlace.distance)) {
+        if (
+          result[i].distance <= usersRadius &&
+          Number(result[i].distance) < Number(nearPlace.distance)
+        ) {
           nearPlace = result[i];
         }
+      }
+
+      if (nearPlace === null) {
+        swal('근처에 추천 장소가 없습니다.', '  ', 'error', {
+          buttons: false,
+          timer: 1000,
+        });
+        return;
       }
 
       var placeLoc = new kakao.maps.LatLng(nearPlace.y, nearPlace.x);
@@ -308,6 +336,10 @@ export const ScheduleMap = (props) => {
     initMap();
     getMiddleLocation();
   }, [myLat, myLng, otherLat, otherLng]);
+
+  useEffect(() => {
+    getRadius();
+  }, [middleLat, middleLng]);
 
   useEffect(() => {
     if (kakaoMap && kakaoMarker && otherLat && otherLng) {
