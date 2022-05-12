@@ -19,7 +19,8 @@ public interface UserReportHistoryRepository extends JpaRepository<UserReportHis
 
     @Query(value = "select report_no as reportNo, content, created_at as createdAt, reported, reporter, reported_number as reportedNumber, status \t\n" +
             "from user_report_history h join user u \t\n" +
-            "on u.user_email = h.reported ", nativeQuery = true)
+            "on u.user_email = h.reported \t\n" +
+            "order by report_no desc  ", nativeQuery = true)
     List<UserReportHistoryFindAllRes> findAllUserReportHistory();
 
     @Transactional
