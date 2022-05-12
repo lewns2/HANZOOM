@@ -101,9 +101,18 @@ $speed: 0.8s;
         border-top: 1px solid #ccc;
       }
       cursor: pointer;
-      //   margin-bottom: 15px;
       &:hover {
         background-color: #f2d17a;
+        .chatInfo {
+          .chatIngredientList {
+            .chatIngredient {
+              background-color: #fffcf2;
+            }
+          }
+          .chatDelete {
+            display: block;
+          }
+        }
       }
       .emptyImage {
         border-radius: 30px;
@@ -125,7 +134,7 @@ $speed: 0.8s;
           font-size: 18px;
           font-weight: 600;
           margin-right: 7px;
-          margin-bottom: 2px;
+          margin-bottom: 0px;
         }
         // 채팅 시간
         .chatTime {
@@ -135,8 +144,29 @@ $speed: 0.8s;
           padding-top: 6px;
           width: 100px;
         }
+        .chatIngredientList {
+          // margin-right: 4px;
+          width: 240px;
+          display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
+          // font-family: 'GmarketSansMedium';
+          font-size: 12px;
+          .chatIngredient {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin: 0px 5px 0px 0px;
+            background-color: #f2d17a;
+            border-radius: 10px;
+            padding: 2px 5px;
+          }
+        }
         // 채팅 삭제
         .chatDelete {
+          display: none;
           &:hover {
             transform: scale(1.1);
           }

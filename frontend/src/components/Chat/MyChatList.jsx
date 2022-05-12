@@ -9,6 +9,7 @@ export const MyChatList = (chat) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const token = sessionStorage.getItem('jwt-token');
+  const today = new Date();
 
   const showMyChat = (chat) => {
     dispatch(setRoomId(chat.id));
@@ -73,12 +74,30 @@ export const MyChatList = (chat) => {
             {chat.chat.chatMessages === null ? (
               <div className="chatTime"></div>
             ) : (
-              <div className="chatTime">{chat.chat.chatMessages.createdAt.slice(0, 10)}</div>
+              <>
+                {chat.chat.chatMessages.createdAt.slice(0, 4) == today.getFullYear() ? (
+                  <div className="chatTime">
+                    {chat.chat.chatMessages.createdAt.slice(5, 7)}/
+                    {chat.chat.chatMessages.createdAt.slice(8, 10)}{' '}
+                    {chat.chat.chatMessages.createdAt.slice(10, 16)}
+                  </div>
+                ) : (
+                  <div className="chatTime">{chat.chat.chatMessages.createdAt.slice(0, 16)}</div>
+                )}
+              </>
             )}
+            {/* <div className="chatIngredient mx-auto">{chat.chat.ingredientList[0]}</div> */}
             <DeleteIcon
               className="chatDelete ms-auto"
               onClick={() => handleDeleteChat(chat.chat.id)}
             />
+          </div>
+          <div className="chatIngredientList">
+            {chat.chat.ingredientList.map((ingredient, index) => (
+              <span className="chatIngredient" key={index}>
+                {ingredient}
+              </span>
+            ))}
           </div>
           {chat.chat.chatMessages === null ? (
             <div className="chatContent">채팅을 시작해보세요!</div>
