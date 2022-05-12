@@ -37,9 +37,9 @@ export const PositioningMap = (props) => {
     display: 'block',
     position: 'relative',
     top: '0%',
-    width: '400px',
-    height: '400px',
-    padding: '7px',
+    width: '95%',
+    height: '390px',
+    padding: '0px',
   };
 
   ///////////////////
@@ -223,29 +223,24 @@ export const PositioningMap = (props) => {
 
   return (
     <section className="mapWrap">
-      {/* {console.log(userLocName)} */}
-      {/* {console.log(userLat)}
-      {console.log(userLng)} */}
       <div className="searchInput">
-        {/* <input
-          className="form-control"
-          type="text"
-          placeholder="주소를 입력하세요."
-          onChange={(e) => setSearchAddr(e.target.value)}
-          onKeyPress={onKeyPress}
-        /> */}
         {isOpenPost ? (
           <span>
-            <CloseIcon title="닫기" onClick={() => setIsOpenPost(false)}>
+            <CloseIcon className="closeIcon" title="닫기" onClick={() => setIsOpenPost(false)}>
               닫기
             </CloseIcon>
-            <DaumPostcode style={postCodeStyle} autoClose onComplete={onCompletePost} />
+            <DaumPostcode
+              // className="postCode"
+              style={postCodeStyle}
+              autoClose
+              onComplete={onCompletePost}
+            />
           </span>
-        ) : null}
-
-        <button className="" onClick={toggle}>
-          주소로 검색
-        </button>
+        ) : (
+          <button className="searchButton" onClick={toggle}>
+            주소로 검색
+          </button>
+        )}
       </div>
       <div id="map" style={{ width: '100%', height: '400px' }}></div>
 

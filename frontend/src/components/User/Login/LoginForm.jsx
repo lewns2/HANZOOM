@@ -61,17 +61,25 @@ export const LoginForm = () => {
         });
         navigate('/');
       })
-      .catch(() => {
-        swal(
-          '로그인 실패',
-          '비밀 번호가 일치 하지 않습니다. \n비밀 번호를 다시 입력해주세요.',
-          'error',
-          {
+      .catch((err) => {
+        console.log('>>>>>>>>>>>>>>>', err.response.data.statusCode);
+        if (err.response.data.statusCode === 401) {
+          swal(
+            '로그인 실패',
+            '비밀 번호가 일치 하지 않습니다. \n비밀 번호를 다시 입력해주세요.',
+            'error',
+            {
+              buttons: false,
+              timer: 2000,
+            },
+          );
+          passwordInput.current.focus();
+        } else if (err.response.data.statusCode === 403) {
+          swal('로그인 실패', '신고 최대 횟수(3회) 초과로\n사용 불가한 계정입니다.', 'error', {
             buttons: false,
             timer: 2000,
-          },
-        );
-        passwordInput.current.focus();
+          });
+        }
       });
   };
 
