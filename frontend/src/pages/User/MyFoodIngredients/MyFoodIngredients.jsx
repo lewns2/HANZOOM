@@ -284,7 +284,7 @@ export const MyFoodIngredients = () => {
                         </Link>
                       </button>
                       <button className="ingreBtn mt-3" onClick={goMatching}>
-                        <Link to={'/match'} state={matchNeeds}>
+                        <Link to="/match" state={{ type: '선택', matchNeeds: checkedNeeds }}>
                           선택 매칭
                         </Link>
                       </button>

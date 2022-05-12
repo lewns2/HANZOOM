@@ -73,10 +73,10 @@
   background-color: white;
   cursor: pointer;
   .recipeCardImgWrap {
-    width: 100%;
-    padding: 5%;
+    // width: 100%;
+    // padding: 5%;
     img {
-      width: 100%;
+      width: 300px;
       height: 300px;
       border-radius: 12px;
     }
@@ -85,13 +85,13 @@
 
 /* 마우스호버 이벤트 관련*/
 
-.imgHoverEvent {
+#imgHoverEvent {
   position: relative;
   overflow: hidden;
   display: inline-block;
 }
 
-.imgHoverEvent .hoverBox {
+#imgHoverEvent .hoverBox {
   position: absolute;
   top: 0;
   left: 0;
@@ -129,7 +129,7 @@
   align-items: center;
 
   .recipeFormWrap {
-    width: 120vh;
+    width: 100%;
     padding-top: 40px;
     padding-left: 40px;
     padding-right: 40px;
@@ -174,23 +174,28 @@
         padding: 20px 20px 20px 20px;
         .recipeOrder {
           display: flex;
-          .recipeIndex {
-            font-size: 20px;
-            color: white;
-            padding: 20px 20px 20px 20px;
-            width: 70px;
-            height: 70px;
-            background: #74b243;
-            border: 1px solid #68a13a;
-            border-radius: 50%;
-          }
-          .recipeDescription {
-            text-align: left;
-            font-size: 20px;
-            padding: 20px 20px 20px 20px;
+          justify-content: center;
+          margin-bottom: 30px;
+          .recipeText {
+            display: flex;
+            .recipeIndex {
+              font-size: 20px;
+              color: white;
+              padding: 20px 20px 20px 20px;
+              width: 70px;
+              height: 70px;
+              background: #74b243;
+              border: 1px solid #68a13a;
+              border-radius: 50%;
+            }
+            .recipeDescription {
+              text-align: left;
+              font-size: 20px;
+              padding: 20px 20px 20px 20px;
+            }
           }
           .recipeImg {
-            max-width: 50%;
+            max-width: 100%;
             padding: 20px 20px 20px 20px;
             border-radius: 2rem;
           }

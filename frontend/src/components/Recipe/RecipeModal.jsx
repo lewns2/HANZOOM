@@ -16,7 +16,9 @@ export const RecipeModal = (props) => {
             <div className="recipeModalTitle">
               <h2>{info.recipeName}</h2>
               <div>
-                <Link to="/match" state={{ recipeNo: info.recipeNo, recipeName: info.recipeName }}>
+                <Link
+                  to="/match"
+                  state={{ type: '자동', recipeNo: info.recipeNo, recipeName: info.recipeName }}>
                   <button className="matchingBtn">자동매칭</button>
                 </Link>
               </div>
@@ -37,9 +39,11 @@ export const RecipeModal = (props) => {
                 {info.recipe.map((content, key) => (
                   <>
                     <div key={key} className="recipeOrder row">
-                      <p className="recipeIndex col-1">{key + 1}</p>
-                      <p className="recipeDescription col-5">{content.description}</p>
-                      <img className="recipeImg col-6" src={content.imagePath}></img>
+                      <div className="recipeText col-lg-6">
+                        <p className="recipeIndex">{key + 1}</p>
+                        <p className="recipeDescription">{content.description}</p>
+                      </div>
+                      <img className="recipeImg col-lg-6" src={content.imagePath}></img>
                     </div>
                   </>
                 ))}
