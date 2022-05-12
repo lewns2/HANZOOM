@@ -55,4 +55,11 @@ public class UserRepositorySupport {
         if(user == null) return Optional.empty();
         return Optional.ofNullable(user);
     }
+
+    public int findReportedNumber(String userEmail) {
+        int reportedNumber = jpaQueryFactory.select(qUser.reportedNumber).from(qUser)
+                .where(qUser.userEmail.eq(userEmail)).fetchOne();
+
+        return reportedNumber;
+    }
 }

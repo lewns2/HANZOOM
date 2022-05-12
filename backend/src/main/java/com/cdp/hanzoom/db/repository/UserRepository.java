@@ -24,12 +24,4 @@ public interface UserRepository extends JpaRepository<User, String> {
             "set reported_number = reported_number + 1\n" +
             "where user_email = :userEmail ", nativeQuery = true)
     void plusUserReportedNumber(@Param("userEmail") String userEmail);
-
-    @Modifying
-    @Transactional
-    @Query(value = "update user\n" +
-            "set reported_number = reported_number - 1\n" +
-            "where user_email = :userEmail ", nativeQuery = true)
-    void minusUserReportedNumber(@Param("userEmail") String userEmail);
-
 }
