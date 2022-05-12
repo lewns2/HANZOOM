@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
-
 export const ContentList = (props) => {
   const navigate = useNavigate();
   const moveToDetail = (num) => {
@@ -10,7 +8,7 @@ export const ContentList = (props) => {
   return (
     <div
       className="contentCard"
-      style={{ margin: '0 auto' }}
+      style={{ margin: '0 auto', marginBottom: '2px', marginTop: '2px' }}
       key={props.content.boardNo}
       onClick={() => moveToDetail(props.content.boardNo)}>
       {/*  이미지  */}
@@ -18,6 +16,7 @@ export const ContentList = (props) => {
         <img src={`${BASE_IMG_URL}${props.content.imagePath}`} className="cardImg" alt="..." />
       </div>
       {/* 본문 */}
+
       <div className="card_body">
         {/* 제목, 거래 상태 */}
         <div className="d-flex" style={{ width: '100%' }}>
@@ -28,7 +27,7 @@ export const ContentList = (props) => {
                 : props.content.title}
             </p>
           </div>
-          <div className="">
+          <div className="state">
             <p className="status">{props.content.status}</p>
           </div>
         </div>
