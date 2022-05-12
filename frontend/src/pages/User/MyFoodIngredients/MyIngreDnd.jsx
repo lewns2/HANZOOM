@@ -6,6 +6,8 @@ import { FoodModal } from './FoodModal';
 import swal from 'sweetalert';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import { Grid } from '@mui/material';
+import { Col } from 'react-bootstrap';
 
 export const MyIngreDnd = (props) => {
   const { column, tasks, setState, state } = props;
@@ -43,75 +45,65 @@ export const MyIngreDnd = (props) => {
   };
 
   return (
-    <div>
-      <div className="d-flex justify-content-between">
+    <Col md={4}>
+      <div className="d-flex justify-content-center px-4">
         <h2>{column.title}</h2>
         {column.title === 'MY 식재료' ? (
-          <Fab
-            sx={{
-              backgroundColor: '#f7c343',
-              height: '10px',
-              width: '10px',
-              padding: '12px',
-              '&:hover': {
-                backgroundColor: '#000',
-                color: '#f7c343',
-              },
-            }}
-            aria-label="add"
-            onClick={openModal}>
-            <AddIcon />
-          </Fab>
+          <button className="addFood" onClick={openModal}>
+            +
+          </button>
         ) : null}
 
         <FoodModal open={modalOpen} close={closeModal} header="식재료 등록" />
       </div>
-      <Droppable droppableId={column.id}>
-        {(provided, snapshot) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            // isDraggingOver={snapshot.isDraggingOver}
-          >
-            {tasks.map((task, index) => (
-              <div key={index}>
-                <FoodIngreList
-                  task={task}
-                  index={index}
-                  state={state}
-                  setState={setState}
-                  checkedIngre={checkedIngre}
-                  setCheckedIngre={setCheckedIngre}
-                  checkedBSIngre={checkedBSIngre}
-                  setCheckedBSIngre={setCheckedBSIngre}
-                />
-              </div>
-            ))}
-            {provided.placeholder}
-          </div>
+      <div className="ingreBody">
+        <Droppable droppableId={column.id}>
+          {(provided, snapshot) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              // isDraggingOver={snapshot.isDraggingOver}
+            >
+              {tasks.map((task, index) => (
+                <div key={index}>
+                  <FoodIngreList
+                    task={task}
+                    index={index}
+                    state={state}
+                    setState={setState}
+                    checkedIngre={checkedIngre}
+                    setCheckedIngre={setCheckedIngre}
+                    checkedBSIngre={checkedBSIngre}
+                    setCheckedBSIngre={setCheckedBSIngre}
+                  />
+                </div>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+        {column.title === 'MY 식재료' ? (
+          <button className="ingreBtn mt-3" onClick={clickEvent}>
+            {checkedIngre.length ? (
+              <Link to={'/recipe'} state={checkedIngre}>
+                레시피 추천
+              </Link>
+            ) : (
+              <div>레시피 추천</div>
+            )}
+          </button>
+        ) : (
+          <button className="ingreBtn mt-3" onClick={clickEvent2}>
+            {checkedBSIngre.length ? (
+              <Link to={'/board/write'} state={checkedBSIngre}>
+                교환 / 나눔 등록
+              </Link>
+            ) : (
+              <div>교환 / 나눔 등록</div>
+            )}
+          </button>
         )}
-      </Droppable>
-      {column.title === 'MY 식재료' ? (
-        <button className="ingreBtn" onClick={clickEvent}>
-          {checkedIngre.length ? (
-            <Link to={'/recipe'} state={checkedIngre}>
-              레시피 추천
-            </Link>
-          ) : (
-            <div>레시피 추천</div>
-          )}
-        </button>
-      ) : (
-        <button className="ingreBtn" onClick={clickEvent2}>
-          {checkedBSIngre.length ? (
-            <Link to={'/board/write'} state={checkedBSIngre}>
-              교환 / 나눔 등록
-            </Link>
-          ) : (
-            <div>교환 / 나눔 등록</div>
-          )}
-        </button>
-      )}
-    </div>
+      </div>
+    </Col>
   );
 };

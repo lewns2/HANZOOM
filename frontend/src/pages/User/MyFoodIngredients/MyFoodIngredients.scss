@@ -1,78 +1,65 @@
 #myFoodIngredients {
   padding: 5%;
-  #myIngre {
-    h3 {
-      text-align: center;
-      @media only screen and (max-width: 480px) {
-        font-size: 15px;
-      }
-    }
-    .addFood {
-      float: right;
-      border-radius: 50%;
-      background-color: #f7c343;
-      border: 2px solid #f7c343;
-    }
-    .ingreBody {
-      // background-color: #fffcf2;
-      background-color: pink;
-      border-radius: 15px;
-      padding: 10%;
-      margin: 5%;
-    }
-  }
-  #barterShare {
-    h3 {
-      text-align: center;
-      @media only screen and (max-width: 480px) {
-        font-size: 15px;
-      }
-    }
-    .ingreBody {
-      // background-color: #fffcf2;
-      background-color: pink;
-      border-radius: 15px;
-      padding: 10%;
-      margin: 5%;
-    }
-  }
-  #needs {
-    h2 {
-      text-align: center;
-      @media only screen and (max-width: 480px) {
-        font-size: 15px;
-      }
-    }
-    .addNeeds {
-      float: right;
-      border-radius: 50%;
-      background-color: #f7c343;
-      border: 2px solid #f7c343;
-    }
-    .ingreBody {
-      // background-color: #fffcf2;
-      background-color: pink;
-      border-radius: 15px;
-      padding: 10%;
-      margin: 5%;
-    }
-  }
-  .ingreBtn {
-    margin: 0 auto;
-    display: block;
-    padding: 6px 12px;
+  .addFood {
+    float: right;
+    border-radius: 50%;
     background-color: #f7c343;
     border: 2px solid #f7c343;
-    border-radius: 5px;
-    box-shadow: 0 4px 4px -4px #777;
-    a {
-      color: black;
-    }
-    a:hover {
-      color: black;
+  }
+
+  h2 {
+    text-align: center;
+    margin: auto;
+    @media only screen and (max-width: 480px) {
+      font-size: 15px;
     }
   }
-  .headWrap {
-    height: 30px;
+  .ingreBody {
+    // background-color: #fffcf2;
+    background-color: pink;
+    border-radius: 15px;
+    padding: 5%;
+    margin: 5%;
   }
+}
+#needs {
+  h2 {
+    text-align: center;
+    margin: auto;
+    @media only screen and (max-width: 480px) {
+      font-size: 15px;
+    }
+  }
+  .addNeeds {
+    float: right;
+    border-radius: 50%;
+    background-color: #f7c343;
+    border: 2px solid #f7c343;
+  }
+  .ingreBody {
+    // background-color: #fffcf2;
+    background-color: pink;
+    border-radius: 15px;
+    padding: 5%;
+    margin: 5%;
+  }
+}
+.ingreBtn {
+  margin: 0 auto;
+  display: block;
+  padding: 6px 12px;
+  background-color: #f7c343;
+  border: 2px solid #f7c343;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px -4px #777;
+  a {
+    color: black;
+  }
+  a:hover {
+    color: black;
+  }
+}
+
+#myBoard {
+  padding: 5%;
 }

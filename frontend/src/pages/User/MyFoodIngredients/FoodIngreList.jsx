@@ -84,27 +84,32 @@ export const FoodIngreList = (props) => {
   return (
     <>
       {task.type === '필요' && (
-        <div>
+        <div className="d-flex align-items-center px-4">
           <input
+            className="me-3"
             type="checkbox"
             onChange={(e) =>
               handleNeedsCheck(e.target.checked, task.ingredientName, task.userIngredientNo)
             }
           />
           {task.ingredientName}
-          <EditIcon onClick={openModal4} style={{ cursor: 'pointer' }} />
-          <FoodModal
-            open={modalOpen4}
-            close={closeModal4}
-            header="필요목록 수정"
-            ingre={task}
-            state={state}
-            setState={setState}
-          />
-          <DeleteIcon
-            onClick={() => deleteFoodIngre(task.userIngredientNo)}
-            style={{ cursor: 'pointer' }}
-          />
+          {task.boardNo ? null : (
+            <span className="ms-auto">
+              <EditIcon onClick={openModal4} style={{ cursor: 'pointer' }} />
+              <FoodModal
+                open={modalOpen4}
+                close={closeModal4}
+                header="필요목록 수정"
+                ingre={task}
+                state={state}
+                setState={setState}
+              />
+              <DeleteIcon
+                onClick={() => deleteFoodIngre(task.userIngredientNo)}
+                style={{ cursor: 'pointer' }}
+              />
+            </span>
+          )}
         </div>
       )}
       {(task.type === '일반' || task.type === '교환/나눔') && (
@@ -114,17 +119,20 @@ export const FoodIngreList = (props) => {
           key={task.userIngredientNo}>
           {(provided, snapshot) => (
             <div
+              className="d-flex align-items-center px-4"
 
-            // isDragging={snapshot.isDragging} // 드래그 중일 때의 스타일링을 위해 snapshot 속성을 외부로 가져옴
+              // isDragging={snapshot.isDragging} // 드래그 중일 때의 스타일링을 위해 snapshot 속성을 외부로 가져옴
             >
               {task.type === '일반' && (
                 <input
+                  className="me-3"
                   type="checkbox"
                   onChange={(e) => handleCheck(e.target.checked, task.ingredientName)}
                 />
               )}
               {task.type === '교환/나눔' && (
                 <input
+                  className="me-3"
                   type="checkbox"
                   onChange={(e) =>
                     handleBSCheck(e.target.checked, task.ingredientName, task.userIngredientNo)
@@ -138,8 +146,9 @@ export const FoodIngreList = (props) => {
                 ref={provided.innerRef}>
                 {task.ingredientName}
               </span>
+
               {task.type === '교환/나눔' ? null : (
-                <span>
+                <span className="ms-auto">
                   <EditIcon onClick={openModal3} style={{ cursor: 'pointer' }} />
                   <FoodModal
                     open={modalOpen3}
