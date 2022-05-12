@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import mylocation from '../../assets/images/mylocation.png';
 
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
@@ -12,7 +11,8 @@ export const MatchMap = (props) => {
 
   useEffect(() => {
     console.log(matchingArr);
-    // 1. 지도 객체 생성
+
+    /*1. 지도 객체 생성*/
     const container = document.getElementById('matchMap');
     const options = {
       center: new kakao.maps.LatLng(userInfo.lat, userInfo.lng),
@@ -20,23 +20,45 @@ export const MatchMap = (props) => {
     };
     const map = new kakao.maps.Map(container, options);
 
-    // 2. 내 위치 마커 생성
-    var markerPosition = new kakao.maps.LatLng(userInfo.lat, userInfo.lng);
-    var marker = new kakao.maps.Marker({
-      position: markerPosition,
-    });
-    marker.setMap(map);
+    /* 2. 내 위치 마커 생성 */
 
-    // 3. 상대방 마커 생성
+    var myImgUrl;
+    if (userInfo.userImage == null) {
+      myImgUrl = '/img/basicProfile.png';
+    } else {
+      myImgUrl = `${BASE_IMG_URL}${userInfo.userImage}`;
+    }
+    var content = '<img class="userImg" src=' + myImgUrl + '></img>';
+    var markerPosition = new kakao.maps.LatLng(userInfo.lat, userInfo.lng);
+    var customOverlay = new kakao.maps.CustomOverlay({
+      position: markerPosition,
+      content: content,
+    });
+    customOverlay.setMap(map);
+
+    /* 3. 상대방 마커 생성 */
+
     matchingArr.map((value) => {
       value.userIngredientMatchingRes.map((findUser) => {
-        // console.log(findUser);
-        var imgSrc = BASE_IMG_URL + findUser.imagePath;
-        console.log(imgSrc);
+        var otherImgUrl;
+        if (findUser.imagePath == null) {
+          otherImgUrl = '/img/basicProfile.png';
+        } else {
+          otherImgUrl = `${BASE_IMG_URL}${findUser.userImage}`;
+        }
+
+        var content = '<img class="userImg" src=' + otherImgUrl + '></img>';
         var markerPosition = new kakao.maps.LatLng(findUser.lat, findUser.lng);
-        var marker = new kakao.maps.Marker({
+
+        var otherMarker = new kakao.maps.Marker({
           position: markerPosition,
+          content: `${BASE_IMG_URL}${findUser.userImage}`,
         });
+
+        otherMarker.setMap(map);
+
+        var IngredientImg = BASE_IMG_URL + findUser.imagePath;
+
         var contents = ` 
                     <style>
                         .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
@@ -57,7 +79,7 @@ export const MatchMap = (props) => {
                         <div>
                         <div class="body">
                             <div class="img">
-                            <img src=${imgSrc} width="73" height ="70">
+                            <img src=${IngredientImg} width="73" height ="70">
                             </div>
                             <div class="desc">
                             <div class="detail">닉네임 :${findUser.userNickname}</div>
@@ -74,17 +96,13 @@ export const MatchMap = (props) => {
           position: markerPosition,
           content: contents, // 인포윈도우에 표시할 내용
         });
-        (function (marker, infowindow) {
-          kakao.maps.event.addListener(marker, 'mouseover', function () {
-            infowindow.setMap(map);
-          });
-          kakao.maps.event.addListener(marker, 'mouseout', function () {
-            infowindow.setMap(null);
-          });
-        })(marker, infowindow);
 
-        marker.setMap(map);
-        markerList.push(marker);
+        kakao.maps.event.addListener(otherMarker, 'mouseover', function (mouseEvent) {
+          infowindow.setMap(map);
+        });
+        kakao.maps.event.addListener(otherMarker, 'mouseout', function (mouseEvent) {
+          infowindow.setMap(null);
+        });
       });
     });
   }, []);

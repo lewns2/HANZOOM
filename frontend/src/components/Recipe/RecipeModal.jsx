@@ -25,13 +25,13 @@ export const RecipeModal = (props) => {
             </div>
             <hr></hr>
             <div className="recipeModalBody">
-              <h3>재료</h3>
+              <h3 className="recipeIngreTitle">재료</h3>
               <div className="recipeIngredients">
                 {info.ingredients.map((ingredient, key) => (
-                  <div key={key}>
+                  <p className="recipeIngredient" key={key}>
                     &nbsp;
-                    {ingredient.name} {ingredient.weight}&nbsp; /
-                  </div>
+                    {ingredient.name} {ingredient.weight}&nbsp;
+                  </p>
                 ))}
               </div>
               <div className="recipeImgWrap">
