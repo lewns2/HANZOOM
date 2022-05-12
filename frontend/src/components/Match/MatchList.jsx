@@ -6,18 +6,48 @@ import Box from '@mui/material/Box';
 import Slider from 'react-slick';
 import { settings } from '../../constants/slider';
 import sample from '../../assets/images/need.PNG';
-import { RestoreOutlined } from '@mui/icons-material';
+import { RestoreOutlined, SwapCallsTwoTone } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
 export const MatchList = (props) => {
   const [selectedType, setSelectedType] = useState('나눔');
+  const [isMove, setIsMove] = useState(true);
+  const navigate = useNavigate();
   const matchingArr = props.matchArr;
 
   const handleChange = (e) => {
     // console.log(e.target.value);
     setSelectedType(e.target.value);
   };
+
+  const handleClick = (num) => {
+    console.log(num);
+    setIsMove(true);
+    swal('해당 게시글로 이동하시겠습니까?', {
+      buttons: {
+        cancel: '아니오',
+        catch: {
+          text: '이동할래요',
+          value: 'move',
+        },
+      },
+    }).then((value) => {
+      switch (value) {
+        case 'move':
+          setIsMove(false);
+          break;
+
+        default:
+          break;
+      }
+    });
+    if (!isMove) {
+      navigate(`/board/${num}`);
+    }
+  };
+
   useEffect(() => {}, [selectedType]);
 
   const renderList = (type) => {
@@ -30,7 +60,9 @@ export const MatchList = (props) => {
         shareResult.push(
           <div key={i} className="matchContentCard">
             <div className="matchCardImgWrap">
-              <img src={`${BASE_IMG_URL}${it.imagePath}`}></img>
+              <img
+                src={`${BASE_IMG_URL}${it.imagePath}`}
+                onClick={() => handleClick(it.boardNo)}></img>
             </div>
             <p>{it.userNickname}</p>
           </div>,
@@ -39,7 +71,9 @@ export const MatchList = (props) => {
         exchangeResult.push(
           <div key={i} className="matchContentCard">
             <div className="matchCardImgWrap">
-              <img src={sample}></img>
+              <img
+                src={`${BASE_IMG_URL}${it.imagePath}`}
+                onClick={() => handleClick(it.boardNo)}></img>
             </div>
             <p>{it.userNickname}</p>
           </div>,
