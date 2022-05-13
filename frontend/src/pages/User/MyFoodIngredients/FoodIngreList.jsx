@@ -84,7 +84,7 @@ export const FoodIngreList = (props) => {
   return (
     <>
       {task.type === '필요' && (
-        <div className="d-flex align-items-center px-4">
+        <div className="d-flex align-items-center px-4 py-1">
           <input
             className="me-3"
             type="checkbox"
@@ -92,23 +92,27 @@ export const FoodIngreList = (props) => {
               handleNeedsCheck(e.target.checked, task.ingredientName, task.userIngredientNo)
             }
           />
-          {task.ingredientName}
-          {task.boardNo ? null : (
-            <span className="ms-auto">
-              <EditIcon onClick={openModal4} style={{ cursor: 'pointer' }} />
-              <FoodModal
-                open={modalOpen4}
-                close={closeModal4}
-                header="필요목록 수정"
-                ingre={task}
-                state={state}
-                setState={setState}
-              />
-              <DeleteIcon
-                onClick={() => deleteFoodIngre(task.userIngredientNo)}
-                style={{ cursor: 'pointer' }}
-              />
-            </span>
+          {task.boardNo ? (
+            <span style={{ color: '#777' }}>{task.ingredientName}</span>
+          ) : (
+            <>
+              {task.ingredientName}
+              <span className="ms-auto">
+                <EditIcon onClick={openModal4} style={{ cursor: 'pointer' }} />
+                <FoodModal
+                  open={modalOpen4}
+                  close={closeModal4}
+                  header="필요목록 수정"
+                  ingre={task}
+                  state={state}
+                  setState={setState}
+                />
+                <DeleteIcon
+                  onClick={() => deleteFoodIngre(task.userIngredientNo)}
+                  style={{ cursor: 'pointer' }}
+                />
+              </span>
+            </>
           )}
         </div>
       )}
@@ -119,7 +123,7 @@ export const FoodIngreList = (props) => {
           key={task.userIngredientNo}>
           {(provided, snapshot) => (
             <div
-              className="d-flex align-items-center px-4"
+              className="d-flex align-items-center px-4 py-1"
 
               // isDragging={snapshot.isDragging} // 드래그 중일 때의 스타일링을 위해 snapshot 속성을 외부로 가져옴
             >
