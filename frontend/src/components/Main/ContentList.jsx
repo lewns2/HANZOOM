@@ -1,10 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
 export const ContentList = (props) => {
-  console.log(props);
   const navigate = useNavigate();
   const moveToDetail = (num) => {
     navigate(`/board/${num}`);
