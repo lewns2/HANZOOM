@@ -263,7 +263,7 @@ public class BoardServiceImpl implements BoardService{
         for(int i=0; i<userIngredients.size(); i++) {
             UserIngredient userIngredient = userIngredients.get(i);
             userIngredient.setBoardNo(null);
-            userIngredient.setType("일반");
+            if(!("필요").equals(userIngredient.getType())) userIngredient.setType("일반");
             userIngredientRepository.save(userIngredient);
         }
     }
