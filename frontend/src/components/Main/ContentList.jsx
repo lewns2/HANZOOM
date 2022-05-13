@@ -1,6 +1,10 @@
 import { useNavigate } from 'react-router-dom';
+
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
+
 export const ContentList = (props) => {
+  console.log(props);
   const navigate = useNavigate();
   const moveToDetail = (num) => {
     navigate(`/board/${num}`);
@@ -21,11 +25,7 @@ export const ContentList = (props) => {
         {/* 제목, 거래 상태 */}
         <div className="d-flex" style={{ width: '100%' }}>
           <div className="cardTitle">
-            <p>
-              {props.content.title.length > 18
-                ? props.content.title.slice(0, 18) + '...'
-                : props.content.title}
-            </p>
+            <p className="card_Ptag">{props.content.title}</p>
           </div>
           <div className="state">
             <p className="status">{props.content.status}</p>
@@ -46,9 +46,11 @@ export const ContentList = (props) => {
         </div>
 
         {/* 좋아요 표시 */}
-        <div className="likeBtn" style={{ visibility: props.content.like ? 'visible' : 'hidden' }}>
-          좋아요 버튼
-        </div>
+        {props.content.like ? (
+          <AiFillHeart className="detailLike" />
+        ) : (
+          <AiOutlineHeart className="detailUnLike" />
+        )}
       </div>
     </div>
   );
