@@ -9,6 +9,12 @@ header {
       margin-right: 10px;
     }
   }
+  @media only screen and (max-width: 991px) {
+    a {
+      display: block;
+      width: 100%;
+    }
+  }
 
   .logo {
     height: 50px;
