@@ -16,4 +16,6 @@ public class UserLoginReq {
 	String userEmail;
 	@ApiModelProperty(name="유저 Password", example="ssafy11!")
 	String userPassword;
+	@ApiModelProperty(name="브라우저 토큰", example="f61Hby...")
+	String browserToken;
 }
