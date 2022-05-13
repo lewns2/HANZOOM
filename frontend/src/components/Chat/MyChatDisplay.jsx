@@ -282,11 +282,11 @@ export const MyChatDisplay = (props) => {
                                   <div className="profileImg">
                                     <img
                                       src={
-                                        !message.senderImage.includes('kakao')
-                                          ? message.senderImage
-                                            ? `${BASE_IMG_URL}${message.senderImage}`
-                                            : '/img/basicProfile.png'
-                                          : message.senderImage
+                                        message.senderImage
+                                          ? message.senderImage.includes('kakao')
+                                            ? message.senderImage
+                                            : `${BASE_IMG_URL}${message.senderImage}`
+                                          : '/img/basicProfile.png'
                                       }
                                       alt=""
                                     />
@@ -298,11 +298,11 @@ export const MyChatDisplay = (props) => {
                                 <div className="profileImg">
                                   <img
                                     src={
-                                      !message.senderImage.includes('kakao')
-                                        ? message.senderImage
-                                          ? `${BASE_IMG_URL}${message.senderImage}`
-                                          : '/img/basicProfile.png'
-                                        : message.senderImage
+                                      message.senderImage
+                                        ? message.senderImage.includes('kakao')
+                                          ? message.senderImage
+                                          : `${BASE_IMG_URL}${message.senderImage}`
+                                        : '/img/basicProfile.png'
                                     }
                                     alt=""
                                   />
@@ -346,11 +346,11 @@ export const MyChatDisplay = (props) => {
                                 <div className="profileImg">
                                   <img
                                     src={
-                                      !m.senderImage.includes('kakao')
-                                        ? m.senderImage
-                                          ? `${BASE_IMG_URL}${m.senderImage}`
-                                          : '/img/basicProfile.png'
-                                        : m.senderImage
+                                      m.senderImage
+                                        ? m.senderImage.includes('kakao')
+                                          ? m.senderImage
+                                          : `${BASE_IMG_URL}${m.senderImage}`
+                                        : '/img/basicProfile.png'
                                     }
                                     alt=""
                                   />
@@ -361,11 +361,11 @@ export const MyChatDisplay = (props) => {
                                 <div className="profileImg">
                                   <img
                                     src={
-                                      !m.senderImage.includes('kakao')
-                                        ? m.senderImage
-                                          ? `${BASE_IMG_URL}${m.senderImage}`
-                                          : '/img/basicProfile.png'
-                                        : m.senderImage
+                                      m.senderImage
+                                        ? m.senderImage.includes('kakao')
+                                          ? m.senderImage
+                                          : `${BASE_IMG_URL}${m.senderImage}`
+                                        : '/img/basicProfile.png'
                                     }
                                     alt=""
                                   />
