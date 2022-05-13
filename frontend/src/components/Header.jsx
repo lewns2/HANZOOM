@@ -96,13 +96,13 @@ export const Header = () => {
             </div>
           ) : null}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
+          <Navbar.Collapse id="responsive-navbar-nav" style={{ textAlign: 'center' }}>
             <Nav className="nav-menu ms-auto">
-              {!beforeLoginPage && (
+              {/* {!beforeLoginPage && (
                 <Link to="/board" onClick={(event) => boardHandler(event)}>
                   게시판
                 </Link>
-              )}
+              )} */}
               {user.userInfo.length == 0 ? (
                 !beforeLoginPage && (
                   <>
@@ -114,11 +114,14 @@ export const Header = () => {
                 )
               ) : (
                 <>
-                  <Link to="/martmap">마트맵</Link>
+                  {/* <Link to="/martmap">마트맵</Link> */}
                   <Link to="/my-food-ingredients">MY식재료</Link>
+                  <Link to="/board" onClick={(event) => boardHandler(event)}>
+                    게시판
+                  </Link>
                   <Link to="/my-page">MY페이지</Link>
-                  {user.userInfo.userNickname === 'admin' && <Link to="/admin">관리자페이지</Link>}
-                  <Link to="/" onClick={logout}>
+                  {user.userInfo.userNickname === 'admin' && <Link to="/admin">관리자</Link>}
+                  <Link to="/" onClick={logout} style={{ marginRight: '0' }}>
                     로그아웃
                   </Link>
                 </>
