@@ -62,7 +62,6 @@ export const LoginForm = () => {
         navigate('/');
       })
       .catch((err) => {
-        console.log('>>>>>>>>>>>>>>>', err.response.data.statusCode);
         if (err.response.data.statusCode === 401) {
           swal(
             '로그인 실패',
