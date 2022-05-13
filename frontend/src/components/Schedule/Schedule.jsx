@@ -7,6 +7,9 @@ import { axios_apis } from '../../core/axios';
 import swal from 'sweetalert';
 import { useSelector } from 'react-redux';
 
+import 'react-calendar/dist/Calendar.css'; // css import
+import './ReactCalendar.scss';
+
 export const Schedule = (props) => {
   const { otherEmail, boardNo } = props;
 
@@ -115,7 +118,11 @@ export const Schedule = (props) => {
         <div className="scheduleItems d-flex justify-content-center align-items-center">
           <div className="row">
             <div className="scheduleDate col-lg-5 d-flex justify-content-center">
-              <Calendar onChange={setDate} value={date} />
+              <Calendar
+                onChange={setDate}
+                value={date}
+                formatDay={(locale, date) => moment(date).format('DD')}
+              />
               {authority && (
                 <div className="schecduleTime d-flex">
                   <div className="scheduleHour">
@@ -144,11 +151,11 @@ export const Schedule = (props) => {
           </div>
         </div>
         <div className="d-flex justify-content-center" style={{ marginTop: '8px' }}>
-          <button className="cancelBtn" onClick={() => props.show(false)}>
+          <button className="btn cancelBtn" onClick={() => props.show(false)}>
             취소
           </button>
           {authority && (
-            <button className="registBtn" onClick={scheduleRegist}>
+            <button className="btn registBtn" onClick={scheduleRegist}>
               확정
             </button>
           )}
