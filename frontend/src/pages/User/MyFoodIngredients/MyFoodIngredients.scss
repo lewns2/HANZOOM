@@ -2,6 +2,7 @@
   padding: 5%;
   .addFood {
     float: right;
+    height: fit-content;
     border-radius: 50%;
     background-color: #f7c343;
     border: 2px solid #f7c343;
@@ -10,38 +11,44 @@
   h2 {
     text-align: center;
     margin: auto;
-    @media only screen and (max-width: 480px) {
-      font-size: 15px;
-    }
   }
   .ingreBody {
-    // background-color: #fffcf2;
-    background-color: pink;
+    background-color: #fffcf2;
+    // background-color: pink;
     border-radius: 15px;
     padding: 5%;
     margin: 5%;
+    box-shadow: 4px 4px 4px -2px #777;
+    .dndBody {
+      margin-bottom: 5px;
+      border-bottom: 1px solid rgba(119, 119, 119, 0.1);
+    }
   }
 }
 #needs {
   h2 {
     text-align: center;
     margin: auto;
-    @media only screen and (max-width: 480px) {
-      font-size: 15px;
-    }
   }
   .addNeeds {
     float: right;
+    height: fit-content;
     border-radius: 50%;
     background-color: #f7c343;
     border: 2px solid #f7c343;
   }
   .ingreBody {
-    // background-color: #fffcf2;
-    background-color: pink;
+    background-color: #fffcf2;
+    // background-color: pink;
     border-radius: 15px;
     padding: 5%;
     margin: 5%;
+    box-shadow: 4px 4px 4px -2px #777;
+
+    .needBody {
+      margin-bottom: 5px;
+      border-bottom: 1px solid rgba(119, 119, 119, 0.1);
+    }
   }
 }
 .ingreBtn {
@@ -54,6 +61,7 @@
   box-shadow: 0 4px 4px -4px #777;
   a {
     color: black;
+    text-decoration: none;
   }
   a:hover {
     color: black;
@@ -62,4 +70,106 @@
 
 #myBoard {
   padding: 5%;
+
+  h2 {
+    text-align: center;
+  }
+
+  .ingredients {
+    &:last-child {
+      margin-bottom: 10%;
+    }
+    font-size: 20px;
+  }
+  .tabsContainer {
+    margin: 20px 20px 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tabs {
+    display: flex;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 0 1px 0 rgba(#777, 0.15), 0 6px 12px 0 rgba(#777, 0.15);
+    padding: 0.75rem;
+    border-radius: 99px; // just a high number to create pill effect
+    * {
+      z-index: 2;
+    }
+  }
+
+  input[type='radio'] {
+    display: none;
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 54px;
+    width: 200px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    border-radius: 99px; // just a high number to create pill effect
+    cursor: pointer;
+    transition: color 0.15s ease-in;
+  }
+
+  input[type='radio'] {
+    &:checked {
+      & + label {
+        color: var(--primary-color);
+      }
+    }
+  }
+
+  input[id='radio-1'] {
+    &:checked {
+      & ~ .glider {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  input[id='radio-2'] {
+    &:checked {
+      & ~ .glider {
+        transform: translateX(100%);
+      }
+    }
+  }
+  input[id='radio-3'] {
+    &:checked {
+      & ~ .glider {
+        transform: translateX(200%);
+      }
+    }
+  }
+
+  .glider {
+    position: absolute;
+    display: flex;
+    height: 54px;
+    width: 200px;
+    background-color: #f2d17a;
+    z-index: 1;
+    border-radius: 99px; // just a high number to create pill effect
+    transition: 0.25s ease-out;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .tabs {
+      transform: scale(0.7);
+    }
+    .ingredients {
+      font-size: medium;
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    .tabs {
+      transform: scale(0.6);
+    }
+  }
 }

@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 import { FoodIngreList } from './FoodIngreList';
 import { FoodModal } from './FoodModal';
 import swal from 'sweetalert';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import { Grid } from '@mui/material';
 import { Col } from 'react-bootstrap';
 
 export const MyIngreDnd = (props) => {
@@ -45,7 +42,7 @@ export const MyIngreDnd = (props) => {
   };
 
   return (
-    <Col md={4}>
+    <Col md={6} lg={4}>
       <div className="d-flex justify-content-center px-4">
         <h2>{column.title}</h2>
         {column.title === 'MY 식재료' ? (
@@ -65,7 +62,7 @@ export const MyIngreDnd = (props) => {
               // isDraggingOver={snapshot.isDraggingOver}
             >
               {tasks.map((task, index) => (
-                <div key={index}>
+                <div className="dndBody" key={index}>
                   <FoodIngreList
                     task={task}
                     index={index}
