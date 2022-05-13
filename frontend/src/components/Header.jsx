@@ -95,7 +95,7 @@ export const Header = () => {
               </span>
             </div>
           ) : null}
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          {!beforeLoginPage && <Navbar.Toggle aria-controls="responsive-navbar-nav" />}
           <Navbar.Collapse id="responsive-navbar-nav" style={{ textAlign: 'center' }}>
             <Nav className="nav-menu ms-auto">
               {/* {!beforeLoginPage && (
