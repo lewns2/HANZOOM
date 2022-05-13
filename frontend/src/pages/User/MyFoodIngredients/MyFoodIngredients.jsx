@@ -6,14 +6,13 @@ import { Axios } from '../../../core/axios.js';
 import { FoodIngreList } from './FoodIngreList';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { MyIngreDnd } from './MyIngreDnd';
-import { Grid } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 
 export const MyFoodIngredients = () => {
   const [modalOpen2, setModalOpen2] = useState(false);
   const [checkedNeeds, setCheckedNeeds] = useState([]);
   const [myNeedsIngre, setMyNeedsIngre] = useState([]);
-  const [matchNeeds, setMatchNeeds] = useState([]);
+  const [boardStatus, setBoardStatus] = useState(true);
   const [myBoard, setMyBoard] = useState([]);
 
   const [state, setState] = useState(false);
@@ -51,7 +50,7 @@ export const MyFoodIngredients = () => {
             normal.push(String(ingre.userIngredientNo));
           } else if (ingre.type === '교환/나눔') {
             bartershare.push(String(ingre.userIngredientNo));
-          } else {
+          } else if (ingre.type === '필요') {
             needs.push(ingre);
           }
         });
@@ -217,17 +216,80 @@ export const MyFoodIngredients = () => {
   };
 
   const clickEvent = () => {
-    swal('식재료를 선택해주세요', '', 'error');
+    if (!boardStatus) {
+      swal('이미 등록된 식재료 입니다.', '다른 식재료를 선택해주세요.', 'error');
+    } else {
+      swal('식재료를 선택해주세요', '', 'error');
+    }
   };
   const navigate = useNavigate();
   const goBoardDetail = (boardNo) => {
     navigate(`/board/${boardNo}`);
   };
 
-  const goMatching = () => {
+  const confirmNeeds = () => {
+    var boardsIngre = [];
     var ingreNames = [];
+    myBoard.map((item) => {
+      if (item.board.type === '필요') {
+        boardsIngre.push(item.ingredients);
+      }
+    });
     checkedNeeds.map((ingre) => ingreNames.push(ingre.ingredientName));
-    setMatchNeeds(ingreNames);
+    ingreNames.map((i) => {
+      boardsIngre.map((j) => {
+        if (j.includes(i)) {
+          setBoardStatus(false);
+        }
+      });
+    });
+  };
+  useEffect(() => {
+    confirmNeeds();
+  }, [checkedNeeds]);
+
+  const [selectedType, setSelectedType] = useState('교환');
+  const handleChange = (e) => {
+    setSelectedType(e.target.value);
+  };
+  useEffect(() => {}, [selectedType]);
+
+  const RenderType = (props) => {
+    const { type } = props;
+    const arr = [];
+    myBoard.map((item, key) => {
+      if (item.board.type === type) {
+        arr.push(
+          <div key={key} className="d-flex justify-content-center my-2 ingredients">
+            {item.ingredients &&
+              item.ingredients.map((ingredient, index) =>
+                index === item.ingredients.length - 1 ? (
+                  <div
+                    key={index}
+                    onClick={() => goBoardDetail(item.board.boardNo)}
+                    style={{ cursor: 'pointer' }}>
+                    {ingredient}
+                  </div>
+                ) : (
+                  <div
+                    key={index}
+                    onClick={() => goBoardDetail(item.board.boardNo)}
+                    style={{ cursor: 'pointer' }}>
+                    {ingredient},{' '}
+                  </div>
+                ),
+              )}
+          </div>,
+        );
+      }
+    });
+    if (arr.length !== 0) {
+      return arr;
+    } else {
+      return (
+        <div className="d-flex justify-content-center ingredients">등록된 식재료가 없습니다.</div>
+      );
+    }
   };
 
   return (
@@ -266,7 +328,7 @@ export const MyFoodIngredients = () => {
                 </div>
                 <div className="ingreBody">
                   {myNeedsIngre.map((ingre, key) => (
-                    <div key={key}>
+                    <div className="needBody" key={key}>
                       <FoodIngreList
                         task={ingre}
                         state={state}
@@ -276,14 +338,22 @@ export const MyFoodIngredients = () => {
                       />
                     </div>
                   ))}
+
                   {checkedNeeds.length ? (
                     <div className="d-flex justify-content-center">
-                      <button className="ingreBtn mt-3">
-                        <Link to={'/board/write'} state={checkedNeeds}>
+                      {boardStatus ? (
+                        <button className="ingreBtn mt-3">
+                          <Link to={'/board/write'} state={checkedNeeds}>
+                            게시글 등록
+                          </Link>
+                        </button>
+                      ) : (
+                        <button className="ingreBtn mt-3" onClick={clickEvent}>
                           게시글 등록
-                        </Link>
-                      </button>
-                      <button className="ingreBtn mt-3" onClick={goMatching}>
+                        </button>
+                      )}
+
+                      <button className="ingreBtn mt-3">
                         <Link to="/match" state={{ type: '선택', matchNeeds: checkedNeeds }}>
                           선택 매칭
                         </Link>
@@ -307,7 +377,30 @@ export const MyFoodIngredients = () => {
       </div>
       <div id="myBoard">
         <h2>등록된 식재료</h2>
-        {myBoard &&
+        <div className="tabsContainer">
+          <div className="tabs">
+            <input type="radio" id="radio-1" name="tabs" value="교환" onChange={handleChange} />
+            <label className="tab" htmlFor="radio-1">
+              교환
+            </label>
+            <input type="radio" id="radio-2" name="tabs" value="나눔" onChange={handleChange} />
+            <label className="tab" htmlFor="radio-2">
+              나눔
+            </label>
+            <input type="radio" id="radio-3" name="tabs" value="필요" onChange={handleChange} />
+            <label className="tab" htmlFor="radio-3">
+              필요
+            </label>
+            <span className="glider"></span>
+          </div>
+        </div>
+
+        {myBoard && selectedType === '교환' && <RenderType type="교환" />}
+        {myBoard && selectedType === '나눔' && <RenderType type="나눔" />}
+        {myBoard && selectedType === '필요' && <RenderType type="필요" />}
+        {/* {myBoard && selectedType === '나눔' ? renderType('나눔') : <p>등록된 식재료가 없습니다.</p>}
+        {myBoard && selectedType === '필요' ? renderType('필요') : <p>등록된 식재료가 없습니다.</p>} */}
+        {/* {myBoard &&
           myBoard.map((ingre, index) => (
             <div
               key={index}
@@ -321,9 +414,8 @@ export const MyFoodIngredients = () => {
                     <span key={index}>{ingredient}, </span>
                   ),
                 )}
-              <span> ({ingre.board.type})</span>
             </div>
-          ))}
+          ))} */}
       </div>
     </div>
   );
