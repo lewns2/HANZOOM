@@ -106,7 +106,37 @@
               font-size: 1.25rem;
               font-weight: bolder;
             }
-
+            .card_Ptag {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              width: 200px;
+            }
+            @media all and (min-width: 1338px) and (max-width: 1550px) {
+              .card_Ptag {
+                width: 180px;
+              }
+            }
+            @media all and (min-width: 1248px) and (max-width: 1337px) {
+              .card_Ptag {
+                width: 160px;
+              }
+            }
+            @media all and (min-width: 1007px) and (max-width: 1247px) {
+              .card_Ptag {
+                width: 140px;
+              }
+            }
+            @media all and (min-width: 978px) and (max-width: 992px) {
+              .card_Ptag {
+                width: 140px;
+              }
+            }
+            @media (max-width: 975px) {
+              .card_Ptag {
+                width: 160px;
+              }
+            }
             .status {
               width: 70px;
               font-size: 16px;
@@ -120,9 +150,20 @@
               text-align: center;
             }
           }
-
-          .likeBtn {
-            text-align: right;
+          .boardIngredientResList {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 95%;
+          }
+          .detailLike {
+            font-size: 30px;
+            color: red;
+            margin-left: 90%;
+          }
+          .detailUnLike {
+            font-size: 30px;
+            margin-left: 90%;
           }
         }
       }
