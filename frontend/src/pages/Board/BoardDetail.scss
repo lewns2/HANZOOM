@@ -11,6 +11,10 @@
   box-shadow: 0 4px 4px -4px #777;
   margin: 70px 0 110px 0;
 
+  @media only screen and (max-width: 992px) {
+    // height: 700px;
+  }
+
   .detailHeader {
     display: flex;
     justify-content: space-around;
@@ -45,12 +49,20 @@
     padding: 30px 0px;
     justify-content: center;
 
+    @media only screen and (min-width: 991px) and (max-width: 1200px) {
+      margin-bottom: 50px;
+    }
+
     .detailIngredientImgWrap {
       margin-right: 40px;
       flex-shrink: 0;
       width: 430px;
       height: 430px;
       position: relative;
+
+      @media only screen and (max-width: 1200px) {
+        margin-right: 0;
+      }
 
       .detailIngredientImg {
         width: 100%;
@@ -119,12 +131,43 @@
     }
   }
   .detailInfoWrap {
+    // width: 60%;
+    // margin: 0 auto;
     display: flex;
+    // justify-content: center;
     flex-wrap: wrap;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+
+    @media only screen and (max-width: 1200px) {
+      max-height: 500px;
+      overflow: auto;
+    }
+
+    @media only screen and (max-width: 992px) {
+      // width: 500px;
+    }
     .detailInfo {
-      margin-right: 44px;
-      margin-bottom: 25px;
+      width: 25%;
+      // margin-right: 44px;
+      margin-bottom: 20px;
       margin-top: 20px;
+      // margin: 20px 10px 20px;
+      padding: 0 10px;
+
+      @media only screen and (max-width: 1200px) {
+        width: 33.33%;
+        padding: 0 30px;
+      }
+      @media only screen and (max-width: 992px) {
+        width: 50%;
+        // padding: 0 60px;
+      }
+      @media only screen and (max-width: 520px) {
+        width: 100%;
+        // padding: 0 60px;
+      }
       .detailTag {
         text-align: center;
         font-size: 16px;
