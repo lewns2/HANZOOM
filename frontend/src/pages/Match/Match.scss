@@ -146,8 +146,8 @@
     }
   }
 
-  .matchType {
-  }
+  // .matchType {
+  // }
   .matchPurchaseDate {
     font-size: 14px;
   }
@@ -240,19 +240,31 @@ input[id='radio-2'] {
 }
 
 /* 매칭 실패 페이지 버튼 */
-
+// .buttonBlock {
+//   position: relative;
 .failMoveToMart {
   width: 400px;
   height: 400px;
   font-size: 30px;
-  margin: 80px 30px 30px 30px;
+  margin: 80px 50px 30px 50px;
+  border: 5px solid #f2d17a;
   border-radius: 1rem;
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .failMoveToRecipe {
   width: 400px;
   height: 400px;
   font-size: 30px;
-  margin: 80px 30px 30px 30px;
+  margin: 80px 50px 30px 50px;
   border-radius: 1rem;
+  border: 5px solid #f2d17a;
+  // box-shadow: 3px 3px 3px 2px #ccc;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
 }
+// }
