@@ -104,6 +104,11 @@ $desktop: 1400px;
       width: calc(($laptopS - 60px) / 4);
     }
   }
+  @media only screen and (max-width: $mobile) {
+    .contentCard {
+      height: 150px;
+    }
+  }
 
   .cardImgWrap {
     width: 100%;
@@ -114,6 +119,7 @@ $desktop: 1400px;
     background-color: #f8f9fa;
     box-shadow: inset 0px 0px 0px 1px rgb(0 0 0 / 15%);
     box-sizing: border-box;
+
     // width: 300px;
     // height: 300px;
     .cardImg {
@@ -128,7 +134,6 @@ $desktop: 1400px;
       object-fit: cover;
     }
   }
-
   .cardBodyHeader {
     margin-top: 12px;
     .status {
@@ -143,6 +148,30 @@ $desktop: 1400px;
       box-shadow: 0 4px 4px -4px #777;
       text-align: center;
     }
+
+    @media all and (min-width: 992px) and (max-width: 992px) {
+      .status {
+        width: 70px;
+      }
+    }
+    @media (max-width: 991px) {
+      .status {
+        width: 62px;
+        font-size: 12px;
+      }
+    }
+    @media (max-width: 412px) {
+      .status {
+        width: 70px;
+        font-size: 12px;
+      }
+    }
+    @media (max-width: 320px) {
+      .status {
+        width: 60px;
+        font-size: 12px;
+      }
+    }
     .cardTitle {
       font-size: 1.25rem;
       font-weight: bolder;
@@ -150,6 +179,51 @@ $desktop: 1400px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+      @media all and (min-width: 1338px) and (max-width: 1550px) {
+        p {
+          width: 180px;
+        }
+      }
+      @media all and (min-width: 1248px) and (max-width: 1337px) {
+        p {
+          width: 160px;
+        }
+      }
+      @media all and (min-width: 1007px) and (max-width: 1247px) {
+        p {
+          width: 140px;
+        }
+      }
+      @media all and (min-width: 978px) and (max-width: 992px) {
+        p {
+          width: 130px;
+        }
+      }
+      @media all and (min-width: 770px) and(max-width: 975px) {
+        p {
+          width: 140px;
+        }
+      }
+      @media (max-width: 769px) {
+        p {
+          width: 100px;
+        }
+      }
+    }
+    @media (max-width: 769px) {
+      .cardTitle {
+        width: 100px;
+      }
+    }
+    @media (max-width: 500px) {
+      .cardTitle {
+        width: 180px;
+      }
+    }
+    @media (max-width: 412px) {
+      .cardTitle {
+        width: 160px;
       }
     }
   }
@@ -159,6 +233,7 @@ $desktop: 1400px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    width: 100%;
   }
   .cardBodyCountsLike {
     display: flex;
