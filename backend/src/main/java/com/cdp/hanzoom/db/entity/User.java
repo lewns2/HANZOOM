@@ -57,6 +57,9 @@ public class User {
     @CreationTimestamp
     LocalDateTime joinDate; // 가입일
 
+    @Column(name = "browser_token", length = 2000)
+    String browserToken;
+
     public void updateUser(String userNickname, String userPassword) {
         this.userNickname = userNickname;
         this.userPassword = userPassword;
@@ -69,4 +72,6 @@ public class User {
     public void updateProfileImage(String savingFileName) {
         this.userImage = savingFileName;
     }
+
+    public void updateBrowserToken(String browserToken) { this.browserToken = browserToken;}
 }
