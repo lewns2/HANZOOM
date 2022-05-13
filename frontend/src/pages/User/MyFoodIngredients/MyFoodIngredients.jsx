@@ -254,13 +254,18 @@ export const MyFoodIngredients = () => {
   };
   useEffect(() => {}, [selectedType]);
 
+  useEffect(() => {
+    getMyFoodIngre();
+    getMyBoard();
+  }, []);
+
   const RenderType = (props) => {
     const { type } = props;
     const arr = [];
     myBoard.map((item, key) => {
       if (item.board.type === type) {
         arr.push(
-          <div key={key} className="d-flex justify-content-center my-2 ingredients">
+          <div key={key} className="d-flex justify-content-center mt-2 ingredients">
             {item.ingredients &&
               item.ingredients.map((ingredient, index) =>
                 index === item.ingredients.length - 1 ? (
@@ -287,7 +292,11 @@ export const MyFoodIngredients = () => {
       return arr;
     } else {
       return (
-        <div className="d-flex justify-content-center ingredients">등록된 식재료가 없습니다.</div>
+        <div
+          className="d-flex justify-content-center ingredients mt-5"
+          style={{ marginTop: '100px' }}>
+          등록된 식재료가 없습니다.
+        </div>
       );
     }
   };
@@ -398,24 +407,6 @@ export const MyFoodIngredients = () => {
         {myBoard && selectedType === '교환' && <RenderType type="교환" />}
         {myBoard && selectedType === '나눔' && <RenderType type="나눔" />}
         {myBoard && selectedType === '필요' && <RenderType type="필요" />}
-        {/* {myBoard && selectedType === '나눔' ? renderType('나눔') : <p>등록된 식재료가 없습니다.</p>}
-        {myBoard && selectedType === '필요' ? renderType('필요') : <p>등록된 식재료가 없습니다.</p>} */}
-        {/* {myBoard &&
-          myBoard.map((ingre, index) => (
-            <div
-              key={index}
-              onClick={() => goBoardDetail(ingre.board.boardNo)}
-              style={{ cursor: 'pointer' }}>
-              {ingre.ingredients &&
-                ingre.ingredients.map((ingredient, index) =>
-                  index === ingre.ingredients.length - 1 ? (
-                    <span key={index}>{ingredient}</span>
-                  ) : (
-                    <span key={index}>{ingredient}, </span>
-                  ),
-                )}
-            </div>
-          ))} */}
       </div>
     </div>
   );

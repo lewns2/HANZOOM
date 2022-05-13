@@ -1,5 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { FoodModal } from './FoodModal';
 import { useState } from 'react';
 import { Axios } from '../../../core/axios.js';
@@ -124,7 +125,7 @@ export const FoodIngreList = (props) => {
           {(provided, snapshot) => (
             <div
               className="d-flex align-items-center px-4 py-1"
-
+              style={{ position: 'relative' }}
               // isDragging={snapshot.isDragging} // 드래그 중일 때의 스타일링을 위해 snapshot 속성을 외부로 가져옴
             >
               {task.type === '일반' && (
@@ -145,11 +146,13 @@ export const FoodIngreList = (props) => {
               )}
 
               <span
+                className="ingreItem"
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
                 ref={provided.innerRef}>
                 {task.ingredientName}
               </span>
+              <DragIndicatorIcon className="dndIcon" sx={{ color: '#777', marginRight: '10px' }} />
 
               {task.type === '교환/나눔' ? null : (
                 <span className="ms-auto">

@@ -106,7 +106,6 @@ export const AddMyFoodIngredients = (props) => {
           </a>
           <div className="collapse" id="collapseExample">
             <div className="p-3">
-              {/* <div className="card card-body"> */}
               <BasicTable />
             </div>
           </div>
