@@ -202,8 +202,7 @@ export const BoardDetail = () => {
                 <div
                   className="detailIcon"
                   style={{
-                    visibility:
-                      userInfo.userNickname == content.userNickname ? 'hidden' : 'visible',
+                    display: userInfo.userNickname == content.userNickname ? 'none' : '',
                   }}>
                   {likeStatus ? (
                     <button id="detailLike" onClick={clickLike}>
