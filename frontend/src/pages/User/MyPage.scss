@@ -14,7 +14,7 @@
   .formWrap {
     margin: 0 auto;
     width: 80vh;
-    height: 70vh;
+    height: 520px;
     padding-top: 40px;
     padding-left: 40px;
     padding-right: 40px;
@@ -22,8 +22,8 @@
     background-color: #fffcf2;
     overflow: hidden;
 
-    @media only screen and (max-width: 480px) {
-      height: 80vh;
+    @media only screen and (max-width: 991px) {
+      height: 620px;
       .label {
         margin-bottom: 5px;
       }
@@ -74,7 +74,7 @@
     }
   }
   .pwdChkWrap {
-    height: 28vh;
+    height: 220px;
   }
 }
 
@@ -122,6 +122,9 @@
         .userNickName {
           font-size: 35px;
           font-weight: 600;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
         .userEmail {
           font-size: 20px;
