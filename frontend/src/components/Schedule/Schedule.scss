@@ -23,6 +23,13 @@
     padding: 10px 40px;
     border-radius: 10px;
 
+    @media only screen and (max-width: 480px) {
+      width: 400px;
+    }
+    @media only screen and (max-width: 360px) {
+      width: 350px;
+    }
+
     .boardButton {
       position: absolute;
       top: 8px;
@@ -34,10 +41,6 @@
       border-radius: 8px;
       padding: 4px 10px;
       box-shadow: 0 4px 4px -4px #777;
-
-      @media only screen and (max-width: 992px) {
-        // margin-bottom: 30px;
-      }
 
       @media only screen and (max-width: 480px) {
         font-size: 10px;
@@ -76,7 +79,7 @@
 
         .schecduleTime {
           position: absolute;
-          bottom: 10px;
+          bottom: 15px;
 
           @media only screen and (max-width: 992px) {
             bottom: -40px;
@@ -195,6 +198,10 @@
   height: 100%;
   // height: 100px;
   position: relative;
+
+  @media only screen and (max-width: 480px) {
+    width: 90%;
+  }
 
   .bAddr {
     padding: 5px;

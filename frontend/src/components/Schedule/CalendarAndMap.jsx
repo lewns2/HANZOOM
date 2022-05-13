@@ -72,7 +72,11 @@ export const CalendarAndMap = (props) => {
   return (
     <div className="row">
       <div className="scheduleDate col-lg-6 col-12 d-flex justify-content-center">
-        <Calendar onChange={setDate} value={date} />
+        <Calendar
+          onChange={setDate}
+          value={date}
+          formatDay={(locale, date) => moment(date).format('DD')}
+        />
         <div className="schecduleTime d-flex">
           <div className="scheduleHour">
             {hour && <input type="number" onChange={(e) => setHour(e.target.value)} value={hour} />}
