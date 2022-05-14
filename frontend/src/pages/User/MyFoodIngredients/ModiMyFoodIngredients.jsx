@@ -92,7 +92,7 @@ export const ModiMyFoodIngredients = (props) => {
     <div className="applyForm">
       <div className="inputForm">
         <div>식재료 명</div>
-        <div>
+        <>
           {ingreName && (
             <AutoComplete
               foods={props.foods}
@@ -102,7 +102,7 @@ export const ModiMyFoodIngredients = (props) => {
               header={props.header}
             />
           )}
-        </div>
+        </>
       </div>
       <div className="inputForm">
         <div>

@@ -292,9 +292,7 @@ export const MyFoodIngredients = () => {
       return arr;
     } else {
       return (
-        <div
-          className="d-flex justify-content-center ingredients mt-5"
-          style={{ marginTop: '100px' }}>
+        <div className="d-flex justify-content-center ingredients mt-2">
           등록된 식재료가 없습니다.
         </div>
       );
