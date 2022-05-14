@@ -3,7 +3,6 @@ import { Calendar } from '../../../components/Board/Calendar';
 import { Axios } from '../../../core/axios.js';
 import { AutoComplete } from './AutoComplete';
 
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -107,7 +106,6 @@ export const ModiMyFoodIngredients = (props) => {
       <div className="inputForm">
         <div>
           구매일자
-          <CalendarMonthIcon />
           {modiPurchaseDate && (
             <Calendar setSelectedDate={setModiPurchaseDate} originalDate={modiPurchaseDate} />
           )}
@@ -116,7 +114,6 @@ export const ModiMyFoodIngredients = (props) => {
       <div className="inputForm">
         <div>
           유통기한
-          <CalendarMonthIcon />
           <a
             data-bs-toggle="collapse"
             href="#collapseExample"

@@ -7,6 +7,9 @@ import { FoodIngreList } from './FoodIngreList';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { MyIngreDnd } from './MyIngreDnd';
 import { Col, Row } from 'react-bootstrap';
+import Tooltip from '@mui/material/Tooltip';
+import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded';
+import swal from 'sweetalert';
 
 export const MyFoodIngredients = () => {
   const [modalOpen2, setModalOpen2] = useState(false);
@@ -118,7 +121,10 @@ export const MyFoodIngredients = () => {
         setState(!state);
       })
       .catch((err) => {
-        alert('MY식재료 수정에 실패하였습니다😓');
+        swal('MY식재료 수정에 실패하였습니다😓', '', 'error', {
+          buttons: false,
+          timer: 2000,
+        });
         console.log(err);
       });
   };
@@ -383,7 +389,15 @@ export const MyFoodIngredients = () => {
         </DragDropContext>
       </div>
       <div id="myBoard">
-        <h2>등록된 식재료</h2>
+        <div className="d-flex justify-content-center align-items-center">
+          <h2>등록된 식재료</h2>
+          <Tooltip
+            className="ms-2"
+            title="식재료를 클릭하면 해당 게시글로 이동합니다."
+            placement="right">
+            <HelpOutlineRoundedIcon />
+          </Tooltip>
+        </div>
         <div className="tabsContainer">
           <div className="tabs">
             <input type="radio" id="radio-1" name="tabs" value="교환" onChange={handleChange} />
