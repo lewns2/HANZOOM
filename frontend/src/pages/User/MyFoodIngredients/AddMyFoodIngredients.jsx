@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Calendar } from '../../../components/Board/Calendar';
 import { AutoComplete } from './AutoComplete';
 
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -87,14 +86,12 @@ export const AddMyFoodIngredients = (props) => {
       <div className="inputForm">
         <div>
           구매일자
-          <CalendarMonthIcon />
           <Calendar setSelectedDate={setPurchaseDate} />
         </div>
       </div>
       <div className="inputForm">
         <div>
           유통기한
-          <CalendarMonthIcon />
           <a
             data-bs-toggle="collapse"
             href="#collapseExample"

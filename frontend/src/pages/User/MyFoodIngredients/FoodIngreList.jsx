@@ -5,6 +5,7 @@ import { FoodModal } from './FoodModal';
 import { useState } from 'react';
 import { Axios } from '../../../core/axios.js';
 import { Draggable } from 'react-beautiful-dnd';
+import swal from 'sweetalert';
 
 export const FoodIngreList = (props) => {
   const {
@@ -80,6 +81,10 @@ export const FoodIngreList = (props) => {
       })
       .catch((err) => {
         console.log(err);
+        swal('식재료가 삭제되지 않았습니다😓', '', 'error', {
+          buttons: false,
+          timer: 2000,
+        });
       });
   };
   return (

@@ -80,7 +80,7 @@
   padding: 5%;
 
   h2 {
-    text-align: center;
+    margin-bottom: 0;
   }
 
   .ingredients {
@@ -161,7 +161,7 @@
     display: flex;
     height: 54px;
     width: 200px;
-    background-color: #f2d17a;
+    background-color: #f7c343;
     z-index: 1;
     border-radius: 99px; // just a high number to create pill effect
     transition: 0.25s ease-out;
