@@ -47,6 +47,8 @@ public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
+    UserRepository userRepository;
+    @Autowired
     UserRepositorySupport userRepositorySupport;
 
     @PostMapping("/login")
@@ -63,6 +65,13 @@ public class AuthController {
         String userPassword = loginInfo.getUserPassword();
 
         User user = userService.getUserByUserEmail(userEmail);
+
+        // 브라우저 토큰 저장
+        if(loginInfo.getBrowserToken() != null) {
+            user.updateBrowserToken(loginInfo.getBrowserToken());
+            userRepository.save(user);
+        }
+
         // 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
         if(passwordEncoder.matches(userPassword, user.getUserPassword())) {
             // 해당 유저의 신고 누적횟수가 3회 이상이면, 이용 제한

@@ -24,10 +24,24 @@ export const UserInfoUpdate = (props) => {
   const [password, setPassword] = useState(null);
 
   const passwordInput = useRef();
+  const nickNameInput = useRef();
 
   const dispatch = useDispatch();
 
   const updateUser = async () => {
+    if (userNickname.length < 3 || userNickname.length > 12) {
+      alert('닉네임은 3~12자리수로 입력해주세요.');
+      nickNameInput.current.focus();
+      return;
+    }
+
+    const chkResult = await Axios.get(`${axios_apis.users.nickNameCheck}/${userNickname}`);
+    if (userInfo.userNickname != userNickname && !chkResult.data) {
+      alert('이미 사용 중인 닉네임입니다.');
+      nickNameInput.current.focus();
+      return;
+    }
+
     var rule = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/;
     if (!rule.test(userPassword)) {
       alert('비밀번호는 8 ~ 12 자리수이며 문자, 숫자, 특수기호를 최소 1개씩 포함해야합니다.');
@@ -108,6 +122,7 @@ export const UserInfoUpdate = (props) => {
       pwdCheck();
     }
   };
+
   const onKeyPress = (e) => {
     if (e.key == 'Enter') {
       updateUser();
@@ -176,6 +191,8 @@ export const UserInfoUpdate = (props) => {
                   type="text"
                   value={userNickname}
                   onChange={(e) => setUserNickname(e.target.value)}
+                  onKeyPress={onKeyPress}
+                  ref={nickNameInput}
                 />
               </div>
             </div>

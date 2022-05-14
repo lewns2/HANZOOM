@@ -81,7 +81,7 @@ export const Contents = (props) => {
                   ) : (
                     content.boardFindIngredientResList.map((ingre, index) => (
                       <div key={index}>
-                        <p>#{ingre.ingredientName}&nbsp;</p>
+                        <p className="ingredientname">#{ingre.ingredientName}&nbsp;</p>
                       </div>
                     ))
                   )}

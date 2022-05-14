@@ -213,9 +213,11 @@ export const SignUpForm = () => {
           <button className="formBtn" onClick={signUp}>
             SIGN UP
           </button>
-          <Link to="/login">
-            <p className="loginExplain">이미 계정이 있나요? 로그인하러 가기</p>
-          </Link>
+          <div className="loginExplain">
+            <Link to="/login">
+              <p>이미 계정이 있나요? 로그인하러 가기</p>
+            </Link>
+          </div>
         </div>
       </section>
     </>

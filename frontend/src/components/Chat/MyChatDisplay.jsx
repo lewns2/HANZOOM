@@ -40,68 +40,96 @@ export const MyChatDisplay = (props) => {
 
   // Socket connection
   const connect = () => {
-    ws.connect(
-      {
-        token: token,
-      },
-      () => {
-        ws.subscribe(
-          '/sub/chat/room/' + chatRoomId,
-          function (message) {
-            var recv = JSON.parse(message.body);
-            recvMessage(recv);
-          },
-          { token: token },
-        );
-        // ws.send(
-        //   '/pub/chat/message',
-        //   {},
-        //   JSON.stringify({
-        //     type: 'ENTER',
-        //     roomId: chatRoomId,
-        //     sender: user.userInfo.userNickname,
-        //   }),
-        // );
-      },
-      (error) => {
-        if (reconnect++ <= 5) {
-          setTimeout(() => {
-            sock = new SockJS('/ws/chat');
-            ws = StompJS.over(sock);
-            connect();
-          }, 10 * 1000);
-        }
-        console.log(error);
-      },
-    );
+    try {
+      ws.connect(
+        {
+          token: token,
+        },
+        () => {
+          ws.subscribe(
+            '/sub/chat/room/' + chatRoomId,
+            (message) => {
+              var recv = JSON.parse(message.body);
+              recvMessage(recv);
+            },
+            { token: token },
+          );
+          // ws.send(
+          //   '/pub/chat/message',
+          //   {},
+          //   JSON.stringify({
+          //     type: 'ENTER',
+          //     roomId: chatRoomId,
+          //     sender: user.userInfo.userNickname,
+          //   }),
+          // );
+        },
+        // (error) => {
+        // if (reconnect++ <= 5) {
+        //   setTimeout(() => {
+        //     sock = new SockJS('/ws/chat');
+        //     ws = StompJS.over(sock);
+        //     connect();
+        //   }, 10 * 1000);
+        // }
+        // console.log(error);
+        // },
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Socket Disconnection
   const disconnect = () => {
-    ws.disconnect(
-      () => {
-        ws.unsubscribe('/sub/chat/room/' + chatRoomId);
-      },
-      {
-        token: token,
-      },
-    );
+    try {
+      ws.disconnect(
+        () => {
+          ws.unsubscribe('/sub/chat/room/' + chatRoomId);
+        },
+        {
+          token: token,
+        },
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // run until the websocket is connected
+  const waitForConnection = (ws, callback) => {
+    setTimeout(() => {
+      if (ws.ws.readyState === 1) {
+        // if it's connected
+        callback();
+      } else {
+        // if it's disconnected
+        waitForConnection(ws, callback);
+      }
+    }, 1);
   };
 
   // send message
   const sendMessage = () => {
-    ws.send(
-      '/pub/chat/message',
-      {},
-      JSON.stringify({
-        type: 'TALK',
-        roomId: chatRoomId,
-        message: msg,
-        sender: user.userInfo.userNickname,
-        createdAt: new Date(),
-      }),
-    );
-    setMsg('');
+    try {
+      waitForConnection(ws, () => {
+        ws.send(
+          '/pub/chat/message',
+          { token: token },
+          JSON.stringify({
+            type: 'TALK',
+            roomId: chatRoomId,
+            message: msg,
+            sender: user.userInfo.userNickname,
+            createdAt: new Date(),
+          }),
+        );
+        setMsg('');
+      });
+    } catch (error) {
+      console.log(error);
+      console.log(ws.ws.readyState);
+    }
   };
 
   // message setting
@@ -135,7 +163,7 @@ export const MyChatDisplay = (props) => {
   const getMessage = async () => {
     await Axios.get(`/chat/find/${chatRoomId}`)
       .then(async (res) => {
-        await setChatMessageInfo(res.data);
+        setChatMessageInfo(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -162,7 +190,10 @@ export const MyChatDisplay = (props) => {
   useEffect(() => {
     getMessage();
     connect(); // web socket connect
-  }, []);
+    return () => {
+      disconnect();
+    };
+  }, [chatRoomId]);
 
   useEffect(() => {
     let email;
@@ -186,7 +217,6 @@ export const MyChatDisplay = (props) => {
 
   return (
     <>
-      {/* {console.log(chatMessageInfo)} */}
       <div className="showChatDisplayWrap">
         {showSchedule && (
           <Schedule
@@ -252,11 +282,11 @@ export const MyChatDisplay = (props) => {
                                   <div className="profileImg">
                                     <img
                                       src={
-                                        !message.senderImage.includes('kakao')
-                                          ? message.senderImage
-                                            ? `${BASE_IMG_URL}${message.senderImage}`
-                                            : '/img/basicProfile.png'
-                                          : message.senderImage
+                                        message.senderImage
+                                          ? message.senderImage.includes('kakao')
+                                            ? message.senderImage
+                                            : `${BASE_IMG_URL}${message.senderImage}`
+                                          : '/img/basicProfile.png'
                                       }
                                       alt=""
                                     />
@@ -268,11 +298,11 @@ export const MyChatDisplay = (props) => {
                                 <div className="profileImg">
                                   <img
                                     src={
-                                      !message.senderImage.includes('kakao')
-                                        ? message.senderImage
-                                          ? `${BASE_IMG_URL}${message.senderImage}`
-                                          : '/img/basicProfile.png'
-                                        : message.senderImage
+                                      message.senderImage
+                                        ? message.senderImage.includes('kakao')
+                                          ? message.senderImage
+                                          : `${BASE_IMG_URL}${message.senderImage}`
+                                        : '/img/basicProfile.png'
                                     }
                                     alt=""
                                   />
@@ -316,11 +346,11 @@ export const MyChatDisplay = (props) => {
                                 <div className="profileImg">
                                   <img
                                     src={
-                                      !m.senderImage.includes('kakao')
-                                        ? m.senderImage
-                                          ? `${BASE_IMG_URL}${m.senderImage}`
-                                          : '/img/basicProfile.png'
-                                        : m.senderImage
+                                      m.senderImage
+                                        ? m.senderImage.includes('kakao')
+                                          ? m.senderImage
+                                          : `${BASE_IMG_URL}${m.senderImage}`
+                                        : '/img/basicProfile.png'
                                     }
                                     alt=""
                                   />
@@ -331,11 +361,11 @@ export const MyChatDisplay = (props) => {
                                 <div className="profileImg">
                                   <img
                                     src={
-                                      !m.senderImage.includes('kakao')
-                                        ? m.senderImage
-                                          ? `${BASE_IMG_URL}${m.senderImage}`
-                                          : '/img/basicProfile.png'
-                                        : m.senderImage
+                                      m.senderImage
+                                        ? m.senderImage.includes('kakao')
+                                          ? m.senderImage
+                                          : `${BASE_IMG_URL}${m.senderImage}`
+                                        : '/img/basicProfile.png'
                                     }
                                     alt=""
                                   />
@@ -347,7 +377,7 @@ export const MyChatDisplay = (props) => {
                                   <div className="d-flex">
                                     <div className="msgContent">{m.message}</div>
                                     <div className="msgTime">
-                                      {dayjs(m.createdAt).toShortTimeString()}
+                                      {dayjs(m.createdAt).format('YY/MM/DD HH:mm')}
                                     </div>
                                   </div>
                                 </div>
