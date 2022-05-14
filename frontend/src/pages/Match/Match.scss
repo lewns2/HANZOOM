@@ -317,16 +317,15 @@ input[id='radio-2'] {
 }
 
 /* 매칭 실패 페이지 버튼 */
-// .buttonBlock {
-//   position: relative;
 .failMoveToMart {
   width: 400px;
   height: 400px;
   font-size: 30px;
   margin: 80px 50px 30px 50px;
-  border: 5px solid #f2d17a;
+  border: 5px solid #f7c343;
   border-radius: 1rem;
   &:hover {
+    border: none;
     transform: scale(1.1);
   }
 }
@@ -337,11 +336,10 @@ input[id='radio-2'] {
   font-size: 30px;
   margin: 80px 50px 30px 50px;
   border-radius: 1rem;
-  border: 5px solid #f2d17a;
-  // box-shadow: 3px 3px 3px 2px #ccc;
+  border: 5px solid #f7c343;
   cursor: pointer;
   &:hover {
+    border: none;
     transform: scale(1.1);
   }
 }
-// }

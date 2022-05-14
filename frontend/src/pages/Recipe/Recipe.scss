@@ -6,15 +6,16 @@
 
   .recipeHeader {
     text-align: center;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
 
     .recipeTitle {
       font-size: 50px;
-      margin-bottom: 40px;
+      margin: 25px 0px;
     }
 
     .recipeDescription {
       font-size: 20px;
+      font-family: 'GmarketSansMedium';
     }
   }
 }
@@ -59,6 +60,14 @@
   }
 }
 
+.slick-prev {
+  padding-bottom: 130px;
+}
+
+.slick-next {
+  padding-bottom: 130px;
+}
+
 .slick-prev::before {
   content: url(../../assets/icon_prev.png);
 }
@@ -78,7 +87,11 @@
     img {
       width: 300px;
       height: 300px;
-      border-radius: 12px;
+      border-radius: 15px;
+      &:hover {
+        // opacity: 0.7;
+        transform: scale(1.1);
+      }
     }
   }
 }
@@ -101,7 +114,9 @@
 .hoverBox {
   visibility: hidden;
   text-align: center;
+  width: 300px;
   .p1 {
+    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
@@ -186,8 +201,9 @@
         }
       }
       .recipeImgWrap {
-        width: 100%;
-        padding: 20px 20px 20px 20px;
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
         .recipeOrder {
           display: flex;
           justify-content: center;
@@ -195,37 +211,48 @@
           .recipeText {
             display: flex;
             .recipeIndex {
+              margin-top: 15px;
               font-size: 20px;
               color: white;
-              padding: 20px 20px 20px 20px;
-              width: 70px;
-              height: 70px;
-              background: #74b243;
-              border: 1px solid #68a13a;
+              padding: 15px;
+              width: 60px;
+              height: 60px;
+              // background: #74b243;
+              // border: 1px solid #68a13a;
+              background: #ff7f00;
+              border: 1px solid #ff7f00;
               border-radius: 50%;
             }
             .recipeDescription {
               text-align: left;
-              font-size: 20px;
-              padding: 20px 20px 20px 20px;
+              font-size: 18px;
+              margin-left: 15px;
+              padding-top: 20px;
+              font-family: 'GmarketSansMedium';
             }
           }
           .recipeImg {
             max-width: 100%;
-            padding: 20px 20px 20px 20px;
+            padding: 20px;
             border-radius: 2rem;
           }
         }
       }
-      .recipeCancleBtn {
-        font-size: 18px;
-        font-weight: bolder;
-        background-color: #fff;
-        border: 2px solid #f7c343;
-        border-radius: 8px;
-        padding: 3px 2px;
-        margin-right: 5px;
-        box-shadow: 0 4px 4px -4px #777;
+      .ButtonWrapper {
+        display: flex;
+        justify-content: center;
+        .recipeCancleBtn {
+          font-size: 18px;
+          font-weight: bolder;
+          background-color: #fff;
+          border: 2px solid #f7c343;
+          border-radius: 8px;
+          padding: 4px 8px;
+          box-shadow: 0 4px 4px -4px #777;
+        }
+        @media only screen and (max-width: 991px) {
+          justify-content: end;
+        }
       }
     }
   }

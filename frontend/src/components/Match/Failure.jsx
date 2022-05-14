@@ -1,21 +1,32 @@
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import marketImg from '../../assets/images/market.png';
+import marketYellowImg from '../../assets/images/market_yellow.png';
 import recipeImg from '../../assets/images/recipe.png';
+import recipeYellowImg from '../../assets/images/recipe_yellow.png';
 
 export const Failure = () => {
   const navigate = useNavigate();
+  const [marketImage, setMarketImage] = useState(marketImg);
+  const [recipeImage, setRecipeImage] = useState(recipeImg);
+
   return (
-    <>
-      {/* <Link to="/martmap">
-        <button className="failMoveToMart">주변 마트 보러 가기</button>
-      </Link> */}
-      {/* <button className="failMoveToRecipe" onClick={() => navigate(-1)}>
-        레시피 페이지로 돌아가기
-      </button> */}
+    <div className="failureWrapper">
       <Link to="/martmap">
-        <img className="failMoveToMart" src={marketImg} />
+        <img
+          className="failMoveToMart"
+          src={marketImage}
+          onMouseEnter={() => setMarketImage(marketYellowImg)}
+          onMouseLeave={() => setMarketImage(marketImg)}
+        />
       </Link>
-      <img className="failMoveToRecipe" src={recipeImg} onClick={() => navigate(-1)} />
-    </>
+      <img
+        className="failMoveToRecipe"
+        src={recipeImage}
+        onMouseEnter={() => setRecipeImage(recipeYellowImg)}
+        onMouseLeave={() => setRecipeImage(recipeImg)}
+        onClick={() => navigate(-1)}
+      />
+    </div>
   );
 };

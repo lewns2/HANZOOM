@@ -44,10 +44,11 @@ export const Recipe = (props) => {
           <div style={modalOpen ? { display: 'none' } : { display: 'grid' }}>
             <div className="recipeTextWrap">
               <div className="recipeHeader">
-                <div className="recipeTitle">추천 레시피</div>
+                <div className="recipeTitle">👨‍🍳 추천 레시피</div>
                 <div className="recipeDescription">
-                  MY식재료를 바탕으로 만개의 레시피 사이트를 참고하여 추천된 레시피들입니다.
-                  솰라솰라 여기 너무 허전해서 페이지 설명이라도 적자는 마인드
+                  선택한 식재료를 바탕으로 만개의 레시피 사이트를 참고하여 추천된 레시피들입니다.
+                  <br />
+                  마음에 드는 레시피를 선택하여 식재료 낭비를 줄이고 맛있는 요리를 만들어보세요.
                 </div>
               </div>
               <div className="recipeListWrap">
