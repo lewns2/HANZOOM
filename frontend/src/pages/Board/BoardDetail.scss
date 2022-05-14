@@ -8,7 +8,8 @@
   padding: 50px;
   overflow: auto;
   overflow-x: hidden;
-  box-shadow: 0 4px 4px -4px #777;
+  // box-shadow: 0 4px 4px -4px #777;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.25);
   margin: 70px 0 110px 0;
 
   @media only screen and (max-width: 992px) {
@@ -17,9 +18,10 @@
 
   .detailHeader {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin: 10px auto;
+    width: 90%;
 
     .detailProfileImg {
       max-width: 50px;
@@ -28,6 +30,7 @@
     }
     .detailUserName {
       margin-left: 10px;
+      font-size: 18px;
       align-self: flex-end;
     }
     .detailStatus {
@@ -42,11 +45,17 @@
       margin-right: 5px;
       box-shadow: 0 4px 4px -4px #777;
     }
+    @media only screen and (max-width: 767px) {
+      width: 100%;
+      .detailUserName {
+        font-size: 14px;
+      }
+    }
   }
 
   .detailBody {
     display: flex;
-    padding: 30px 0px;
+    padding: 40px 0px;
     justify-content: center;
 
     @media only screen and (min-width: 991px) and (max-width: 1200px) {
@@ -70,6 +79,7 @@
         position: absolute;
         top: 0px;
         left: 0px;
+        border-radius: 8%;
       }
     }
     .detailContent {
@@ -80,10 +90,14 @@
         font-size: 30px;
       }
       .detailDescription {
-        font-weight: bold;
+        // font-weight: bold;
         margin-bottom: 25px;
-        height: 40%;
-        font-size: 25px;
+        height: 30%;
+        font-size: 23px;
+        font-family: 'GmarketSansMedium';
+      }
+      .detailDistance {
+        // font-family: 'GmarketSansMedium';
       }
       .detailIcon {
         display: flex;
@@ -138,6 +152,9 @@
         font-size: 20px;
         color: #f7c343;
         margin-top: 40px;
+      }
+      @media only screen and (min-width: 991px) and (max-width: 1200px) {
+        padding-left: 40px;
       }
     }
   }
@@ -194,7 +211,7 @@
 
   .detailCounts {
     display: flex;
-    margin-bottom: 30px;
+    margin: 5px 0px;
   }
 
   .detailFooter {
@@ -205,9 +222,11 @@
       font-weight: bolder;
       background-color: #fff;
       border: 2px solid #f7c343;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
       border-radius: 8px;
-      padding: 3px 2px;
-      margin-right: 5px;
+      padding: 5px 10px;
+      // margin-right: 5px;
       box-shadow: 0 4px 4px -4px #777;
     }
     #detailModifyBtn {
@@ -216,18 +235,20 @@
       background-color: #f7c343;
       border: 2px solid #f7c343;
       border-radius: 8px;
-      padding: 3px 2px;
+      padding: 5px 10px;
       margin-right: 5px;
       box-shadow: 0 4px 4px -4px #777;
     }
     #detailDeleteBtn {
-      color: white;
+      // color: white;
       font-size: 16px;
       font-weight: bolder;
-      background-color: rgb(223, 0, 0);
-      border: 2px solid rgb(223, 0, 0);
+      // background-color: rgb(223, 0, 0);
+      // border: 2px solid rgb(223, 0, 0);
+      background-color: #fff;
+      border: 2px solid #f7c343;
       border-radius: 8px;
-      padding: 3px 2px;
+      padding: 5px 10px;
       margin-right: 5px;
       box-shadow: 0 4px 4px -4px #777;
     }
@@ -248,7 +269,9 @@
       }
     }
     .detailFooter {
-      position: absolute;
+      // position: absolute;
+      text-align: right;
+      width: 100%;
       bottom: 0%;
     }
   }

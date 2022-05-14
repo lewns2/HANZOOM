@@ -165,7 +165,9 @@ export const BoardDetail = () => {
                   // src="/img/basicProfile.png"
                   src={
                     content.userImage
-                      ? `${BASE_IMG_URL}${content.userImage}`
+                      ? content.userImage.includes('kakao')
+                        ? `${content.userImage}`
+                        : `${BASE_IMG_URL}${content.userImage}`
                       : '/img/basicProfile.png'
                   }></img>
                 <p className="detailUserName">{content.userNickname}</p>
@@ -186,19 +188,25 @@ export const BoardDetail = () => {
               <div className="detailContent col-6">
                 <div className="detailTitle">{content.title}</div>
                 <div className="detailDescription">{content.description}</div>
-
-                {content.distance == null ? (
-                  <h6>나와 떨어진 거리 확인을 위해선 위치 정보 설정이 필요합니다.</h6>
-                ) : (
-                  <div> 나와 떨어진 거리 : 약 {content.distance.toFixed(1)} KM</div>
-                )}
-                <div
+                <div className="detailDistance">
+                  {content.distance == null ? (
+                    <h6>나와 떨어진 거리 확인을 위해선 위치 정보 설정이 필요합니다.</h6>
+                  ) : (
+                    <div> 나와 떨어진 거리 : 약 {content.distance.toFixed(1)} KM</div>
+                  )}
+                </div>
+                <div className="detailCounts">
+                  <p>조회 {content.viewCnt} ∙</p>
+                  &nbsp;
+                  <p>관심 {likeCnt}</p>
+                </div>
+                {/* <div
                   className="detailMyContent"
                   style={{
                     display: userInfo.userNickname == content.userNickname ? '' : 'none',
                   }}>
                   <p>내가 작성한 게시글입니다.</p>
-                </div>
+                </div> */}
                 <div
                   className="detailIcon"
                   style={{
@@ -303,15 +311,21 @@ export const BoardDetail = () => {
                 </div>
               ))}
             </div>
-            <div className="detailCounts">
+            {/* <div className="detailCounts">
               <p>조회 {content.viewCnt} ∙</p>
               &nbsp;
               <p>관심 {likeCnt}</p>
-            </div>
+            </div> */}
             <div className="detailFooter">
-              <button id="detailCancelBtn" onClick={() => navigate(-1)}>
-                취소
+              <button
+                id="detailDeleteBtn"
+                style={{
+                  display: userInfo.userNickname == content.userNickname ? 'inline' : 'none',
+                }}
+                onClick={clickDelete}>
+                삭제
               </button>
+
               <Link
                 to={`/board/modify/${id}`}
                 state={{
@@ -322,23 +336,18 @@ export const BoardDetail = () => {
                   description: content.description,
                   ingredient: ingredientNameList,
                   userIngreNo: ingredientNumber,
-                }}>
+                }}
+                style={{ textDecoration: 'none' }}>
                 <button
                   id="detailModifyBtn"
                   style={{
-                    visibility:
-                      userInfo.userNickname == content.userNickname ? 'visible' : 'hidden',
+                    display: userInfo.userNickname == content.userNickname ? 'inline' : 'none',
                   }}>
                   수정
                 </button>
               </Link>
-              <button
-                id="detailDeleteBtn"
-                style={{
-                  visibility: userInfo.userNickname == content.userNickname ? 'visible' : 'hidden',
-                }}
-                onClick={clickDelete}>
-                삭제
+              <button id="detailCancelBtn" onClick={() => navigate(-1)}>
+                취소
               </button>
             </div>
           </div>
