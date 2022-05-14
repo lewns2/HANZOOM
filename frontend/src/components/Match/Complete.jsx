@@ -1,16 +1,24 @@
 import { useEffect, useState } from 'react';
 import { MatchMap } from './MatchMap';
 import { MatchList } from './MatchList';
+import Switch from '@mui/material/Switch';
 
 export const Complete = (props) => {
   const matchingList = props.res.matchingList;
   const notFound = props.res.notFound;
 
   const [clickCase, setClickCase] = useState(0);
+  const [checked, setChecked] = useState(false);
+  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   useEffect(() => {
     console.log(clickCase);
-  }, [clickCase]);
+    console.log(checked);
+  }, [clickCase, checked]);
 
   const renderCase = () => {
     console.log(matchingList);
@@ -77,8 +85,14 @@ export const Complete = (props) => {
           <div className="matchFindIngredients">{renderIngredient()}</div>
           {/* <div className="matchNotFoundIngredients">{renderNotFoundIngredient()}</div> */}
         </div>
+        <div className="matchMartView">
+          <p>
+            {checked ? '마트 숨기기' : '마트 보이기'}
+            <Switch {...label} checked={checked} onChange={handleChange} />
+          </p>
+        </div>
         <div className="matchResultMap">
-          <MatchMap matchArr={matchingList[clickCase]} />
+          <MatchMap matchArr={matchingList[clickCase]} martView={checked} />
         </div>
         <div className="matchResultList">
           <MatchList matchArr={matchingList[clickCase]} />
