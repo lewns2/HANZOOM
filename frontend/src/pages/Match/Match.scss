@@ -9,9 +9,54 @@
     max-width: 500px;
     height: 500px;
   }
-
   .matchingMessage {
     font-size: 30px;
+  }
+  .matchCaseBtn {
+    font-size: 18px;
+    width: 50px;
+    height: 50px;
+    font-weight: bolder;
+    background-color: #fff;
+    border: 2px solid #f7c343;
+    border-radius: 70%;
+    padding: 3px 2px;
+    margin-right: 20px;
+    box-shadow: 0 4px 4px -4px #777;
+  }
+  button[aria-current] {
+    font-size: 18px;
+    width: 50px;
+    height: 50px;
+    font-weight: bolder;
+    background-color: #f2d17a;
+    border: 2px solid #f7c343;
+    border-radius: 70%;
+    padding: 3px 2px;
+    margin-right: 20px;
+    box-shadow: 0 4px 4px -4px #777;
+  }
+  // .matchClickedCaseBtn {
+  //   font-size: 18px;
+  //   width: 50px;
+  //   height: 50px;
+  //   font-weight: bolder;
+  //   background-color: #f2d17a;
+  //   border: 2px solid #f7c343;
+  //   border-radius: 70%;
+  //   padding: 3px 2px;
+  //   margin-right: 20px;
+  //   box-shadow: 0 4px 4px -4px #777;
+  // }
+  .matchDist {
+    background-color: #f7c343;
+    display: inline-table;
+    font-size: 20px;
+    color: white;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin: 20px 0 50px 0;
   }
 }
 
@@ -30,9 +75,9 @@
     display: flex;
     justify-content: center;
     font-size: 25px;
-    color: darkcyan;
+    // color: darkcyan;
   }
-  .matchIngredients {
+  .matchFindIngredients {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
@@ -41,6 +86,33 @@
       font-weight: bolder;
       background-color: #f2d17a;
       border: 2px solid #f7c343;
+      border-radius: 16px;
+      padding: 3px 2px;
+      margin-right: 15px;
+      box-shadow: 0 4px 4px -4px #777;
+      text-align: center;
+    }
+    .matchNotTag {
+      font-size: 20px;
+      font-weight: bolder;
+      background-color: #cccccc;
+      border: 2px solid #cccccc;
+      border-radius: 16px;
+      padding: 3px 2px;
+      margin-right: 15px;
+      box-shadow: 0 4px 4px -4px #777;
+      text-align: center;
+    }
+  }
+  .matchNotFoundIngredients {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    .matchNotTag {
+      font-size: 20px;
+      font-weight: bolder;
+      background-color: #cccccc;
+      border: 2px solid #cccccc;
       border-radius: 16px;
       padding: 3px 2px;
       margin-right: 15px;
