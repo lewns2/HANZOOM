@@ -54,8 +54,8 @@ export const MatchList = (props) => {
     const shareResult = [];
     const exchangeResult = [];
 
-    for (let i = 0; i < matchingArr[0].userIngredientMatchingRes.length; i++) {
-      var it = matchingArr[0].userIngredientMatchingRes[i];
+    for (let i = 0; i < matchingArr.userIngredientMatchingRes.length; i++) {
+      var it = matchingArr.userIngredientMatchingRes[i];
       if (it.type == '나눔') {
         shareResult.push(
           <div key={i} className="matchContentCard">
