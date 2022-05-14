@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Axios } from '../../../core/axios';
+import './AutoComplete.scss';
 
 export const AutoComplete = (props) => {
   const [allIngredient, setAllIngredient] = useState();
@@ -31,8 +32,6 @@ export const AutoComplete = (props) => {
 
   useEffect(() => {
     getIngredient();
-  }, []);
-  useEffect(() => {
     if (props.header === '필요목록 수정') {
       setKeyword(props.needsName);
     } else if (props.header === '식재료 수정') {
@@ -63,19 +62,21 @@ export const AutoComplete = (props) => {
       />
 
       {keyList.length !== 0 && (
-        <>
+        <div className="autoCompleteContainer">
           {keyList.map(
             (word, index) =>
               index < 10 && (
                 <div
                   key={index}
-                  onClick={() => setKeyword(word.ingredientName)}
+                  onClick={() => {
+                    setKeyword(word.ingredientName), onSearch(word.ingredientName);
+                  }}
                   style={{ cursor: 'pointer' }}>
                   {word.ingredientName}
                 </div>
               ),
           )}
-        </>
+        </div>
       )}
     </>
   );
