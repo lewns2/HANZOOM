@@ -17,9 +17,8 @@ export const FoodModal = (props) => {
   const [needs, setNeeds] = useState({
     ingredient: null,
   });
-
+  const token = sessionStorage.getItem('jwt-token');
   const registerIngre = async () => {
-    const token = sessionStorage.getItem('jwt-token');
     const expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
     const purchase = `${foods.purchaseDate.year}-${foods.purchaseDate.month}-${foods.purchaseDate.day}`;
     if (foods.expirationDate.year === NaN) {
@@ -27,6 +26,10 @@ export const FoodModal = (props) => {
     }
     if (foods.purchaseDate.year === NaN) {
       purchase = '';
+    }
+    if (!foods.ingredient) {
+      swal('식재료명을 입력해주세요.', '', 'error');
+      return;
     }
     Axios.post(
       '/userIngredient/register',
@@ -54,13 +57,19 @@ export const FoodModal = (props) => {
         close();
       })
       .catch((err) => {
-        alert('MY식재료 등록에 실패하였습니다😓');
+        swal('MY식재료 등록에 실패하였습니다😓', '', 'error', {
+          buttons: false,
+          timer: 2000,
+        });
         console.log(err);
       });
   };
 
   const registerNeeds = () => {
-    const token = sessionStorage.getItem('jwt-token');
+    if (!needs.ingredient) {
+      swal('식재료명을 입력해주세요.', '', 'error');
+      return;
+    }
     Axios.post(
       '/userIngredient/register',
       {
@@ -89,21 +98,25 @@ export const FoodModal = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        alert('필요목록 등록에 실패하였습니다😓');
+        swal('필요목록 등록에 실패하였습니다😓', '', 'error', {
+          buttons: false,
+          timer: 2000,
+        });
       });
   };
 
   const modifyIngre = () => {
     const expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
     const purchase = `${foods.purchaseDate.year}-${foods.purchaseDate.month}-${foods.purchaseDate.day}`;
-    console.log('>>>>>>>>>수정 유통기한', expiration);
-    console.log('>>>>>>>>>수정 구매일자', purchase);
-
     if (foods.expirationDate.year === NaN) {
       expiration = '';
     }
     if (foods.purchaseDate.year === NaN) {
       purchase = '';
+    }
+    if (!foods.ingredient) {
+      swal('식재료명을 입력해주세요.', '', 'error');
+      return;
     }
     Axios.put('/userIngredient/update', {
       expirationDate: expiration,
@@ -118,13 +131,18 @@ export const FoodModal = (props) => {
         close();
       })
       .catch((err) => {
-        alert('MY식재료 수정에 실패하였습니다😓');
         console.log(err);
+        swal('MY식재료 수정에 실패하였습니다😓', '', 'error', {
+          buttons: false,
+          timer: 2000,
+        });
       });
   };
   const modifyNeeds = () => {
-    console.log(needs.ingredient);
-    console.log(ingre.userIngredientNo);
+    if (!needs.ingredient) {
+      swal('식재료명을 입력해주세요.', '', 'error');
+      return;
+    }
     Axios.put('/userIngredient/update', {
       expirationDate: '',
       ingredientName: needs.ingredient,
@@ -138,8 +156,11 @@ export const FoodModal = (props) => {
         close();
       })
       .catch((err) => {
-        alert('필요목록 수정에 실패하였습니다😓');
         console.log(err);
+        swal('필요목록 수정에 실패하였습니다😓', '', 'error', {
+          buttons: false,
+          timer: 2000,
+        });
       });
   };
   return (
