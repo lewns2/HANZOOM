@@ -8,10 +8,8 @@ export const AddNeedsIngredients = (props) => {
     }, []);
     return (
       <div className="needsForm">
-        <div>
-          <div className="">식재료 명</div>
-          <AutoComplete setNeeds={props.setNeeds} header={props.header} />
-        </div>
+        <div>식재료 명</div>
+        <AutoComplete setNeeds={props.setNeeds} header={props.header} />
       </div>
     );
   } else {

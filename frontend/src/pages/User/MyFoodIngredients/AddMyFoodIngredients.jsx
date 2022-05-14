@@ -82,9 +82,7 @@ export const AddMyFoodIngredients = (props) => {
     <div className="applyForm">
       <div className="inputForm">
         <div>식재료 명</div>
-        <div>
-          <AutoComplete foods={props.foods} setFoods={props.setFoods} header={props.header} />
-        </div>
+        <AutoComplete foods={props.foods} setFoods={props.setFoods} header={props.header} />
       </div>
       <div className="inputForm">
         <div>
