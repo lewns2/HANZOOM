@@ -5,12 +5,17 @@ import BannerLayout from './BannerLayout';
 import bannerImg from '../../assets/images/fridge.gif';
 import { useNavigate } from 'react-router-dom';
 import { mainButton } from './Main.style';
+import swal from 'sweetalert';
 
 export const Banner = () => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const handleRegister = () => {
     if (user.userInfo.length !== 0) {
+      if (!user.userInfo.lng && !user.userInfo.lat) {
+        swal('위치 정보를 설정해주세요.', '한줌 서비스를 이용하기 위해 위치 정보가 필요합니다');
+        return;
+      }
       navigate('my-food-ingredients');
     } else {
       navigate('/signup');
