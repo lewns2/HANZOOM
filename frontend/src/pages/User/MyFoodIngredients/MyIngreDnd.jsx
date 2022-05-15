@@ -5,7 +5,7 @@ import { FoodIngreList } from './FoodIngreList';
 import { FoodModal } from './FoodModal';
 import swal from 'sweetalert';
 import { Col } from 'react-bootstrap';
-
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 export const MyIngreDnd = (props) => {
   const { column, tasks, setState, state } = props;
   const [modalOpen, setModalOpen] = useState(false);
@@ -46,9 +46,10 @@ export const MyIngreDnd = (props) => {
       <div className="d-flex justify-content-center px-4">
         <h2>{column.title}</h2>
         {column.title === 'MY 식재료' ? (
-          <button className="addFood" onClick={openModal}>
-            +
-          </button>
+          // <button className="addFood" onClick={openModal}>
+          //   +
+          // </button>
+          <AddCircleIcon className="addFood" onClick={openModal}></AddCircleIcon>
         ) : null}
 
         <FoodModal open={modalOpen} close={closeModal} header="식재료 등록" />
