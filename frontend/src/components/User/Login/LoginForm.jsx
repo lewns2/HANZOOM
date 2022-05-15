@@ -98,7 +98,7 @@ export const LoginForm = () => {
   };
 
   const REST_API_KEY = '112573439184cd2fae91493c54ed80a9';
-  const REDIRECT_URI = 'https://k6e103.p.ssafy.io/oauth/kakao/callback';
+  const REDIRECT_URI = 'https://k6e103.p.ssafy.io:8443/oauth/kakao/callback';
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const onSocialLogin = async () => {
     console.log(new URL(window.location.href));
