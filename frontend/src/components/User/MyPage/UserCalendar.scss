@@ -9,9 +9,6 @@
       color: #222;
     }
   }
-  .fc {
-    // height: 400px;
-  }
   .fc-header-toolbar {
     font-size: 12px;
     margin-bottom: 12px;
@@ -63,5 +60,13 @@
   }
   td {
     height: 90px;
+  }
+
+  @media only screen and (max-width: 1300px) {
+    .fc-event-main {
+      word-break: keep-all;
+      white-space: normal;
+      font-size: 10px;
+    }
   }
 }
