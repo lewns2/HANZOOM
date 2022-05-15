@@ -30,6 +30,8 @@ export const AutoComplete = (props) => {
     return name === keyword.toString().toLowerCase();
   };
 
+  const [closeContainer, setCloseContainer] = useState(false);
+
   useEffect(() => {
     getIngredient();
     if (props.header === '필요목록 수정') {
@@ -56,12 +58,12 @@ export const AutoComplete = (props) => {
               ingredient: event.target.value,
             });
           }
-          onSearch(event.target.value), setKeyword(event.target.value);
+          onSearch(event.target.value), setKeyword(event.target.value), setCloseContainer(false);
         }}
         value={keyword}
       />
 
-      {keyList.length !== 0 && (
+      {keyList.length !== 0 && !closeContainer && (
         <div className="autoCompleteContainer">
           {keyList.map(
             (word, index) =>
@@ -69,7 +71,9 @@ export const AutoComplete = (props) => {
                 <div
                   key={index}
                   onClick={() => {
-                    setKeyword(word.ingredientName), onSearch(word.ingredientName);
+                    setKeyword(word.ingredientName),
+                      onSearch(word.ingredientName),
+                      setCloseContainer(true);
                   }}
                   style={{ cursor: 'pointer' }}>
                   {word.ingredientName}
