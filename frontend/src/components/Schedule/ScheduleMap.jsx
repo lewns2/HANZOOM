@@ -9,7 +9,7 @@ import swal from 'sweetalert';
 
 export const ScheduleMap = (props) => {
   const { otherEmail, lat, lng } = props;
-  const { userInfo } = useSelector((state) => state.user);
+  const { userInfo, otherImage } = useSelector((state) => state.user);
   const [myImg, setMyImg] = useState(null);
   const [myLat, setMyLat] = useState(null);
   const [myLng, setMyLng] = useState(null);
@@ -103,7 +103,11 @@ export const ScheduleMap = (props) => {
     // 커스텀 오버레이
     var myImgUrl;
     if (myImg) {
-      myImgUrl = `${BASE_IMG_URL}${myImg}`;
+      if (myImg.includes('kakao')) {
+        myImgUrl = `${myImg}`;
+      } else {
+        myImgUrl = `${BASE_IMG_URL}${myImg}`;
+      }
     } else {
       myImgUrl = '/img/basicProfile.png';
     }
@@ -122,7 +126,11 @@ export const ScheduleMap = (props) => {
 
     var otherImgUrl;
     if (otherImg) {
-      otherImgUrl = `${BASE_IMG_URL}${otherImg}`;
+      if (otherImg.includes('kakao')) {
+        otherImgUrl = `${otherImg}`;
+      } else {
+        otherImgUrl = `${BASE_IMG_URL}${otherImg}`;
+      }
     } else {
       otherImgUrl = '/img/basicProfile.png';
     }
@@ -329,6 +337,7 @@ export const ScheduleMap = (props) => {
     setMyImg(userInfo.userImage);
     setMyLat(userInfo.lat);
     setMyLng(userInfo.lng);
+    setOtherImg(otherImage);
     if (otherEmail) setOtherPosition();
   }, []);
 
@@ -346,12 +355,14 @@ export const ScheduleMap = (props) => {
       setMarker();
     }
     if (kakaoMap && kakaoMarker) {
-      addEventListener();
+      if (props.authority) addEventListener();
     }
   }, [kakaoMap]);
 
   return (
     <>
+      {console.log(otherImage)}
+
       <div id="scheduleMap">
         {!lat && !lng && (
           <>
