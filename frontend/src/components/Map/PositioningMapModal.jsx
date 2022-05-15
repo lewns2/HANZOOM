@@ -6,7 +6,10 @@ import './PositioningMapModal.scss';
 
 export const PositioningMapModal = (props) => {
   return (
-    <Modal {...props} aria-labelledby="contained-modal-title-vcenter" style={{ zIndex: '99999' }}>
+    <Modal
+      {...props}
+      aria-labelledby="contained-modal-title-vcenter"
+      style={{ zIndex: '99999', fontFamily: 'GmarketSansBold' }}>
       <Modal.Header closeButton>
         <div>
           <Modal.Title id="contained-modal-title-vcenter " className="modalTitle">

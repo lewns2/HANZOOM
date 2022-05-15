@@ -226,7 +226,11 @@ export const PositioningMap = (props) => {
       <div className="searchInput">
         {isOpenPost ? (
           <span>
-            <CloseIcon className="closeIcon" title="닫기" onClick={() => setIsOpenPost(false)}>
+            <CloseIcon
+              className="closeIcon"
+              title="닫기"
+              onClick={() => setIsOpenPost(false)}
+              style={{ cursor: 'pointer' }}>
               닫기
             </CloseIcon>
             <DaumPostcode
