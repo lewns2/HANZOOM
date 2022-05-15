@@ -92,7 +92,7 @@ export const Complete = (props) => {
           </p>
         </div>
         <div className="matchResultMap">
-          <MatchMap matchArr={matchingList[clickCase]} martView={checked} />
+          <MatchMap matchArr={matchingList[clickCase]} martView={checked} setChecked={setChecked}/>
         </div>
         <div className="matchResultList">
           <MatchList matchArr={matchingList[clickCase]} />
