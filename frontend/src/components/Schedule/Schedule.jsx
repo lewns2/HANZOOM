@@ -146,7 +146,12 @@ export const Schedule = (props) => {
             </div>
             <div className="scheduleMap col-lg-7 d-flex justify-content-center">
               <div className="mapExplain">약속 장소를 지도에 표시해주세요.</div>
-              <ScheduleMap setLat={setLat} setLng={setLng} otherEmail={otherEmail} />
+              <ScheduleMap
+                setLat={setLat}
+                setLng={setLng}
+                otherEmail={otherEmail}
+                authority={authority}
+              />
             </div>
           </div>
         </div>

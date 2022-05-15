@@ -19,6 +19,7 @@ export const userSlice = createSlice({
     code: '',
     loginType: '',
     beforeLogin: 'false',
+    otherImage: '',
   },
   reducers: {
     clearUser: (state) => {
@@ -26,6 +27,7 @@ export const userSlice = createSlice({
       state.loginType = '';
       sessionStorage.removeItem('jwt-token');
       state.beforeLogin = false;
+      otherImage = '';
     },
     setCode: (state, action) => {
       state.code = action.payload;
@@ -35,6 +37,9 @@ export const userSlice = createSlice({
     },
     setBeforeLogin: (state, action) => {
       state.beforeLogin = action.payload;
+    },
+    setOtherImage: (state, action) => {
+      state.otherImage = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -46,6 +51,7 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { clearUser, setCode, setLoginType, setBeforeLogin } = userSlice.actions;
+export const { clearUser, setCode, setLoginType, setBeforeLogin, setOtherImage } =
+  userSlice.actions;
 
 export default userSlice.reducer;

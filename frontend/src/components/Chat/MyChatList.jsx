@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeShow, setRoomId, getChatMessageInfo, getChatInfo } from '../../Reducer/chatSlice';
+import { setOtherImage } from '../../Reducer/userSlice';
 import { Axios } from '../../core/axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { BASE_IMG_URL } from '../../core/s3';
@@ -16,6 +17,13 @@ export const MyChatList = (chat) => {
     dispatch(setRoomId(chat.id));
     dispatch(getChatMessageInfo());
     dispatch(changeShow(true));
+    if (chat.userNickname1 === user.userInfo.userNickname) {
+      console.log(chat.userImage2);
+      dispatch(setOtherImage(chat.userImage2));
+    } else {
+      dispatch(setOtherImage(chat.userImage1));
+      console.log(chat.userImage2);
+    }
   };
 
   const handleDeleteChat = async (id) => {
