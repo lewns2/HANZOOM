@@ -17,6 +17,8 @@ public class BoardFindAllRes {
     String imagePath;
     @ApiModelProperty(name="Board status")
     String status;
+    @ApiModelProperty(name="Board type")
+    String type;
     @ApiModelProperty(name="Board title")
     String title;
     @ApiModelProperty(name="Board viewCnt")

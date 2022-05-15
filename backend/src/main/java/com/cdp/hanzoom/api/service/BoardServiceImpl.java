@@ -92,6 +92,7 @@ public class BoardServiceImpl implements BoardService{
             boardFindAllRes.setDescription(board.getDescription());
             boardFindAllRes.setImagePath(board.getImagePath());
             boardFindAllRes.setStatus(board.getStatus());
+            boardFindAllRes.setType(board.getType());
             boardFindAllRes.setTitle(board.getTitle());
             boardFindAllRes.setViewCnt(board.getViewCnt());
             boardFindAllRes.setLikeCnt(board.getLikeCnt());
