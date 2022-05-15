@@ -53,7 +53,7 @@ public class KaKaoServiceImpl implements KaKaoService{
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=112573439184cd2fae91493c54ed80a9");
-            sb.append("&redirect_uri=http://localhost:3000/oauth/kakao/callback");
+            sb.append("&redirect_uri=https://k6e103.p.ssafy.io/oauth/kakao/callback");
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
             bw.flush();
