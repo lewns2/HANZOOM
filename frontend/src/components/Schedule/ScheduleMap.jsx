@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import swal from 'sweetalert';
 
 export const ScheduleMap = (props) => {
-  const { otherEmail, lat, lng } = props;
+  const { otherEmail, lat, lng, authority } = props;
   const { userInfo, otherImage } = useSelector((state) => state.user);
   const [myImg, setMyImg] = useState(null);
   const [myLat, setMyLat] = useState(null);
@@ -355,7 +355,8 @@ export const ScheduleMap = (props) => {
       setMarker();
     }
     if (kakaoMap && kakaoMarker) {
-      if (props.authority) addEventListener();
+      console.log(props);
+      if (authority || (lat && lng)) addEventListener();
     }
   }, [kakaoMap]);
 
