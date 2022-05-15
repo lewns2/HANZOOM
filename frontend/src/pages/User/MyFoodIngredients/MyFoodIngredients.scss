@@ -1,11 +1,10 @@
 #myFoodIngredients {
   padding: 5%;
   .addFood {
-    float: right;
     height: fit-content;
-    border-radius: 50%;
-    background-color: #f7c343;
-    border: 2px solid #f7c343;
+    color: #f7c343;
+    cursor: pointer;
+    font-size: 40px;
   }
 
   h2 {
@@ -33,18 +32,18 @@
     }
   }
 }
+
 #needs {
   h2 {
     text-align: center;
     margin: auto;
   }
   .addNeeds {
-    float: right;
-    height: fit-content;
-    border-radius: 50%;
-    background-color: #f7c343;
-    border: 2px solid #f7c343;
+    color: #f7c343;
+    cursor: pointer;
+    font-size: 40px;
   }
+
   .ingreBody {
     background-color: #fffcf2;
     // background-color: pink;

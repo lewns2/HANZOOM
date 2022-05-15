@@ -1,5 +1,6 @@
 import './MyFoodIngredients.scss';
 import { FoodModal } from './FoodModal';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Axios } from '../../../core/axios.js';
@@ -99,6 +100,7 @@ export const MyFoodIngredients = () => {
   };
   const closeModal2 = () => {
     setModalOpen2(false);
+    setState(!state);
   };
 
   //수정 요청
@@ -328,9 +330,8 @@ export const MyFoodIngredients = () => {
               <Col id="needs">
                 <div className="d-flex justify-content-center px-4">
                   <h2>필요목록</h2>
-                  <button className="addNeeds" onClick={openModal2}>
-                    +
-                  </button>
+
+                  <AddCircleIcon className="addNeeds" onClick={openModal2}></AddCircleIcon>
                   <FoodModal
                     open={modalOpen2}
                     close={closeModal2}

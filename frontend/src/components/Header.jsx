@@ -47,10 +47,10 @@ export const Header = () => {
     }
   };
 
-  const boardHandler = (e) => {
-    if (user.userInfo.length == 0) {
+  const moveHandler = (e) => {
+    if (!user.userInfo.lng && !user.userInfo.lat) {
       e.preventDefault();
-      swal('로그인 필요', '한줌 서비스를 이용하기 위해 로그인이 필요합니다');
+      swal('위치 정보를 설정해주세요.', '한줌 서비스를 이용하기 위해 위치 정보가 필요합니다');
     }
   };
 
@@ -73,8 +73,7 @@ export const Header = () => {
 
   return (
     <header>
-      {/* {console.log(userLocName)}
-      {console.log(user.userInfo)} */}
+      {console.log(user.userInfo)}
       <PositioningMapModal show={modalShow} onHide={() => setModalShow(false)} />
       <Navbar collapseOnSelect expand="lg">
         <Container>
@@ -115,8 +114,10 @@ export const Header = () => {
               ) : (
                 <>
                   {/* <Link to="/martmap">마트맵</Link> */}
-                  <Link to="/my-food-ingredients">MY식재료</Link>
-                  <Link to="/board" onClick={(event) => boardHandler(event)}>
+                  <Link to="/my-food-ingredients" onClick={(event) => moveHandler(event)}>
+                    MY식재료
+                  </Link>
+                  <Link to="/board" onClick={(event) => moveHandler(event)}>
                     게시판
                   </Link>
                   <Link to="/my-page">MY페이지</Link>

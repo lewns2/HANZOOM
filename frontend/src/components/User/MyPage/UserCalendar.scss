@@ -26,6 +26,12 @@
       margin-bottom: 12px;
       @media only screen and (max-width: 414px) {
         font-size: 8px;
+    }
+    .fc-header-toolbar {
+      font-size: 12px;
+      margin-bottom: 12px;
+      @media only screen and (max-width: 414px) {
+        font-size: 8px;
       }
     }
     .fc-toolbar-chunk {
@@ -102,5 +108,13 @@
   }
   @media only screen and (max-width: 991px) {
     margin-top: 20px;
+  }
+
+  @media only screen and (max-width: 1300px) {
+    .fc-event-main {
+      word-break: keep-all;
+      white-space: normal;
+      font-size: 10px;
+    }
   }
 }
