@@ -64,12 +64,14 @@ export const FoodIngreList = (props) => {
   };
   const closeModal3 = () => {
     setModalOpen3(false);
+    setState(!state);
   };
   const openModal4 = () => {
     setModalOpen4(true);
   };
   const closeModal4 = () => {
     setModalOpen4(false);
+    setState(!state);
   };
 
   // 식재료 삭제 요청
@@ -110,8 +112,6 @@ export const FoodIngreList = (props) => {
                   close={closeModal4}
                   header="필요목록 수정"
                   ingre={task}
-                  state={state}
-                  setState={setState}
                 />
                 <DeleteIcon
                   onClick={() => deleteFoodIngre(task.userIngredientNo)}

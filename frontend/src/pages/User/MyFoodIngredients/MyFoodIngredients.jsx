@@ -99,6 +99,7 @@ export const MyFoodIngredients = () => {
   };
   const closeModal2 = () => {
     setModalOpen2(false);
+    setState(!state);
   };
 
   //수정 요청
