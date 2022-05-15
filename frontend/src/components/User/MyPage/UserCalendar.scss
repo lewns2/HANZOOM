@@ -26,95 +26,96 @@
       margin-bottom: 12px;
       @media only screen and (max-width: 414px) {
         font-size: 8px;
-    }
-    .fc-header-toolbar {
-      font-size: 12px;
-      margin-bottom: 12px;
-      @media only screen and (max-width: 414px) {
-        font-size: 8px;
       }
-    }
-    .fc-toolbar-chunk {
-      .fc-today-button {
-        background-color: #f08d0c !important;
-        border: 1px solid #f08d0c !important;
-      }
-
-      .fc-button-group {
-        button {
-          background-color: #f7cc5ee5 !important;
-          border: 1px solid #f7cc5ee5 !important;
+      .fc-header-toolbar {
+        font-size: 12px;
+        margin-bottom: 12px;
+        @media only screen and (max-width: 414px) {
+          font-size: 8px;
         }
       }
-    }
+      .fc-toolbar-chunk {
+        .fc-today-button {
+          background-color: #f08d0c !important;
+          border: 1px solid #f08d0c !important;
+        }
 
-    /* 캘린더 이벤트 칸에 마우스 올리면 마우스 포인터 변경*/
-    .fc-h-event .fc-event-title-container {
-      cursor: pointer;
-    }
-    .fc-daygrid-day-frame {
-      background-color: #fcfcfc;
-    }
-
-    .fc-daygrid-day-number {
-      font-family: 'GmarketSansMedium';
-    }
-
-    /* 토요일 날짜 파란색으로 표시 */
-    .fc-day-sat .fc-daygrid-day-number {
-      color: #064789;
-    }
-
-    /* 일요일 날짜 빨간색으로 표시 */
-    .fc-day-sun .fc-daygrid-day-number {
-      color: #c92323;
-    }
-
-    .fc-scroller {
-      @media only screen and (min-width: 415px) {
-        &::-webkit-scrollbar {
-          width: 15px;
+        .fc-button-group {
+          button {
+            background-color: #f7cc5ee5 !important;
+            border: 1px solid #f7cc5ee5 !important;
+          }
         }
       }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 5px;
-        background-color: #ccc;
+
+      /* 캘린더 이벤트 칸에 마우스 올리면 마우스 포인터 변경*/
+      .fc-h-event .fc-event-title-container {
+        cursor: pointer;
       }
-      &::-webkit-scrollbar-track {
-        background-color: #eee;
+      .fc-daygrid-day-frame {
+        background-color: #fcfcfc;
       }
-    }
-    thead {
-      background-color: #f3c85c;
-      // @media only screen and (max-width: 1400px) {
-      //   width: 60% !important;
-      // }
-      // @media only screen and (max-width: 1200px) {
-      //   width: 70% !important;
-      // }
-      // @media only screen and (max-width: 991px) {
-      //   width: 60% !important;
-      // }
-      @media only screen and (max-width: 414px) {
-        font-size: 8px;
+
+      .fc-daygrid-day-number {
+        font-family: 'GmarketSansMedium';
       }
-    }
-    td {
-      height: 80px;
+
+      /* 토요일 날짜 파란색으로 표시 */
+      .fc-day-sat .fc-daygrid-day-number {
+        color: #064789;
+      }
+
+      /* 일요일 날짜 빨간색으로 표시 */
+      .fc-day-sun .fc-daygrid-day-number {
+        color: #c92323;
+      }
+
+      .fc-scroller {
+        @media only screen and (min-width: 415px) {
+          &::-webkit-scrollbar {
+            width: 15px;
+          }
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 5px;
+          background-color: #ccc;
+        }
+        &::-webkit-scrollbar-track {
+          background-color: #eee;
+        }
+      }
+      thead {
+        background-color: #f3c85c;
+        // @media only screen and (max-width: 1400px) {
+        //   width: 60% !important;
+        // }
+        // @media only screen and (max-width: 1200px) {
+        //   width: 70% !important;
+        // }
+        // @media only screen and (max-width: 991px) {
+        //   width: 60% !important;
+        // }
+        @media only screen and (max-width: 414px) {
+          font-size: 8px;
+        }
+      }
+      td {
+        height: 80px;
+      }
+      @media only screen and (max-width: 991px) {
+        // padding: 20px;
+      }
     }
     @media only screen and (max-width: 991px) {
-      // padding: 20px;
+      margin-top: 20px;
     }
-  }
-  @media only screen and (max-width: 991px) {
-    margin-top: 20px;
-  }
 
-  @media only screen and (max-width: 1300px) {
-    .fc-event-main {
-      word-break: keep-all;
-      white-space: normal;
-      font-size: 10px;
+    @media only screen and (max-width: 1300px) {
+      .fc-event-main {
+        word-break: keep-all;
+        white-space: normal;
+        font-size: 10px;
+      }
     }
   }
 }
