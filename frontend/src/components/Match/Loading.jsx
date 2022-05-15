@@ -6,7 +6,7 @@ export const Loading = (props) => {
 
   const [isPending, setIsPending] = useState(true);
   useEffect(() => {
-    const handle = setTimeout(() => setIsPending(false), 4000);
+    const handle = setTimeout(() => setIsPending(false), 3000);
   }, []);
   return (
     <>
