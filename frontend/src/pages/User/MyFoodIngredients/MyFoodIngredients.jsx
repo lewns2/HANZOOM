@@ -356,7 +356,7 @@ export const MyFoodIngredients = () => {
                     <div className="d-flex justify-content-center">
                       {boardStatus ? (
                         <button className="ingreBtn mt-3">
-                          <Link to={'/board/write'} state={checkedNeeds}>
+                          <Link to={'/board/write'} state={{ type: '필요', ingre: checkedNeeds }}>
                             게시글 등록
                           </Link>
                         </button>

@@ -92,7 +92,7 @@ export const MyIngreDnd = (props) => {
         ) : (
           <button className="ingreBtn mt-3" onClick={clickEvent2}>
             {checkedBSIngre.length ? (
-              <Link to={'/board/write'} state={checkedBSIngre}>
+              <Link to={'/board/write'} state={{ type: '교환/나눔', ingre: checkedBSIngre }}>
                 교환 / 나눔 등록
               </Link>
             ) : (
