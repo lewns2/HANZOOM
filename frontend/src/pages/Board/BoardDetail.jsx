@@ -9,6 +9,7 @@ import './BoardDetail.scss';
 import { BreakfastDiningRounded } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { changeShow, setRoomId, getChatMessageInfo } from '../../Reducer/chatSlice';
+import { setOtherImage } from '../../Reducer/userSlice';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -90,6 +91,7 @@ export const BoardDetail = () => {
     })
       .then((res) => {
         startChat(res.data);
+        dispatch(setOtherImage(content.userImage));
       })
       .catch((err) => {
         console.log(err);
