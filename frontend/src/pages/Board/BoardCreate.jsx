@@ -1,25 +1,21 @@
-import { AddLink, ConstructionOutlined, ConstructionRounded } from '@mui/icons-material';
-import { width } from '@mui/system';
-import { useState, useRef, useEffect } from 'react';
-import Initimage from '../../assets/images/Initimage.PNG';
-import { Calendar } from '../../components/Board/Calendar';
+import './BoardCreate.scss';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { Axios } from '../../core/axios';
-// import axios from 'axios';
 
-import './BoardCreate.scss';
+import Initimage from '../../assets/images/Initimage.PNG';
+import { Axios } from '../../core/axios';
 
 export const BoardCreate = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  console.log(location);
   const [ingredients, setIngredients] = useState([]);
 
   const setInfo = () => {
     let ingreList = [];
     let noList = [];
-    location.state.map((info) => {
+    location.state.ingre.map((info) => {
       noList.push(info.userIngredientNo);
       ingreList.push(info.ingredientName);
     });
@@ -29,6 +25,9 @@ export const BoardCreate = () => {
 
   useEffect(() => {
     setInfo();
+    if (location.state.type === '필요') {
+      setIsNeed(true);
+    }
   }, []);
   /* POST 요청 보낼 이미지 */
   const [postImg, setPostImg] = useState();
@@ -189,24 +188,29 @@ export const BoardCreate = () => {
           <div className="row mb-4">
             <div className="col-3">거래 종류</div>
             <div className="col-9">
-              <button
-                type="button"
-                id={isShare ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
-                onClick={() => selectedType('나눔')}>
-                나눔
-              </button>
-              <button
-                type="button"
-                id={isExchange ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
-                onClick={() => selectedType('교환')}>
-                교환
-              </button>
-              <button
-                type="button"
-                id={isNeed ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
-                onClick={() => selectedType('필요')}>
-                필요
-              </button>
+              {location.state.type === '교환/나눔' ? (
+                <>
+                  <button
+                    type="button"
+                    id={isShare ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
+                    onClick={() => selectedType('나눔')}>
+                    나눔
+                  </button>
+                  <button
+                    type="button"
+                    id={isExchange ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
+                    onClick={() => selectedType('교환')}>
+                    교환
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  id={isNeed ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
+                  onClick={() => selectedType('필요')}>
+                  필요
+                </button>
+              )}
             </div>
           </div>
 
