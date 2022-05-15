@@ -1,12 +1,19 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { settings } from '../../../constants/slider';
 import { useEffect, useState } from 'react';
 import { Axios } from '../../../core/axios';
 import { axios_apis } from '../../../core/axios';
 
 import { FavoriteListItem } from './FavoriteListItem';
+
+export const settings = {
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 export const FavoriteList = () => {
   const [likeList, setLikeList] = useState();

@@ -48,7 +48,7 @@ export const UserInfo = (props) => {
   return (
     <>
       <section className="userInfoWrap">
-        <div className="row">
+        {/* <div className="row">
           <div className="col-4 userImage">
             <img
               className=""
@@ -75,6 +75,34 @@ export const UserInfo = (props) => {
                 </button>
               )}
             </div>
+          </div>
+        </div> */}
+        <h3>프로필</h3>
+        <div className="userImage">
+          <img
+            className=""
+            src={
+              loginType == '일반'
+                ? userInfo.userImage
+                  ? `${BASE_IMG_URL}${userInfo.userImage}`
+                  : '/img/basicProfile.png'
+                : userInfo.userImage
+            }
+            alt=""
+          />
+        </div>
+        <div className="userContent">
+          <p className="userNickName">{userInfo.userNickname}</p>
+          <p className="userEmail">{userInfo.userEmail}</p>
+          <div className="buttons">
+            <button className="withdrawBtn" onClick={withdrawUser}>
+              회원 탈퇴
+            </button>
+            {loginType == '일반' && (
+              <button className="updateBtn" onClick={() => props.setModalOpen(true)}>
+                정보 수정
+              </button>
+            )}
           </div>
         </div>
       </section>
