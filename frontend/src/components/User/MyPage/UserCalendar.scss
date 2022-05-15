@@ -1,65 +1,113 @@
-.calendar {
-  width: 90%;
+.calendarWrap {
+  background-color: #f7f6f2;
+  border-radius: 25px;
+  box-shadow: 0 4px 4px -3px #777;
+  padding: 20px 0px;
+  height: 100%;
 
-  a {
-    text-decoration: none;
-    color: #222;
-    // font-weight: bold;
-    &:hover {
+  .calendar {
+    width: 90%;
+    padding: 30px 30px;
+    margin: 0px auto;
+
+    a {
+      text-decoration: none;
       color: #222;
-    }
-  }
-  .fc-header-toolbar {
-    font-size: 12px;
-    margin-bottom: 12px;
-    @media only screen and (max-width: 414px) {
-      font-size: 8px;
-    }
-  }
-  .fc-toolbar-chunk {
-    .fc-today-button {
-      background-color: #f08d0c !important;
-      border: 1px solid #f08d0c !important;
-    }
-
-    .fc-button-group {
-      button {
-        background-color: #f7cc5ee5 !important;
-        border: 1px solid #f7cc5ee5 !important;
+      // font-weight: bold;
+      &:hover {
+        color: #222;
       }
     }
-  }
-
-  .fc-scroller {
-    @media only screen and (min-width: 415px) {
-      &::-webkit-scrollbar {
-        width: 18px;
+    .fc {
+      height: 100%;
+    }
+    .fc-header-toolbar {
+      font-size: 12px;
+      margin-bottom: 12px;
+      @media only screen and (max-width: 414px) {
+        font-size: 8px;
+    }
+    .fc-header-toolbar {
+      font-size: 12px;
+      margin-bottom: 12px;
+      @media only screen and (max-width: 414px) {
+        font-size: 8px;
       }
     }
-    &::-webkit-scrollbar-thumb {
-      background-color: #aaa;
+    .fc-toolbar-chunk {
+      .fc-today-button {
+        background-color: #f08d0c !important;
+        border: 1px solid #f08d0c !important;
+      }
+
+      .fc-button-group {
+        button {
+          background-color: #f7cc5ee5 !important;
+          border: 1px solid #f7cc5ee5 !important;
+        }
+      }
     }
-    &::-webkit-scrollbar-track {
-      background-color: #eee;
+
+    /* 캘린더 이벤트 칸에 마우스 올리면 마우스 포인터 변경*/
+    .fc-h-event .fc-event-title-container {
+      cursor: pointer;
+    }
+    .fc-daygrid-day-frame {
+      background-color: #fcfcfc;
+    }
+
+    .fc-daygrid-day-number {
+      font-family: 'GmarketSansMedium';
+    }
+
+    /* 토요일 날짜 파란색으로 표시 */
+    .fc-day-sat .fc-daygrid-day-number {
+      color: #064789;
+    }
+
+    /* 일요일 날짜 빨간색으로 표시 */
+    .fc-day-sun .fc-daygrid-day-number {
+      color: #c92323;
+    }
+
+    .fc-scroller {
+      @media only screen and (min-width: 415px) {
+        &::-webkit-scrollbar {
+          width: 15px;
+        }
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: #ccc;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #eee;
+      }
+    }
+    thead {
+      background-color: #f3c85c;
+      // @media only screen and (max-width: 1400px) {
+      //   width: 60% !important;
+      // }
+      // @media only screen and (max-width: 1200px) {
+      //   width: 70% !important;
+      // }
+      // @media only screen and (max-width: 991px) {
+      //   width: 60% !important;
+      // }
+      @media only screen and (max-width: 414px) {
+        font-size: 8px;
+      }
+    }
+    td {
+      height: 80px;
+    }
+    @media only screen and (max-width: 991px) {
+      // padding: 20px;
     }
   }
-  thead {
-    background-color: #f3c85c;
-    // @media only screen and (max-width: 1400px) {
-    //   width: 60% !important;
-    // }
-    // @media only screen and (max-width: 1200px) {
-    //   width: 70% !important;
-    // }
-    // @media only screen and (max-width: 991px) {
-    //   width: 60% !important;
-    // }
-    @media only screen and (max-width: 414px) {
-      font-size: 8px;
-    }
-  }
-  td {
-    height: 90px;
+  @media only screen and (max-width: 991px) {
+    margin-top: 20px;
   }
 
   @media only screen and (max-width: 1300px) {
