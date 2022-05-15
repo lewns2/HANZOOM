@@ -15,15 +15,31 @@ import Paper from '@mui/material/Paper';
 
 export const ModiMyFoodIngredients = (props) => {
   const [ingreName, setIngreName] = useState();
-  const [modiPurchaseDate, setModiPurchaseDate] = useState('');
-  const [modiExpirationDate, setModiExpirationDate] = useState('');
+  const [purchaseDate, setPurchaseDate] = useState();
+  const [expirationDate, setExpirationDate] = useState();
+  const [modiPurchaseDate, setModiPurchaseDate] = useState();
+  const [modiExpirationDate, setModiExpirationDate] = useState();
 
   const getIngreInfo = async () => {
     await Axios.get(`userIngredient/find/${props.ingre.userIngredientNo}`)
       .then((res) => {
+        console.log(res.data);
         setIngreName(res.data.ingredientName);
-        setModiPurchaseDate(res.data.purchaseDate);
-        setModiExpirationDate(res.data.expirationDate);
+        if (res.data.purchaseDate) {
+          console.log('1');
+          setModiPurchaseDate(res.data.purchaseDate);
+        } else {
+          console.log('2');
+          setPurchaseDate(res.data.purchaseDate);
+        }
+
+        if (res.data.expirationDate) {
+          console.log('3');
+          setModiExpirationDate(res.data.expirationDate);
+        } else {
+          console.log('4');
+          setExpirationDate(res.data.expirationDate);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -81,12 +97,23 @@ export const ModiMyFoodIngredients = (props) => {
   }, []);
 
   useEffect(() => {
+    if (modiExpirationDate) {
+      var finalExpirationDate = modiExpirationDate;
+    } else if (expirationDate) {
+      finalExpirationDate = expirationDate;
+    }
+    if (modiPurchaseDate) {
+      var finalPurchaseDate = modiPurchaseDate;
+    } else if (purchaseDate) {
+      finalPurchaseDate = purchaseDate;
+    }
     props.setFoods({
-      ...props.foods,
-      purchaseDate: modiPurchaseDate,
-      expirationDate: modiExpirationDate,
+      ingredient: ingreName,
+      purchaseDate: finalExpirationDate,
+      expirationDate: finalPurchaseDate,
     });
-  }, [modiPurchaseDate, modiExpirationDate]);
+  }, [modiPurchaseDate, modiExpirationDate, purchaseDate, expirationDate]);
+
   return (
     <div className="applyForm">
       <div className="inputForm">
@@ -97,7 +124,7 @@ export const ModiMyFoodIngredients = (props) => {
               foods={props.foods}
               setFoods={props.setFoods}
               ingreName={ingreName}
-              setIngreName={setIngreName}
+              // setIngreName={setIngreName}
               header={props.header}
             />
           )}
@@ -106,6 +133,7 @@ export const ModiMyFoodIngredients = (props) => {
       <div className="inputForm">
         <div>
           구매일자
+          {!modiPurchaseDate && <Calendar setSelectedDate={setPurchaseDate} />}
           {modiPurchaseDate && (
             <Calendar setSelectedDate={setModiPurchaseDate} originalDate={modiPurchaseDate} />
           )}
@@ -126,6 +154,7 @@ export const ModiMyFoodIngredients = (props) => {
               <BasicTable />
             </div>
           </div>
+          {!modiExpirationDate && <Calendar setSelectedDate={setExpirationDate} />}
           {modiExpirationDate && (
             <Calendar setSelectedDate={setModiExpirationDate} originalDate={modiExpirationDate} />
           )}

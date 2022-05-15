@@ -107,14 +107,16 @@ export const FoodModal = (props) => {
   };
 
   const modifyIngre = () => {
-    var expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
-    var purchase = `${foods.purchaseDate.year}-${foods.purchaseDate.month}-${foods.purchaseDate.day}`;
-    if (expiration === 'NaN-NaN-NaN') {
-      expiration = '';
+    console.log(foods);
+    var expiration = '';
+    var purchase = '';
+    if (foods.expirationDate) {
+      expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
     }
-    if (purchase === 'NaN-NaN-NaN') {
-      purchase = '';
+    if (foods.purchaseDate) {
+      purchase = `${foods.purchaseDate.year}-${foods.purchaseDate.month}-${foods.purchaseDate.day}`;
     }
+
     if (!foods.ingredient) {
       swal('식재료명을 입력해주세요.', '', 'error');
       return;
