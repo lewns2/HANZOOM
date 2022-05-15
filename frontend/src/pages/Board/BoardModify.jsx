@@ -12,6 +12,8 @@ import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { Axios } from '../../core/axios';
 
+import { Camera } from 'react-camera-pro';
+
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
 export const BoardModify = () => {
@@ -162,6 +164,27 @@ export const BoardModify = () => {
     console.log(location.state);
   }, []);
 
+  const camera = useRef(null);
+  const [cameraState, setCameraState] = useState(false);
+  const [numberOfCameras, setNumberOfCameras] = useState(0);
+
+  const cameraTakePhoto = (e) => {
+    const dataurl = camera.current.takePhoto();
+    setCameraState(false);
+    var arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    const file = new File([u8arr], 'camera.jpg', { type: mime });
+    setUploadImg(URL.createObjectURL(file));
+    setPostImg(file);
+  };
+
   return (
     <>
       <section className="container">
@@ -220,17 +243,62 @@ export const BoardModify = () => {
           <div className="row mb-4" style={{ display: isNeed ? 'none' : '' }}>
             <div className="col-3">거래 품목</div>
             <div className="col-9">
-              <div className="uploadImg">
-                {uploadImg && (
-                  <img
-                    src={uploadImg}
-                    alt="sample"
-                    style={{ margin: 'auto', width: '200px', height: '200px' }}></img>
-                )}
-              </div>
-              <input type="file" className="imgInput" accept="image/*" onChange={saveUploadImg} />
-              <button onClick={deleteUploadImg}>삭제</button>
-              <button>이미지 촬영</button>
+              {cameraState ? (
+                <>
+                  <div style={{ width: '260px', height: '200px' }}>
+                    <Camera
+                      ref={camera}
+                      aspectRatio={4 / 3}
+                      numberOfCamerasCallback={setNumberOfCameras}
+                    />
+                  </div>
+                  <button className="imageSelect" onClick={cameraTakePhoto}>
+                    촬영
+                  </button>
+                  <button
+                    className="imageSelect"
+                    hidden={numberOfCameras <= 1}
+                    onClick={() => {
+                      camera.current.switchCamera();
+                    }}>
+                    전환
+                  </button>
+                  <button className="imageSelect" onClick={() => setCameraState(false)}>
+                    취소
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="uploadImg">
+                    {uploadImg && (
+                      <img
+                        src={uploadImg}
+                        alt="sample"
+                        style={{ margin: 'auto', width: '200px', height: '200px' }}></img>
+                    )}
+                  </div>
+                  {/* <input
+                    type="file"
+                    className="imgInput"
+                    accept="image/*"
+                    onChange={saveUploadImg}
+                  /> */}
+                  <label className="imageSelect" htmlFor="input-file">
+                    이미지 선택
+                  </label>
+                  <input
+                    onChange={saveUploadImg}
+                    type="file"
+                    id="input-file"
+                    style={{ display: 'none' }}></input>
+                  <button className="imageSelect" onClick={() => setCameraState(true)}>
+                    이미지 촬영
+                  </button>
+                  <button className="imageSelect" onClick={deleteUploadImg}>
+                    삭제
+                  </button>
+                </>
+              )}
             </div>
           </div>
 
