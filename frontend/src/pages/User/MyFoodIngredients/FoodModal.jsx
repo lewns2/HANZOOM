@@ -8,7 +8,8 @@ import swal from 'sweetalert';
 
 export const FoodModal = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-  const { open, close, header, ingre, state, setState } = props;
+  const { open, close, header, ingre } = props;
+
   const [foods, setFoods] = useState({
     ingredient: null,
     purchaseDate: { year: null, month: null, day: null },
@@ -19,12 +20,13 @@ export const FoodModal = (props) => {
   });
   const token = sessionStorage.getItem('jwt-token');
   const registerIngre = async () => {
-    const expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
-    const purchase = `${foods.purchaseDate.year}-${foods.purchaseDate.month}-${foods.purchaseDate.day}`;
-    if (foods.expirationDate.year === NaN) {
+    var expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
+    var purchase = `${foods.purchaseDate.year}-${foods.purchaseDate.month}-${foods.purchaseDate.day}`;
+    console.log(expiration);
+    if (expiration === 'NaN-NaN-NaN') {
       expiration = '';
     }
-    if (foods.purchaseDate.year === NaN) {
+    if (purchase === 'NaN-NaN-NaN') {
       purchase = '';
     }
     if (!foods.ingredient) {
@@ -93,7 +95,6 @@ export const FoodModal = (props) => {
             icon: 'info',
           });
         }
-        setState(!state);
         close();
       })
       .catch((err) => {
@@ -106,12 +107,12 @@ export const FoodModal = (props) => {
   };
 
   const modifyIngre = () => {
-    const expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
-    const purchase = `${foods.purchaseDate.year}-${foods.purchaseDate.month}-${foods.purchaseDate.day}`;
-    if (foods.expirationDate.year === NaN) {
+    var expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
+    var purchase = `${foods.purchaseDate.year}-${foods.purchaseDate.month}-${foods.purchaseDate.day}`;
+    if (expiration === 'NaN-NaN-NaN') {
       expiration = '';
     }
-    if (foods.purchaseDate.year === NaN) {
+    if (purchase === 'NaN-NaN-NaN') {
       purchase = '';
     }
     if (!foods.ingredient) {
@@ -127,7 +128,6 @@ export const FoodModal = (props) => {
     })
       .then((res) => {
         console.log(res);
-        setState(!state);
         close();
       })
       .catch((err) => {
@@ -152,7 +152,6 @@ export const FoodModal = (props) => {
     })
       .then((res) => {
         console.log(res);
-        setState(!state);
         close();
       })
       .catch((err) => {

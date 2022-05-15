@@ -40,7 +40,18 @@ export const AutoComplete = (props) => {
       setKeyword(props.ingreName);
     }
   }, []);
-
+  useEffect(() => {
+    if (props.header === '필요목록 등록' || props.header === '필요목록 수정') {
+      props.setNeeds({
+        ingredient: keyword,
+      });
+    } else if (props.header === '식재료 등록' || props.header === '식재료 수정') {
+      props.setFoods({
+        ...props.foods,
+        ingredient: keyword,
+      });
+    }
+  }, [keyword]);
   return (
     <>
       <input
@@ -48,16 +59,6 @@ export const AutoComplete = (props) => {
         type="text"
         placeholder={keyword ? keyword : '식재료 명'}
         onChange={(event) => {
-          if (props.header === '필요목록 등록' || props.header === '필요목록 수정') {
-            props.setNeeds({
-              ingredient: event.target.value,
-            });
-          } else {
-            props.setFoods({
-              ...props.foods,
-              ingredient: event.target.value,
-            });
-          }
           onSearch(event.target.value), setKeyword(event.target.value), setCloseContainer(false);
         }}
         value={keyword}
