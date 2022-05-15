@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import feature from '../../assets/images/map.png';
 
 import { mainButton, item, number, image } from './Main.style';
+import swal from 'sweetalert';
+
 export const Feature = () => {
   // redux user 테스트
   const user = useSelector((state) => state.user);
@@ -15,6 +17,10 @@ export const Feature = () => {
     navigate('/login');
   };
   const myIngreGo = () => {
+    if (!user.userInfo.lng && !user.userInfo.lat) {
+      swal('위치 정보를 설정해주세요.', '한줌 서비스를 이용하기 위해 위치 정보가 필요합니다');
+      return;
+    }
     navigate('/my-food-ingredients');
   };
   return (
