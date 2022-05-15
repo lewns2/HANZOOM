@@ -48,9 +48,13 @@ export const Header = () => {
   };
 
   const boardHandler = (e) => {
-    if (user.userInfo.length == 0) {
+    // if (user.userInfo.length == 0) {
+    //   e.preventDefault();
+    //   swal('로그인 필요', '한줌 서비스를 이용하기 위해 로그인이 필요합니다');
+    // }
+    if (!user.userInfo.lng && !user.userInfo.lat) {
       e.preventDefault();
-      swal('로그인 필요', '한줌 서비스를 이용하기 위해 로그인이 필요합니다');
+      swal('위치 정보를 설정해주세요.', '한줌 서비스를 이용하기 위해 위치 정보가 필요합니다');
     }
   };
 
@@ -73,8 +77,7 @@ export const Header = () => {
 
   return (
     <header>
-      {/* {console.log(userLocName)}
-      {console.log(user.userInfo)} */}
+      {console.log(user.userInfo)}
       <PositioningMapModal show={modalShow} onHide={() => setModalShow(false)} />
       <Navbar collapseOnSelect expand="lg">
         <Container>

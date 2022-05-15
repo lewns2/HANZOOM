@@ -1,10 +1,20 @@
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import swal from 'sweetalert';
+
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
 export const ContentList = (props) => {
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+
   const moveToDetail = (num) => {
+    if (!user.userInfo.lng && !user.userInfo.lat) {
+      swal('위치 정보를 설정해주세요.', '한줌 서비스를 이용하기 위해 위치 정보가 필요합니다');
+      return;
+    }
+
     navigate(`/board/${num}`);
   };
   return (
