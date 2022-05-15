@@ -72,7 +72,9 @@ export const UserCalendar = () => {
       {console.log(scheduleList)}
       {showScheduleDetail && <ScheduleDetail show={setShowScheduleDetail} boardNo={boardNo} />}
       <div className="calendar">
+        <h3>일정</h3>
         <FullCalendar
+          locale="ko"
           defaultView="dayGridMonth"
           plugins={[dayGridPlugin]}
           events={scheduleList}
