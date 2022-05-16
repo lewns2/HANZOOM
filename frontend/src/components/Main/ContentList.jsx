@@ -29,9 +29,11 @@ export const ContentList = (props) => {
         <span
           className="status"
           style={
-            props.content.status === '거래완료'
-              ? { backgroundColor: '#cccccc', color: 'black' }
-              : { backgroundColor: '#ff7f00', border: '2px solid #ff7f00' }
+            {
+              // props.content.status === '거래완료'
+              //   ? { backgroundColor: '#cccccc', color: 'black' }
+              //   : {
+            }
           }>
           {props.content.status}
         </span>
