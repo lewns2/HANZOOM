@@ -24,10 +24,10 @@ getToken(messaging, {
     if (currentToken) {
       // Send the token to your server and update the UI if necessary
       // ...
-      console.log(currentToken);
       localStorage.setItem('browerToken', currentToken);
 
       /* 요청 보내는 방법 */
+
       // const header = {
       //   headers: {
       //     Authorization:
@@ -57,8 +57,38 @@ getToken(messaging, {
     // ...
   });
 
+const useNotification = (title, options) => {
+  if (!('Notification' in window)) {
+    return;
+  }
+
+  const fireNotif = () => {
+    /* 권한 요청 부분 */
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          /* 권한을 요청받고 nofi를 생성해주는 부분 */
+          new Notification(title, options);
+        } else {
+          return;
+        }
+      });
+    } else {
+      /* 권한이 있을때 바로 noti 생성해주는 부분 */
+      new Notification(title, options);
+    }
+  };
+  return fireNotif;
+};
+
 /* 포그라운드 메시지 수신인 경우 */
 onMessage(messaging, (payload) => {
   console.log('Message received. ', payload);
-  resolve(payload);
+
+  useNotification('Test Noti', {
+    body: 'notification body test',
+  });
+
+  // resolve(payload);
+
 });
