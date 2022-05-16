@@ -36,6 +36,13 @@
     width: 100%;
   }
 }
+@media (max-width: 412px) {
+  .createFormWrap {
+    margin-left: 0%;
+    width: 100%;
+    height: 0%;
+  }
+}
 
 /* 선택되지 않은 필터 버튼 스타일 */
 #tradeTypeBtn {
@@ -73,6 +80,11 @@
   margin-right: 5px;
   box-shadow: 0 4px 4px -4px #777;
 }
+@media (max-width: 992px) {
+  #createCancelBtn {
+    margin-left: 150px;
+  }
+}
 
 #createBtn {
   font-size: 18px;
@@ -83,6 +95,12 @@
   padding: 3px 10px 4px 10px;
   margin-right: 5px;
   box-shadow: 0 4px 4px -4px #777;
+}
+
+@media (max-width: 992px) {
+  #createBtn {
+    margin-left: 5px;
+  }
 }
 
 .alterImgPlace {
