@@ -7,6 +7,40 @@
     height: auto;
   }
 }
+
+.featureLeftWrap {
+  padding: 60px 150px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  // height: 100vh;
+  .featureimage {
+    margin: 30px;
+    width: 100%;
+  }
+  .featureContent {
+    font-family: 'GmarketSansMedium';
+    margin-top: 20px;
+  }
+}
+
+.featureRightWrap {
+  // background-color: #f7c343;
+  padding: 60px 150px;
+  width: 100%;
+  height: 120%;
+  margin: 0 auto;
+  text-align: right;
+  .featureimage {
+    margin: 20px;
+    width: 100%;
+  }
+  .featureContent {
+    font-family: 'GmarketSansMedium';
+    margin-top: 20px;
+  }
+}
+
 #main2 {
   // padding: 100px;
   // img {
@@ -98,14 +132,15 @@
 
             .status {
               position: absolute;
-              color: white;
+              color: #fff;
+              font-size: 20px;
               top: 45%;
               left: 42%;
               z-index: 3;
               border-radius: 50%;
-              padding: 3px 2px;
+              // padding: 3px 2px;
               margin-right: 5px;
-              box-shadow: 0 4px 4px -4px #777;
+              // box-shadow: 0 4px 4px -4px #777;
               text-align: center;
               visibility: hidden;
             }
@@ -117,7 +152,7 @@
                 visibility: visible;
               }
               &:hover {
-                opacity: 0.5;
+                filter: brightness(60%);
               }
             }
           }
