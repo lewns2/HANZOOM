@@ -26,18 +26,14 @@ export const ModiMyFoodIngredients = (props) => {
         console.log(res.data);
         setIngreName(res.data.ingredientName);
         if (res.data.purchaseDate) {
-          console.log('1');
           setModiPurchaseDate(res.data.purchaseDate);
         } else {
-          console.log('2');
           setPurchaseDate(res.data.purchaseDate);
         }
 
         if (res.data.expirationDate) {
-          console.log('3');
           setModiExpirationDate(res.data.expirationDate);
         } else {
-          console.log('4');
           setExpirationDate(res.data.expirationDate);
         }
       })
