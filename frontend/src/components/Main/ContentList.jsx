@@ -53,7 +53,6 @@ export const ContentList = (props) => {
         {/* <div className="contentDescription">{props.content.description}</div> */}
 
         {/* 나와의 거리 */}
-        {console.log(props.content)}
         {props.content.distance !== 0 ? (
           <p>약 {props.content.distance.toFixed(2)}km</p>
         ) : (
