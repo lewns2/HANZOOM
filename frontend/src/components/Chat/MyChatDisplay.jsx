@@ -156,7 +156,7 @@ export const MyChatDisplay = (props) => {
   const hideMyChat = () => {
     disconnect();
     dispatch(changeShow(false));
-    dispatch(getChatInfo());
+    if (user.userInfo !== null) dispatch(getChatInfo());
   };
 
   // 메시지 정보 요청 axios
