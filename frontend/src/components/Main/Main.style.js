@@ -37,14 +37,12 @@ const mainButton = {
   fontSize: 18,
   backgroundColor: '#f7c343',
   color: '#000',
-  padding: '18px',
+  padding: '13px 20px',
   borderRadius: '8px',
   border: '1px solid #f7c343',
-};
-
-const content = {
-  fontFamily: 'KOTRA_GOTHIC',
-  wordBreak: 'break-all',
+  '&:hover': {
+    transform: 'scale(1.1)',
+  },
 };
 
 // Function Component
@@ -93,7 +91,7 @@ const BoardImage = styled.img`
   cursor: pointer;
   border-radius: 15px;
 `;
-const BestDietWrapper = styled.div`
+const BestBoardWrapper = styled.div`
 
   width: 100%;
   height: 100%;
@@ -104,7 +102,7 @@ const BestDietWrapper = styled.div`
     width: 80%;
 `;
 export {
-  BestDietWrapper,
+  BestBoardWrapper,
   BoardImage,
   Featurejs,
   BannerWrapper,
@@ -117,5 +115,4 @@ export {
   item,
   number,
   image,
-  content,
 };

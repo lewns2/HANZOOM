@@ -47,6 +47,7 @@
     // height: 800px;
     .slick-list {
       width: 100%;
+      padding-bottom: 10px;
 
       .slick-slide {
         display: flex;
@@ -85,7 +86,7 @@
         }
         .contentCard {
           width: 100%;
-          height: 500px;
+          height: 100%;
           box-shadow: 1px 1px 1px 1px gray;
           border-radius: 1rem;
           background-color: white;
@@ -155,6 +156,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             width: 95%;
+            height: 24px;
           }
           .detailLike {
             font-size: 30px;
@@ -168,6 +170,12 @@
         }
       }
     }
+  }
+  @media all and (min-width: 415px) and (max-width: 869px) {
+    padding: 30px;
+  }
+  @media all and (max-width: 414px) {
+    padding: 10px;
   }
 
   .slick-prev::before {
