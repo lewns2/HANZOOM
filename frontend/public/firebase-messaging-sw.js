@@ -1,13 +1,5 @@
-// 9.8.1
-// import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js';
-// import {
-//   getMessaging,
-//   isSupported,
-//   onBackgroundMessage,
-// } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-messaging.js';
-
-importScripts('https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/9.8.1/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.8.1/firebase-messaging-compat.js');
 
 const firebaseApp = initializeApp({
   apiKey: 'AIzaSyDgXmj3E2LXDfu-4jSY2tH1lHlRc-YmV9I',
@@ -32,7 +24,7 @@ messaging.onBackgroundMessage(messaging, (payload) => {
   const notificationTitle = 'Background Message Title';
   const notificationOptions = {
     body: payload,
-    icon: '/firebase-logo.png',
+    icon: './img/HANZOOM.png',
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);

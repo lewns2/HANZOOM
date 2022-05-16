@@ -25,25 +25,27 @@ getToken(messaging, {
       // Send the token to your server and update the UI if necessary
       // ...
       console.log(currentToken);
+      localStorage.setItem('browerToken', currentToken);
 
-      const header = {
-        headers: {
-          Authorization:
-            'Bearer AAAA7e9xyD4:APA91bEPAokzHd9yaULDhqEUPy6WJ6wDWaqmmNYfGja87GQbwZYo-bgZSDIy_bLXfzJgwNHPXd00OpxzJ_qdTbNwiJvrFqPjEF9Tr2d2ZuREGUzoPoR29JbGqK1aeOBrXYQKerGqNHqO ',
-          'Content-Type': 'application/json',
-        },
-      };
-      const message = {
-        notification: {
-          title: 'TEST',
-          body: '알림 테스트',
-        },
-        to: 'f61HbyqCgBXrVR8vwnEgTb:APA91bGMw-KMt-UgyExlfJDVMYeQ01le2BAv5L1DFZwRsjNXzbowrnXpzs9nS8dpG-aO3MuO0gS1U31goMXUvPN_QTWDYWEFMceY4qJb748PSw5U0vlzzT-BkGTq0_83eqYjABj8Lmf6',
-      };
+      /* 요청 보내는 방법 */
+      // const header = {
+      //   headers: {
+      //     Authorization:
+      //       'Bearer AAAA7e9xyD4:APA91bEPAokzHd9yaULDhqEUPy6WJ6wDWaqmmNYfGja87GQbwZYo-bgZSDIy_bLXfzJgwNHPXd00OpxzJ_qdTbNwiJvrFqPjEF9Tr2d2ZuREGUzoPoR29JbGqK1aeOBrXYQKerGqNHqO ',
+      //     'Content-Type': 'application/json',
+      //   },
+      // };
+      // const message = {
+      //   notification: {
+      //     title: 'TEST',
+      //     body: '알림 테스트',
+      //   },
+      //   to: 'f61HbyqCgBXrVR8vwnEgTb:APA91bGMw-KMt-UgyExlfJDVMYeQ01le2BAv5L1DFZwRsjNXzbowrnXpzs9nS8dpG-aO3MuO0gS1U31goMXUvPN_QTWDYWEFMceY4qJb748PSw5U0vlzzT-BkGTq0_83eqYjABj8Lmf6',
+      // };
 
-      Axios.post('https://fcm.googleapis.com/fcm/send', message, header)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      // Axios.post('https://fcm.googleapis.com/fcm/send', message, header)
+      //   .then((res) => console.log(res))
+      //   .catch((err) => console.log(err));
     } else {
       // Show permission request UI
       console.log('No registration token available. Request permission to generate one.');
@@ -58,5 +60,5 @@ getToken(messaging, {
 /* 포그라운드 메시지 수신인 경우 */
 onMessage(messaging, (payload) => {
   console.log('Message received. ', payload);
-  // ...
+  resolve(payload);
 });
