@@ -37,6 +37,10 @@ export const Routing = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const setChatInfo = () => {
+    if (user.userInfo !== null) dispatch(getChatInfo());
+  };
+
   useEffect(() => {
     setShowChat(chatShow.chatShow);
   }, []);
@@ -85,7 +89,7 @@ export const Routing = () => {
               style={{ width: '70px', height: '70px' }}
               onClick={() => {
                 setShowChatList(!showChatList);
-                dispatch(getChatInfo());
+                setChatInfo();
               }}
             />
           ) : (

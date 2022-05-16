@@ -47,6 +47,7 @@
     // height: 800px;
     .slick-list {
       width: 100%;
+      padding-bottom: 10px;
 
       .slick-slide {
         display: flex;
@@ -85,17 +86,39 @@
         }
         .contentCard {
           width: 100%;
-          height: 500px;
+          height: 100%;
           box-shadow: 1px 1px 1px 1px gray;
           border-radius: 1rem;
           background-color: white;
+
           .cardImgWrap {
+            position: relative;
             width: 100%;
             padding: 5%;
+
+            .status {
+              position: absolute;
+              color: white;
+              top: 45%;
+              left: 42%;
+              z-index: 3;
+              border-radius: 50%;
+              padding: 3px 2px;
+              margin-right: 5px;
+              box-shadow: 0 4px 4px -4px #777;
+              text-align: center;
+              visibility: hidden;
+            }
             img {
               width: 100%;
               height: 300px;
               border-radius: 12px;
+              &:hover + .status {
+                visibility: visible;
+              }
+              &:hover {
+                opacity: 0.5;
+              }
             }
           }
           .card_body {
@@ -137,7 +160,7 @@
                 width: 160px;
               }
             }
-            .status {
+            .type {
               width: 70px;
               font-size: 16px;
               font-weight: bolder;
@@ -155,6 +178,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             width: 95%;
+            height: 24px;
           }
           .detailLike {
             font-size: 30px;
@@ -168,6 +192,12 @@
         }
       }
     }
+  }
+  @media all and (min-width: 415px) and (max-width: 869px) {
+    padding: 30px;
+  }
+  @media all and (max-width: 414px) {
+    padding: 10px;
   }
 
   .slick-prev::before {

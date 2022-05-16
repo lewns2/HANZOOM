@@ -29,7 +29,6 @@ header {
   .navbar {
     overflow: hidden;
     background-color: #f7c343;
-    // min-height: 70px;
     padding-top: 10px;
     padding-bottom: 10px;
 
@@ -80,6 +79,11 @@ header {
         .addrName {
           font-size: 13px;
         }
+      }
+    }
+    @media only screen and (max-width: 991px) {
+      #responsive-navbar-nav {
+        margin-top: 12px;
       }
     }
 

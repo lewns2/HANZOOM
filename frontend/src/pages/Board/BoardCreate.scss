@@ -10,6 +10,12 @@
   overflow: auto;
   overflow-x: hidden;
   box-shadow: 0 4px 4px -4px #777;
+  @media (max-width: 992px) {
+    .col-3 {
+      padding-right: calc(var(--bs-gutter-x) * 0);
+      padding-left: calc(var(--bs-gutter-x) * 0);
+    }
+  }
 }
 
 /* 선택되지 않은 필터 버튼 스타일 */
@@ -97,7 +103,6 @@
 @media (max-width: 496px) {
   .imageSelect {
     font-size: 11px;
-    width: 45%;
-    margin-right: 5%;
+    width: 30%;
   }
 }

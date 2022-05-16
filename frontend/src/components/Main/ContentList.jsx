@@ -26,6 +26,15 @@ export const ContentList = (props) => {
       {/*  이미지  */}
       <div className="cardImgWrap">
         <img src={`${BASE_IMG_URL}${props.content.imagePath}`} className="cardImg" alt="..." />
+        <span
+          className="status"
+          style={
+            props.content.status === '거래완료'
+              ? { backgroundColor: '#cccccc', color: 'black' }
+              : { backgroundColor: '#ff7f00', border: '2px solid #ff7f00' }
+          }>
+          {props.content.status}
+        </span>
       </div>
       {/* 본문 */}
 
@@ -36,7 +45,7 @@ export const ContentList = (props) => {
             <p className="card_Ptag">{props.content.title}</p>
           </div>
           <div className="state">
-            <p className="status">{props.content.status}</p>
+            <p className="type">{props.content.type}</p>
           </div>
         </div>
 
@@ -44,7 +53,11 @@ export const ContentList = (props) => {
         {/* <div className="contentDescription">{props.content.description}</div> */}
 
         {/* 나와의 거리 */}
-        {props.content.distance ? <p>약 {props.content.distance.toFixed(2)}km</p> : null}
+        {props.content.distance !== 0 ? (
+          <p>약 {props.content.distance.toFixed(2)}km</p>
+        ) : (
+          <p>약 0km</p>
+        )}
 
         {/* 식재료 명 */}
         <div className="boardIngredientResList">
