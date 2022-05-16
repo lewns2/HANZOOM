@@ -13,6 +13,59 @@ const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
 import './Recipe.scss';
 
+const settings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 3,
+  initialSlide: 0,
+  responsive: [
+    {
+      breakpoint: 1300,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+      },
+    },
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+      },
+    },
+    {
+      breakpoint: 720,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 576,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 320,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
+
 export const Recipe = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [recipeList, setRecipeList] = useState([]);
@@ -68,9 +121,12 @@ export const Recipe = (props) => {
                             className="recipeContentCard event1"
                             key={content.recipeNo}
                             onClick={() => openModal(content)}>
-                            <div className="recipeCardImgWrap" id="imgHoverEvent">
-                              <img src={content.imagePath} alt="..." />
-                            </div>
+                            <img
+                              className="recipeCardImgWrap"
+                              id="imgHoverEvent"
+                              src={content.imagePath}
+                              alt="..."
+                            />
                             <div className="hoverBox">
                               <p className="p1">{content.recipeName}</p>
                             </div>
@@ -112,49 +168,3 @@ const SearchNotFoundLottie = (props) => (
     src="https://assets6.lottiefiles.com/packages/lf20_uqfbsoei.json"
   />
 );
-
-const settings = {
-  dots: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  initialSlide: 0,
-  responsive: [
-    {
-      breakpoint: 1300,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-      },
-    },
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-      },
-    },
-    {
-      breakpoint: 720,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 320,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
