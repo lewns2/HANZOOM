@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
@@ -11,7 +11,7 @@ import { PositioningMapModal } from './Map/PositioningMapModal';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export const Header = () => {
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const [userLocName, setUserLocName] = useState(null);
   const [beforeLoginPage, setBeforeLoginPage] = useState(false);
 
@@ -73,7 +73,6 @@ export const Header = () => {
 
   return (
     <header>
-      {console.log(user.userInfo)}
       <PositioningMapModal show={modalShow} onHide={() => setModalShow(false)} />
       <Navbar collapseOnSelect expand="lg">
         <Container>
@@ -82,7 +81,6 @@ export const Header = () => {
           </div>
           {user.userInfo.length != 0 ? (
             <div className="positioning">
-              {/* <div className="addrName">부산광역시 강서구 명지동</div> */}
               {user.userInfo.lat && user.userInfo.lat ? (
                 <div className="addrName">{userLocName}</div>
               ) : (
@@ -97,11 +95,6 @@ export const Header = () => {
           {!beforeLoginPage && <Navbar.Toggle aria-controls="responsive-navbar-nav" />}
           <Navbar.Collapse id="responsive-navbar-nav" style={{ textAlign: 'center' }}>
             <Nav className="nav-menu ms-auto">
-              {/* {!beforeLoginPage && (
-                <Link to="/board" onClick={(event) => boardHandler(event)}>
-                  게시판
-                </Link>
-              )} */}
               {user.userInfo.length == 0 ? (
                 !beforeLoginPage && (
                   <>
@@ -113,7 +106,6 @@ export const Header = () => {
                 )
               ) : (
                 <>
-                  {/* <Link to="/martmap">마트맵</Link> */}
                   <Link to="/my-food-ingredients" onClick={(event) => moveHandler(event)}>
                     MY식재료
                   </Link>
@@ -131,30 +123,6 @@ export const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {/* <nav className='navbar navbar-expand-lg navbar-light'>
-        <div>
-          <Link to="/main">한줌</Link>
-        </div>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className='collapse navbar-collapse' id='navbarNav'>
-          <div className='nav-menu ms-auto d-flex justify-content-between'>
-            <Link to="/board">게시판</Link>
-          
-            <Link to="/my-food-ingredients">MY식재료</Link>
-          
-            <Link to="/my-page">MY페이지</Link>
-
-            <Link to="/login">로그인</Link>
-          
-            <Link to="/signup">회원가입</Link>
-          </div>
-          <div>
-            <div onClick={logout}>로그아웃</div>
-          </div>
-        </div>
-      </nav> */}
     </header>
   );
 };
