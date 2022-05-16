@@ -1,5 +1,6 @@
 .createFormWrap {
-  width: 100%;
+  margin-left: 15%;
+  width: 70%;
   margin-bottom: 250px;
   height: 80vh;
   border-radius: 2rem;
@@ -10,11 +11,29 @@
   overflow: auto;
   overflow-x: hidden;
   box-shadow: 0 4px 4px -4px #777;
+  .form-control {
+    width: 60%;
+  }
+  @media (max-width: 992px) {
+    .form-control {
+      width: 100%;
+    }
+  }
+  .col-3 {
+    font-size: 20px;
+  }
   @media (max-width: 992px) {
     .col-3 {
+      font-size: 17px;
       padding-right: calc(var(--bs-gutter-x) * 0);
       padding-left: calc(var(--bs-gutter-x) * 0);
     }
+  }
+}
+@media (max-width: 992px) {
+  .createFormWrap {
+    margin-left: 0%;
+    width: 100%;
   }
 }
 
@@ -45,23 +64,23 @@
 }
 
 #createCancelBtn {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bolder;
   background-color: #fff;
   border: 2px solid #f7c343;
   border-radius: 8px;
-  padding: 3px 2px;
+  padding: 3px 10px 4px 10px;
   margin-right: 5px;
   box-shadow: 0 4px 4px -4px #777;
 }
 
 #createBtn {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bolder;
   background-color: #f7c343;
   border: 2px solid #f7c343;
   border-radius: 8px;
-  padding: 3px 2px;
+  padding: 3px 10px 4px 10px;
   margin-right: 5px;
   box-shadow: 0 4px 4px -4px #777;
 }
@@ -73,6 +92,7 @@
 }
 
 .imageSelect {
+  cursor: pointer;
   margin-top: 2%;
   margin-left: 1%;
   background-color: #e0e0e0;

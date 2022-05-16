@@ -323,9 +323,9 @@ export const BoardCreate = () => {
           <div className="row mb-4">
             <div className="col-3">내용</div>
             <div className="col-9">
-              <input
+              <textarea
                 className="form-control"
-                type="text"
+                type="textarea"
                 placeholder="내용"
                 onChange={(e) => {
                   setState({
