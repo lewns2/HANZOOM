@@ -59,7 +59,7 @@ export const Match = () => {
           ) : isComplete ? (
             <Complete title={location.state.recipeName} res={matchingRes} />
           ) : (
-            <Failure />
+            <Failure matchType={location.state} />
           )}
         </div>
       </div>
