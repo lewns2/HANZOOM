@@ -85,6 +85,16 @@
     margin-left: 150px;
   }
 }
+@media (max-width: 360px) {
+  #createCancelBtn {
+    margin-left: 100px;
+  }
+}
+@media (max-width: 320px) {
+  #createCancelBtn {
+    margin-left: 60px;
+  }
+}
 
 #createBtn {
   font-size: 18px;
@@ -142,5 +152,12 @@
   .imageSelect {
     font-size: 11px;
     width: 30%;
+  }
+}
+@media (max-width: 360px) {
+  .imageSelect {
+    font-size: 11px;
+    width: 130px;
+    margin-left: 40px;
   }
 }
