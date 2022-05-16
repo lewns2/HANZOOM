@@ -1,11 +1,16 @@
+import { useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
+import swal from 'sweetalert';
+import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { FoodModal } from './FoodModal';
-import { useState } from 'react';
 import { Axios } from '../../../core/axios.js';
-import { Draggable } from 'react-beautiful-dnd';
-import swal from 'sweetalert';
+
+const Ingre = styled.span`
+  background-color: ${(props) => (props.isDragging ? '#f7c343' : '')};
+`;
 
 export const FoodIngreList = (props) => {
   const {
@@ -89,6 +94,7 @@ export const FoodIngreList = (props) => {
         });
       });
   };
+
   return (
     <>
       {task.type === '필요' && (
@@ -128,11 +134,7 @@ export const FoodIngreList = (props) => {
           index={index}
           key={task.userIngredientNo}>
           {(provided, snapshot) => (
-            <div
-              className="d-flex align-items-center px-4 py-1"
-              style={{ position: 'relative' }}
-              // isDragging={snapshot.isDragging} // 드래그 중일 때의 스타일링을 위해 snapshot 속성을 외부로 가져옴
-            >
+            <div className="d-flex align-items-center px-4 py-1" style={{ position: 'relative' }}>
               {task.type === '일반' && (
                 <input
                   className="me-3"
@@ -150,13 +152,14 @@ export const FoodIngreList = (props) => {
                 />
               )}
 
-              <span
+              <Ingre
+                isDragging={snapshot.isDragging} // 드래그 중일 때의 스타일링을 위해 snapshot 속성을 외부로 가져옴
                 className="ingreItem"
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
                 ref={provided.innerRef}>
                 {task.ingredientName}
-              </span>
+              </Ingre>
               <DragIndicatorIcon className="dndIcon" sx={{ color: '#777', marginRight: '10px' }} />
 
               {task.type === '교환/나눔' ? null : (
