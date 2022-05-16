@@ -46,6 +46,9 @@ export const Contents = (props) => {
               onClick={() => moveToDetail(content.boardNo)}>
               {/*  이미지  */}
               <div className="cardImgWrap">
+                {content.status === '거래완료' ? (
+                  <span className="status">{content.status}</span>
+                ) : null}
                 {content.imagePath == 'need.jpg' ? (
                   <img src={needSample} className="cardImg" alt="..." />
                 ) : (
@@ -60,7 +63,7 @@ export const Contents = (props) => {
                     <p>{content.title}</p>
                   </div>
                   <div className="col-4">
-                    <p className="status">{content.status}</p>
+                    <p className="ingreType">{content.type}</p>
                   </div>
                 </div>
 
