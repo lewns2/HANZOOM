@@ -16,12 +16,12 @@ export const Complete = (props) => {
   };
 
   useEffect(() => {
-    console.log(clickCase);
-    console.log(checked);
+    // console.log(clickCase);
+    // console.log(checked);
   }, [clickCase, checked]);
 
   const renderCase = () => {
-    console.log(matchingList);
+    // console.log(matchingList);
     const caseList = [];
     for (let i = 0; i < matchingList.length; i++) {
       caseList.push(
@@ -92,7 +92,7 @@ export const Complete = (props) => {
           </p>
         </div>
         <div className="matchResultMap">
-          <MatchMap matchArr={matchingList[clickCase]} martView={checked} setChecked={setChecked}/>
+          <MatchMap matchArr={matchingList[clickCase]} martView={checked} setChecked={setChecked} />
         </div>
         <div className="matchResultList">
           <MatchList matchArr={matchingList[clickCase]} />

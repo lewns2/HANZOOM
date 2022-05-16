@@ -52,25 +52,27 @@ export const MatchList = (props) => {
       var it = matchingArr.userIngredientMatchingRes[i];
       if (it.type == '나눔') {
         shareResult.push(
-          <div key={i} className="matchContentCard">
-            <div className="matchCardImgWrap">
+          <>
+            <div key={i} className="matchContentCard">
               <img
+                className="matchCardImgWrap"
                 src={`${BASE_IMG_URL}${it.imagePath}`}
                 onClick={() => handleClick(matchingArr.userIngredientMatchingRes[i].boardNo)}></img>
+              <p>{it.userNickname}</p>
             </div>
-            <p>{it.userNickname}</p>
-          </div>,
+          </>,
         );
       } else if (it.type == '교환') {
         exchangeResult.push(
-          <div key={i} className="matchContentCard">
-            <div className="matchCardImgWrap">
+          <>
+            <div key={i} className="matchContentCard">
               <img
+                className="matchCardImgWrap"
                 src={`${BASE_IMG_URL}${it.imagePath}`}
                 onClick={() => handleClick(matchingArr.userIngredientMatchingRes[i].boardNo)}></img>
+              <p>{it.userNickname}</p>
             </div>
-            <p>{it.userNickname}</p>
-          </div>,
+          </>,
         );
       }
     }
@@ -95,24 +97,26 @@ export const MatchList = (props) => {
         </div>
       </div>
 
-      <div className="matchContainer">
-        {selectedType == '나눔' ? (
-          <Slider {...settings}>
-            {renderList('나눔').length == 0 ? (
-              <p className="notFound">조건에 맞는 유저가 없어요</p>
-            ) : (
-              renderList('나눔')
-            )}
-          </Slider>
-        ) : (
-          <Slider {...settings}>
-            {renderList('교환').length == 0 ? (
-              <p className="notFound">조건에 맞는 유저가 없어요</p>
-            ) : (
-              renderList('교환')
-            )}
-          </Slider>
-        )}
+      <div className="matchListWrap">
+        <div className="container matchContainer">
+          {selectedType == '나눔' ? (
+            <Slider {...settings}>
+              {renderList('나눔').length == 0 ? (
+                <p className="notFound">조건에 맞는 유저가 없어요</p>
+              ) : (
+                renderList('나눔')
+              )}
+            </Slider>
+          ) : (
+            <Slider {...settings}>
+              {renderList('교환').length == 0 ? (
+                <p className="notFound">조건에 맞는 유저가 없어요</p>
+              ) : (
+                renderList('교환')
+              )}
+            </Slider>
+          )}
+        </div>
       </div>
     </>
   );

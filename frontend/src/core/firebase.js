@@ -24,7 +24,10 @@ getToken(messaging, {
     if (currentToken) {
       // Send the token to your server and update the UI if necessary
       // ...
-      // console.log(currentToken);
+      localStorage.setItem('browerToken', currentToken);
+
+      /* 요청 보내는 방법 */
+
       // const header = {
       //   headers: {
       //     Authorization:
@@ -39,6 +42,7 @@ getToken(messaging, {
       //   },
       //   to: 'f61HbyqCgBXrVR8vwnEgTb:APA91bGMw-KMt-UgyExlfJDVMYeQ01le2BAv5L1DFZwRsjNXzbowrnXpzs9nS8dpG-aO3MuO0gS1U31goMXUvPN_QTWDYWEFMceY4qJb748PSw5U0vlzzT-BkGTq0_83eqYjABj8Lmf6',
       // };
+
       // Axios.post('https://fcm.googleapis.com/fcm/send', message, header)
       //   .then((res) => console.log(res))
       //   .catch((err) => console.log(err));
@@ -80,8 +84,11 @@ const useNotification = (title, options) => {
 /* 포그라운드 메시지 수신인 경우 */
 onMessage(messaging, (payload) => {
   console.log('Message received. ', payload);
-  // ...
+
   useNotification('Test Noti', {
     body: 'notification body test',
   });
+
+  // resolve(payload);
+
 });

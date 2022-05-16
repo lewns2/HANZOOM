@@ -45,6 +45,7 @@ export const LoginForm = () => {
     }
 
     Axios.post('/auth/login', {
+      browserToken: localStorage.getItem('browerToken'),
       userEmail: email,
       userPassword: password,
     })

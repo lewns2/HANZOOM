@@ -1,5 +1,5 @@
 import { SwapCallsTwoTone } from '@mui/icons-material';
-import { getDialogActionsUtilityClass } from '@mui/material';
+import { createMuiTheme, getDialogActionsUtilityClass } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import marketimage from '../../assets/images/supermarket.png';
@@ -22,12 +22,12 @@ export const MatchMap = (props) => {
       navigator.geolocation.getCurrentPosition(
         // 현 위치 정보가 받아와질 때
         function (position) {
-          console.log(position);
+          // console.log(position);
           // 실수형으로 형 변환 해 주지 않으면 정확한 자기 위치 안됨
           var lat = parseFloat(position.coords.latitude);
           var lng = parseFloat(position.coords.longitude);
           let locPosition = new kakao.maps.LatLng(lat, lng);
-          console.log('현재 위도 경도' + lat + ' ' + lng);
+          // console.log('현재 위도 경도' + lat + ' ' + lng);
           setUserLat(lat);
           setUserLng(lng);
           setUserLoc(locPosition);
@@ -41,6 +41,9 @@ export const MatchMap = (props) => {
   var markerList = [];
 
   useEffect(() => {
+    console.log(matchingArr);
+    getLocation();
+
     /*1. 지도 객체 생성*/
     const container = document.getElementById('matchMap');
     const options = {
@@ -65,13 +68,28 @@ export const MatchMap = (props) => {
     });
     customOverlay.setMap(map);
 
+    /* 중복된 위치 갯수 세기 */
+    var cnt = new Map();
+    for (let i = 0; i < matchingArr.userIngredientMatchingRes.length; i++) {
+      var it = matchingArr.userIngredientMatchingRes[i].userEmail;
+      if (!cnt.has(it)) {
+        cnt.set(it, 1);
+      } else {
+        var temp = cnt.get(it);
+        temp++;
+        cnt.delete(it);
+        cnt.set(it, temp);
+      }
+    }
+    // console.log(cnt.entries());
+
     /* 3. 상대방 마커 생성 */
 
-    matchingArr.userIngredientMatchingRes.map((findUser) => {
+    matchingArr.userIngredientMatchingRes.map((findUser, index) => {
       var otherImgUrl;
       if (findUser.userImage == null) {
         otherImgUrl = '/img/basicProfile.png';
-      } else if(findUser.userImage.includes('kakao')) {
+      } else if (findUser.userImage.includes('kakao')) {
         otherImgUrl = findUser.userImage;
       } else {
         otherImgUrl = `${BASE_IMG_URL}${findUser.userImage}`;
@@ -79,13 +97,35 @@ export const MatchMap = (props) => {
 
       var content = '<img class="userImg" src=' + otherImgUrl + '></img>';
       var markerPosition = new kakao.maps.LatLng(findUser.lat, findUser.lng);
+      var pos = [findUser.lat, findUser.lng];
+
+      var imageSrc = otherImgUrl; // 마커이미지의 주소입니다
+      var imageSize = new kakao.maps.Size(40, 40); // 마커이미지의 크기입니다
+
+      // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
       var otherMarker = new kakao.maps.Marker({
         position: markerPosition,
-        content: `${BASE_IMG_URL}${findUser.userImage}`,
+        image: markerImage,
       });
 
       otherMarker.setMap(map);
+
+      /* 지도에 동일한 사용자의 게시글이 몇개 있는지 알려주는 인포윈도우 */
+      var count = cnt.get(findUser.userEmail);
+      var countContents = `
+        <div class="matchCount">
+          <p>${count}</p>
+        </div>
+      `;
+      var infoCount = new kakao.maps.CustomOverlay({
+        position: new kakao.maps.LatLng(findUser.lat, findUser.lng),
+        content: countContents,
+        xAnchor: -0.4,
+        yAnchor: 2.25,
+      });
+      infoCount.setMap(map);
 
       var ingredientImg = BASE_IMG_URL + findUser.imagePath;
       var dist = findUser.distance.toFixed(1);
@@ -125,115 +165,113 @@ export const MatchMap = (props) => {
     /* 4. 마트 표시 */
 
     if (martView) {
-      getLocation();
-      if(userLat != null && userLng != null) {
-          map.setCenter(new kakao.maps.LatLng(userLat, userLng));
+      if (userLat != null && userLng != null) {
+        map.setCenter(new kakao.maps.LatLng(userLat, userLng));
 
         /* 2. 내 위치 마커 위치 재설정 */
 
-          var myImgUrl;
-          if (userInfo.userImage == null) {
-            myImgUrl = '/img/basicProfile.png';
-          } else {
-            myImgUrl = `${BASE_IMG_URL}${userInfo.userImage}`;
-          }
-          var content = '<img class="userImg" src=' + myImgUrl + '></img>';
-          var markerPosition = new kakao.maps.LatLng(userLat, userLng);
-          var customOverlay = new kakao.maps.CustomOverlay({
-            position: markerPosition,
-            content: content,
-          });
-          customOverlay.setMap(map);
-
-          var imageSrc = marketimage, // 마커이미지의 주소입니다
-            imageSize = new kakao.maps.Size(45, 50), // 마커이미지의 크기입니다
-            imageOption = { offset: new kakao.maps.Point(26, 49) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-    
-          // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-    
-          // 장소 검색 객체를 생성합니다
-          map.setLevel(4);
-          const ps = new kakao.maps.services.Places(map);
-    
-          ps.categorySearch('MT1', placesSearchCB, { useMapBounds: true });
-          ps.categorySearch('CS2', placesSearchCB, { useMapBounds: true });
-          function placesSearchCB(data, status, pagination) {
-            if (status === kakao.maps.services.Status.OK) {
-              for (let i = 0; i < 3; i++) {
-                displayMarker(data[i]);
-              }
-            }
-          }
-    
-          var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-    
-          function displayMarker(place) {
-            let martMarker = new kakao.maps.Marker({
-              map: map,
-              image: markerImage, // 마커이미지 설정
-              position: new kakao.maps.LatLng(place.y, place.x),
-            });
-    
-            var content =
-              '<div class="placeinfo onClick={onSocialLogin}">' +
-              '   <a class="title" href="' +
-              place.place_url +
-              '" target="_blank" title="' +
-              place.place_name +
-              '">' +
-              place.place_name +
-              '</a>';
-    
-            if (place.road_address_name) {
-              content +=
-                '    <span class="type">' +
-                '종류: ' +
-                place.category_group_name +
-                '</span>' +
-                '    <span title="' +
-                place.road_address_name +
-                '">' +
-                place.road_address_name +
-                '</span>' +
-                '  <span class="jibun" title="' +
-                place.address_name +
-                '">(지번 : ' +
-                place.address_name +
-                ')</span>';
-            } else {
-              content +=
-                '    <span title="' + place.address_name + '">' + place.address_name + '</span>';
-            }
-    
-            content +=
-              '    <span class="tel">' +
-              place.phone +
-              '</span>' +
-              '</div>' +
-              '<div class="after"></div>';
-    
-            kakao.maps.event.addListener(martMarker, 'click', function () {
-              infowindow.setContent(content);
-              infowindow.open(map, martMarker);
-            });
-            kakao.maps.event.addListener(map, 'click', function () {
-              infowindow.close();
-            });
-          }
+        var myImgUrl;
+        if (userInfo.userImage == null) {
+          myImgUrl = '/img/basicProfile.png';
         } else {
-          swal('위치 설정이 필요합니다');
-          props.setChecked(false);
-          console.log('위치 설정이 필요합니다');
-          map.setLevel(8);
+          myImgUrl = `${BASE_IMG_URL}${userInfo.userImage}`;
         }
-      }
+        var content = '<img class="userImg" src=' + myImgUrl + '></img>';
+        var markerPosition = new kakao.maps.LatLng(userLat, userLng);
+        var customOverlay = new kakao.maps.CustomOverlay({
+          position: markerPosition,
+          content: content,
+        });
+        customOverlay.setMap(map);
 
+        var imageSrc = marketimage, // 마커이미지의 주소입니다
+          imageSize = new kakao.maps.Size(45, 50), // 마커이미지의 크기입니다
+          imageOption = { offset: new kakao.maps.Point(26, 49) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+        // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+        // 장소 검색 객체를 생성합니다
+        map.setLevel(4);
+        const ps = new kakao.maps.services.Places(map);
+
+        ps.categorySearch('MT1', placesSearchCB, { useMapBounds: true });
+        ps.categorySearch('CS2', placesSearchCB, { useMapBounds: true });
+        function placesSearchCB(data, status, pagination) {
+          if (status === kakao.maps.services.Status.OK) {
+            for (let i = 0; i < 3; i++) {
+              displayMarker(data[i]);
+            }
+          }
+        }
+
+        var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
+        function displayMarker(place) {
+          let martMarker = new kakao.maps.Marker({
+            map: map,
+            image: markerImage, // 마커이미지 설정
+            position: new kakao.maps.LatLng(place.y, place.x),
+          });
+
+          var content =
+            '<div class="placeinfo onClick={onSocialLogin}">' +
+            '   <a class="title" href="' +
+            place.place_url +
+            '" target="_blank" title="' +
+            place.place_name +
+            '">' +
+            place.place_name +
+            '</a>';
+
+          if (place.road_address_name) {
+            content +=
+              '    <span class="type">' +
+              '종류: ' +
+              place.category_group_name +
+              '</span>' +
+              '    <span title="' +
+              place.road_address_name +
+              '">' +
+              place.road_address_name +
+              '</span>' +
+              '  <span class="jibun" title="' +
+              place.address_name +
+              '">(지번 : ' +
+              place.address_name +
+              ')</span>';
+          } else {
+            content +=
+              '    <span title="' + place.address_name + '">' + place.address_name + '</span>';
+          }
+
+          content +=
+            '    <span class="tel">' +
+            place.phone +
+            '</span>' +
+            '</div>' +
+            '<div class="after"></div>';
+
+          kakao.maps.event.addListener(martMarker, 'click', function () {
+            infowindow.setContent(content);
+            infowindow.open(map, martMarker);
+          });
+          kakao.maps.event.addListener(map, 'click', function () {
+            infowindow.close();
+          });
+        }
+      } else {
+        swal('위치 설정이 필요합니다');
+        props.setChecked(false);
+        // console.log('위치 설정이 필요합니다');
+        map.setLevel(8);
+      }
+    }
   }, [matchingArr, martView]);
 
   return (
     <>
-      <div id="matchMap" style={{ width: '100vw', height: '70vh' }}></div>
+      <div id="matchMap"></div>
     </>
   );
 };
