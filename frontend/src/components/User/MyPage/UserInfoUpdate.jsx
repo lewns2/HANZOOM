@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Axios } from '../../../core/axios';
 import { getUserInfo } from '../../../Reducer/userSlice';
 import { axios_apis } from '../../../core/axios';
+import swal from 'sweetalert';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -109,7 +110,10 @@ export const UserInfoUpdate = (props) => {
       },
     )
       .then(() => {
-        alert('회원 정보 수정이 완료되었습니다.');
+        swal('회원 정보 수정이 완료되었습니다.', '  ', 'success', {
+          buttons: false,
+          timer: 1800,
+        });
         props.setModalOpen(false);
       })
       .catch((error) => {
