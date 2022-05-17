@@ -130,6 +130,9 @@ $desktop: 1400px;
   .matchTitle {
     margin-bottom: 30px;
     font-size: 30px;
+    p {
+      margin-top: 60px;
+    }
   }
 
   .matchMessage {
@@ -237,7 +240,7 @@ $desktop: 1400px;
     }
 
     .notFound {
-      margin: 20px;
+      margin-top: 20px;
       font-size: 25px;
     }
   }
@@ -286,7 +289,13 @@ $desktop: 1400px;
   }
 
   @media only screen and (max-width: $mobile) {
+    height: 40vh;
+    width: 40vh;
+  }
+  @media (max-width: 360px) {
     height: 30vh;
+    margin-left: 60px;
+    width: 350px;
   }
 }
 
