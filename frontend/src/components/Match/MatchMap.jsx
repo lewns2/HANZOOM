@@ -221,7 +221,7 @@ export const MatchMap = (props) => {
         map.setCenter(new kakao.maps.LatLng(userLat, userLng));
 
         /* 2. 내 위치 마커 위치 재설정 */
-
+        customOverlay.setMap(null);
         var myImgUrl;
         if (userInfo.userImage == null) {
           myImgUrl = '/img/basicProfile.png';
