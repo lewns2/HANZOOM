@@ -70,7 +70,7 @@ export const Complete = (props) => {
   // };
 
   return (
-    <section className="container">
+    <section className="container matchContainer">
       <div className="matchFormWrap">
         <div className="matchTitle">
           <p>{props.title}</p>
