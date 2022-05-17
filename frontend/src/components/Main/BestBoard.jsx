@@ -36,22 +36,20 @@ export const BestBoard = () => {
             display: 'flex',
             overflow: 'hidden',
           }}>
-          <div style={{ margin: '3% auto', width: '100%' }}>
-            {user.userInfo.length !== 0 ? (
-              <section id="main3">
-                <h3 className="text-center">인기 게시글</h3>
-                <BestBoardWrapper>
-                  <div className="container contentContainer">
-                    <Slider {...settings}>
-                      {contents.map((content, index) => (
-                        <ContentList content={content} key={index} />
-                      ))}
-                    </Slider>
-                  </div>
-                </BestBoardWrapper>
-              </section>
-            ) : null}
-          </div>
+          {user.userInfo.length !== 0 ? (
+            <section id="main3">
+              <h3 className="text-center">인기 게시글</h3>
+              <BestBoardWrapper>
+                <div className="container contentContainer">
+                  <Slider {...settings}>
+                    {contents.map((content, index) => (
+                      <ContentList content={content} key={index} />
+                    ))}
+                  </Slider>
+                </div>
+              </BestBoardWrapper>
+            </section>
+          ) : null}
         </Box>
       ) : null}
     </>

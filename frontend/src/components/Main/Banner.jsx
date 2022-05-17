@@ -51,12 +51,6 @@ export const Banner = () => {
       <button style={mainButton} onClick={handleRegister}>
         START
       </button>
-      <Typography
-        variant="body2"
-        color="inherit"
-        sx={{
-          mt: 2,
-        }}></Typography>
     </BannerLayout>
   );
 };

@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import Fade from 'react-reveal/Fade';
 
 import 'slick-carousel/slick/slick.css';
@@ -12,26 +10,8 @@ import { Feature4 } from '../../components/Main/Feature4';
 import { Line } from '../../components/Main/Line';
 import { Banner } from '../../components/Main/Banner';
 import { BestBoard } from '../../components/Main/BestBoard';
-import { Axios } from '../../core/axios';
 
 export const Main = () => {
-  // redux user 테스트
-  const user = useSelector((state) => state.user);
-
-  const [contents, setContents] = useState([]);
-
-  const getContents = () => {
-    const token = sessionStorage.getItem('jwt-token');
-    Axios.get('/board/findAll?page=1&size=8&sort=viewCnt%2CDESC&ingredient=', {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((res) => {
-      setContents(res.data.content);
-    });
-  };
-  useEffect(() => {
-    getContents();
-  }, []);
-
   return (
     <>
       <Banner />
@@ -50,9 +30,9 @@ export const Main = () => {
       <Fade right>
         <Feature4 />
       </Fade>
-      <Fade top>
-        <BestBoard />
-      </Fade>
+      {/* <Fade top> */}
+      <BestBoard />
+      {/* </Fade> */}
     </>
   );
 };
