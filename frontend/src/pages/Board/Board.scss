@@ -224,11 +224,17 @@ $desktop: 1400px;
     @media (max-width: 500px) {
       .cardTitle {
         width: 180px;
+        p {
+          width: 160px;
+        }
       }
     }
     @media (max-width: 412px) {
       .cardTitle {
         width: 160px;
+        p {
+          width: 150px;
+        }
       }
     }
   }
@@ -239,6 +245,9 @@ $desktop: 1400px;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
+    @media (max-width: 500px) {
+      width: 200px;
+    }
   }
 
   .cardBodyCounts {
