@@ -3,12 +3,19 @@ $tablet: 991px;
 $laptopS: 1200px;
 $desktop: 1400px;
 
+.container {
+  @media only screen and (max-width: 576px) {
+    max-width: 95%;
+  }
+}
+
 .matchWrap {
   display: grid;
   justify-content: center;
   align-content: center;
   text-align: center;
   .matchingLottie {
+    margin-top: 30%;
     width: 500px;
     height: 500px;
   }
@@ -62,6 +69,54 @@ $desktop: 1400px;
     margin: 20px 0 50px 0;
   }
 }
+@media only screen and (max-width: $laptopS) {
+  .matchWrap {
+    .matchingLottie {
+      width: 500px;
+      height: 500px;
+    }
+    .matchingMessage {
+      font-size: 30px;
+    }
+  }
+}
+@media only screen and (max-width: $tablet) {
+  .matchWrap {
+    .matchingLottie {
+      width: 400px;
+      height: 400px;
+    }
+    .matchingMessage {
+      font-size: 25px;
+    }
+  }
+}
+@media only screen and (max-width: $mobile) {
+  .matchWrap {
+    .matchingLottie {
+      margin-top: 15%;
+      width: 300px;
+      height: 300px;
+    }
+    .matchingMessage {
+      font-size: 20px;
+    }
+
+    .matchCaseBtn {
+      font-size: 14px;
+      width: 30px;
+      height: 30px;
+    }
+    button[aria-current] {
+      font-size: 14px;
+      width: 35px;
+      height: 35px;
+    }
+    .matchDist {
+      font-size: 15px;
+    }
+  }
+}
 
 .matchBody {
   // height: 85vh;
@@ -74,6 +129,7 @@ $desktop: 1400px;
 .matchFormWrap {
   .matchTitle {
     margin-bottom: 30px;
+    font-size: 30px;
   }
 
   .matchMessage {
@@ -131,6 +187,28 @@ $desktop: 1400px;
     display: flex;
     justify-content: flex-end;
   }
+
+  @media only screen and (max-width: $mobile) {
+    .matchTitle {
+      margin-bottom: 30px;
+      font-size: 25px;
+    }
+
+    .matchMessage {
+      display: flex;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .matchFindIngredients {
+      .matchTag {
+        font-size: 15px;
+      }
+      .matchNotTag {
+        font-size: 15px;
+      }
+    }
+  }
 }
 
 .matchResultMap {
@@ -162,10 +240,6 @@ $desktop: 1400px;
       margin: 20px;
       font-size: 25px;
     }
-    @media only screen and (max-width: 576px) {
-      min-width: 100vw !important;
-      max-width: 100% !important;
-    }
   }
 
   .matchContentCard {
@@ -193,10 +267,6 @@ $desktop: 1400px;
   }
   .slick-next::before {
     content: url(../../assets/icon_next.png);
-  }
-  @media only screen and (max-width: 576px) {
-    max-width: 576px !important;
-    min-width: 100px !important;
   }
 }
 
@@ -248,6 +318,10 @@ $desktop: 1400px;
   bottom: 28px;
   left: -150px;
   width: 220px;
+
+  @media only screen and (max-width: $mobile) {
+    width: 100px;
+  }
 }
 
 .matchInfo {
