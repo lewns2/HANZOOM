@@ -1,7 +1,6 @@
-import Fade from 'react-reveal/Fade';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import './Main.scss';
 import { Feature1 } from '../../components/Main/Feature1';
 import { Feature2 } from '../../components/Main/Feature2';
@@ -10,29 +9,31 @@ import { Feature4 } from '../../components/Main/Feature4';
 import { Line } from '../../components/Main/Line';
 import { Banner } from '../../components/Main/Banner';
 import { BestBoard } from '../../components/Main/BestBoard';
+import { useEffect } from 'react';
 
 export const Main = () => {
+  useEffect(() => {
+    AOS.init();
+  });
   return (
     <>
       <Banner />
-      <Fade left>
+      <div data-aos="fade-left" data-aos-duration="1600">
         <Feature1 />
-      </Fade>
+      </div>
       <Line />
-      <Fade right>
+      <div data-aos="fade-right" data-aos-duration="1600">
         <Feature2 />
-      </Fade>
+      </div>
       <Line />
-      <Fade left>
+      <div data-aos="fade-left" data-aos-duration="1600">
         <Feature3 />
-      </Fade>
+      </div>
       <Line />
-      <Fade right>
+      <div data-aos="fade-right" data-aos-duration="1600">
         <Feature4 />
-      </Fade>
-      <Fade top>
-        <BestBoard />
-      </Fade>
+      </div>
+      <BestBoard />
     </>
   );
 };
