@@ -25,10 +25,17 @@
     margin-top: 20px;
   }
   .featureContent {
+    width: 80%;
     font-family: 'GmarketSansMedium';
   }
+
   .mobileScreen {
     display: none;
+  }
+  @media all and (max-width: 991px) {
+    .featureContent {
+      width: 100%;
+    }
   }
   @media (max-width: 869px) {
     padding: 60px 50px;
@@ -44,6 +51,9 @@
       // .featureimage {
       display: none;
       // }
+    }
+    .mobileSpace {
+      margin: 0;
     }
     .mobileScreen {
       display: block;
@@ -74,9 +84,15 @@
   }
   .featureContent {
     font-family: 'GmarketSansMedium';
+    width: 80%;
   }
   .mobileScreen {
     display: none;
+  }
+  @media all and (max-width: 991px) {
+    .featureContent {
+      width: 100%;
+    }
   }
   @media (max-width: 869px) {
     padding: 60px 50px;

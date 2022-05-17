@@ -17,11 +17,8 @@ export const Feature1 = () => {
               <h2>1. 나만의 식재료 관리</h2>
               <div className="featureSubTitle">MY식재료에서 나만의 식재료를 관리할 수 있어요!</div>
               <div className="featureContent">
-                <strong>드래그 앤 드랍 (Drag & Drop)</strong>으로 쉽게 주변 사람들과
-                <span className="regularScreen">
-                  <br />
-                </span>
-                식재료를 교환&middot; 나눔하여 식재료 낭비를 줄여 지구를 생각해봐요.
+                <strong>드래그 앤 드랍 (Drag & Drop)</strong>으로 쉽게 주변 사람들과 식재료를
+                교환&middot; 나눔하여 식재료 낭비를 줄여 지구를 생각해봐요.
               </div>
             </Grid>
           </Grid>

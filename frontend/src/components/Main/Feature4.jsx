@@ -21,11 +21,8 @@ export const Feature4 = () => {
               <h2>4. 유저 간 채팅</h2>
               <div className="featureSubTitle">유저 간 채팅을 통해 소통할 수 있어요!</div>
               <div className="featureContent">
-                원하는 교환&middot;나눔 게시글을 선택하여
-                <span className="regularScreen">
-                  <br />
-                </span>
-                해당 유저와 <strong>채팅을 통해 일정</strong>을 잡아보아요.
+                원하는 교환&middot;나눔 게시글을 선택하여 해당 유저와{' '}
+                <strong>채팅을 통해 일정</strong>을 잡아보아요.
               </div>
             </Grid>
           </Grid>
