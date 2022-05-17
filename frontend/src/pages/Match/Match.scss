@@ -356,9 +356,8 @@ $desktop: 1400px;
   // border: 1px solid #ff7f00;
   border-radius: 50%;
 }
-
 .matchInfo_wrap {
-  position: absolute;
+  // position: absolute;
   bottom: 28px;
   left: -150px;
   width: 220px;
@@ -391,6 +390,9 @@ $desktop: 1400px;
       width: 200px;
       height: 200px;
       border-radius: 10px;
+    }
+    @media only screen and (max-width: $mobile) {
+      display: none;
     }
   }
 
