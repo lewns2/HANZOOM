@@ -111,10 +111,20 @@ export const MyFoodIngredients = () => {
     } else {
       typeDetail = '일반';
     }
+    var expiration = expirationDate;
+    var purchase = purchaseDate;
+
+    if (!expirationDate) {
+      expiration = '';
+    }
+    if (!purchase) {
+      purchase = '';
+    }
+
     Axios.put('/userIngredient/update', {
-      expirationDate: expirationDate,
+      expirationDate: expiration,
       ingredientName: ingredientName,
-      purchaseDate: purchaseDate,
+      purchaseDate: purchase,
       type: typeDetail,
       userIngredientNo: userIngredientNo,
     })
@@ -356,18 +366,18 @@ export const MyFoodIngredients = () => {
                   {checkedNeeds.length ? (
                     <div className="d-flex justify-content-center">
                       {boardStatus ? (
-                        <button className="ingreBtn mt-3">
+                        <button className="ingreBtn mt-4">
                           <Link to={'/board/write'} state={{ type: '필요', ingre: checkedNeeds }}>
                             게시글 등록
                           </Link>
                         </button>
                       ) : (
-                        <button className="ingreBtn mt-3" onClick={clickEvent}>
+                        <button className="ingreBtn mt-4" onClick={clickEvent}>
                           게시글 등록
                         </button>
                       )}
 
-                      <button className="ingreBtn mt-3">
+                      <button className="ingreBtn mt-4">
                         <Link to="/match" state={{ type: '선택', matchNeeds: checkedNeeds }}>
                           선택 매칭
                         </Link>
@@ -375,10 +385,10 @@ export const MyFoodIngredients = () => {
                     </div>
                   ) : (
                     <div className="d-flex justify-content-center">
-                      <button className="ingreBtn mt-3" onClick={clickEvent}>
+                      <button className="ingreBtn mt-4" onClick={clickEvent}>
                         게시글 등록
                       </button>
-                      <button className="ingreBtn mt-3" onClick={clickEvent}>
+                      <button className="ingreBtn mt-4" onClick={clickEvent}>
                         선택 매칭
                       </button>
                     </div>

@@ -14,7 +14,7 @@ export const RecipeModal = (props) => {
               <button className="btn-close" aria-label="Close" onClick={close}></button>
             </div>
             <div className="recipeModalTitle">
-              <h2>📙 {info.recipeName}</h2>
+              <h2 className="recipeName">📙 {info.recipeName}</h2>
               <div>
                 <Link
                   to="/match"
