@@ -1,18 +1,21 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/messaging';
+import 'firebase/compat/database';
 // import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDgXmj3E2LXDfu-4jSY2tH1lHlRc-YmV9I',
   authDomain: 'ssafy-103.firebaseapp.com',
+  databaseURL: 'https://ssafy-103-default-rtdb.asia-southeast1.firebasedatabase.app',
   projectId: 'ssafy-103',
   storageBucket: 'ssafy-103.appspot.com',
   messagingSenderId: '1021924460606',
-  appId: '1:1021924460606:web:4f7ce148a1dd1f2a8be96f',
-  measurementId: 'G-EM19M4FZ5Q',
+  appId: '1:1021924460606:web:d52fcb580c6ed0e68be96f',
+  measurementId: 'G-74ZS8TSXWE',
 };
 
 firebase.initializeApp(firebaseConfig);
+export default firebase;
 
 const messaging = firebase.messaging();
 
