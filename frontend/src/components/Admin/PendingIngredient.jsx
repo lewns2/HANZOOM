@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Axios } from '../../core/axios';
+import { useEffect, useState } from 'react';
+import { Axios, axios_apis } from '../../core/axios';
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -12,11 +12,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 import './PendingIngredient.scss';
 import admin_empty from '../../assets/images/admin_empty.gif';
+
+import axios from 'axios';
 
 const columns = [
   { id: 'ingredientName', label: '식재료명', align: 'center', minWidth: 170, maxWidth: 200 },
@@ -84,6 +87,45 @@ export const PendingIngredient = () => {
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+    const [pendingReason, setPendingReason] = useState('');
+
+    const handlePendingReason = (e) => {
+      setPendingReason(e.target.value);
+    };
+
+    const sendAlarm = (event, result) => {
+      if (event.browserToken === null || event.browserToken === '') return;
+
+      const header = {
+        headers: {
+          Authorization:
+            'bearer AAAA7e9xyD4:APA91bEPAokzHd9yaULDhqEUPy6WJ6wDWaqmmNYfGja87GQbwZYo-bgZSDIy_bLXfzJgwNHPXd00OpxzJ_qdTbNwiJvrFqPjEF9Tr2d2ZuREGUzoPoR29JbGqK1aeOBrXYQKerGqNHqO ',
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const message = {
+        notification: {
+          title: '한줌',
+          body: `${pendingReason}의 이유로 식재료 등록 요청이 ${result}되었습니다.`,
+        },
+        to: event.browserToken,
+      };
+      axios
+        .post('https://fcm.googleapis.com/fcm/send', message, header)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    };
+
+    const handleApproveStep = (event) => {
+      sendAlarm(event, '승인');
+      handleApprove(event);
+    };
+
+    const handleRejectStep = (event) => {
+      sendAlarm(event, '거절');
+      handleReject(event);
+    };
 
     return (
       <React.Fragment>
@@ -109,11 +151,29 @@ export const PendingIngredient = () => {
           <TableCell style={{ paddingTop: '0', paddingBottom: '0', paddingLeft: '4%' }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 3, fontFamily: 'GmarketSansBold' }}>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  component="div"
+                  style={{ fontFamily: 'GmarketSansBold' }}>
+                  이유
+                </Typography>
+                <textarea
+                  style={{
+                    width: '100%',
+                    height: '8.25em',
+                    border: '2px solid #777',
+                    resize: 'none',
+                    fontFamily: 'GmarketSansMedium',
+                    borderRadius: '5px',
+                  }}
+                  placeholder="유저에게 보낼 승인/거절 이유를 작성해주세요."
+                  onChange={handlePendingReason}></textarea>
                 <div style={{ float: 'right', margin: '3% 5%' }}>
-                  <button className="pendingApproveBtn" onClick={() => handleApprove(row)}>
+                  <button className="pendingApproveBtn" onClick={() => handleApproveStep(row)}>
                     승인
                   </button>
-                  <button className="pendingRejectBtn" onClick={() => handleReject(row)}>
+                  <button className="pendingRejectBtn" onClick={() => handleRejectStep(row)}>
                     거절
                   </button>
                 </div>
