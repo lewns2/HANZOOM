@@ -108,6 +108,11 @@ $speed: 0.8s;
               background-color: #fffcf2;
             }
           }
+          .nickName {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
           .chatDelete {
             display: block;
           }
