@@ -94,7 +94,21 @@ export const MatchList = (props) => {
                 className="matchCardImgWrap"
                 src={`${BASE_IMG_URL}${it.imagePath}`}
                 onClick={() => handleClick(matchingArr.userIngredientMatchingRes[i].boardNo)}></img>
-              <p>{it.userNickname}</p>
+              <span className="matchImgHover">
+                <p> 식재료명 : {it.ingredientName}</p>
+                <p>거래 구분 : {it.type}</p>
+                <p>나와 떨어진 거리 : {it.distance.toFixed(1)} KM</p>
+                <p>구매일 : {it.purchaseDate}</p>
+                <p>유통 기한 : {it.expirationDate}</p>
+              </span>
+              <div className="matchListNickName">
+                <img
+                  src={otherImgUrl}
+                  style={{ width: '40px', height: '40px', borderRadius: '50%' }}
+                />
+                &nbsp;&nbsp;
+                {it.userNickname}
+              </div>
             </div>
           </>,
         );
