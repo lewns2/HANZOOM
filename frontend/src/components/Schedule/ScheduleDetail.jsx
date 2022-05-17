@@ -170,14 +170,14 @@ export const ScheduleDetail = (props) => {
               <button className="btn cancelBtn" onClick={() => props.show(false)}>
                 닫기
               </button>
+              <button className="btn removeBtn" onClick={removePlan}>
+                일정 취소
+              </button>
               {authority && (
                 <button className="btn updateBtn" onClick={() => setUpdateState(true)}>
                   일정 수정
                 </button>
               )}
-              <button className="btn removeBtn" onClick={removePlan}>
-                일정 취소
-              </button>
               <button className="btn shareBtn" onClick={shareKakao}>
                 <img src="img/kakaolink_btn_medium.png" alt="" />
                 공유하기
