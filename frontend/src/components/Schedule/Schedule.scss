@@ -250,6 +250,15 @@
     .place {
       margin: 0 20px;
       cursor: pointer;
+
+      @media only screen and (max-width: 481px) {
+        margin: 0 16px;
+        font-size: 12px;
+      }
+      @media only screen and (max-width: 361px) {
+        margin: 0 10px;
+        font-size: 11px;
+      }
     }
 
     .selected {
