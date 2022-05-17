@@ -28,7 +28,7 @@ export const Banner = () => {
         backgroundColor: '#7fc7d9', // Average color of the background image.
         backgroundPosition: 'center',
       }}>
-      <h1 align="center" style={{ fontSize: '50px' }}>
+      <h1 align="center" className="mainMessage" style={{ fontSize: '50px' }}>
         SHARE YOUR FOOD
       </h1>
       <Typography
