@@ -89,6 +89,10 @@ export const MatchMap = (props) => {
     /* 유저 위치를 찾기 위한 Map 객체 */
     var userLocation = new Map();
 
+    /* 지도의 범위를 재설정하기 위한 bounds객체 생성 */
+    var bounds = new kakao.maps.LatLngBounds();
+    bounds.extend(markerPosition);
+
     /* 3. 상대방 마커 생성 */
     matchingArr.userIngredientMatchingRes.map((findUser, index) => {
       var otherImgUrl;
@@ -117,6 +121,7 @@ export const MatchMap = (props) => {
       });
 
       otherMarker.setMap(map);
+      bounds.extend(markerPosition);
 
       /* 지도에 동일한 사용자의 게시글이 몇개 있는지 알려주는 인포윈도우 */
       var count = cnt.get(findUser.userEmail);
@@ -180,6 +185,7 @@ export const MatchMap = (props) => {
       //   infowindow.setMap(null);
       // });
     });
+    map.setBounds(bounds);
 
     function handleInfo(mark) {
       /* 인포윈도우 한꺼번에 표시*/
