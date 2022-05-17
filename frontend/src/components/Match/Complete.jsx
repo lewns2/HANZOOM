@@ -73,7 +73,7 @@ export const Complete = (props) => {
     <section className="container">
       <div className="matchFormWrap">
         <div className="matchTitle">
-          <h2>{props.title}</h2>
+          <p>{props.title}</p>
           <hr />
         </div>
         <div className="matchMessage">
