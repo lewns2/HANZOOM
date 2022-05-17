@@ -107,7 +107,7 @@ export const PendingIngredient = () => {
       const message = {
         notification: {
           title: '한줌',
-          body: `${pendingReason}의 이유로 식재료 등록 요청이 ${result}되었습니다.`,
+          body: `${event.ingredientName}건에 대해 '${pendingReason}' 의 이유로 식재료 등록 요청이 ${result}되었습니다.`,
         },
         to: event.browserToken,
       };
