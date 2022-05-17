@@ -1,25 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Grid from '@mui/material/Grid';
-import { useNavigate } from 'react-router-dom';
 import Matching from '../../assets/images/feature_matching.gif';
 
-import swal from 'sweetalert';
-
 export const Feature3 = () => {
-  // redux user 테스트
-  const user = useSelector((state) => state.user);
-  const navigate = useNavigate();
-  const loginGo = () => {
-    navigate('/login');
-  };
-  const myIngreGo = () => {
-    if (!user.userInfo.lng && !user.userInfo.lat) {
-      swal('위치 정보를 설정해주세요.', '한줌 서비스를 이용하기 위해 위치 정보가 필요합니다');
-      return;
-    }
-    navigate('/my-food-ingredients');
-  };
   return (
     <div className="featureLeftWrap">
       <Grid container spacing={6}>
