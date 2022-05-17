@@ -36,7 +36,7 @@ const settings = {
       },
     },
     {
-      breakpoint: 720,
+      breakpoint: 768,
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -92,9 +92,9 @@ export const Recipe = (props) => {
   return (
     <>
       {isPending ? (
-        <section className="container recipeContainer">
+        <section className="container recipeContainer d-flex justify-content-center">
           <RecipeModal open={modalOpen} close={closeModal} info={recipeDetail}></RecipeModal>
-          <div style={modalOpen ? { display: 'none' } : { display: 'grid' }}>
+          <div style={modalOpen ? { display: 'none' } : { display: '' }}>
             <div className="recipeTextWrap">
               <div className="recipeHeader">
                 <div className="recipeTitle">👨‍🍳 추천 레시피</div>
