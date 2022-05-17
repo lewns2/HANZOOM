@@ -4,6 +4,7 @@ import com.cdp.hanzoom.api.request.UserIngredientRegisterReq;
 import com.cdp.hanzoom.api.request.PendingIngredientReq;
 import com.cdp.hanzoom.api.request.UserIngredientTypeUpdateReq;
 import com.cdp.hanzoom.api.response.PendingIngredientRes;
+import com.cdp.hanzoom.api.response.PendingIngredientTokenRes;
 import com.cdp.hanzoom.api.response.UserIngredientBoardRes;
 import com.cdp.hanzoom.api.response.UserIngredientFindRes;
 import com.cdp.hanzoom.db.entity.UserIngredient;
@@ -29,7 +30,7 @@ public interface UserIngredientService {
     /** 유저 식재료 정보를 삭제하는 deleteUserIngredient 입니다. **/
     void deleteUserIngredient(UserIngredient userIngredient);
     /** 식재료 등록 요청한 정보들을 전체 조회하는 findAllPendingUserIngredient 입니다. **/
-    List<PendingIngredientRes> findAllPendingIngredient();
+    List<PendingIngredientTokenRes> findAllPendingIngredient();
     /** 게시글에 등록된 유저 식재료 게시글 번호에 맞춰 조회한다. **/
     List<UserIngredientBoardRes> findUserIngredientSortingBoardNo(String userEmail);
 }

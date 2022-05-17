@@ -4,6 +4,7 @@ import com.cdp.hanzoom.api.request.PendingIngredientReq;
 import com.cdp.hanzoom.api.request.UserIngredientRegisterReq;
 import com.cdp.hanzoom.api.request.UserIngredientTypeUpdateReq;
 import com.cdp.hanzoom.api.response.PendingIngredientRes;
+import com.cdp.hanzoom.api.response.PendingIngredientTokenRes;
 import com.cdp.hanzoom.api.response.UserIngredientBoardRes;
 import com.cdp.hanzoom.api.response.UserIngredientFindRes;
 import com.cdp.hanzoom.db.entity.*;
@@ -216,9 +217,25 @@ public class UserIngredientServiceImpl implements UserIngredientService {
 
     /** 식재료 등록 요청한 정보들을 전체 조회하는 findAllPendingUserIngredient 입니다. **/
     @Override
-    public List<PendingIngredientRes> findAllPendingIngredient() {
+    public List<PendingIngredientTokenRes> findAllPendingIngredient() {
         List<PendingIngredientRes> pendingIngredientResList = pendingIngredientRepositorySupport.findAllPendingIngredient();
-        return pendingIngredientResList;
+        List<PendingIngredientTokenRes> pendingIngredientTokenResList = new ArrayList<PendingIngredientTokenRes>();
+        for(int i=0; i<pendingIngredientResList.size(); i++) {
+            PendingIngredientTokenRes res = new PendingIngredientTokenRes();
+            PendingIngredientRes pRes = pendingIngredientResList.get(i);
+            res.setRequestNo(pRes.getRequestNo());
+            res.setRequestor(pRes.getRequestor());
+            res.setIngredientName(pRes.getIngredientName());
+            res.setType(pRes.getType());
+            res.setPurchaseDate(pRes.getPurchaseDate());
+            res.setExpirationDate(pRes.getExpirationDate());
+            res.setStatus(pRes.getStatus());
+            User user = userRepositorySupport.findUserByUserEmail(pRes.getRequestor()).orElse(null);
+            res.setBrowserToken(user.getBrowserToken());
+
+            pendingIngredientTokenResList.add(res);
+        }
+        return pendingIngredientTokenResList;
     }
 
     @Override
