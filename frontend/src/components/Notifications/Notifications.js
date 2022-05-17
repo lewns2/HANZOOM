@@ -13,6 +13,7 @@ const Notifications = (props) => {
     async function tokenFunc() {
       data = await getToken(setTokenFound);
       if (data) {
+        localStorage.setItem('browerToken', data);
         console.log('토큰 is ', data);
       }
       return data;
