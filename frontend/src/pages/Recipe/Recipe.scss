@@ -193,12 +193,16 @@
 
   .recipeFormWrap {
     width: 100%;
-    padding-top: 40px;
+    // padding-top: 40px;
     padding-left: 40px;
     padding-right: 40px;
     border-radius: 0.8rem;
-    margin-top: 40px;
+    // margin-top: 40px;
     margin-bottom: 100px;
+
+    @media only screen and (max-width: 768px) {
+      padding: 0;
+    }
 
     .recipeCancleBtn1 {
       display: flex;
@@ -209,6 +213,13 @@
     .recipeModalTitle {
       display: flex;
       justify-content: space-between;
+
+      .recipeName {
+        @media only screen and (max-width: 420px) {
+          font-size: 18px;
+        }
+      }
+
       .matchingBtn {
         width: 90px;
         font-size: 16px;
@@ -277,6 +288,39 @@
               margin-left: 15px;
               padding-top: 20px;
               font-family: 'GmarketSansMedium';
+            }
+            @media only screen and (max-width: 484px) {
+              .recipeIndex {
+                font-size: 18px;
+                padding: 15px;
+                width: 55px;
+                height: 55px;
+              }
+              .recipeDescription {
+                font-size: 16px;
+              }
+            }
+            @media only screen and (max-width: 445px) {
+              .recipeIndex {
+                font-size: 16px;
+                padding: 14px;
+                width: 50px;
+                height: 50px;
+              }
+              .recipeDescription {
+                font-size: 14px;
+              }
+            }
+            @media only screen and (max-width: 407px) {
+              .recipeIndex {
+                font-size: 14px;
+                padding: 13px;
+                width: 45px;
+                height: 45px;
+              }
+              .recipeDescription {
+                font-size: 12px;
+              }
             }
           }
           .recipeImg {
