@@ -15,24 +15,24 @@ export const Main = () => {
   return (
     <>
       <Banner />
-      <Fade left>
-        <Feature1 />
-      </Fade>
+      {/* <Fade left> */}
+      <Feature1 />
+      {/* </Fade> */}
       <Line />
-      <Fade right>
-        <Feature2 />
-      </Fade>
+      {/* <Fade right> */}
+      <Feature2 />
+      {/* </Fade> */}
       <Line />
-      <Fade left>
-        <Feature3 />
-      </Fade>
+      {/* <Fade left> */}
+      <Feature3 />
+      {/* </Fade> */}
       <Line />
-      <Fade right>
-        <Feature4 />
-      </Fade>
-      <Fade top>
-        <BestBoard />
-      </Fade>
+      {/* <Fade right> */}
+      <Feature4 />
+      {/* </Fade> */}
+      {/* <Fade top> */}
+      <BestBoard />
+      {/* </Fade> */}
     </>
   );
 };
