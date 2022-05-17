@@ -67,8 +67,9 @@ export const Board = () => {
   }, [searchKeyword, page]);
 
   return (
-    <section className="container mt-1 px-2 py-3">
-      <div className="header">
+    <section className="container mt-1">
+      <div className="pageTitle">
+        {/* <div className="header"> */}
         <h1>게시판</h1>
       </div>
 

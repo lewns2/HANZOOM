@@ -4,7 +4,6 @@ import { Typography } from '@mui/material';
 import BannerLayout from './BannerLayout';
 import bannerImg from '../../assets/images/fridge.gif';
 import { useNavigate } from 'react-router-dom';
-import { mainButton } from './Main.style';
 import swal from 'sweetalert';
 
 export const Banner = () => {
@@ -28,7 +27,7 @@ export const Banner = () => {
         backgroundColor: '#7fc7d9', // Average color of the background image.
         backgroundPosition: 'center',
       }}>
-      <h1 align="center" className="mainMessage" style={{ fontSize: '50px' }}>
+      <h1 align="center" className="mainMessage">
         SHARE YOUR FOOD
       </h1>
       <Typography
@@ -42,13 +41,11 @@ export const Banner = () => {
             sm: 10,
           },
         }}>
-        <div
-          className="intro d-flex align-items-center"
-          style={{ fontSize: '30px', fontFamily: 'GmarketSansMedium' }}>
+        <div className="d-flex align-items-center introMessage">
           냉장고 속 남는 재료, <br /> 이제 버리지 마세요!
         </div>
       </Typography>
-      <button style={mainButton} onClick={handleRegister}>
+      <button className="mainButton" onClick={handleRegister}>
         START
       </button>
     </BannerLayout>

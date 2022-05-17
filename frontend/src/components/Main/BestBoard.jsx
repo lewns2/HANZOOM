@@ -10,7 +10,7 @@ import { ContentList } from './ContentList';
 import { Axios } from '../../core/axios';
 import { settings } from '../../constants/slider';
 
-import { BestBoardWrapper } from './Main.style';
+// import { BestBoardWrapper } from './Main.style';
 export const BestBoard = () => {
   const user = useSelector((state) => state.user);
   const [contents, setContents] = useState([]);
@@ -39,7 +39,8 @@ export const BestBoard = () => {
           {user.userInfo.length !== 0 ? (
             <section id="main3">
               <h3 className="text-center">인기 게시글</h3>
-              <BestBoardWrapper>
+              {/* <BestBoardWrapper> */}
+              <div className="bestBoardWrapper">
                 <div className="container contentContainer">
                   <Slider {...settings}>
                     {contents.map((content, index) => (
@@ -47,7 +48,8 @@ export const BestBoard = () => {
                     ))}
                   </Slider>
                 </div>
-              </BestBoardWrapper>
+              </div>
+              {/* </BestBoardWrapper> */}
             </section>
           ) : null}
         </Box>
