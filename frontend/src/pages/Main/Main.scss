@@ -84,7 +84,7 @@
   }
   .featureContent {
     font-family: 'GmarketSansMedium';
-    width: 80%;
+    padding-left: 20%;
   }
   .mobileScreen {
     display: none;
@@ -108,6 +108,9 @@
       // .featureimage {
       display: none;
       // }
+    }
+    .featureContent {
+      padding-left: 0;
     }
     .mobileScreen {
       display: block;
