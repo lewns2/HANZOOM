@@ -20,23 +20,13 @@ export const ContentList = (props) => {
   return (
     <div
       className="contentCard"
-      style={{ margin: '0 auto', marginBottom: '2px', marginTop: '2px' }}
+      style={{ margin: '2px auto' }}
       key={props.content.boardNo}
       onClick={() => moveToDetail(props.content.boardNo)}>
       {/*  이미지  */}
       <div className="cardImgWrap">
         <img src={`${BASE_IMG_URL}${props.content.imagePath}`} className="cardImg" alt="..." />
-        <span
-          className="status"
-          style={
-            {
-              // props.content.status === '거래완료'
-              //   ? { backgroundColor: '#cccccc', color: 'black' }
-              //   : {
-            }
-          }>
-          {props.content.status}
-        </span>
+        <span className="status">{props.content.status}</span>
       </div>
       {/* 본문 */}
 
@@ -50,9 +40,6 @@ export const ContentList = (props) => {
             <p className="type">{props.content.type}</p>
           </div>
         </div>
-
-        {/* 설명 */}
-        {/* <div className="contentDescription">{props.content.description}</div> */}
 
         {/* 나와의 거리 */}
         {props.content.distance !== null ? (
