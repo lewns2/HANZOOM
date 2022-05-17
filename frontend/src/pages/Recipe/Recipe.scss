@@ -131,8 +131,9 @@
 }
 .event1 .hoverBox {
   text-align: center;
+  margin-top: 20px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 5%, rgba(255, 255, 255, 1) 90%);
-  transform: translateY(200%);
+  transform: translateY(100%);
   transition: 0.5s;
 }
 // .event1:hover .imgBox {

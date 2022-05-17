@@ -15,7 +15,7 @@ $desktop: 1400px;
   align-content: center;
   text-align: center;
   .matchingLottie {
-    margin-top: 30%;
+    margin-top: 8%;
     width: 500px;
     height: 500px;
   }
@@ -24,8 +24,8 @@ $desktop: 1400px;
   }
   .matchCaseBtn {
     font-size: 18px;
-    width: 50px;
-    height: 50px;
+    width: 42px;
+    height: 42px;
     font-weight: bolder;
     background-color: #fff;
     border: 2px solid #f7c343;
@@ -168,6 +168,7 @@ $desktop: 1400px;
       margin-right: 15px;
       box-shadow: 0 4px 4px -4px #777;
       text-align: center;
+      opacity: 0.4;
     }
   }
   .matchNotFoundIngredients {
@@ -243,6 +244,10 @@ $desktop: 1400px;
     .notFound {
       margin-top: 20px;
       font-size: 25px;
+
+      @media only screen and (max-width: $mobile) {
+        font-size: 20px;
+      }
     }
   }
 
@@ -255,6 +260,35 @@ $desktop: 1400px;
       width: 300px;
       height: 300px;
       border-radius: 1rem;
+      &:hover + .matchImgHover {
+        visibility: visible;
+      }
+      &:hover {
+        filter: brightness(60%);
+      }
+    }
+    @media only screen and (max-width: $mobile) {
+      .matchCardImgWrap {
+        width: 200px;
+        height: 200px;
+      }
+    }
+    .matchListNickName {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0 0 0;
+      font-size: 17px;
+    }
+    .matchImgHover {
+      position: absolute;
+      top: 15%;
+      left: 17%;
+      color: white;
+      visibility: hidden;
+      @media only screen and (max-width: $mobile) {
+        font-size: 8px;
+      }
     }
   }
 
@@ -329,9 +363,9 @@ $desktop: 1400px;
   left: -150px;
   width: 220px;
 
-  @media only screen and (max-width: $mobile) {
-    width: 100px;
-  }
+  // @media only screen and (max-width: $mobile) {
+  //   width: 100px;
+  // }
 }
 
 .matchInfo {

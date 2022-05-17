@@ -50,6 +50,15 @@ export const MatchList = (props) => {
 
     for (let i = 0; i < matchingArr.userIngredientMatchingRes.length; i++) {
       var it = matchingArr.userIngredientMatchingRes[i];
+      var otherImgUrl;
+      if (matchingArr.userIngredientMatchingRes[i].userImage == null) {
+        otherImgUrl = '/img/basicProfile.png';
+      } else if (matchingArr.userIngredientMatchingRes[i].userImage.includes('kakao')) {
+        otherImgUrl = matchingArr.userIngredientMatchingRes[i].userImage;
+      } else {
+        otherImgUrl = `${BASE_IMG_URL}${matchingArr.userIngredientMatchingRes[i].userImage}`;
+      }
+
       if (it.type == '나눔') {
         shareResult.push(
           <>
@@ -58,7 +67,21 @@ export const MatchList = (props) => {
                 className="matchCardImgWrap"
                 src={`${BASE_IMG_URL}${it.imagePath}`}
                 onClick={() => handleClick(matchingArr.userIngredientMatchingRes[i].boardNo)}></img>
-              <p>{it.userNickname}</p>
+              <span className="matchImgHover">
+                <p> 식재료명 : {it.ingredientName}</p>
+                <p>거래 구분 : {it.type}</p>
+                <p>나와 떨어진 거리 : {it.distance.toFixed(1)} KM</p>
+                <p>구매일 : {it.purchaseDate}</p>
+                <p>유통 기한 : {it.expirationDate}</p>
+              </span>
+              <div className="matchListNickName">
+                <img
+                  src={otherImgUrl}
+                  style={{ width: '40px', height: '40px', borderRadius: '50%' }}
+                />
+                &nbsp;&nbsp;
+                {it.userNickname}
+              </div>
             </div>
           </>,
         );
