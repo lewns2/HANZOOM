@@ -8,6 +8,7 @@ import { settings } from '../../constants/slider';
 import sample from '../../assets/images/need.PNG';
 import { RestoreOutlined, SwapCallsTwoTone } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { render } from 'react-dom';
 
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
@@ -104,6 +105,11 @@ export const MatchList = (props) => {
     else if (type == '교환') return exchangeResult;
   };
 
+  var customSetting = {
+    ...settings,
+    infinite: false,
+  };
+
   return (
     <>
       <div className="matchFilterContainer">
@@ -123,7 +129,7 @@ export const MatchList = (props) => {
       <div className="matchListWrap">
         <div className="container matchContainer">
           {selectedType == '나눔' ? (
-            <Slider {...settings}>
+            <Slider {...customSetting}>
               {renderList('나눔').length == 0 ? (
                 <p className="notFound">조건에 맞는 유저가 없어요</p>
               ) : (
@@ -131,7 +137,7 @@ export const MatchList = (props) => {
               )}
             </Slider>
           ) : (
-            <Slider {...settings}>
+            <Slider {...customSetting}>
               {renderList('교환').length == 0 ? (
                 <p className="notFound">조건에 맞는 유저가 없어요</p>
               ) : (

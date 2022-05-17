@@ -1,5 +1,6 @@
 import { SwapCallsTwoTone } from '@mui/icons-material';
 import { createMuiTheme, getDialogActionsUtilityClass } from '@mui/material';
+import { handleBreakpoints } from '@mui/system';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import marketimage from '../../assets/images/supermarket.png';
@@ -81,10 +82,14 @@ export const MatchMap = (props) => {
         cnt.set(it, temp);
       }
     }
-    // console.log(cnt.entries());
+
+    /* 유저 이메일로 Map 만들기({마커 위치, 인포윈도우 배열}) */
+    var viewInfo = new Map();
+
+    /* 유저 위치를 찾기 위한 Map 객체 */
+    var userLocation = new Map();
 
     /* 3. 상대방 마커 생성 */
-
     matchingArr.userIngredientMatchingRes.map((findUser, index) => {
       var otherImgUrl;
       if (findUser.userImage == null) {
@@ -98,6 +103,7 @@ export const MatchMap = (props) => {
       var content = '<img class="userImg" src=' + otherImgUrl + '></img>';
       var markerPosition = new kakao.maps.LatLng(findUser.lat, findUser.lng);
       var pos = [findUser.lat, findUser.lng];
+      userLocation.set(findUser.userEmail, markerPosition);
 
       var imageSrc = otherImgUrl; // 마커이미지의 주소입니다
       var imageSize = new kakao.maps.Size(40, 40); // 마커이미지의 크기입니다
@@ -145,22 +151,68 @@ export const MatchMap = (props) => {
           </div>
         </div>
         `;
+      // 유저 이메일 배열에다가 contents를 쌓아두고 한꺼번에 출력해야함.
+      if (!viewInfo.has(findUser.userEmail)) {
+        var infoArr = [];
+        infoArr.push(contents);
+        viewInfo.set(findUser.userEmail, infoArr);
+      } else {
+        var temp = viewInfo.get(findUser.userEmail);
+        temp.push(contents);
+        viewInfo.delete(findUser.userEmail);
+        viewInfo.set(findUser.userEmail, temp);
+      }
 
-      var infoInfowindow = new kakao.maps.CustomOverlay({
-        position: markerPosition,
-        content: contents, // 인포윈도우에 표시할 내용
-      });
+      handleInfo(otherMarker);
 
-      kakao.maps.event.addListener(otherMarker, 'click', function (mouseEvent) {
-        infoInfowindow.setMap(map);
-      });
-      kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-        infoInfowindow.setMap(null);
-      });
+      // var infoInfowindow = new kakao.maps.CustomOverlay({
+      //   position: markerPosition,
+      //   content: contents, // 인포윈도우에 표시할 내용
+      // });
+
+      // kakao.maps.event.addListener(otherMarker, 'click', function (mouseEvent) {
+      //   infoInfowindow.setMap(map);
+      // });
+      // kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+      //   infoInfowindow.setMap(null);
+      // });
       // kakao.maps.event.addListener(otherMarker, 'mouseout', function (mouseEvent) {
       //   infowindow.setMap(null);
       // });
     });
+
+    function handleInfo(mark) {
+      /* 인포윈도우 한꺼번에 표시*/
+      for (var [key, value] of viewInfo) {
+        var InfoPos = userLocation.get(key);
+
+        var infoStr = '';
+        for (let i = 0; i < value.length; i++) {
+          infoStr += value[i];
+        }
+        // console.log(infoStr);
+        var customContent = `
+            <div className="matchWrapWrap" style="display:flex;">
+              ${infoStr}
+            </div>
+          `;
+
+        var infoInfowindow = new kakao.maps.CustomOverlay({
+          position: InfoPos,
+          content: customContent,
+          xAnchor: 0.5,
+          yAnchor: 1.1,
+        });
+        kakao.maps.event.addListener(mark, 'click', function (mouseEvent) {
+          infoInfowindow.setMap(map);
+        });
+        kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+          infoInfowindow.setMap(null);
+        });
+      }
+    }
+    // console.log(userLocation.entries());
+    // console.log(viewInfo.entries());
 
     /* 4. 마트 표시 */
 
@@ -169,7 +221,7 @@ export const MatchMap = (props) => {
         map.setCenter(new kakao.maps.LatLng(userLat, userLng));
 
         /* 2. 내 위치 마커 위치 재설정 */
-
+        customOverlay.setMap(null);
         var myImgUrl;
         if (userInfo.userImage == null) {
           myImgUrl = '/img/basicProfile.png';
