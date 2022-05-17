@@ -3,6 +3,7 @@ package com.cdp.hanzoom.api.controller;
 import com.cdp.hanzoom.api.request.PendingIngredientReq;
 import com.cdp.hanzoom.api.request.UserReportHistoryUpdateReq;
 import com.cdp.hanzoom.api.response.PendingIngredientRes;
+import com.cdp.hanzoom.api.response.PendingIngredientTokenRes;
 import com.cdp.hanzoom.api.response.UserReportHistoryFindAllRes;
 import com.cdp.hanzoom.api.response.UserRes;
 import com.cdp.hanzoom.api.service.UserIngredientService;
@@ -93,9 +94,9 @@ public class AdminController {
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<List<PendingIngredientRes>> findAllPendingIngredient() {
-        List<PendingIngredientRes> pendingIngredientResList = userIngredientService.findAllPendingIngredient();
-        return new ResponseEntity<List<PendingIngredientRes>>(pendingIngredientResList, HttpStatus.OK);
+    public ResponseEntity<List<PendingIngredientTokenRes>> findAllPendingIngredient() {
+        List<PendingIngredientTokenRes> pendingIngredientResList = userIngredientService.findAllPendingIngredient();
+        return new ResponseEntity<List<PendingIngredientTokenRes>>(pendingIngredientResList, HttpStatus.OK);
     }
 
     /** 유저 식재료 등록 요청 상태 수정 **/
