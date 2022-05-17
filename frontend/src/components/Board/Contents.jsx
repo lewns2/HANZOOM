@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import sample from '../../assets/images/Initimage.PNG';
 import needSample from '../../assets/images/need.PNG';
 import { Axios } from '../../core/axios';
-import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
 import Lottie from '../../components/Lottie';
 
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
+
 export const Contents = (props) => {
   const navigate = useNavigate();
-  const token = sessionStorage.getItem('jwt-token');
-
-  const [totalElements, setTotalElements] = useState(48);
-  const [totalPages, setTotalPages] = useState(6);
   const [contents, setContents] = useState([]);
+  const token = sessionStorage.getItem('jwt-token');
 
   useEffect(() => {
     Axios.get(
@@ -23,7 +19,6 @@ export const Contents = (props) => {
       },
     )
       .then((res) => {
-        console.log(`${props.page} 페이지 조회한다!`, res);
         setContents(res.data.content);
         props.setTotalPage(res.data.totalPages);
         props.setTotalElements(res.data.totalElements);
@@ -37,9 +32,9 @@ export const Contents = (props) => {
 
   return (
     <>
-      {contents.length != 0 || props.searchKeyword.length == 0 ? (
+      {contents.length !== 0 || props.searchKeyword.length === 0 ? (
         <section className="contentsContainer">
-          {contents.map((content, key) => (
+          {contents.map((content) => (
             <div
               className="contentCard mx-2 mb-3"
               key={content.boardNo}
@@ -49,11 +44,17 @@ export const Contents = (props) => {
                 {content.status === '거래완료' ? (
                   <span className="status">{content.status}</span>
                 ) : null}
-                {content.imagePath == 'need.jpg' ? (
-                  <img src={needSample} className="cardImg" alt="..." />
-                ) : (
-                  <img src={`${BASE_IMG_URL}${content.imagePath}`} className="cardImg" alt="..." />
-                )}
+
+                <img
+                  src={
+                    content.imagePath === 'need.jpg'
+                      ? needSample
+                      : `${BASE_IMG_URL}${content.imagePath}`
+                  }
+                  className="cardImg"
+                  alt="..."
+                  style={content.status === '거래완료' ? { filter: 'brightness(50%)' } : null}
+                />
               </div>
               {/* 본문 */}
               <div className="cardBody">
@@ -66,9 +67,6 @@ export const Contents = (props) => {
                     <p className="ingreType">{content.type}</p>
                   </div>
                 </div>
-
-                {/* 설명 */}
-                {/* <div className="contentDescription">{content.description}</div> */}
 
                 {/* 나와의 거리 */}
                 {content.distance == null ? (
@@ -90,17 +88,10 @@ export const Contents = (props) => {
                   )}
                 </div>
 
-                <div className="cardBodyCountsLike">
-                  <div className="cardBodyCounts">
-                    <p>조회 {content.viewCnt} ∙</p>
-                    &nbsp;
-                    <p> 관심 {content.likeCnt}</p>
-                  </div>
-                  {/* <ThumbUpTwoToneIcon
-                    className="likeBtn"
-                    style={{ visibility: content.like ? 'visible' : 'hidden' }}>
-                    좋아요 버튼
-                  </ThumbUpTwoToneIcon> */}
+                <div className="cardBodyCounts">
+                  <p>조회 {content.viewCnt} ∙</p>
+                  &nbsp;
+                  <p> 관심 {content.likeCnt}</p>
                 </div>
               </div>
             </div>
