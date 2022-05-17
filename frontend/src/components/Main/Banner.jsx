@@ -42,11 +42,11 @@ export const Banner = () => {
             sm: 10,
           },
         }}>
-        <h2
+        <div
           className="intro d-flex align-items-center"
           style={{ fontSize: '30px', fontFamily: 'GmarketSansMedium' }}>
           냉장고 속 남는 재료, <br /> 이제 버리지 마세요!
-        </h2>
+        </div>
       </Typography>
       <button style={mainButton} onClick={handleRegister}>
         START

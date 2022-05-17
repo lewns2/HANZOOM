@@ -36,11 +36,8 @@ export const Feature3 = () => {
                 <strong>위치를 기반</strong>으로 원하는 식재료를 한눈에 파악할 수 있어요!
               </div>
               <div className="featureContent">
-                MY식재료에서 원하는 식재료를 선택하여
-                <span className="regularScreen">
-                  <br />
-                </span>
-                내 주변에 식재료를 가진 사람과 교환&middot;나눔을 할 수 있어요.
+                MY식재료에서 원하는 식재료를 선택하여 내 주변에 식재료를 가진 사람과
+                교환&middot;나눔을 할 수 있어요.
               </div>
             </Grid>
           </Grid>

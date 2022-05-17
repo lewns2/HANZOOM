@@ -40,11 +40,8 @@ export const Feature2 = () => {
                 <strong>원하는 식재료를 기반</strong>으로 레시피를 추천받을 수 있어요!
               </div>
               <div className="featureContent">
-                만개의 레시피 API를 이용하여 다양한 레시피 정보를 확인하고
-                <span className="regularScreen">
-                  <br />
-                </span>
-                남은 식재료를 활용하여 맛있는 요리를 해봐요.
+                만개의 레시피 API를 이용하여 다양한 레시피 정보를 확인하고 남은 식재료를 활용하여
+                맛있는 요리를 해봐요.
               </div>
             </Grid>
           </Grid>
