@@ -1,11 +1,11 @@
-$mobile: 500px;
+$mobile: 576px;
 $tablet: 991px;
 $laptopS: 1200px;
 $desktop: 1400px;
 
-.container {
+.matchContainer {
   @media only screen and (max-width: 576px) {
-    max-width: 95%;
+    max-width: 80vw;
   }
 }
 
@@ -127,6 +127,7 @@ $desktop: 1400px;
 
 /* 매칭 완료 창 */
 .matchFormWrap {
+  margin-bottom: 100px;
   .matchTitle {
     margin-bottom: 30px;
     font-size: 30px;

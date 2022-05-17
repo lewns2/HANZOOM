@@ -92,7 +92,7 @@ export const Recipe = (props) => {
   return (
     <>
       {isPending ? (
-        <section className="container">
+        <section className="container recipeContainer">
           <RecipeModal open={modalOpen} close={closeModal} info={recipeDetail}></RecipeModal>
           <div style={modalOpen ? { display: 'none' } : { display: 'grid' }}>
             <div className="recipeTextWrap">
