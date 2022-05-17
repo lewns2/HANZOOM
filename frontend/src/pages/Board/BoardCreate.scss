@@ -29,6 +29,13 @@
       padding-left: calc(var(--bs-gutter-x) * 0);
     }
   }
+  @media (max-width: 360px) {
+    .col-3 {
+      font-size: 15px;
+      padding-right: calc(var(--bs-gutter-x) * 0);
+      padding-left: calc(var(--bs-gutter-x) * 0);
+    }
+  }
 }
 @media (max-width: 992px) {
   .createFormWrap {
@@ -85,9 +92,64 @@
     margin-left: 150px;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 440px) {
+  #createCancelBtn {
+    margin-left: 148px;
+  }
+}
+@media (max-width: 437px) {
+  #createCancelBtn {
+    margin-left: 145px;
+  }
+}
+@media (max-width: 434px) {
+  #createCancelBtn {
+    margin-left: 140px;
+  }
+}
+@media (max-width: 429px) {
+  #createCancelBtn {
+    margin-left: 135px;
+  }
+}
+@media (max-width: 424px) {
+  #createCancelBtn {
+    margin-left: 130px;
+  }
+}
+@media (max-width: 420px) {
+  #createCancelBtn {
+    margin-left: 140px;
+  }
+}
+@media (max-width: 414px) {
+  #createCancelBtn {
+    margin-left: 120px;
+  }
+}
+@media (max-width: 393px) {
+  #createCancelBtn {
+    margin-left: 110px;
+  }
+}
+@media (max-width: 383px) {
   #createCancelBtn {
     margin-left: 100px;
+  }
+}
+@media (max-width: 373px) {
+  #createCancelBtn {
+    margin-left: 90px;
+  }
+}
+@media (max-width: 363px) {
+  #createCancelBtn {
+    margin-left: 85px;
+  }
+}
+@media (max-width: 360px) {
+  #createCancelBtn {
+    margin-left: 85px;
   }
 }
 @media (max-width: 320px) {
@@ -147,11 +209,24 @@
     width: 25%;
   }
 }
+@media (max-width: 527px) {
+  .imageSelect {
+    font-size: 13px;
 
+    width: 30%;
+  }
+}
 @media (max-width: 496px) {
   .imageSelect {
     font-size: 11px;
     width: 30%;
+  }
+}
+@media (max-width: 444px) {
+  .imageSelect {
+    font-size: 11px;
+    margin-left: 40px;
+    width: 130px;
   }
 }
 @media (max-width: 360px) {
