@@ -21,6 +21,8 @@ import admin_empty from '../../assets/images/admin_empty.gif';
 
 import axios from 'axios';
 
+import firebase from '../../firebaseInit';
+
 const columns = [
   { id: 'ingredientName', label: '식재료명', align: 'center', minWidth: 170, maxWidth: 200 },
   { id: 'requestor', label: '요청자', align: 'center', minWidth: 170, maxWidth: 200 },
@@ -84,6 +86,17 @@ export const PendingIngredient = () => {
       .then((err) => console.log(err));
   };
 
+  // firebase database
+  const userRef = firebase.database().ref('pendingIngredients');
+
+  const onClickAdd = (event, result, reason) => {
+    const ingredient = event.ingredientName;
+    const requestor = event.requestor;
+    const pendingIngredient = { requestor, ingredient, reason, result };
+
+    userRef.push(pendingIngredient);
+  };
+
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
@@ -96,6 +109,8 @@ export const PendingIngredient = () => {
     const sendAlarm = (event, result) => {
       if (event.browserToken === null || event.browserToken === '') return;
 
+      onClickAdd(event, result, pendingReason);
+
       const header = {
         headers: {
           Authorization:
@@ -106,7 +121,7 @@ export const PendingIngredient = () => {
 
       const message = {
         notification: {
-          title: '한줌',
+          title: '한줌(HANZOOM)',
           body: `${event.ingredientName}건에 대해 '${pendingReason}' 의 이유로 식재료 등록 요청이 ${result}되었습니다.`,
         },
         to: event.browserToken,

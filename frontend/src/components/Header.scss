@@ -14,6 +14,9 @@ header {
       display: block;
       width: 100%;
     }
+    .badge {
+      margin-left: 20px;
+    }
   }
 
   .logo {
@@ -98,5 +101,25 @@ header {
         color: #444;
       }
     }
+  }
+}
+
+.scrollUl {
+  list-style: none;
+  margin: 0px;
+  position: relative;
+  padding: 0px;
+  width: 320px;
+  max-height: 320px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #f7c343;
+    border-radius: 25px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #eee;
   }
 }
