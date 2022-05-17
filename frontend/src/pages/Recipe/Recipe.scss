@@ -3,12 +3,26 @@
     max-width: 80vw;
   }
 }
+.recipeContainer {
+  margin-top: 40px;
+  @media only screen and (max-width: 576px) {
+    max-width: 80vw;
+  }
+}
 
 .recipeTextWrap {
-  height: 100vh;
-  display: grid;
+  // height: 100vh;
+  height: 700px;
+  // display: grid;
   justify-items: stretch;
   align-content: center;
+
+  @media only screen and (max-width: 415px) {
+    height: 75vh;
+  }
+  @media only screen and (max-width: 376px) {
+    height: 90vh;
+  }
 
   .recipeHeader {
     text-align: center;
@@ -22,6 +36,23 @@
     .recipeDescription {
       font-size: 20px;
       font-family: 'GmarketSansMedium';
+    }
+
+    @media only screen and (max-width: 466px) {
+      .recipeTitle {
+        font-size: 46px;
+      }
+      .recipeDescription {
+        font-size: 17px;
+      }
+    }
+    @media only screen and (max-width: 395px) {
+      .recipeTitle {
+        font-size: 42px;
+      }
+      .recipeDescription {
+        font-size: 16px;
+      }
     }
   }
 }
@@ -79,6 +110,14 @@
       border-radius: 1rem;
       &:hover {
         transform: scale(1.1);
+      }
+      @media screen and (max-width: 400px) {
+        width: 280px;
+        height: 280px;
+      }
+      @media screen and (max-width: 373px) {
+        width: 260px;
+        height: 260px;
       }
     }
   }
