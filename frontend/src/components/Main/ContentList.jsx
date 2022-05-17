@@ -58,7 +58,7 @@ export const ContentList = (props) => {
         {props.content.distance !== 0 && props.content.distance !== null ? (
           <p>약 {props.content.distance.toFixed(2)}km</p>
         ) : (
-          <p>약 0km</p>
+          <p>위치 정보 설정이 필요합니다</p>
         )}
 
         {/* 식재료 명 */}
