@@ -85,7 +85,6 @@ $desktop: 1400px;
   flex-wrap: wrap;
   width: 100%;
   margin: 0 auto;
-
   overflow-x: hidden;
 
   .contentCard {
@@ -93,12 +92,6 @@ $desktop: 1400px;
     margin-right: 44px;
     margin-bottom: 56px;
     cursor: pointer;
-    // display: inline-block;
-    // width: calc(($desktop - 200px) / 4);
-    // height: auto;
-    // box-shadow: 1px 1px 1px 1px gray;
-    // border-radius: 1rem;
-    // overflow: auto;
 
     @media only screen and (max-width: $laptopS) {
       width: calc(($laptopS - 60px) / 4);
@@ -133,8 +126,7 @@ $desktop: 1400px;
       box-shadow: 0 4px 4px -4px #777;
       text-align: center;
     }
-    // width: 300px;
-    // height: 300px;
+
     .cardImg {
       position: absolute;
       top: 0;
@@ -248,18 +240,11 @@ $desktop: 1400px;
     white-space: nowrap;
     width: 100%;
   }
-  .cardBodyCountsLike {
-    display: flex;
-    justify-content: space-between;
-    .likeBtn {
-      text-align: right;
-    }
 
-    .cardBodyCounts {
-      display: flex;
-      color: #868e96;
-      font-size: 14px;
-    }
+  .cardBodyCounts {
+    display: flex;
+    color: #868e96;
+    font-size: 14px;
   }
 }
 
@@ -294,7 +279,6 @@ $desktop: 1400px;
 }
 
 /* 검색 실패 */
-
 .searchNotFoundText {
   text-align: center;
 }
