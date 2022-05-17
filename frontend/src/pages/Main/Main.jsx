@@ -30,9 +30,9 @@ export const Main = () => {
       <Fade right>
         <Feature4 />
       </Fade>
-      {/* <Fade top> */}
-      <BestBoard />
-      {/* </Fade> */}
+      <Fade top>
+        <BestBoard />
+      </Fade>
     </>
   );
 };
