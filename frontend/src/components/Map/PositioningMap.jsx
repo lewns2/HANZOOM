@@ -6,7 +6,8 @@ import { getUserInfo } from '../../Reducer/userSlice';
 import './KakaoMap.scss';
 import DaumPostcode from 'react-daum-postcode';
 import CloseIcon from '@mui/icons-material/Close';
-// const { kakao } = window;
+import swal from 'sweetalert';
+
 export const PositioningMap = (props) => {
   const [userLat, setUserLat] = useState(35.094068611669925);
   const [userLng, setUserLng] = useState(128.85567290875736);
@@ -167,7 +168,10 @@ export const PositioningMap = (props) => {
       },
     )
       .then(() => {
-        alert('위치 정보가 등록 되었습니다.');
+        swal('위치 정보가 등록 되었습니다.', '  ', 'success', {
+          buttons: false,
+          timer: 1800,
+        });
         dispatch(getUserInfo());
       })
       .catch((error) => {

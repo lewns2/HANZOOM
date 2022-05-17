@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Axios } from '../../../core/axios';
 import { axios_apis } from '../../../core/axios';
 import { Link, useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
 
 export const FindPasswordForm = () => {
   const [email, setEmail] = useState('');
@@ -39,13 +40,19 @@ export const FindPasswordForm = () => {
     })
       .then((res) => {
         setLoading(false);
-        alert('이메일로 임시비밀번호를 전송하였습니다.');
+        swal('비밀번호 찾기 성공', '이메일로 임시비밀번호를 전송하였습니다.', 'success', {
+          buttons: false,
+          timer: 1000,
+        });
         navigate('/login');
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
-        alert('이메일과 닉네임이 일치하지 않습니다.');
+        swal('비밀번호 찾기 실패', '이메일과 닉네임이 일치하지 않습니다.', 'error', {
+          buttons: false,
+          timer: 1000,
+        });
         nicknameInput.current.focus();
       });
   };

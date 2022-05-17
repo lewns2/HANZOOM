@@ -5,6 +5,7 @@ import { Axios } from '../../../core/axios';
 import { axios_apis } from '../../../core/axios';
 import { clearUser } from '../../../Reducer/userSlice';
 import { BASE_IMG_URL } from '../../../core/s3';
+import swal from 'sweetalert';
 
 export const UserInfo = (props) => {
   const user = useSelector((state) => state.user);
@@ -26,12 +27,18 @@ export const UserInfo = (props) => {
       },
     })
       .then(() => {
-        alert('회원 탈퇴가 왼료되었습니다.');
+        swal('회원 탈퇴가 완료되었습니다.', ' ', 'success', {
+          buttons: false,
+          timer: 2000,
+        });
         dispatch(clearUser());
         navigate('/');
       })
       .catch((error) => {
-        alert('회원 탈퇴 실패');
+        swal('회원 탈퇴 실패', '서버 에러', 'error', {
+          buttons: false,
+          timer: 2000,
+        });
         console.log(error);
       });
   };
