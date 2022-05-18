@@ -38,3 +38,15 @@
   font-family: GmarketSansBold !important;
   font-size: 0.75rem !important;
 }
+
+.srcollTextarea {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #f7c343;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #eee;
+  }
+}
