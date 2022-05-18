@@ -1,13 +1,5 @@
-import {
-  AddLink,
-  ConstructionOutlined,
-  ConstructionRounded,
-  LocationCity,
-} from '@mui/icons-material';
-import { width } from '@mui/system';
 import { useState, useRef, useEffect } from 'react';
 import Initimage from '../../assets/images/Initimage.PNG';
-import { Calendar } from '../../components/Board/Calendar';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { Axios } from '../../core/axios';
@@ -20,8 +12,6 @@ export const BoardModify = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [ingredients, setIngredients] = useState([]);
-
   /* POST 요청 보낼 이미지 */
   const [postImg, setPostImg] = useState();
 
@@ -32,7 +22,6 @@ export const BoardModify = () => {
     setUploadImg(URL.createObjectURL(e.target.files[0]));
     setPostImg(e.target.files[0]);
     return;
-    // return setState({ ...state, img: e });
   };
 
   const deleteUploadImg = () => {
@@ -71,7 +60,7 @@ export const BoardModify = () => {
   const [state, setState] = useState({
     title: location.state.title,
     userIngredientNo: location.state.userIngreNo,
-    type: null,
+    type: location.state.type,
     description: location.state.description,
     boardNo: location.state.boardNo,
     imagePath: location.state.imagePath,
@@ -104,11 +93,9 @@ export const BoardModify = () => {
     const keys = Object.keys(state); // 객체의 key 추출
     keys.map((key) => {
       if (state[key] == null) {
-        console.log(state[key]);
         errorKeyword = key;
       } else if (uploadImg == Initimage) {
         errorKeyword = 'img';
-        console.log(errorKeyword);
       }
     });
 
@@ -161,7 +148,13 @@ export const BoardModify = () => {
   };
 
   useEffect(() => {
-    console.log(location.state);
+    if (location.state.type === '교환') {
+      setIsExchange(true);
+    } else if (location.state.type === '나눔') {
+      setIsShare(true);
+    } else if (location.state.type === '필요') {
+      setIsNeed(true);
+    }
   }, []);
 
   const camera = useRef(null);
@@ -212,24 +205,29 @@ export const BoardModify = () => {
           <div className="row mb-4">
             <div className="col-3">거래 종류</div>
             <div className="col-9">
-              <button
-                type="button"
-                id={isShare ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
-                onClick={() => selectedType('나눔')}>
-                나눔
-              </button>
-              <button
-                type="button"
-                id={isExchange ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
-                onClick={() => selectedType('교환')}>
-                교환
-              </button>
-              <button
-                type="button"
-                id={isNeed ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
-                onClick={() => selectedType('필요')}>
-                필요
-              </button>
+              {location.state.type === '필요' ? (
+                <button
+                  type="button"
+                  id={isNeed ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
+                  onClick={() => selectedType('필요')}>
+                  필요
+                </button>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    id={isShare ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
+                    onClick={() => selectedType('나눔')}>
+                    나눔
+                  </button>
+                  <button
+                    type="button"
+                    id={isExchange ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
+                    onClick={() => selectedType('교환')}>
+                    교환
+                  </button>
+                </>
+              )}
             </div>
           </div>
 
@@ -277,12 +275,6 @@ export const BoardModify = () => {
                         style={{ margin: 'auto', width: '200px', height: '200px' }}></img>
                     )}
                   </div>
-                  {/* <input
-                    type="file"
-                    className="imgInput"
-                    accept="image/*"
-                    onChange={saveUploadImg}
-                  /> */}
                   <label className="imageSelect" htmlFor="input-file">
                     이미지 선택
                   </label>
@@ -329,11 +321,12 @@ export const BoardModify = () => {
                     description: e.target.value,
                   });
                 }}
+                style={{ height: '100px' }}
               />
             </div>
           </div>
 
-          <div className="d-flex justify-content-center">
+          <div className="d-flex buttonClass">
             <button type="button" id="createCancelBtn" onClick={handleCancel}>
               취소
             </button>

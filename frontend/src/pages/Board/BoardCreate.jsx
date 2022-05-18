@@ -2,16 +2,14 @@ import './BoardCreate.scss';
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { Camera } from 'react-camera-pro';
 
 import Initimage from '../../assets/images/Initimage.PNG';
 import { Axios } from '../../core/axios';
 
-import { Camera } from 'react-camera-pro';
-
 export const BoardCreate = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
   const [ingredients, setIngredients] = useState([]);
 
   const setInfo = () => {
@@ -81,7 +79,6 @@ export const BoardCreate = () => {
     userIngredientNo: null,
     type: null,
     description: null,
-    // sellByDate: { year: null, month: null, day: null },
   });
 
   /* 게시글 등록 */
@@ -108,11 +105,9 @@ export const BoardCreate = () => {
     const keys = Object.keys(state); // 객체의 key 추출
     keys.map((key) => {
       if (state[key] == null) {
-        console.log(state[key]);
         errorKeyword = key;
       } else if (uploadImg == Initimage) {
         errorKeyword = 'img';
-        console.log(errorKeyword);
       }
     });
 
@@ -282,12 +277,6 @@ export const BoardCreate = () => {
                         style={{ margin: 'auto', width: '200px', height: '200px' }}></img>
                     )}
                   </div>
-                  {/* <input
-                    type="file"
-                    className="imgInput"
-                    accept="image/*"
-                    onChange={saveUploadImg}
-                  /> */}
                   <label className="imageSelect" htmlFor="input-file">
                     이미지 선택
                   </label>
@@ -333,11 +322,12 @@ export const BoardCreate = () => {
                     description: e.target.value,
                   });
                 }}
+                style={{ height: '100px' }}
               />
             </div>
           </div>
 
-          <div className="d-flex justify-content-center">
+          <div className="d-flex buttonClass">
             <button type="button" id="createCancelBtn" onClick={handleCancel}>
               취소
             </button>

@@ -2,7 +2,6 @@
   margin-left: 15%;
   width: 70%;
   margin-bottom: 250px;
-  height: 80vh;
   border-radius: 2rem;
   background-color: #fffcf2;
   transform: translateY(10%);
@@ -12,17 +11,16 @@
   overflow-x: hidden;
   box-shadow: 0 4px 4px -4px #777;
   .form-control {
-    width: 60%;
-  }
-  @media (max-width: 992px) {
-    .form-control {
+    width: 80%;
+    @media (max-width: 991px) {
       width: 100%;
     }
   }
+
   .col-3 {
     font-size: 20px;
   }
-  @media (max-width: 992px) {
+  @media (max-width: 991px) {
     .col-3 {
       font-size: 17px;
       padding-right: calc(var(--bs-gutter-x) * 0);
@@ -44,7 +42,7 @@
     }
   }
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .createFormWrap {
     margin-left: 0%;
     width: 100%;
@@ -84,6 +82,12 @@
   box-shadow: 0 4px 4px -4px #777;
 }
 
+.buttonClass {
+  justify-content: center;
+  @media (max-width: 575px) {
+    justify-content: end;
+  }
+}
 #createCancelBtn {
   font-size: 18px;
   font-weight: bolder;
@@ -91,58 +95,8 @@
   border: 2px solid #f7c343;
   border-radius: 8px;
   padding: 3px 10px 4px 10px;
-  margin-right: 5px;
+  margin: 0 5px;
   box-shadow: 0 4px 4px -4px #777;
-}
-
-@media (max-width: 992px) {
-  #createCancelBtn {
-    margin-left: 150px;
-  }
-}
-@media (max-width: 443px) {
-  #createCancelBtn {
-    margin-left: 130px;
-  }
-}
-
-@media (max-width: 437px) {
-  #createCancelBtn {
-    margin-left: 120px;
-  }
-}
-
-@media (max-width: 431px) {
-  #createCancelBtn {
-    margin-left: 110px;
-  }
-}
-@media (max-width: 420px) {
-  #createCancelBtn {
-    margin-left: 105px;
-  }
-}
-@media all and (min-width: 415px) and (max-width: 416px) {
-  #createCancelBtn {
-    width: 70px;
-  }
-}
-
-@media (max-width: 393px) {
-  #createCancelBtn {
-    margin-left: 110px;
-  }
-}
-@media (max-width: 383px) {
-  #createCancelBtn {
-    margin-left: 100px;
-  }
-}
-
-@media (max-width: 360px) {
-  #createCancelBtn {
-    margin-left: 80px;
-  }
 }
 
 #createBtn {
@@ -152,14 +106,8 @@
   border: 2px solid #f7c343;
   border-radius: 8px;
   padding: 3px 10px 4px 10px;
-  margin-right: 5px;
+  margin: 0 5px;
   box-shadow: 0 4px 4px -4px #777;
-}
-
-@media (max-width: 992px) {
-  #createBtn {
-    margin-left: 5px;
-  }
 }
 
 .alterImgPlace {
@@ -178,12 +126,9 @@
   width: 18%;
   border: none;
   text-align: center;
-  :hover {
-    cursor: pointer;
-  }
 }
 
-@media (min-width: 771px) and (max-width: 997px) {
+@media (min-width: 771px) and (max-width: 1199px) {
   .imageSelect {
     font-size: 12px;
     width: 20%;
@@ -199,7 +144,6 @@
 @media (max-width: 527px) {
   .imageSelect {
     font-size: 13px;
-
     width: 30%;
   }
 }
