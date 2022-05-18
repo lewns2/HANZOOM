@@ -9,6 +9,7 @@ export const KaKaoCall = () => {
   const dispatch = useDispatch();
   const [code, setCode] = useState(null);
   const temp = new URL(window.location.href).searchParams.get('code');
+
   // const { code } = useSelector((state) => state.user);
   // setCode(temp);
   useEffect(() => {
@@ -22,7 +23,9 @@ export const KaKaoCall = () => {
     }
   }, [code]);
   const getKaKaoUserInfoAPI = async () => {
-    await Axios.post(`/auth/kakao/${code}`)
+    const browerToken =
+      localStorage.getItem('browerToken') === null ? '' : localStorage.getItem('browerToken');
+    await Axios.post(`/auth/kakao/${code}/${browerToken}`)
       .then((res) => {
         console.log(res);
         if (res.data.accessToken) {

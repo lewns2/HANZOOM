@@ -86,19 +86,14 @@ public class AuthController {
         return ResponseEntity.status(401).body(UserLoginRes.of(401, "Invalid Password", null));
     }
     
-    @PostMapping(value="/kakao/{code}")
+    @PostMapping(value="/kakao/{code}/{browserToken}")
     @ApiOperation(value = "카카오 로그인", notes = "<strong> Access 토큰 받기 요청에 필요한 인가 코드(code)를 입력 받아 온 뒤, 카카오 정보를 가져와 회원 가입 및 로그인 시켜 준다.</strong>.")
-    public Object login(@PathVariable("code") String code) {
-        System.out.println("code>>>>>>>>>>>>>"+ code);
+    public Object login(@PathVariable("code") String code, @PathVariable("browserToken") String browserToken) {
         String access_Token = kaKaoService.getAccessToken(code);
-        System.out.println("debug>>>>>>>>>>>>"+access_Token);
         HashMap<String, Object> userInfo = kaKaoService.getUserInfo(access_Token);
         String userEmail = (String) userInfo.get("email");
         String nickname = (String) userInfo.get("nickname");
         String profile = (String) userInfo.get("profile");
-        System.out.println("debug>>>>>>>>>>>>"+userEmail);
-        System.out.println("debug>>>>>>>>>>>>>>"+nickname);
-        System.out.println("debug>>>>>>>>>>>>>>"+profile);
         User user = userService.getUserByUserEmail(userEmail);
 
         // 카카오 정보로 회원 가입이 안 되어 있다면
@@ -117,6 +112,12 @@ public class AuthController {
             registerInfo.setReportedNumber(0);
             //임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
             user = kaKaoService.registerUser(registerInfo);
+        }
+
+        // 브라우저 토큰 저장
+        if(!browserToken.equals("")) {
+            user.updateBrowserToken(browserToken);
+            userRepository.save(user);
         }
 
         if(userRepositorySupport.findReportedNumber(user.getUserEmail()) > 2) {
