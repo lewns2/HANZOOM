@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 const Notifications = (props) => {
   const [isTokenFound, setTokenFound] = useState(false);
 
-  console.log('토큰 찾았다!', isTokenFound);
-
   useEffect(() => {
     let data;
 

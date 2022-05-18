@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ReactNotificationComponent = ({ title, body }) => {
-  toast.info(<Display />);
+  toast.info(<Display />, {
+    icon: ({ theme, type }) => <img src="/favicon.ico" />,
+  });
   function Display() {
     return (
-      <div>
-        <h4>{title}</h4>
+      <div style={{ marginLeft: '10%' }}>
+        <h5 style={{ fontWeight: 'bolder' }}>{title}</h5>
         <p>{body}</p>
       </div>
     );
@@ -15,7 +17,7 @@ const ReactNotificationComponent = ({ title, body }) => {
   return <ToastContainer />;
 };
 
-ReactNotificationComponent.propTyps = {
+ReactNotificationComponent.propTypes = {
   title: PropTypes.string,
   body: PropTypes.string,
 };
