@@ -68,3 +68,19 @@ self.addEventListener('message', (event) => {
     self.skipWaiting();
   }
 });
+
+/* 인스톨 배너 */
+// Initialize deferredPrompt for use later to show browser install prompt.
+let deferredPrompt;
+
+// App install banner
+window.addEventListener('beforeinstallprompt', function (e) {
+  e.userChoice.then(function (choiceResult) {
+    console.log(choiceResult.outcome);
+    if (choiceResult.outcome == 'dismissed') {
+      console.log('User cancelled home screen install');
+    } else {
+      console.log('User added to home screen');
+    }
+  });
+});

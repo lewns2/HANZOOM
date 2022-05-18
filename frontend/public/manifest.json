@@ -9,12 +9,12 @@
       "purpose": "any maskable"
     },
     {
-      "src": "./icons/Hanzoom192.png",
+      "src": "./icons/hanzoom192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "./icons/Hanzoom512.png",
+      "src": "./icons/hanzoom512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
