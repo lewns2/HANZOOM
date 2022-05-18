@@ -36,6 +36,10 @@ export const BoardCreate = () => {
   const [uploadImg, setUploadImg] = useState(Initimage);
 
   const saveUploadImg = (e) => {
+    if (e.target.files[0].size > 1024 * 1024) {
+      alert('이미지는 1MB이내로 등록이 가능합니다.');
+      return;
+    }
     setUploadImg(URL.createObjectURL(e.target.files[0]));
     setPostImg(e.target.files[0]);
     return;

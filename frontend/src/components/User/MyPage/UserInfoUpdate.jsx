@@ -181,6 +181,10 @@ export const UserInfoUpdate = (props) => {
                   className="imgInput"
                   accept="image/*"
                   onChange={(e) => {
+                    if (e.target.files[0].size > 1024 * 1024) {
+                      alert('이미지는 1MB이내로 등록이 가능합니다.');
+                      return;
+                    }
                     setUserPreviewImg(URL.createObjectURL(e.target.files[0]));
                     setUserImg(e.target.files[0]);
                   }}
