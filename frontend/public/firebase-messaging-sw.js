@@ -29,12 +29,29 @@ const messaging = firebase.messaging();
 //   self.registration.showNotification(notificationTitle, notificationOptions);
 // });
 
-messaging.onBackgroundMessage(function (payload) {
-  console.log('Received background message ', payload);
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
+self.addEventListener('push', function (event) {
+  const payload = event.data.json();
+  const title = payload.notification.title;
+  const options = {
     body: payload.notification.body,
-    icon: '/logo192.png',
+    icon: payload.notification.icon,
+    data: payload.notification.click_action,
+    icon: '/favicon.ico',
   };
-  return self.registration.showNotification(notificationTitle, notificationOptions);
+  event.waitUntil(self.registration.showNotification(title, options));
 });
+self.addEventListener('notificationclick', function (event) {
+  console.log(event.notification);
+  event.notification.close();
+  event.waitUntil(clients.openWindow(event.notification.data));
+});
+
+// messaging.onBackgroundMessage(function (payload) {
+//   console.log('백그라운드에서 받았어 ', payload);
+//   const notificationTitle = payload.notification.title;
+//   const notificationOptions = {
+//     body: payload.notification.body,
+//     icon: '/favicon.ico',
+//   };
+//   return self.registration.showNotification(notificationTitle, notificationOptions);
+// });
