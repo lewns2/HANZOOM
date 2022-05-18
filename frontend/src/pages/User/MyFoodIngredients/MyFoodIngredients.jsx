@@ -46,8 +46,7 @@ export const MyFoodIngredients = () => {
     await Axios.get('userIngredient/findAll', {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(async (res) => {
-        console.log(res.data);
+      .then((res) => {
         res.data.map((ingre) => {
           obj[String(ingre.userIngredientNo)] = ingre;
           if (ingre.type === '일반') {
@@ -58,7 +57,7 @@ export const MyFoodIngredients = () => {
             needs.push(ingre);
           }
         });
-        await setInfo({
+        setInfo({
           ...info,
           tasks: obj,
           columns: {
@@ -84,7 +83,6 @@ export const MyFoodIngredients = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
-        console.log(res.data);
         setMyBoard(res.data);
       })
       .catch((err) => console.log(err));
@@ -129,7 +127,6 @@ export const MyFoodIngredients = () => {
       userIngredientNo: userIngredientNo,
     })
       .then((res) => {
-        console.log(res);
         setState(!state);
       })
       .catch((err) => {
@@ -233,13 +230,6 @@ export const MyFoodIngredients = () => {
     }
   };
 
-  const clickEvent = () => {
-    if (!boardStatus) {
-      swal('이미 등록된 식재료 입니다.', '다른 식재료를 선택해주세요.', 'error');
-    } else {
-      swal('식재료를 선택해주세요', '', 'error');
-    }
-  };
   const navigate = useNavigate();
   const goBoardDetail = (boardNo) => {
     navigate(`/board/${boardNo}`);
@@ -254,17 +244,29 @@ export const MyFoodIngredients = () => {
       }
     });
     checkedNeeds.map((ingre) => ingreNames.push(ingre.ingredientName));
-    ingreNames.map((i) => {
-      boardsIngre.map((j) => {
-        if (j.includes(i)) {
+    for (let i = 0; i < boardsIngre.length; i++) {
+      for (let j = 0; j < ingreNames.length; j++) {
+        if (ingreNames[j].includes(boardsIngre[i])) {
           setBoardStatus(false);
+          return;
         }
-      });
-    });
+      }
+    }
+    setBoardStatus(true);
   };
+
   useEffect(() => {
     confirmNeeds();
   }, [checkedNeeds]);
+
+  const clickEvent = () => {
+    if (!boardStatus) {
+      swal('이미 등록된 식재료 입니다.', '다른 식재료를 선택해주세요.', 'error');
+      setBoardStatus(true);
+    } else {
+      swal('식재료를 선택해주세요', '', 'error');
+    }
+  };
 
   const [selectedType, setSelectedType] = useState('교환');
   const handleChange = (e) => {
@@ -362,7 +364,6 @@ export const MyFoodIngredients = () => {
                       />
                     </div>
                   ))}
-
                   {checkedNeeds.length ? (
                     <div className="d-flex justify-content-center">
                       {boardStatus ? (
