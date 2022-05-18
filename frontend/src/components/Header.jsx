@@ -153,21 +153,98 @@ export const Header = () => {
               ) : (
                 <>
                   {pendingIngredients.length === 0 ? (
-                    <div style={{ textAlign: 'center' }}>
-                      <StyledBadge
-                        showZero={true}
-                        badgeContent={pendingIngredients.length}
-                        color="warning"
-                        style={{ marginRight: '20px' }}
-                        className="badge">
-                        <div>
-                          <img
-                            src={alarmEmpty}
-                            alt="알람"
-                            style={{ width: '20px', height: '20px' }}></img>
-                        </div>
-                      </StyledBadge>
-                    </div>
+                    <>
+                      <div onClick={handleClick} style={{ textAlign: 'center', cursor: 'pointer' }}>
+                        <StyledBadge
+                          showZero={true}
+                          badgeContent={pendingIngredients.length}
+                          color="warning"
+                          style={{ marginRight: '20px' }}
+                          className="badge">
+                          <div>
+                            <img
+                              src={alarmEmpty}
+                              alt="알람"
+                              style={{ width: '20px', height: '20px' }}></img>
+                          </div>
+                        </StyledBadge>
+                      </div>
+
+                      <Popper
+                        id={id}
+                        open={open}
+                        anchorEl={anchorEl}
+                        style={{
+                          zIndex: '999',
+                        }}>
+                        <Box
+                          sx={{
+                            m: 1,
+                            p: 2,
+                            bgcolor: 'background.paper',
+                            borderRadius: '5px',
+                          }}>
+                          <ul className="scrollUl">
+                            <li
+                              style={{
+                                display: 'flex',
+                                textAlign: 'left',
+                                flexDirection: 'column',
+                                boxSizing: 'border-box',
+                                width: '100%',
+                                textDecoration: 'none',
+                                position: 'relative',
+                                alignItems: 'flex-start',
+                                justifyContent: 'flex-start',
+                              }}>
+                              <p
+                                style={{
+                                  margin: '0px 0px 0.35em',
+                                  fontSize: '0.95rem',
+                                  lineHeight: '1.5',
+                                  letterSpacing: '0px',
+                                  fontFamily: 'GmarketSansBold',
+                                }}>
+                                식재료 등록 요청에 대한 결과가 없습니다.
+                              </p>
+                            </li>
+                            <hr
+                              style={{
+                                flexShrink: '0',
+                                borderWidth: '0px 0px thin',
+                                borderStyle: 'solid',
+                                borderColor: 'rgb(136, 141, 147)',
+                                margin: '8px 0px',
+                              }}
+                            />
+                            <li
+                              style={{
+                                display: 'flex',
+                                textAlign: 'left',
+                                flexDirection: 'column',
+                                boxSizing: 'border-box',
+                                width: '100%',
+                                textDecoration: 'none',
+                                position: 'relative',
+                                alignItems: 'flex-start',
+                                justifyContent: 'flex-start',
+                              }}>
+                              <p
+                                style={{
+                                  margin: '0px 0px 0.35em',
+                                  fontSize: '0.875rem',
+                                  lineHeight: '1.5',
+                                  letterSpacing: '0px',
+                                  fontFamily: 'GmarketSansMedium',
+                                  color: 'rgb(62, 80, 96)',
+                                }}>
+                                MY식재료에서 원하는 식재료를 등록해보세요.🥦
+                              </p>
+                            </li>
+                          </ul>
+                        </Box>
+                      </Popper>
+                    </>
                   ) : (
                     <>
                       <div onClick={handleClick} style={{ textAlign: 'center' }}>
