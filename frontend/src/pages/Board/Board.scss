@@ -290,12 +290,13 @@ $desktop: 1400px;
 /* 검색 실패 */
 .searchNotFoundText {
   text-align: center;
+  margin-bottom: 20px;
 }
 .searchNotFound {
   display: flex;
   justify-content: center;
   margin: 30px;
-  height: 600px;
+  height: 300px;
 }
 
 @media only screen and (max-width: $mobile) {
