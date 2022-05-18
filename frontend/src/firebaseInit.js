@@ -32,7 +32,7 @@ export const getToken = async (setTokenFound) => {
       setTokenFound(false);
     }
   } catch (error) {
-    console.log('토큰 못 가져옴...', error);
+    // console.log('토큰 못 가져옴...', error);
   }
 
   return currentToken;
@@ -41,7 +41,6 @@ export const getToken = async (setTokenFound) => {
 export const onMessageListener = () =>
   new Promise((resolve) => {
     messaging.onMessage((payload) => {
-      console.log('메세지 내용 : ', payload);
       resolve(payload);
     });
   });
