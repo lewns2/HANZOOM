@@ -30,6 +30,7 @@ public class UserReportHistoryRegisterReq {
                 .user(user)
                 .reported(reported)
                 .content(content)
+                .status("대기")
                 .build();
     }
 }
