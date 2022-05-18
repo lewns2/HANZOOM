@@ -338,6 +338,7 @@ export const BoardDetail = () => {
                   description: content.description,
                   ingredient: ingredientNameList,
                   userIngreNo: ingredientNumber,
+                  type: content.type,
                 }}
                 style={{ textDecoration: 'none' }}>
                 <button
