@@ -6,6 +6,7 @@ import './Schedule.scss';
 import { max } from 'moment';
 import CloseIcon from '@mui/icons-material/Close';
 import swal from 'sweetalert';
+import meetIcon from '../../assets/images/meetIcon.png';
 
 export const ScheduleMap = (props) => {
   const { otherEmail, lat, lng, authority } = props;
@@ -63,7 +64,8 @@ export const ScheduleMap = (props) => {
     let customOverlay = new kakao.maps.CustomOverlay({ xAnchor: 0.5, yAnchor: 2.1 });
     setKakaoCustomOverlay(customOverlay);
 
-    var imageSrc = 'img/meetIcon.png';
+    // var imageSrc = 'img/meetIcon.png';
+    var imageSrc = meetIcon;
     var imageSize = new kakao.maps.Size(50, 55);
     var imageOption = { offset: new kakao.maps.Point(24, 51) };
     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);

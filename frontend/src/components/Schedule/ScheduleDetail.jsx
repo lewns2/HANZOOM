@@ -8,6 +8,8 @@ import { changeShow } from '../../Reducer/chatSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { CalendarAndMap } from './CalendarAndMap';
 
+import kakaoImg from '../../assets/images/kakaolink_btn_medium.png';
+
 import swal from 'sweetalert';
 
 export const ScheduleDetail = (props) => {
@@ -179,7 +181,7 @@ export const ScheduleDetail = (props) => {
                 </button>
               )}
               <button className="btn shareBtn" onClick={shareKakao}>
-                <img src="img/kakaolink_btn_medium.png" alt="" />
+                <img src={kakaoImg} alt="" />
                 공유하기
               </button>
             </>
