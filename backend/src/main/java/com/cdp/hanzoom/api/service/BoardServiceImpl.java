@@ -157,6 +157,7 @@ public class BoardServiceImpl implements BoardService{
         res.setDescription(board.getDescription());
         res.setImagePath(board.getImagePath());
         res.setStatus(board.getStatus());
+        res.setType(board.getType());
         res.setTitle(board.getTitle());
         res.setViewCnt(board.getViewCnt());
         res.setLikeCnt(board.getLikeCnt());
