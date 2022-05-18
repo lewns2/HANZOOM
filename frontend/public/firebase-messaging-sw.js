@@ -16,18 +16,6 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 //백그라운드 서비스워커 설정
-// messaging.onBackgroundMessage(messaging, (payload) => {
-//   console.log('[firebase-messaging-sw.js] Received background message ', payload);
-
-//   // Customize notification here
-//   const notificationTitle = 'Background Message Title';
-//   const notificationOptions = {
-//     body: payload,
-//     icon: './img/HANZOOM.png',
-//   };
-
-//   self.registration.showNotification(notificationTitle, notificationOptions);
-// });
 
 self.addEventListener('push', function (event) {
   const payload = event.data.json();
@@ -41,17 +29,6 @@ self.addEventListener('push', function (event) {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 self.addEventListener('notificationclick', function (event) {
-  console.log(event.notification);
   event.notification.close();
   event.waitUntil(clients.openWindow(event.notification.data));
 });
-
-// messaging.onBackgroundMessage(function (payload) {
-//   console.log('백그라운드에서 받았어 ', payload);
-//   const notificationTitle = payload.notification.title;
-//   const notificationOptions = {
-//     body: payload.notification.body,
-//     icon: '/favicon.ico',
-//   };
-//   return self.registration.showNotification(notificationTitle, notificationOptions);
-// });

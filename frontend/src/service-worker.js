@@ -69,4 +69,27 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// 알림
+// 오프라인 환경에서의 fetch 다루기
+self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') {
+    // GET 요청만 캐싱 지원 처리
+    return;
+  }
+
+  const fetchRequest = event.request.clone();
+
+  event.respondWith(
+    fetch(fetchRequest)
+      .then((response) => {
+        caches
+          .open(CACHE_NAME) // 네트워크 요청 성공시 해당 결과값 캐싱
+          .then((cache) => cache.put(event.request.url, response.clone()));
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request.url).then((cache) => {
+          return cache;
+        }); // 네트워크 요청 실패시 캐싱된 요청으로 응답.
+      }),
+  );
+});
