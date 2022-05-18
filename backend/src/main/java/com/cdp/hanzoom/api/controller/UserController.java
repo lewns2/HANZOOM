@@ -3,9 +3,12 @@ package com.cdp.hanzoom.api.controller;
 import com.cdp.hanzoom.api.request.UserRegisterReq;
 import com.cdp.hanzoom.api.request.UserUpdateLatAndLngReq;
 import com.cdp.hanzoom.api.request.UserUpdateReq;
+import com.cdp.hanzoom.api.response.ChatRoomRes;
 import com.cdp.hanzoom.api.response.UserLikeListFindRes;
+import com.cdp.hanzoom.api.service.ChatRoomService;
 import com.cdp.hanzoom.api.service.UserService;
 import com.cdp.hanzoom.db.entity.User;
+import com.cdp.hanzoom.db.repository.ChatRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +46,9 @@ public class UserController {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	ChatRoomService chatRoomService;
 
 	// 회원 가입
 	@PostMapping("/register/signup")
@@ -190,7 +196,14 @@ public class UserController {
 		String userEmail = userDetails.getUsername();
 		boolean result;
 		try {
+			// 삭제할 유저 찾기
 			User user = userService.getUserByUserEmail(userEmail);
+
+			// 해당 유저에대한 채팅방 정보 삭제
+			List<ChatRoomRes> chatRoomResList = chatRoomService.findAllChatRoom(userEmail);	// 유저가 속한 모든 채팅방 가져오기
+			for(int i=0; i<chatRoomResList.size(); i++) {
+				chatRoomService.deleteUserInfo(chatRoomResList.get(i).getId(), userEmail);	// 속한 채팅방에서 해당 유저 userEmail 정보 삭제
+			}
 			result = userService.deleteByUserEmail(user);
 		}catch(NoSuchElementException E) {
 			return  ResponseEntity.status(500).body("해당 회원 없어서 회원 탈퇴 실패");
