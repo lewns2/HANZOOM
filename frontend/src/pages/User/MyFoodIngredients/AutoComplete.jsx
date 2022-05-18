@@ -66,21 +66,18 @@ export const AutoComplete = (props) => {
 
       {keyList.length !== 0 && !closeContainer && (
         <div className="autoCompleteContainer">
-          {keyList.map(
-            (word, index) =>
-              index < 10 && (
-                <div
-                  key={index}
-                  onClick={() => {
-                    setKeyword(word.ingredientName),
-                      onSearch(word.ingredientName),
-                      setCloseContainer(true);
-                  }}
-                  style={{ cursor: 'pointer' }}>
-                  {word.ingredientName}
-                </div>
-              ),
-          )}
+          {keyList.map((word, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                setKeyword(word.ingredientName),
+                  onSearch(word.ingredientName),
+                  setCloseContainer(true);
+              }}
+              style={{ cursor: 'pointer' }}>
+              {word.ingredientName}
+            </div>
+          ))}
         </div>
       )}
     </>
