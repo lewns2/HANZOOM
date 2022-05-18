@@ -139,6 +139,7 @@ export const Report = () => {
                   신고 이유
                 </Typography>
                 <textarea
+                  className="srcollTextarea"
                   style={{
                     width: '100%',
                     height: '8.25em',
