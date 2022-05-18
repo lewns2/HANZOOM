@@ -13,7 +13,6 @@
   }
   .ingreBody {
     background-color: #fffcf2;
-    // background-color: pink;
     border-radius: 15px;
     padding: 5%;
     margin: 5%;
@@ -38,7 +37,7 @@
       .dndIcon {
         position: absolute;
         visibility: hidden;
-        left: -10px;
+        left: -7px;
       }
       .ingreItem:hover + .dndIcon {
         visibility: visible;
