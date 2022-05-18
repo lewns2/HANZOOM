@@ -30,4 +30,7 @@ public class KaKaoUserRegisterReq {
 
 	@ApiModelProperty(name="유저 이미지 경로")
 	private String userImage; // 프로필 이미지 경로
+
+	@ApiModelProperty(name="유저 신고 누적 횟수")
+	private Integer reportedNumber;
 }
