@@ -86,9 +86,9 @@ public class AuthController {
         return ResponseEntity.status(401).body(UserLoginRes.of(401, "Invalid Password", null));
     }
     
-    @PostMapping(value="/kakao/{code}/{browserToken}")
+    @PostMapping(value="/kakao/{code}")
     @ApiOperation(value = "카카오 로그인", notes = "<strong> Access 토큰 받기 요청에 필요한 인가 코드(code)를 입력 받아 온 뒤, 카카오 정보를 가져와 회원 가입 및 로그인 시켜 준다.</strong>.")
-    public Object login(@PathVariable("code") String code, @PathVariable("browserToken") String browserToken) {
+    public Object login(@PathVariable("code") String code, @RequestBody String browserToken) {
         String access_Token = kaKaoService.getAccessToken(code);
         HashMap<String, Object> userInfo = kaKaoService.getUserInfo(access_Token);
         String userEmail = (String) userInfo.get("email");
