@@ -95,6 +95,17 @@
         height: 30%;
         font-size: 23px;
         font-family: 'GmarketSansMedium';
+        overflow: auto;
+        &::-webkit-scrollbar {
+          width: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background-color: #f7c343;
+        }
+        &::-webkit-scrollbar-track {
+          background-color: #eee;
+        }
       }
       .detailDistance {
         // font-family: 'GmarketSansMedium';
