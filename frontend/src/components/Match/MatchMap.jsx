@@ -58,6 +58,8 @@ export const MatchMap = (props) => {
     var myImgUrl;
     if (userInfo.userImage == null) {
       myImgUrl = '/img/basicProfile.png';
+    } else if (userInfo.userImage.includes('kakao')) {
+      myImgUrl = userInfo.userImage;
     } else {
       myImgUrl = `${BASE_IMG_URL}${userInfo.userImage}`;
     }
