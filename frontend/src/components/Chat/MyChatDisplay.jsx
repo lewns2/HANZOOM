@@ -192,9 +192,9 @@ export const MyChatDisplay = (props) => {
   useEffect(() => {
     getMessage();
     connect(); // web socket connect
-    // return () => {
-    //   disconnect();
-    // };
+    return () => {
+      disconnect();
+    };
   }, [chatRoomId]);
 
   useEffect(() => {
@@ -398,7 +398,7 @@ export const MyChatDisplay = (props) => {
           </div>
           <div className="chatFooter">
             <input
-              className="msgInput"
+              className="msgInput fontMedium"
               type="text"
               value={msg}
               onKeyPress={onKeyPress}
