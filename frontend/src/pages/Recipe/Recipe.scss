@@ -26,7 +26,6 @@
 
   .recipeHeader {
     text-align: center;
-    margin-bottom: 50px;
 
     .recipeTitle {
       font-size: 50px;
@@ -89,13 +88,16 @@
     }
 
     .recipeNotFound {
-      font-size: 20px;
-      color: gray;
+      font-size: 25px;
+      // color: gray;
     }
     .searchNotFound {
       display: flex;
       justify-content: center;
-      height: 500px;
+      height: 300px;
+      @media only screen and (max-width: 466px) {
+        height: 100px;
+      }
     }
   }
 

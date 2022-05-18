@@ -194,7 +194,7 @@ export const BoardCreate = () => {
             <div className="col-3">제목</div>
             <div className="col-9">
               <input
-                className="form-control"
+                className="form-control fontMedium"
                 type="text"
                 placeholder="제목"
                 onChange={(e) => {
@@ -317,7 +317,7 @@ export const BoardCreate = () => {
             <div className="col-3">내용</div>
             <div className="col-9">
               <textarea
-                className="form-control"
+                className="form-control createTextArea fontMedium"
                 type="textarea"
                 placeholder="내용"
                 onChange={(e) => {
@@ -326,7 +326,6 @@ export const BoardCreate = () => {
                     description: e.target.value,
                   });
                 }}
-                style={{ height: '100px' }}
               />
             </div>
           </div>

@@ -107,11 +107,11 @@ export const Contents = (props) => {
         </section>
       ) : (
         <>
-          <div className="searchNotFoundText">
-            <h4>검색 결과를 찾을 수 없어요</h4>
-          </div>
           <div className="searchNotFound">
             <SearchNotFoundLottie />
+          </div>
+          <div className="searchNotFoundText">
+            <h4>검색 결과를 찾을 수 없어요</h4>
           </div>
         </>
       )}

@@ -158,7 +158,7 @@ export const UserInfoUpdate = (props) => {
         <h4 className="text-center mb-3">{!passwordCheck ? <>비밀번호 확인</> : <>정보 수정</>}</h4>
         {!passwordCheck ? (
           <input
-            className="form-control mb-4"
+            className="form-control mb-4 fontMedium"
             type="password"
             placeholder="비밀번호를 입력하세요."
             onChange={(e) => setPassword(e.target.value)}
@@ -195,7 +195,7 @@ export const UserInfoUpdate = (props) => {
               <div className="col-lg-3 label">닉네임</div>
               <div className="col-lg-9">
                 <input
-                  className="form-control"
+                  className="form-control fontMedium"
                   type="text"
                   value={userNickname}
                   onChange={(e) => setUserNickname(e.target.value)}
@@ -208,7 +208,7 @@ export const UserInfoUpdate = (props) => {
               <div className="col-lg-3 label">비밀번호</div>
               <div className="col-lg-9 pwdInput">
                 <input
-                  className="form-control"
+                  className="form-control fontMedium"
                   type={passwordType.type}
                   value={userPassword}
                   placeholder="변경할 비밀번호를 입력하세요."

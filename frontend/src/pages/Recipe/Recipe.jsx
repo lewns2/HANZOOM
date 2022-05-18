@@ -108,10 +108,10 @@ export const Recipe = (props) => {
                 <div className="container recipeContainer">
                   {recipeList.length == 0 ? (
                     <>
-                      <p className="recipeNotFound">조건에 만족하는 레시피를 찾지 못했어요</p>
                       <div className="searchNotFound">
                         <SearchNotFoundLottie />
                       </div>
+                      <p className="recipeNotFound">조건에 만족하는 레시피를 찾지 못했어요</p>
                     </>
                   ) : (
                     <Slider {...settings}>
