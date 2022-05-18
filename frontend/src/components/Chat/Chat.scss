@@ -108,11 +108,6 @@ $speed: 0.8s;
               background-color: #fffcf2;
             }
           }
-          .nickName {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
           .chatDelete {
             display: block;
           }
@@ -139,6 +134,9 @@ $speed: 0.8s;
           font-weight: 600;
           margin-right: 7px;
           margin-bottom: 0px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
         // 채팅 시간
         .chatTime {
