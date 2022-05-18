@@ -112,20 +112,22 @@ export const MyChatDisplay = (props) => {
   // send message
   const sendMessage = () => {
     try {
-      waitForConnection(ws, () => {
-        ws.send(
-          '/pub/chat/message',
-          { token: token },
-          JSON.stringify({
-            type: 'TALK',
-            roomId: chatRoomId,
-            message: msg,
-            sender: user.userInfo.userNickname,
-            createdAt: new Date(),
-          }),
-        );
-        setMsg('');
-      });
+      if (msg.length > 0) {
+        waitForConnection(ws, () => {
+          ws.send(
+            '/pub/chat/message',
+            { token: token },
+            JSON.stringify({
+              type: 'TALK',
+              roomId: chatRoomId,
+              message: msg,
+              sender: user.userInfo.userNickname,
+              createdAt: new Date(),
+            }),
+          );
+          setMsg('');
+        });
+      }
     } catch (error) {
       console.log(error);
       console.log(ws.ws.readyState);
@@ -190,9 +192,9 @@ export const MyChatDisplay = (props) => {
   useEffect(() => {
     getMessage();
     connect(); // web socket connect
-    return () => {
-      disconnect();
-    };
+    // return () => {
+    //   disconnect();
+    // };
   }, [chatRoomId]);
 
   useEffect(() => {
