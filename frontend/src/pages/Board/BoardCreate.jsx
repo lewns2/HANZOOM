@@ -27,6 +27,7 @@ export const BoardCreate = () => {
     setInfo();
     if (location.state.type === '필요') {
       setIsNeed(true);
+      setState({ ...state, type: '필요' });
     }
   }, []);
   /* POST 요청 보낼 이미지 */
