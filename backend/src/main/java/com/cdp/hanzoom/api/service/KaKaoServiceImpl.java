@@ -150,9 +150,8 @@ public class KaKaoServiceImpl implements KaKaoService{
                         .userImage(kaKaoUserRegisterReq.getUserImage())
                         // 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
                         .userPassword(passwordEncoder.encode(kaKaoUserRegisterReq.getUserPassword()))
+                        .reportedNumber(kaKaoUserRegisterReq.getReportedNumber())
                         .build();
-
         return userRepository.save(user);
-
     }
 }
