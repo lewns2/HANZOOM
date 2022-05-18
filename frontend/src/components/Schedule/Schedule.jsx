@@ -97,11 +97,11 @@ export const Schedule = (props) => {
   };
 
   const setScheduleMinute = (inputMinute) => {
-    if ((inputMinute.length > 0 && inputMinute < 1) || inputMinute > 59) {
+    if ((inputMinute.length > 0 && inputMinute < 0) || inputMinute > 59) {
       console.log(inputMinute);
-      alert('분은 1분~59분으로 설정해주세요.');
-      if (inputMinute < 1) setMinute(1);
-      else setMinute(inputMinute);
+      alert('분은 0분~59분으로 설정해주세요.');
+      if (inputMinute < 0) setMinute(0);
+      else setMinute(minute);
       return;
     }
     setMinute(inputMinute);
