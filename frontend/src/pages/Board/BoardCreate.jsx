@@ -27,7 +27,6 @@ export const BoardCreate = () => {
     setInfo();
     if (location.state.type === '필요') {
       setIsNeed(true);
-      setState({ ...state, type: '필요' });
     }
   }, []);
   /* POST 요청 보낼 이미지 */
@@ -82,7 +81,7 @@ export const BoardCreate = () => {
     title: null,
     // 유저의 식재료에 등록된 user_ingredient_no 등록
     userIngredientNo: null,
-    type: null,
+    type: location.state.type,
     description: null,
   });
 
