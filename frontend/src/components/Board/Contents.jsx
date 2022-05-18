@@ -11,7 +11,7 @@ export const Contents = (props) => {
   const [contents, setContents] = useState([]);
   const token = sessionStorage.getItem('jwt-token');
 
-  useEffect(() => {
+  const getBoardList = () => {
     Axios.get(
       `/board/findAll?page=${props.page}&size=8&sort=${props.selectedFilter}%2CDESC&ingredient=${props.searchKeyword}`,
       {
@@ -24,6 +24,14 @@ export const Contents = (props) => {
         props.setTotalElements(res.data.totalElements);
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getBoardList();
+  }, []);
+
+  useEffect(() => {
+    getBoardList();
   }, [props.page, props.size, props.selectedFilter, props.searchKeyword]);
 
   const moveToDetail = (num) => {
