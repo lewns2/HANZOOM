@@ -404,19 +404,39 @@ $desktop: 1400px;
       height: 30px;
       border-radius: 70%;
     }
+    @media only screen and (max-width: $mobile) {
+      font-size: 14px;
+    }
+  }
+  .matchIngredientName {
+    @media only screen and (max-width: $mobile) {
+      font-size: 14px;
+    }
   }
 
-  // .matchType {
-  // }
+  .matchType {
+    @media only screen and (max-width: $mobile) {
+      font-size: 14px;
+    }
+  }
   .matchPurchaseDate {
     font-size: 14px;
+    @media only screen and (max-width: $mobile) {
+      font-size: 12px;
+    }
   }
   .matchExpirationDate {
     font-size: 14px;
+    @media only screen and (max-width: $mobile) {
+      font-size: 12px;
+    }
   }
   .matchDistance {
     font-size: 14px;
     color: #999;
+    @media only screen and (max-width: $mobile) {
+      font-size: 12px;
+    }
   }
 }
 

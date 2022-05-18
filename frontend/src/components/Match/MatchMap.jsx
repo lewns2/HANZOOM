@@ -148,7 +148,8 @@ export const MatchMap = (props) => {
               <img class="matchIngredientImg" src=${ingredientImg}>
             </div>
 
-              <div class="matchNickname"> <img class="matchingUserImg" src=${otherImgUrl}>&nbsp;${findUser.userNickname}</div>
+            <div class="matchNickname"> <img class="matchingUserImg" src=${otherImgUrl}>&nbsp;${findUser.userNickname}</div>
+            <div class="matchIngredientName">식재료명 : ${findUser.ingredientName}</div>
             <div class="matchType">거래 구분 : ${findUser.type}</div>
             <div class="matchPurchaseDate">구매일 : ${findUser.purchaseDate}</div>
             <div class="matchExpirationDate">유통 기한 : ${findUser.expirationDate}</div>
