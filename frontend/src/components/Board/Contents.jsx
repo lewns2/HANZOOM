@@ -49,7 +49,7 @@ export const Contents = (props) => {
               onClick={() => moveToDetail(content.boardNo)}>
               {/*  이미지  */}
               <div className="cardImgWrap">
-                {content.status === '거래완료' ? (
+                {content.status === '거래완료' || content.status === '거래중' ? (
                   <span className="status">{content.status}</span>
                 ) : null}
 
