@@ -3,18 +3,14 @@
   height: 100%;
   border-radius: 2rem;
   background-color: #fffcf2;
-  // transform: translateY(10%);
+
   position: relative;
   padding: 50px;
   overflow: auto;
   overflow-x: hidden;
-  // box-shadow: 0 4px 4px -4px #777;
+
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.25);
   margin: 70px 0 110px 0;
-
-  @media only screen and (max-width: 992px) {
-    // height: 700px;
-  }
 
   .detailHeader {
     display: flex;
@@ -90,7 +86,6 @@
         font-size: 30px;
       }
       .detailDescription {
-        // font-weight: bold;
         margin-bottom: 25px;
         height: 30%;
         font-size: 23px;
@@ -107,9 +102,7 @@
           background-color: #eee;
         }
       }
-      .detailDistance {
-        // font-family: 'GmarketSansMedium';
-      }
+
       .detailIcon {
         display: flex;
         justify-content: space-between;
@@ -170,10 +163,7 @@
     }
   }
   .detailInfoWrap {
-    // width: 60%;
-    // margin: 0 auto;
     display: flex;
-    // justify-content: center;
     flex-wrap: wrap;
     width: 90%;
     margin: 0 auto;
@@ -184,15 +174,10 @@
       overflow: auto;
     }
 
-    @media only screen and (max-width: 992px) {
-      // width: 500px;
-    }
     .detailInfo {
       width: 25%;
-      // margin-right: 44px;
       margin-bottom: 20px;
       margin-top: 20px;
-      // margin: 20px 10px 20px;
       padding: 0 10px;
 
       @media only screen and (max-width: 1200px) {
@@ -201,11 +186,9 @@
       }
       @media only screen and (max-width: 992px) {
         width: 50%;
-        // padding: 0 60px;
       }
       @media only screen and (max-width: 520px) {
         width: 100%;
-        // padding: 0 60px;
       }
       .detailTag {
         text-align: center;
@@ -237,7 +220,6 @@
       border: 2px solid #f7c343;
       border-radius: 8px;
       padding: 5px 10px;
-      // margin-right: 5px;
       box-shadow: 0 4px 4px -4px #777;
     }
     #detailModifyBtn {
@@ -251,11 +233,8 @@
       box-shadow: 0 4px 4px -4px #777;
     }
     #detailDeleteBtn {
-      // color: white;
       font-size: 16px;
       font-weight: bolder;
-      // background-color: rgb(223, 0, 0);
-      // border: 2px solid rgb(223, 0, 0);
       background-color: #fff;
       border: 2px solid #f7c343;
       border-radius: 8px;
@@ -280,21 +259,12 @@
       }
     }
     .detailFooter {
-      // position: absolute;
       text-align: right;
       width: 100%;
       bottom: 0%;
     }
   }
 }
-
-// $container-max-widths: (
-//   sm: 540px,
-//   md: 720px,
-//   lg: 960px,
-//   xl: 1140px,
-//   xxl: 1320px
-// );
 
 // 신고 버튼
 .reportBtn {

@@ -4,7 +4,7 @@ import { ScheduleMap } from './ScheduleMap';
 import moment from 'moment';
 import swal from 'sweetalert';
 
-import 'react-calendar/dist/Calendar.css'; // css import
+import 'react-calendar/dist/Calendar.css';
 import './ReactCalendar.scss';
 
 import { Axios } from '../../core/axios';
@@ -20,7 +20,6 @@ export const CalendarAndMap = (props) => {
   const [lng, setLng] = useState(null);
 
   const scheduleUpdate = () => {
-    console.log('😀😀');
     date.setHours(hour, minute);
     const time = moment(date).format('YYYY-MM-DD HH:mm:ss');
     const token = sessionStorage.getItem('jwt-token');
@@ -60,7 +59,6 @@ export const CalendarAndMap = (props) => {
     setMinute(minute);
     setLat(props.lat);
     setLng(props.lng);
-    console.log(props);
   }, []);
 
   useEffect(() => {
@@ -92,13 +90,7 @@ export const CalendarAndMap = (props) => {
       </div>
       <div className="scheduleMap col-lg-6 col-12 d-flex justify-content-center">
         <div className="mapExplain">약속 장소를 지도에 표시해주세요.</div>
-        <ScheduleMap
-          setLat={setLat}
-          setLng={setLng}
-          lat={lat}
-          lng={lng}
-          // otherEmail={props.otherEmail}
-        />
+        <ScheduleMap setLat={setLat} setLng={setLng} lat={lat} lng={lng} />
       </div>
     </div>
   );

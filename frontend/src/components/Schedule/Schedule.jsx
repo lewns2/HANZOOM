@@ -27,7 +27,6 @@ export const Schedule = (props) => {
   const scheduleRegist = () => {
     date.setHours(hour, minute);
     const time = moment(date).format('YYYY-MM-DD HH:mm:ss');
-    console.log(time);
     const token = sessionStorage.getItem('jwt-token');
 
     if (!hour || !minute) {
@@ -73,7 +72,6 @@ export const Schedule = (props) => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((data) => {
-        console.log(data);
         let writer = data.data.userEmail;
         if (user.userInfo.userEmail === writer) {
           setAuthority(true);
@@ -87,7 +85,6 @@ export const Schedule = (props) => {
   const setScheduleHour = (inputHour) => {
     // const hour = e.target.value;
     if ((inputHour.length > 0 && inputHour < 1) || inputHour > 24) {
-      console.log(inputHour);
       alert('시간은 1시~24시로 설정해주세요.');
       if (inputHour < 1) setHour(1);
       else setHour(hour);
@@ -98,7 +95,6 @@ export const Schedule = (props) => {
 
   const setScheduleMinute = (inputMinute) => {
     if ((inputMinute.length > 0 && inputMinute < 0) || inputMinute > 59) {
-      console.log(inputMinute);
       alert('분은 0분~59분으로 설정해주세요.');
       if (inputMinute < 0) setMinute(0);
       else setMinute(minute);

@@ -83,7 +83,6 @@ export const FoodIngreList = (props) => {
   const deleteFoodIngre = async (userIngredientNo) => {
     await Axios.delete(`userIngredient/remove/${userIngredientNo}`)
       .then((res) => {
-        console.log(res);
         setState(!state);
       })
       .catch((err) => {

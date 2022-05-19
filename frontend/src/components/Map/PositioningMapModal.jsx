@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { Modal } from 'react-bootstrap';
 import { PositioningMap } from './PositioningMap';
@@ -23,7 +23,6 @@ export const PositioningMapModal = (props) => {
           <PositioningMap />
         </>
       </Modal.Body>
-      {/* <Modal.Footer></Modal.Footer> */}
     </Modal>
   );
 };

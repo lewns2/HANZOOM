@@ -40,10 +40,8 @@ export const RecipeModal = (props) => {
                   <>
                     <div key={key} className="recipeOrder row">
                       <div className="recipeText col-lg-6">
-                        {/* <div className="row"> */}
                         <p className="recipeIndex col-lg-2">{key + 1}</p>
                         <p className="recipeDescription col-lg-10">{content.description}</p>
-                        {/* </div> */}
                       </div>
                       <img className="recipeImg col-lg-6" src={content.imagePath}></img>
                     </div>

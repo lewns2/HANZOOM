@@ -1,7 +1,6 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/messaging';
 import 'firebase/compat/database';
-// import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDgXmj3E2LXDfu-4jSY2tH1lHlRc-YmV9I',

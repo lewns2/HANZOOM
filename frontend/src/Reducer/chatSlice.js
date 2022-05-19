@@ -3,7 +3,6 @@ import { Axios } from '../core/axios';
 
 export const getChatInfo = createAsyncThunk('GET/CHATINFO', async () => {
   const token = sessionStorage.getItem('jwt-token');
-  // const response = await Axios.get('/chat/findAll', {
   const response = await Axios.get('/chat/findAll', {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -27,7 +26,6 @@ export const chatSlice = createSlice({
   },
   reducers: {
     changeShow: (state, action) => {
-      // console.log(action);
       state.chatShow = action.payload;
     },
     setRoomId: (state, action) => {

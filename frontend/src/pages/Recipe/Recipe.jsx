@@ -1,16 +1,9 @@
 import { useEffect, useState } from 'react';
-import { RecipeModal } from '../../components/Recipe/RecipeModal';
-import Slider from 'react-slick';
-// import { settings } from '../../constants/slider';
-import sample from '../../assets/images/Initimage.PNG';
-import { display, minWidth } from '@mui/system';
-import { Axios } from '../../core/axios';
-import qs from 'qs';
 import { useLocation } from 'react-router';
+import Slider from 'react-slick';
+import { RecipeModal } from '../../components/Recipe/RecipeModal';
+import { Axios } from '../../core/axios';
 import Lottie from '../../components/Lottie';
-
-const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
-
 import './Recipe.scss';
 
 export const Recipe = (props) => {
@@ -27,12 +20,9 @@ export const Recipe = (props) => {
     setModalOpen(false);
   };
 
-  // const postData = qs.stringify(testData);
-
   useEffect(() => {
-    console.log(location.state);
     Axios.get(`/userIngredient/recipe?ingredients=${location.state}`)
-      .then((res) => (setRecipeList(res.data.slice(0, 52)), setIsPending(true), console.log(res)))
+      .then((res) => (setRecipeList(res.data.slice(0, 52)), setIsPending(true)))
       .catch((err) => console.log(err));
   }, []);
 
@@ -116,22 +106,20 @@ export const Recipe = (props) => {
                   ) : (
                     <Slider {...customSettings}>
                       {recipeList.map((content, key) => (
-                        <>
-                          <div
-                            className="recipeContentCard event1"
-                            key={content.recipeNo}
-                            onClick={() => openModal(content)}>
-                            <img
-                              className="recipeCardImgWrap"
-                              id="imgHoverEvent"
-                              src={content.imagePath}
-                              alt="..."
-                            />
-                            <div className="hoverBox">
-                              <p className="p1">{content.recipeName}</p>
-                            </div>
+                        <div
+                          className="recipeContentCard event1"
+                          key={content.recipeNo}
+                          onClick={() => openModal(content)}>
+                          <img
+                            className="recipeCardImgWrap"
+                            id="imgHoverEvent"
+                            src={content.imagePath}
+                            alt="..."
+                          />
+                          <div className="hoverBox">
+                            <p className="p1">{content.recipeName}</p>
                           </div>
-                        </>
+                        </div>
                       ))}
                     </Slider>
                   )}

@@ -1,7 +1,4 @@
-import { height } from '@mui/system';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { BASE_IMG_URL } from '../../core/s3';
 import './Schedule.scss';
 import promiseIcon from '../../assets/images/promiseLocation.png';
 
@@ -22,7 +19,6 @@ export const ScheduleDetailMap = (props) => {
     let map = new window.kakao.maps.Map(container, options);
 
     // 마커 이미지 세팅
-    // var imageSrc = '/img/promiseLocation.png'; // 마커이미지의 주소입니다
     var imageSrc = promiseIcon; // 마커이미지의 주소입니다
     var imageSize = new kakao.maps.Size(50, 55); // 마커이미지의 크기입니다
     var imageOption = { offset: new kakao.maps.Point(24, 51) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -41,7 +37,6 @@ export const ScheduleDetailMap = (props) => {
     // 해당 위치 주소 표시
     if (promiseLat && promiseLng) {
       await geocoder.coord2Address(promiseLng, promiseLat, (result, status) => {
-        console.log(result);
         if (status === kakao.maps.services.Status.OK) {
           // 지번
           var detailAddr = result[0].address.address_name;

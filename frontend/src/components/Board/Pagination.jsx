@@ -1,4 +1,3 @@
-import { SwapCallsTwoTone } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 
 export const Pagination = (props) => {

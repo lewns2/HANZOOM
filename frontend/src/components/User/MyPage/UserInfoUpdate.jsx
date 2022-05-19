@@ -64,9 +64,7 @@ export const UserInfoUpdate = (props) => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((error) => {
         console.log(error);
         alert('이미지 등록 에러');
@@ -83,9 +81,8 @@ export const UserInfoUpdate = (props) => {
           Authorization: `Bearer ${token}`,
         },
       },
-    ).then((data) => {
-      console.log(data);
-      if (data.data) {
+    ).then((res) => {
+      if (res.data) {
         setPasswordCheck(true);
         setUserPassword(password);
       } else {
@@ -147,7 +144,6 @@ export const UserInfoUpdate = (props) => {
   }, []);
 
   useEffect(() => {
-    // setUserInfo(user.userInfo);
     setUserImg(userInfo.userImage);
     setUserNickname(userInfo.userNickname);
   }, [userInfo]);
