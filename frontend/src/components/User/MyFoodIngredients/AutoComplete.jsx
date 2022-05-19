@@ -55,7 +55,7 @@ export const AutoComplete = (props) => {
   return (
     <>
       <input
-        className="form-control"
+        className="form-control fontMedium"
         type="text"
         placeholder={keyword ? keyword : '식재료 명'}
         onChange={(event) => {

@@ -237,6 +237,7 @@ export const BoardDetail = () => {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description">
                     <Box
+                      id="reportInput"
                       sx={{
                         position: 'absolute',
                         top: '50%',
@@ -260,11 +261,15 @@ export const BoardDetail = () => {
                       <div style={{ fontSize: '15px' }}>
                         <Row style={{ marginBottom: '3%' }}>
                           <Col md="4">작성자</Col>
-                          <Col md="8">{userInfo.userNickname}</Col>
+                          <Col md="8" style={{ fontFamily: 'GmarketSansMedium' }}>
+                            {userInfo.userNickname}
+                          </Col>
                         </Row>
                         <Row style={{ marginBottom: '3%' }}>
                           <Col md="4">신고대상</Col>
-                          <Col md="8">{content.userNickname}</Col>
+                          <Col md="8" style={{ fontFamily: 'GmarketSansMedium' }}>
+                            {content.userNickname}
+                          </Col>
                         </Row>
                         <Row style={{ marginBottom: '3%' }}>
                           <Col md="4">신고내용</Col>
@@ -276,6 +281,8 @@ export const BoardDetail = () => {
                                 border: 'none',
                                 backgroundColor: '#fffcf2',
                                 minHeight: '6.25em',
+                                fontFamily: 'GmarketSansMedium',
+                                resize: 'none',
                               }}
                               onChange={handleReportDescription}></textarea>
                           </Col>
