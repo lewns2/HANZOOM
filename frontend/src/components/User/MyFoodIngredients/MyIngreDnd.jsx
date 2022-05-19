@@ -19,8 +19,6 @@ export const MyIngreDnd = (props) => {
   const [checkedIngre, setCheckedIngre] = useState([]);
   const [checkedBSIngre, setCheckedBSIngre] = useState([]);
 
-  // console.log(tasks);
-
   useEffect(() => {
     setCheckedIngre(checkedIngre);
   }, [checkedIngre]);
