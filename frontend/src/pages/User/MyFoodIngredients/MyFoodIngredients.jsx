@@ -1,12 +1,12 @@
 import './MyFoodIngredients.scss';
-import { FoodModal } from './FoodModal';
+import { FoodModal } from '../../../components/User/MyFoodIngredients/FoodModal';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Axios } from '../../../core/axios.js';
-import { FoodIngreList } from './FoodIngreList';
+import { FoodIngreList } from '../../../components/User/MyFoodIngredients/FoodIngreList';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { MyIngreDnd } from './MyIngreDnd';
+import { MyIngreDnd } from '../../../components/User/MyFoodIngredients/MyIngreDnd';
 import { Col, Row } from 'react-bootstrap';
 import Tooltip from '@mui/material/Tooltip';
 import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded';

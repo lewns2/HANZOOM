@@ -214,15 +214,15 @@ export const BoardCreate = () => {
                 <>
                   <button
                     type="button"
-                    id={isShare ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
-                    onClick={() => selectedType('나눔')}>
-                    나눔
-                  </button>
-                  <button
-                    type="button"
                     id={isExchange ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
                     onClick={() => selectedType('교환')}>
                     교환
+                  </button>
+                  <button
+                    type="button"
+                    id={isShare ? 'selectedtradeTypeBtn' : 'tradeTypeBtn'}
+                    onClick={() => selectedType('나눔')}>
+                    나눔
                   </button>
                 </>
               ) : (
