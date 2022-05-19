@@ -1,29 +1,41 @@
 # 한 줌(HANZOOM)
 
-# 1. 서비스 설명
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white"> <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"> <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white"> <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white">
+
+<img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white"/> <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socket.io&logoColor=white"/>
+
+## 1. 서비스 설명
 
 ### 개요
 
 - **진행 기간** : **2022.04.11 ~ 2022.05.20(6주)**
 
-- 한줄 소개 :
+- 한줄 소개 : 위치기반 식재료 나눔/교환 서비스
 - 서비스 명 : **한 줌(HANZOOM)**
 
-<br/>
 
-<br/>
 
-# 2. 기획 배경
+
+
+## 2. 기획 배경
 
 ### 🖼 배경
 
+- 1인 가구 수가 매년 증가하고 있는 가운데, 1인 가구의 식품 절반은 음식물 쓰레기로 버려진다고 합니다. 이는 식재료의 양이 혼자 사용하기 벅차거나 질리고 또, 조리법을 잘 몰라 식재료를 사용하지 않고 오래 보관하여 상하는 경우가 많기 때문입니다. 
+  이로 인해 사람들은 직접 해먹지않고 배달음식을 선택하게 되는데,이는 식비 증가의 부담과 동시에 음식물쓰레기뿐만 아니라 포장 용기로 인한 플라스틱 쓰레기 문제까지 이어지게 됩니다.
+
 ### 🎯 타겟
 
-<br/>
+- 어떤 요리를 해야할지 모르는 사람
+- 상해서 버리는 식재료가 많고 쉽게 식재료를 구하고 싶은 사람
+- 여행이나 일정 등으로 빠르게 남은 식재료를 처리하고 싶은 사람
+- 혼자 구매하기 양이 많아 걱정인 1인 가구
 
-<br/>
 
-# 3. 서비스 화면
+
+
+
+## 3. 서비스 화면
 
 ### 📺 시연영상
 
@@ -35,22 +47,13 @@
 
 ### 🛠 주요기능
 
-<br/>
+### 식재료 관리
 
-타이틀 - gif 이미지 파일 들어갈 부분
+- 식재료 추가 및 게시글 등록
 
-### 일정
+![식재료 등록 및 게시글 등록](./exec/assets/식재료 등록 및 게시글 등록.gif)
 
-- 일정 잡기
 
-![일정잡기](./exec/assets/%EC%9D%BC%EC%A0%95%EC%9E%A1%EA%B8%B0.gif)
-
-- 일정 상세보기(공유)
-
-![일정상세보기](./exec/assets/%EC%9D%BC%EC%A0%95%EA%B3%B5%EC%9C%A0.gif)
-
-<br/>
-<br/>
 
 ### 식재료 매칭
 
@@ -62,9 +65,25 @@
 
 ![매칭실패](./exec/assets/매칭실패.gif)
 
-<br/><br/>
 
-# 4. 기술스택
+
+
+
+### 일정
+
+- 일정 잡기
+
+![일정잡기](./exec/assets/%EC%9D%BC%EC%A0%95%EC%9E%A1%EA%B8%B0.gif)
+
+- 일정 상세보기(공유)
+
+![일정상세보기](./exec/assets/%EC%9D%BC%EC%A0%95%EA%B3%B5%EC%9C%A0.gif)
+
+
+
+
+
+## 4. 기술스택
 
 ## API
 
@@ -73,13 +92,13 @@
 <br/>
 <br/>
 
-# 5. 프로젝트 진행
+## 5. 프로젝트 진행
 
 프로젝트 진행 기간동안 전면 비대면으로, 온라인으로 진행되었기에 특히나 진행 방식과 소통 방법이 중요했습니다. 그래서 우리는 `Agile` 방법으로 프로젝트를 진행했고, Jira를 사용한 스프린트 관리, Notion을 통한 문서 정리, Discord를 활용하여 커뮤니케이션 소통을 하였습니다.
 
 <br/>
 
-## (1). Git Flow
+##  🏞Git Flow
 
 git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://techblog.woowahan.com/2553/)을 참고했습니다. 각자 맡은 기능에 맞게 `feature` 브랜치를 생성하고, 완료된 기능은 `develop`에 merge하여 사용했습니다. 충돌 상황을 최소화하고자 매일 오전 스크럼에 `develop` 최신 버전을 `pull`받고 시작할 것을 강조했습니다.
 
@@ -100,7 +119,7 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 <br/>
 
-## (2). Jira
+##  📋 Jira
 
 매주 월요일 오전 회의에서 차주에 진행되어야 할 이슈를 백로그에 등록했습니다. 금주에 완료하지 못한 이슈나, 앞으로 진행할 이슈들을 추가합니다.
 
@@ -114,7 +133,7 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 <br/>
 
-## (3). Notion
+##  📝Notion
 
 모두가 공유해야할 자료 및 링크는 노션에 정리했습니다. 특히 `userflow`나 `api 명세` 와 같이 여러번 다시 봐야하고 중요한 정보들은 특히 노션에 공유하여 불필요한 커뮤니케이션 리소스를 줄이기 위해 노력했습니다.
 
@@ -126,15 +145,15 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 <br/>
 
-# 6. 배포
+## 6. 배포
 
 서버는 AWS EC2 ubuntu를 사용했습니다
 
-<br/>
+
 
 ## (1). ⚙ 시스템 환경 및 구성
 
-![기술스택]()아키텍처 사진 들어갈 부분.
+![기술스택](C:\Users\multicampus\Desktop\자율프로젝트\exec\assets\아키텍처.png)
 
 - OS: Windows10
 - Backend Framework: Spring Boot 2.4.5
@@ -146,7 +165,7 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 - Docker: 20.10.14
 - WEB: Nginx (1.18.0)
 
-<br/>
+
 
 ## (2). Docker
 
@@ -155,7 +174,7 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 필요한 이미지들의 설정은 docker-compose.yml 파일에 작성합니다.
 
 docker 내부는 같은 네트워크로 묶어주기 위해 docker-compose로 실행합니다.
-<br/>
+
 
 ## (3). DevOps
 
@@ -163,9 +182,9 @@ docker 내부는 같은 네트워크로 묶어주기 위해 docker-compose로 �
 
 build 후 docker-compose를 실행하도록 했습니다.
 
-<br/>
 
-# 7. UI / UX
+
+## 7. UI / UX
 
 ## (1). 와이어프레임(Figma)
 
@@ -173,11 +192,11 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
 
 ![Figma사진](./exec/assets/figma.png)
 
-<br/>
 
-<br/>
 
-# 8. DB
+
+
+## 8. DB
 
 ## (1). ERD
 
@@ -186,16 +205,16 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
 <br/>
 <br/>
 
-# 9. 팀원 소개 및 소감
+## 9. 팀원 소개 및 소감
 
-## 👩‍💻 팀원 소개
+## 👨‍👩‍👧‍👦 팀원 소개
 
-<br/>
 
-|                    [김광희](https://github.com/heeya15)                    |   [김동주]()   |   [김동현]()   |   [정윤정]()   |                  [최영진](https://github.com/youngjin98)                   |                            [한성희](https://github.com/ehhclaire)                             |
-| :------------------------------------------------------------------------: | :------------: | :------------: | :------------: | :------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
-| <img src="./exec/assets/gwanghee.jpg" width="80px;" height="80px" alt=""/> |                |                |                | <img src="./exec/assets/youngjin.PNG" width="80px;" height="80px" alt=""/> | <img src="https://avatars.githubusercontent.com/u/22373060?v=4?s=100" width="100px;" alt=""/> |
-|                     Front-end<br/>Back-end<br/>Dev-Ops                     | Front-end<br/> | Front-end<br/> | Front-end<br/> |                           Front-end<br/>Back-end                           |                                    Front-end<br/>Back-end                                     |
+
+|             [김광희](https://github.com/heeya15)             |   [김동주]()   |   [김동현]()   |                          [정윤정]()                          |           [최영진](https://github.com/youngjin98)            |            [한성희](https://github.com/ehhclaire)            |
+| :----------------------------------------------------------: | :------------: | :------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="./exec/assets/gwanghee.jpg" width="80px;" height="80px" alt=""/> |                |                | <img src="./exec/assets/yoonjung.jpg" width="80px;" height="80px" alt=""/> | <img src="./exec/assets/youngjin.PNG" width="80px;" height="80px" alt=""/> | <img src="https://avatars.githubusercontent.com/u/22373060?v=4?s=100" width="100px;" alt=""/> |
+|             Front-end<br />Back-end<br/>Dev-Ops              | Front-end<br/> | Front-end<br/> |                        Front-end<br/>                        |                    Front-end<br/>Back-end                    |                    Front-end<br/>Back-end                    |
 
 <br/>
 
@@ -207,7 +226,7 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
 
 - **김동현** :
 
-- **정윤정** :
+- **정윤정** : 
 - **최영진** :
 
 - **한성희** :
