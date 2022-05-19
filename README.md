@@ -83,6 +83,22 @@
 
 ![일정상세보기](./exec/assets/%EC%9D%BC%EC%A0%95%EA%B3%B5%EC%9C%A0.gif)
 
+<br/><br/>
+
+### 관리자
+
+- 신고 내역 관리
+
+![신고내역관리](./exec/assets/admin_report.gif)
+
+- 식재료 등록 요청 관리
+
+![식재료등록요청관리](./exec/assets/admin_pending.gif)
+
+- 식재료 등록 요청 알림
+
+![식재료등록요청알림](./exec/assets/pending_alarm.gif)
+
 ## 4. 기술스택
 
 ## API
