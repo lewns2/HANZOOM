@@ -148,7 +148,7 @@ export const Report = () => {
                     fontFamily: 'GmarketSansMedium',
                   }}
                   defaultValue={row.content}></textarea>
-                {row.status === null ? (
+                {row.status === '대기' ? (
                   <div style={{ float: 'right', margin: '3% 0' }}>
                     <button className="reportApproveBtn" onClick={() => handleApprove(row)}>
                       승인
