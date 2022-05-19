@@ -117,9 +117,7 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 ## (1). ⚙ 시스템 환경 및 구성
 
-![기술스택]()
-
-아키텍처 사진 들어갈 부분. 
+![기술스택]()아키텍처 사진 들어갈 부분. 
 
 - OS: Windows10
 - Backend Framework: Spring Boot 2.4.5
@@ -156,8 +154,7 @@ build 후 docker-compose를 실행하도록 했습니다.
 
 figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런스를 참고하고, 서비스 특성에 맞게 제작했습니다.
 
-![]()
-figma 사진 들어갈 부분
+![Figma사진](./exec/assets/figma.png)
 
 <br/>
 
@@ -167,9 +164,7 @@ figma 사진 들어갈 부분
 
 ## (1). ERD
 
-![image-20220405113330197]()
-
-ERD 사진 들어갈 부분
+![ERD사진](./exec/assets/ERD.png)
 
 <br/>
 <br/>
