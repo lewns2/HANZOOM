@@ -15,15 +15,14 @@ import { Header } from '../components/Header';
 import { KaKaoCall } from '../components/User/Login/KaKaoCall';
 import { MyChat } from '../components/Chat/MyChat';
 import { MyChatDisplay } from '../components/Chat/MyChatDisplay';
-import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
-import CommentsDisabledOutlinedIcon from '@mui/icons-material/CommentsDisabledOutlined';
 import { Footer } from '../components/Main/Footer';
 import { Admin } from './Admin/Admin';
+import { NotFound } from '../components/NotFound/NotFound';
 import ChatIcon from '../assets/images/chat.png';
 import NoChatIcon from '../assets/images/nochat.png';
 
-import { Route, Routes, Navigate, BrowserRouter } from 'react-router-dom';
-import { useState, useEffect, useReducer } from 'react';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getChatInfo } from '../Reducer/chatSlice';
@@ -78,6 +77,7 @@ export const Routing = () => {
           <Route
             path="/admin"
             element={user.userInfo.userNickname === 'admin' ? <Admin /> : <Main />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
       {user.userInfo.length !== 0 && (
