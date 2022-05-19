@@ -23,7 +23,6 @@ export const ModiMyFoodIngredients = (props) => {
   const getIngreInfo = async () => {
     await Axios.get(`userIngredient/find/${props.ingre.userIngredientNo}`)
       .then((res) => {
-        console.log(res.data);
         setIngreName(res.data.ingredientName);
         if (res.data.purchaseDate) {
           setModiPurchaseDate(res.data.purchaseDate);
@@ -120,7 +119,6 @@ export const ModiMyFoodIngredients = (props) => {
               foods={props.foods}
               setFoods={props.setFoods}
               ingreName={ingreName}
-              // setIngreName={setIngreName}
               header={props.header}
             />
           )}

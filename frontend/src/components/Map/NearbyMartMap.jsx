@@ -101,7 +101,6 @@ export const NearbyMartMap = () => {
 
       kakao.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(content);
-        console.log(marker);
         infowindow.open(map, marker);
       });
     }
@@ -113,12 +112,11 @@ export const NearbyMartMap = () => {
       navigator.geolocation.getCurrentPosition(
         // 현 위치 정보가 받아와질 때
         function (position) {
-          console.log(position);
           // 실수형으로 형 변환 해 주지 않으면 정확한 자기 위치 안됨
           var lat = parseFloat(position.coords.latitude);
           var lng = parseFloat(position.coords.longitude);
           let locPosition = new kakao.maps.LatLng(lat, lng);
-          console.log('현재 위도 경도' + lat + ' ' + lng);
+          // console.log('현재 위도 경도' + lat + ' ' + lng);
           setUserLat(lat);
           setUserLng(lng);
           setUserLoc(locPosition);

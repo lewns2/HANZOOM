@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Report } from '../../components/Admin/Report';
 import { PendingIngredient } from '../../components/Admin/PendingIngredient';
@@ -9,7 +9,6 @@ export const Admin = () => {
   const [selectedType, setSelectedType] = useState('신고내역');
 
   const handleChange = (e) => {
-    // console.log(e.target.value);
     setSelectedType(e.target.value);
   };
 

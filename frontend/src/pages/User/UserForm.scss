@@ -1,6 +1,5 @@
 .userFormWrap {
   background-color: #f7c343;
-  // height: 100vh;
   height: calc(100vh - 70px);
   overflow: hidden;
   display: flex;
@@ -68,7 +67,6 @@
       cursor: pointer;
       &:hover {
         color: #f7af43;
-        // font-weight: bold;
       }
     }
     .findPwd {

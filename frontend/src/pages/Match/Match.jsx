@@ -7,7 +7,6 @@ import { Axios } from '../../core/axios';
 import { useLocation } from 'react-router';
 
 import './Match.scss';
-import { getAccordionDetailsUtilityClass } from '@mui/material';
 
 export const Match = () => {
   const location = useLocation();
@@ -16,25 +15,21 @@ export const Match = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isComplete, setIsComplete] = useState(false);
   const [matchingRes, setMatchingRes] = useState();
-  // const [url, setUrl] = useState();
 
   const requestData = (url, type) => {
-    console.log(url);
     Axios.get(url, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
-        console.log(res),
-          (setMatchingRes(res.data),
+        setMatchingRes(res.data),
           res.data.matchingList[0].userIngredientMatchingRes.length != 0
             ? setIsComplete(true)
-            : setIsComplete(false));
+            : setIsComplete(false);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    console.log('넘어오는 거', location.state);
     const handle = setTimeout(() => setIsLoading(false), 8500);
 
     if (location.state.type == '자동') {

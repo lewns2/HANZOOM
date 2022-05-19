@@ -17,7 +17,6 @@ export const FavoriteListItem = (props) => {
   };
 
   const clickLike = async () => {
-    console.log('😀😀');
     const token = sessionStorage.getItem('jwt-token');
     await Axios.post(
       `/board/like/${like.boardNo}`,
@@ -36,7 +35,6 @@ export const FavoriteListItem = (props) => {
 
   return (
     <div className="imgBox">
-      {console.log(like)}
       <img
         className=""
         src={like.imagePath && `${BASE_IMG_URL}${like.imagePath}`}

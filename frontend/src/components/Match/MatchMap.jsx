@@ -1,6 +1,3 @@
-import { SwapCallsTwoTone } from '@mui/icons-material';
-import { createMuiTheme, getDialogActionsUtilityClass } from '@mui/material';
-import { handleBreakpoints } from '@mui/system';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import marketimage from '../../assets/images/supermarket.png';
@@ -11,8 +8,6 @@ export const MatchMap = (props) => {
   const matchingArr = props.matchArr;
   const martView = props.martView;
   const { userInfo } = useSelector((state) => state.user);
-  const [resMarker, setResMarker] = useState([]);
-  const [martMarker, setMartMarker] = useState([]);
 
   const [userLat, setUserLat] = useState(null);
   const [userLng, setUserLng] = useState(null);
@@ -23,12 +18,11 @@ export const MatchMap = (props) => {
       navigator.geolocation.getCurrentPosition(
         // 현 위치 정보가 받아와질 때
         function (position) {
-          // console.log(position);
           // 실수형으로 형 변환 해 주지 않으면 정확한 자기 위치 안됨
           var lat = parseFloat(position.coords.latitude);
           var lng = parseFloat(position.coords.longitude);
           let locPosition = new kakao.maps.LatLng(lat, lng);
-          // console.log('현재 위도 경도' + lat + ' ' + lng);
+
           setUserLat(lat);
           setUserLng(lng);
           setUserLoc(locPosition);
@@ -39,10 +33,7 @@ export const MatchMap = (props) => {
     }
   };
 
-  var markerList = [];
-
   useEffect(() => {
-    console.log(matchingArr);
     getLocation();
 
     /*1. 지도 객체 생성*/
@@ -172,21 +163,6 @@ export const MatchMap = (props) => {
       }
 
       handleInfo(otherMarker);
-
-      // var infoInfowindow = new kakao.maps.CustomOverlay({
-      //   position: markerPosition,
-      //   content: contents, // 인포윈도우에 표시할 내용
-      // });
-
-      // kakao.maps.event.addListener(otherMarker, 'click', function (mouseEvent) {
-      //   infoInfowindow.setMap(map);
-      // });
-      // kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-      //   infoInfowindow.setMap(null);
-      // });
-      // kakao.maps.event.addListener(otherMarker, 'mouseout', function (mouseEvent) {
-      //   infowindow.setMap(null);
-      // });
     });
     map.setBounds(bounds);
 
@@ -199,7 +175,7 @@ export const MatchMap = (props) => {
         for (let i = 0; i < value.length; i++) {
           infoStr += value[i];
         }
-        // console.log(infoStr);
+
         var customContent = `
             <div className="matchWrapWrap" style="display:flex;">
               ${infoStr}
@@ -220,8 +196,6 @@ export const MatchMap = (props) => {
         });
       }
     }
-    // console.log(userLocation.entries());
-    // console.log(viewInfo.entries());
 
     /* 4. 마트 표시 */
 
@@ -324,7 +298,6 @@ export const MatchMap = (props) => {
       } else {
         swal('위치 설정이 필요합니다');
         props.setChecked(false);
-        // console.log('위치 설정이 필요합니다');
         map.setLevel(8);
       }
     }

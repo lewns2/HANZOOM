@@ -1,5 +1,4 @@
 .updateModal {
-  // display: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +31,6 @@
     .uploadImage {
       img {
         width: 180px;
-        // max-height: 250px;
         height: 180px;
         margin-bottom: 10px;
       }
@@ -86,7 +84,6 @@
   .userInfoWrap {
     background-color: #f7f6f2;
     height: 100%;
-    // margin-top: 15px;
     padding: 40px;
     border-radius: 25px;
     box-shadow: 0 4px 4px -3px #777;
@@ -114,7 +111,6 @@
 
     .userContent {
       height: 100%;
-      // padding-left: 20px;
       p {
         margin-bottom: 0;
       }
@@ -159,7 +155,6 @@
         }
       }
       @media only screen and (max-width: 480px) {
-        // padding-left: 0px;
         .userNickName {
           font-size: 25px;
           font-weight: 600;
@@ -175,7 +170,6 @@
 }
 
 .favoriteListWrap {
-  // width: 100%;
   height: 100%;
   margin-top: 20px;
   background-color: #f7f6f2;
@@ -190,8 +184,6 @@
   }
 
   .favoriteList {
-    // width: 100%;
-
     .slick-list {
       width: 100%;
 

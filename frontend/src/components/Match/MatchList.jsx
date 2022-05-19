@@ -1,14 +1,9 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
+
 import Slider from 'react-slick';
 import { settings } from '../../constants/slider';
-import sample from '../../assets/images/need.PNG';
-import { RestoreOutlined, SwapCallsTwoTone } from '@mui/icons-material';
+
 import { useNavigate } from 'react-router-dom';
-import { render } from 'react-dom';
 
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
 
@@ -22,7 +17,6 @@ export const MatchList = (props) => {
   };
 
   const handleClick = (num) => {
-    console.log(num);
     swal('해당 게시글로 이동하시겠습니까?', {
       buttons: {
         cancel: '아니오',

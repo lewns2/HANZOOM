@@ -59,12 +59,9 @@
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  // height: 100vh;
   .featureimage {
     margin: 30px;
     width: 100%;
-    // border-radius: 10px;
-    // box-shadow: 0 0 1px 0 rgba(#777, 0.15), 0 6px 12px 0 rgba(#777, 0.15);
   }
   .featureSubTitle {
     font-family: 'GmarketSansMedium';
@@ -94,9 +91,7 @@
     padding: 60px 40px;
     text-align: center;
     .regularScreen {
-      // .featureimage {
       display: none;
-      // }
     }
     .mobileSpace {
       margin: 0;
@@ -112,7 +107,6 @@
 }
 
 .featureRightWrap {
-  // background-color: #f7c343;
   padding: 60px 150px;
   width: 100%;
   height: 120%;
@@ -121,8 +115,6 @@
   .featureimage {
     margin: 20px;
     width: 100%;
-    // border-radius: 10px;
-    // box-shadow: 0 0 1px 0 rgba(#777, 0.15), 0 6px 12px 0 rgba(#777, 0.15);
   }
   .featureSubTitle {
     font-family: 'GmarketSansMedium';
@@ -151,9 +143,7 @@
     padding: 60px 40px;
     text-align: center;
     .regularScreen {
-      // .featureimage {
       display: none;
-      // }
     }
     .featureContent {
       padding-left: 0;
@@ -169,18 +159,6 @@
 }
 
 #main2 {
-  // padding: 100px;
-  // img {
-  //   width: 400px;
-  //   height: auto;
-  //   margin-right: 200px;
-  // }
-  // button {
-  //   background-color: #f7c343;
-  //   border: 1px solid #f7c343;
-  //   border-radius: 8px;
-  // }
-
   @media (max-width: 869px) {
     .featuretitle {
       font-size: 30px;
@@ -209,7 +187,6 @@
     }
     .contentContainer {
       padding: 20px;
-      // height: 800px;
       .slick-list {
         width: 100%;
         padding-bottom: 10px;
@@ -269,9 +246,7 @@
                 left: 42%;
                 z-index: 3;
                 border-radius: 50%;
-                // padding: 3px 2px;
                 margin-right: 5px;
-                // box-shadow: 0 4px 4px -4px #777;
                 text-align: center;
                 visibility: hidden;
               }
@@ -334,7 +309,6 @@
                 border: 2px solid #f7c343;
                 border-radius: 16px;
                 padding: 3px 2px;
-                // margin-right: 5px;
                 box-shadow: 0 4px 4px -4px #777;
                 text-align: center;
               }
