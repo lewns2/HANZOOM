@@ -8,7 +8,7 @@ export const MyLocation = () => {
 
   return (
     <>
-      <button className="locationBtn col-4 px-1">우리동네 : {location}</button>
+      <button className="locationBtn px-1">우리동네 : {location}</button>
     </>
   );
 };
