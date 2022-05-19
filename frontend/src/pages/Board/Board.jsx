@@ -3,8 +3,6 @@ import { SearchBar } from '../../components/Board/SearchBar';
 import { Contents } from '../../components/Board/Contents';
 import { Pagination } from '../../components/Board/Pagination';
 import { MyLocation } from '../../components/Board/MyLocation';
-import { Link } from 'react-router-dom';
-
 import './Board.scss';
 
 export const Board = () => {
@@ -55,7 +53,6 @@ export const Board = () => {
   const limit = 5;
   const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
-  // const offset = (page - 1) * limit;
   const [totalPage, setTotalPage] = useState();
   const [totalElements, setTotalElements] = useState();
 
@@ -69,7 +66,6 @@ export const Board = () => {
   return (
     <section className="container mt-1">
       <div className="pageTitle">
-        {/* <div className="header"> */}
         <h1>게시판</h1>
       </div>
 

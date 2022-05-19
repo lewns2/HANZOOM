@@ -29,7 +29,6 @@ export const ScheduleDetail = (props) => {
 
   const getSchedule = async () => {
     await Axios.get(`${axios_apis.plans.find}/${boardNo}`).then((res) => {
-      console.log(res);
       setScheduleInfo(res.data);
     });
   };
@@ -48,7 +47,6 @@ export const ScheduleDetail = (props) => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((data) => {
-        console.log(data);
         let writer = data.data.userEmail;
         if (myEmail === writer) {
           setAuthority(true);
@@ -77,7 +75,6 @@ export const ScheduleDetail = (props) => {
 
   const shareKakao = () => {
     const sharedUrl = 'https://k6e103.p.ssafy.io';
-    console.log(window.location.href);
     const imgUrl = user.userInfo.userImage;
 
     const scheduleTitle = scheduleInfo.opponent + '님과의 일정';
@@ -110,7 +107,6 @@ export const ScheduleDetail = (props) => {
   useEffect(() => {
     getSchedule();
     setMyEmail(user.userInfo.userEmail);
-    console.log(props);
   }, []);
 
   useEffect(() => {
@@ -119,8 +115,6 @@ export const ScheduleDetail = (props) => {
 
   return (
     <div className="scheduleWrap d-flex align-items-center">
-      {console.log(scheduleInfo)}
-      {console.log(address)}
       <div className="schedule">
         {!updateState ? (
           <h3 className="text-center">일정 상세정보</h3>

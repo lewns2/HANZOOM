@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AddMyFoodIngredients } from './AddMyFoodIngredients';
 import { AddNeedsIngredients } from './AddNeedsIngredients';
 import { Axios } from '../../../core/axios.js';
@@ -22,7 +22,7 @@ export const FoodModal = (props) => {
   const registerIngre = async () => {
     var expiration = `${foods.expirationDate.year}-${foods.expirationDate.month}-${foods.expirationDate.day}`;
     var purchase = `${foods.purchaseDate.year}-${foods.purchaseDate.month}-${foods.purchaseDate.day}`;
-    console.log(expiration);
+
     if (expiration === 'NaN-NaN-NaN') {
       expiration = '';
     }
@@ -48,7 +48,6 @@ export const FoodModal = (props) => {
       },
     )
       .then((res) => {
-        console.log(res);
         if (res.data.message === 'Pending') {
           swal({
             title: '저장되지 않은 식재료 입니다.',
@@ -87,7 +86,6 @@ export const FoodModal = (props) => {
       },
     )
       .then((res) => {
-        console.log(res);
         if (res.data.message === 'Pending') {
           swal({
             title: '저장되지 않은 식재료 입니다.',
@@ -107,7 +105,6 @@ export const FoodModal = (props) => {
   };
 
   const modifyIngre = () => {
-    console.log(foods);
     var expiration = '';
     var purchase = '';
     if (foods.expirationDate) {
@@ -129,7 +126,6 @@ export const FoodModal = (props) => {
       userIngredientNo: ingre.userIngredientNo,
     })
       .then((res) => {
-        console.log(res);
         close();
       })
       .catch((err) => {
@@ -153,7 +149,6 @@ export const FoodModal = (props) => {
       userIngredientNo: ingre.userIngredientNo,
     })
       .then((res) => {
-        console.log(res);
         close();
       })
       .catch((err) => {
@@ -165,7 +160,6 @@ export const FoodModal = (props) => {
       });
   };
   return (
-    // 모달이 열릴때 openModal 클래스가 생성된다.
     <div className={open ? 'openModal modal' : 'modal'}>
       {open ? (
         <section>

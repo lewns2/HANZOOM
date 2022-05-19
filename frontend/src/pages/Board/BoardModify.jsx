@@ -69,7 +69,6 @@ export const BoardModify = () => {
 
   /* 게시글 등록 */
   const handleSubmit = () => {
-    console.log(state);
     const token = sessionStorage.getItem('jwt-token');
     const header = {
       headers: {
@@ -118,8 +117,7 @@ export const BoardModify = () => {
 
     if ((errorKeyword === '이미지를 등록해주세요!' && isNeed) || errorKeyword === null) {
       Axios.put('/board/update', formData, header)
-        .then(
-          (res) => console.log(res),
+        .then((res) =>
           swal('등록 성공', '게시글이 성공적으로 수정되었습니다', 'success', {
             buttons: false,
             timer: 1800,

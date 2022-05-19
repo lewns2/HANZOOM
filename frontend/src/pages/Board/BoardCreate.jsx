@@ -87,7 +87,6 @@ export const BoardCreate = () => {
 
   /* 게시글 등록 */
   const handleSubmit = () => {
-    // console.log(state);
     const token = sessionStorage.getItem('jwt-token');
     const header = {
       headers: {
@@ -133,7 +132,6 @@ export const BoardCreate = () => {
     }
 
     if ((errorKeyword === '이미지를 등록해주세요!' && isNeed) || errorKeyword === null) {
-      console.log(errorKeyword, isNeed);
       Axios.post('/board/register', formData, header)
         .then((res) =>
           swal('등록 성공', '게시글이 성공적으로 등록되었습니다', 'success', {
@@ -143,7 +141,6 @@ export const BoardCreate = () => {
         )
         .catch((err) => console.log(err));
     } else {
-      console.log(errorKeyword, isNeed);
       swal('등록 실패', `${errorKeyword}`, 'error');
       return;
     }

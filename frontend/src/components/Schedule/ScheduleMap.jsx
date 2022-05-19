@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { BASE_IMG_URL } from '../../core/s3';
 import { Axios, axios_apis } from '../../core/axios';
 import './Schedule.scss';
-import { max } from 'moment';
 import CloseIcon from '@mui/icons-material/Close';
 import swal from 'sweetalert';
 import meetIcon from '../../assets/images/meetIcon.png';
@@ -16,8 +15,6 @@ export const ScheduleMap = (props) => {
   const [myLng, setMyLng] = useState(null);
   // todo : 상대방 위치 정보 받아오기
   const [otherImg, setOtherImg] = useState(null);
-  // const [otherLat, setOtherLat] = useState(35.094068611669925);
-  // const [otherLng, setOtherLng] = useState(128.85567290875736);
   const [otherLat, setOtherLat] = useState(null);
   const [otherLng, setOtherLng] = useState(null);
 
@@ -37,7 +34,6 @@ export const ScheduleMap = (props) => {
   const setOtherPosition = () => {
     Axios.get(`${axios_apis.plans.findPosition}?opponentEmail=${otherEmail}`)
       .then((data) => {
-        console.log(data.data);
         setOtherLat(data.data.lat);
         setOtherLng(data.data.lng);
       })
@@ -64,7 +60,6 @@ export const ScheduleMap = (props) => {
     let customOverlay = new kakao.maps.CustomOverlay({ xAnchor: 0.5, yAnchor: 2.1 });
     setKakaoCustomOverlay(customOverlay);
 
-    // var imageSrc = 'img/meetIcon.png';
     var imageSrc = meetIcon;
     var imageSize = new kakao.maps.Size(50, 55);
     var imageOption = { offset: new kakao.maps.Point(24, 51) };
@@ -95,12 +90,6 @@ export const ScheduleMap = (props) => {
 
   const setMarker = () => {
     var myLoc = new kakao.maps.LatLng(myLat, myLng);
-
-    // var imageSrc = `${BASE_IMG_URL}${myImg}`, // 마커이미지의 주소입니다
-    //   imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-    //   imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-
-    // var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
     // 커스텀 오버레이
     var myImgUrl;
@@ -194,7 +183,6 @@ export const ScheduleMap = (props) => {
         tag1[0].classList.remove('selected');
         tag2[0].classList.remove('selected');
         kakaoCustomOverlay.setMap(null);
-        // kakaoInfoWindow.close();
       }
     }
   };
@@ -288,7 +276,6 @@ export const ScheduleMap = (props) => {
 
   const recommendCallback = (result, status) => {
     if (status === kakao.maps.services.Status.OK) {
-      console.log(result);
       var nearPlace = null;
 
       // 일정 반경에 장소가 있는지, 가장 가까운 장소 구하기
@@ -327,9 +314,6 @@ export const ScheduleMap = (props) => {
       kakaoCustomOverlay.setContent(content);
       kakaoCustomOverlay.setMap(kakaoMap);
 
-      // kakaoInfoWindow.setContent(content);
-      // kakaoInfoWindow.open(kakaoMap, kakaoMarker);
-
       props.setLat(nearPlace.y);
       props.setLng(nearPlace.x);
     }
@@ -357,15 +341,12 @@ export const ScheduleMap = (props) => {
       setMarker();
     }
     if (kakaoMap && kakaoMarker) {
-      console.log(props);
       if (authority || (lat && lng)) addEventListener();
     }
   }, [kakaoMap]);
 
   return (
     <>
-      {console.log(otherImage)}
-
       <div id="scheduleMap">
         {!lat && !lng && (
           <>

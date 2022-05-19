@@ -6,15 +6,15 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { clearUser } from '../Reducer/userSlice';
 import { clearChat } from '../Reducer/chatSlice';
 import './Header.scss';
-import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
+import swal from 'sweetalert';
 import { PositioningMapModal } from './Map/PositioningMapModal';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
-
-import firebase from '../firebaseInit';
 import Box from '@mui/material/Box';
 import Popper from '@mui/material/Popper';
+
+import firebase from '../firebaseInit';
 import alarmFull from '../assets/images/alarmFull.png';
 import alarmEmpty from '../assets/images/alarmEmpty.png';
 
@@ -67,7 +67,6 @@ export const Header = () => {
       getAddrName();
     }
     const token = sessionStorage.getItem('jwt-token');
-    // console.log(token);
     if (!token) dispatch(clearUser());
   }, []);
 

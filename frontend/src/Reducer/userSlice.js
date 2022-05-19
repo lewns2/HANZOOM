@@ -8,7 +8,6 @@ export const getUserInfo = createAsyncThunk('GET/USERINFO', async () => {
       Authorization: `Bearer ${token}`,
     },
   });
-  //   console.log(response.data);
   return response.data;
 });
 
@@ -45,7 +44,6 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getUserInfo.fulfilled, (state, action) => {
       state.userInfo = action.payload;
-      console.log(state.userInfo);
     });
   },
 });

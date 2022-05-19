@@ -5,7 +5,8 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Axios } from '../../../core/axios';
 import { axios_apis } from '../../../core/axios';
 import { Link, useNavigate } from 'react-router-dom';
-import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
+import swal from 'sweetalert';
+
 export const SignUpForm = () => {
   const [email, setEmail] = useState('');
   const [nickName, setNickName] = useState('');

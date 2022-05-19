@@ -13,7 +13,6 @@
     a {
       text-decoration: none;
       color: #222;
-      // font-weight: bold;
       &:hover {
         color: #222;
       }
@@ -71,34 +70,21 @@
       }
       &::-webkit-scrollbar-thumb {
         border-radius: 5px;
-        // background-color: #ccc;
         background-color: #f7c343;
       }
       &::-webkit-scrollbar-track {
-        // background-color: #eee;
         background-color: #fcfcfc;
       }
     }
     thead {
       background-color: #f3c85c;
-      // @media only screen and (max-width: 1400px) {
-      //   width: 60% !important;
-      // }
-      // @media only screen and (max-width: 1200px) {
-      //   width: 70% !important;
-      // }
-      // @media only screen and (max-width: 991px) {
-      //   width: 60% !important;
-      // }
+
       @media only screen and (max-width: 414px) {
         font-size: 8px;
       }
     }
     td {
       height: 80px;
-    }
-    @media only screen and (max-width: 991px) {
-      // padding: 20px;
     }
   }
   @media only screen and (max-width: 991px) {

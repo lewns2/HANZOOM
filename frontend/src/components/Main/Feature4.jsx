@@ -14,7 +14,6 @@ export const Feature4 = () => {
             container
             spacing={0}
             direction="column"
-            // alignItems="center"
             justifyContent="center"
             style={{ minHeight: '100%' }}>
             <Grid item xs={3}>

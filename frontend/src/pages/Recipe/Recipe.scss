@@ -11,9 +11,7 @@
 }
 
 .recipeTextWrap {
-  // height: 100vh;
   height: 700px;
-  // display: grid;
   justify-items: stretch;
   align-content: center;
 
@@ -89,7 +87,6 @@
 
     .recipeNotFound {
       font-size: 25px;
-      // color: gray;
     }
     .searchNotFound {
       display: flex;
@@ -139,11 +136,6 @@
   .slick-next::before {
     content: url(../../assets/icon_next.png);
   }
-
-  // @media only screen and (max-width: 576px) {
-  //   max-width: 100% !important;
-  //   min-width: 100px !important;
-  // }
 }
 
 /* 마우스호버 이벤트 관련*/
@@ -178,9 +170,6 @@
   transform: translateY(100%);
   transition: 0.5s;
 }
-// .event1:hover .imgBox {
-//   display: none;
-// }
 .event1:hover .hoverBox {
   text-align: center;
   visibility: visible;
@@ -196,11 +185,9 @@
 
   .recipeFormWrap {
     width: 100%;
-    // padding-top: 40px;
     padding-left: 40px;
     padding-right: 40px;
     border-radius: 0.8rem;
-    // margin-top: 40px;
     margin-bottom: 100px;
 
     @media only screen and (max-width: 768px) {
@@ -279,8 +266,6 @@
               padding: 15px;
               width: 60px;
               height: 60px;
-              // background: #74b243;
-              // border: 1px solid #68a13a;
               background: #ff7f00;
               border: 1px solid #ff7f00;
               border-radius: 50%;

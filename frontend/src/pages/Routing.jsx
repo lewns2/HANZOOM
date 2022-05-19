@@ -15,7 +15,7 @@ import { Header } from '../components/Header';
 import { KaKaoCall } from '../components/User/Login/KaKaoCall';
 import { MyChat } from '../components/Chat/MyChat';
 import { MyChatDisplay } from '../components/Chat/MyChatDisplay';
-import { Footer } from '../components/Main/Footer';
+import { Footer } from '../components/Footer';
 import { Admin } from './Admin/Admin';
 import { NotFound } from '../components/NotFound/NotFound';
 import ChatIcon from '../assets/images/chat.png';

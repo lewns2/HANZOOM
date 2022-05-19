@@ -1,33 +1,31 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Axios } from '../../../core/axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { getUserInfo, setLoginType } from '../../../Reducer/userSlice';
-import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
+import swal from 'sweetalert';
+
 export const KaKaoCall = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [code, setCode] = useState(null);
   const temp = new URL(window.location.href).searchParams.get('code');
 
-  // const { code } = useSelector((state) => state.user);
-  // setCode(temp);
   useEffect(() => {
     setCode(temp);
-    // console.log(new URL(window.location.href));
-    // setCode(new URL(window.location.href).searchParams.get('code'));
   }, []);
+
   useEffect(() => {
     if (code !== null) {
       getKaKaoUserInfoAPI();
     }
   }, [code]);
+
   const getKaKaoUserInfoAPI = async () => {
     const browerToken =
       localStorage.getItem('browerToken') === null ? '' : localStorage.getItem('browerToken');
     await Axios.post(`/auth/kakao/${code}`, browerToken)
       .then((res) => {
-        console.log(res);
         if (res.data.accessToken) {
           sessionStorage.setItem('jwt-token', res.data.accessToken);
         }
@@ -63,7 +61,7 @@ export const KaKaoCall = () => {
 
   return (
     <>
-      <div>{console.log('>>>>>>>>>>>>>>>>>>>>>>>>> 처음ㄴ useEffect' + code)};</div>
+      <div></div>
     </>
   );
 };

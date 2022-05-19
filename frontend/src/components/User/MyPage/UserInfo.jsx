@@ -46,8 +46,8 @@ export const UserInfo = (props) => {
   useEffect(() => {
     setUserInfo(user.userInfo);
     setLoginType(user.loginType);
-    console.log(user.loginType);
   }, []);
+
   useEffect(() => {
     setUserInfo(user.userInfo);
   }, [user]);

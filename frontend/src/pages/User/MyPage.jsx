@@ -13,20 +13,6 @@ export const MyPage = () => {
       <section className="container mt-4">
         {modalOpen ? <UserInfoUpdate open={modalOpen} setModalOpen={setModalOpen} /> : null}
         <h1 className="pageTitle">MY페이지</h1>
-        {/* <div className="myPageWrap">
-          <div className="row">
-            <div className="col-lg-6 col-sm-12 d-flex align-items-center">
-              <UserInfo setModalOpen={setModalOpen} />
-            </div>
-            <div className="col-lg-6 col-sm-12 d-flex justify-content-center">
-              <UserCalendar />
-            </div>
-          </div>
-        </div>
-        <div className="favoriteListWrap">
-          <h3>찜목록</h3>
-          <FavoriteList />
-        </div> */}
         <div className="myPageWrap">
           <div className="row">
             <div className="col-lg-4 col-md-12 col-sm-12 col-xs-12">

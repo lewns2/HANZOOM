@@ -1,4 +1,4 @@
-import { useRef, useEffect, memo } from 'react';
+import { useRef, useEffect } from 'react';
 import lottie from 'lottie-web';
 
 const Lottie = ({ src, loop = true, autoplay = true, controller, className }) => {

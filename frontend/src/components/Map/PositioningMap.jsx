@@ -1,4 +1,3 @@
-import { height } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { Axios } from '../../core/axios';
 import { useDispatch } from 'react-redux';
@@ -24,15 +23,12 @@ export const PositioningMap = (props) => {
   const dispatch = useDispatch();
 
   const onCompletePost = async (data) => {
-    console.log(data);
-    console.log(data.jibunAddress);
     setIsOpenPost(false);
     addrSearch(data.jibunAddress);
   };
   // 유저 위치 정보 업데이트
   const toggle = () => {
     setIsOpenPost(true);
-    console.log(isOpenPost);
   };
   const postCodeStyle = {
     display: 'block',
@@ -98,7 +94,6 @@ export const PositioningMap = (props) => {
 
   // 마커 생성 함수
   const initMarkerAndInfoWindow = () => {
-    console.log(kakaoMarker);
     kakaoMarker.setPosition(userLoc);
 
     // 상세 주소 요청

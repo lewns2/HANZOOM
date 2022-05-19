@@ -1,22 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+
 import { Axios } from '../../core/axios';
-import { useParams } from 'react-router-dom';
-import sample from '../../assets/images/Initimage.PNG';
 import needSample from '../../assets/images/need.PNG';
-import { Link, useNavigate } from 'react-router-dom';
 import './BoardDetail.scss';
-import { BreakfastDiningRounded } from '@mui/icons-material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { changeShow, setRoomId, getChatMessageInfo } from '../../Reducer/chatSlice';
 import { setOtherImage } from '../../Reducer/userSlice';
-
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Row, Col } from 'react-bootstrap';
 
 const BASE_IMG_URL = 'https://hanzoom-bucket.s3.ap-northeast-2.amazonaws.com/';
+
 export const BoardDetail = () => {
   const user = useSelector((state) => state.user);
   const [userInfo, setUserInfo] = useState([]);
@@ -42,8 +40,7 @@ export const BoardDetail = () => {
           setContent(res.data),
           setLikeStatus(res.data.like),
           setLikeCnt(res.data.likeCnt),
-          pasingIngredientName(res.data),
-          console.log(res.data)
+          pasingIngredientName(res.data)
         ),
       )
       .catch((err) => console.log(err));
@@ -148,7 +145,6 @@ export const BoardDetail = () => {
         },
       )
         .then((res) => {
-          // console.log(res);
           setReport(false);
         })
         .catch((err) => console.log(err));
@@ -164,7 +160,6 @@ export const BoardDetail = () => {
               <div className="col-6 d-flex">
                 <img
                   className="detailProfileImg"
-                  // src="/img/basicProfile.png"
                   src={
                     content.userImage
                       ? content.userImage.includes('kakao')
@@ -202,13 +197,7 @@ export const BoardDetail = () => {
                   &nbsp;
                   <p>관심 {likeCnt}</p>
                 </div>
-                {/* <div
-                  className="detailMyContent"
-                  style={{
-                    display: userInfo.userNickname == content.userNickname ? '' : 'none',
-                  }}>
-                  <p>내가 작성한 게시글입니다.</p>
-                </div> */}
+
                 <div
                   className="detailIcon"
                   style={{
@@ -320,11 +309,6 @@ export const BoardDetail = () => {
                 </div>
               ))}
             </div>
-            {/* <div className="detailCounts">
-              <p>조회 {content.viewCnt} ∙</p>
-              &nbsp;
-              <p>관심 {likeCnt}</p>
-            </div> */}
             <div className="detailFooter">
               <button
                 id="detailDeleteBtn"

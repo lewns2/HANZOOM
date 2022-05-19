@@ -46,18 +46,7 @@ $desktop: 1400px;
     margin-right: 20px;
     box-shadow: 0 4px 4px -4px #777;
   }
-  // .matchClickedCaseBtn {
-  //   font-size: 18px;
-  //   width: 50px;
-  //   height: 50px;
-  //   font-weight: bolder;
-  //   background-color: #f2d17a;
-  //   border: 2px solid #f7c343;
-  //   border-radius: 70%;
-  //   padding: 3px 2px;
-  //   margin-right: 20px;
-  //   box-shadow: 0 4px 4px -4px #777;
-  // }
+
   .matchDist {
     background-color: #f7c343;
     display: inline-table;
@@ -118,13 +107,6 @@ $desktop: 1400px;
   }
 }
 
-.matchBody {
-  // height: 85vh;
-  // @media (max-width: 500px) {
-  //   margin-bottom: 300px;
-  // }
-}
-
 /* 매칭 완료 창 */
 .matchFormWrap {
   margin-bottom: 100px;
@@ -140,7 +122,6 @@ $desktop: 1400px;
     display: flex;
     justify-content: center;
     font-size: 25px;
-    // color: darkcyan;
   }
   .matchFindIngredients {
     display: flex;
@@ -343,28 +324,16 @@ $desktop: 1400px;
 
 .matchCount {
   background-color: red;
-  // margin-top: 15px;
   font-size: 20px;
-  // color: white;
-  // padding: 15px;
   color: white;
   width: 25px;
   height: 25px;
-  // background: #74b243;
-  // border: 1px solid #68a13a;
-  // background: #ff7f00;
-  // border: 1px solid #ff7f00;
   border-radius: 50%;
 }
 .matchInfo_wrap {
-  // position: absolute;
   bottom: 28px;
   left: -150px;
   width: 220px;
-
-  // @media only screen and (max-width: $mobile) {
-  //   width: 100px;
-  // }
 }
 
 .matchInfo {
@@ -546,7 +515,6 @@ input[id='radio-2'] {
   width: 400px;
   height: 400px;
   font-size: 30px;
-  // margin: 80px 50px 30px 50px;
   margin-top: 10%;
   border-radius: 1rem;
   border: 5px solid #f7c343;

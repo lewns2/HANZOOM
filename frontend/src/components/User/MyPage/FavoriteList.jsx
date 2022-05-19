@@ -25,7 +25,6 @@ export const FavoriteList = () => {
         Authorization: `Bearer ${token}`,
       },
     }).then((res) => {
-      console.log(res.data);
       setLikeList(res.data);
     });
   };
@@ -36,7 +35,6 @@ export const FavoriteList = () => {
 
   return (
     <>
-      {console.log(likeList)}
       <div className="container favoriteList">
         {likeList && likeList.length != 0 ? (
           <Slider {...settings}>

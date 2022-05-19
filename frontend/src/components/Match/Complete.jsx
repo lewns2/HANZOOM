@@ -15,13 +15,9 @@ export const Complete = (props) => {
     setChecked(event.target.checked);
   };
 
-  useEffect(() => {
-    // console.log(clickCase);
-    // console.log(checked);
-  }, [clickCase, checked]);
+  useEffect(() => {}, [clickCase, checked]);
 
   const renderCase = () => {
-    // console.log(matchingList);
     const caseList = [];
     for (let i = 0; i < matchingList.length; i++) {
       caseList.push(
@@ -59,16 +55,6 @@ export const Complete = (props) => {
     return findIngredient;
   };
 
-  // const renderNotFoundIngredient = () => {
-  //   console.log(notFound);
-  //   const notFoundIngredient = [];
-  //   for (let i = 0; i < notFound.length; i++) {
-  //     var ingre = notFound[i];
-  //     notFoundIngredient.push(<p className="matchNotTag">#{ingre}</p>);
-  //   }
-  //   return notFoundIngredient;
-  // };
-
   return (
     <section className="container matchContainer">
       <div className="matchFormWrap">
@@ -83,7 +69,6 @@ export const Complete = (props) => {
         <div>{renderDist()}</div>
         <div className="matchIngredients">
           <div className="matchFindIngredients">{renderIngredient()}</div>
-          {/* <div className="matchNotFoundIngredients">{renderNotFoundIngredient()}</div> */}
         </div>
         <div className="matchMartView">
           <p>
@@ -101,19 +86,3 @@ export const Complete = (props) => {
     </section>
   );
 };
-
-/* 매칭리스트 - 토탈 거리, 재료를 가진 유저, 재료 정보 */
-// const totalDistance = matchingList[index].totalDistance;
-// const userIngredientMatchingRes = matchingList[index].userIngredientMatchingRes;
-
-// userIngredientMatchingRes.boardNo;
-// userIngredientMatchingRes.distance;
-// userIngredientMatchingRes.expirationDate;
-// userIngredientMatchingRes.purchaseDate;
-// userIngredientMatchingRes.ingredientName;
-// userIngredientMatchingRes.lat;
-// userIngredientMatchingRes.lng;
-// userIngredientMatchingRes.type;
-// userIngredientMatchingRes.userEmail;
-// userIngredientMatchingRes.userIngredientNo;
-// userIngredientMatchingRes.userNickname;
