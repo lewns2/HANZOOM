@@ -14,6 +14,7 @@ export const MyChat = (props) => {
   const outSection = useRef();
   const dispatch = useDispatch();
   const chat = useSelector((state) => state.chat);
+  const user = useSelector((state) => state.user);
 
   // 바깥 화면을 클릭해도 채팅리스트를 사라지게하는 함수
   const clickOutSection = (e) => {
@@ -23,7 +24,7 @@ export const MyChat = (props) => {
   };
 
   useEffect(() => {
-    dispatch(getChatInfo());
+    if (user.userInfo.length !== 0) dispatch(getChatInfo());
   }, []);
 
   return (
