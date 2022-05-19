@@ -23,7 +23,9 @@ export const BestBoard = () => {
     });
   };
   useEffect(() => {
-    getContents();
+    if (user.userInfo.length !== 0) {
+      getContents();
+    }
   }, []);
 
   return (

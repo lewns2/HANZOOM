@@ -36,7 +36,6 @@ export const chatSlice = createSlice({
       state.chatInfo = [];
       state.chatRoomId = '';
       state.chatMessageInfo = [];
-      console.log('cleared!!');
     },
   },
   extraReducers: (builder) => {
