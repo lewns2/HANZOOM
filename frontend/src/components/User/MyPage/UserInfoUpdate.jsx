@@ -73,15 +73,14 @@ export const UserInfoUpdate = (props) => {
 
   const pwdCheck = () => {
     const token = sessionStorage.getItem('jwt-token');
-    Axios.post(
-      `${axios_apis.users.passwordCheck}?userPassword=${password}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    Axios.post(`${axios_apis.users.passwordCheck}`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    ).then((res) => {
+      params: {
+        userPassword: password,
+      },
+    }).then((res) => {
       if (res.data) {
         setPasswordCheck(true);
         setUserPassword(password);
