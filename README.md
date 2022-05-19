@@ -4,8 +4,6 @@
 
 <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white"/> <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socket.io&logoColor=white"/>
 
-
-
 ## 1. 서비스 설명
 
 ### 개요
@@ -17,18 +15,16 @@
 - 서비스 명 : **한 줌(HANZOOM)**
   <br/>
   <br/>
-  
-  
+
 ## 2. 기획 배경
 
 ### 🖼 배경
 
 - 1인 가구 수가 매년 증가하고 있는 가운데, 1인 가구의 식품 절반은 음식물 쓰레기로 버려진다고 합니다. 이는 식재료의 양이 혼자 사용하기 벅차거나 질리고 또, 조리법을 잘 몰라 식재료를 사용하지 않고 오래 보관하여 상하는 경우가 많기 때문입니다.
 
-  
-
   이로 인해 사람들은 직접 해먹지않고 배달음식을 선택하게 되는데,이는 식비 증가의 부담과 동시에 음식물쓰레기뿐만 아니라 포장 용기로 인한 플라스틱 쓰레기 문제까지 이어지게 됩니다.
   <br/>
+
 ### 🎯 타겟
 
 - 어떤 요리를 해야할지 모르는 사람
@@ -41,7 +37,6 @@
   <br/>
   <br/>
 
-  
 ## 3. 서비스 화면
 
 ### 📺 시연영상
@@ -88,13 +83,13 @@
 
 ### 게시판
 
-* 게시판
+- 게시판
 
 ![게시판](./exec/assets/boardpage.gif)
 
 <br/>
 
-* 게시글 상세
+- 게시글 상세
 
 ![게시글상세](./exec/assets/board_detail.gif)
 
@@ -132,7 +127,7 @@
 
 ### 채팅
 
-* 유저 간 1:1 실시간 채팅
+- 유저 간 1:1 실시간 채팅
 
 ![채팅](./exec/assets/chat.gif)
 
@@ -223,8 +218,6 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 프로젝트 컨벤션, 문서, 참고자료, 산출물, 데일리 스크럼 등을 설정했습니다.
 
-
-
 ![데일리스크럼](./exec/assets/notion_daily_scrum.PNG)
 
 <br/>
@@ -244,7 +237,8 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 - OS: Windows10
 - Backend Framework: Spring Boot 2.4.5
 - Frontend Framework: React 18.0.0
-- DB: 8.0.29-0ubuntu0.20.04.3 (Ubuntu)
+- MySQL: 8.0.29-0ubuntu0.20.04.3 (Ubuntu)
+- MongoDB: MongoDB 4.4.13
 - WAS: Gradle
 - JVM: openJDK (1.8.0_192)
 - Node.js: 16.14
