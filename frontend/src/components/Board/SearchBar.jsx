@@ -16,7 +16,7 @@ export const SearchBar = (props) => {
   return (
     <div className="searchBar d-flex justify-content-end px-4">
       <input
-        className="form-control mx-1"
+        className="form-control mx-1 fontMedium"
         id="text-area"
         type="text"
         placeholder="찾으시는 식재료명을 입력해주세요"
