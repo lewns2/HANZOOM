@@ -13,15 +13,11 @@
 - 한줄 소개 : 위치기반 식재료 나눔/교환 서비스
 - 서비스 명 : **한 줌(HANZOOM)**
 
-
-
-
-
 ## 2. 기획 배경
 
 ### 🖼 배경
 
-- 1인 가구 수가 매년 증가하고 있는 가운데, 1인 가구의 식품 절반은 음식물 쓰레기로 버려진다고 합니다. 이는 식재료의 양이 혼자 사용하기 벅차거나 질리고 또, 조리법을 잘 몰라 식재료를 사용하지 않고 오래 보관하여 상하는 경우가 많기 때문입니다. 
+- 1인 가구 수가 매년 증가하고 있는 가운데, 1인 가구의 식품 절반은 음식물 쓰레기로 버려진다고 합니다. 이는 식재료의 양이 혼자 사용하기 벅차거나 질리고 또, 조리법을 잘 몰라 식재료를 사용하지 않고 오래 보관하여 상하는 경우가 많기 때문입니다.
   이로 인해 사람들은 직접 해먹지않고 배달음식을 선택하게 되는데,이는 식비 증가의 부담과 동시에 음식물쓰레기뿐만 아니라 포장 용기로 인한 플라스틱 쓰레기 문제까지 이어지게 됩니다.
 
 ### 🎯 타겟
@@ -30,10 +26,6 @@
 - 상해서 버리는 식재료가 많고 쉽게 식재료를 구하고 싶은 사람
 - 여행이나 일정 등으로 빠르게 남은 식재료를 처리하고 싶은 사람
 - 혼자 구매하기 양이 많아 걱정인 1인 가구
-
-
-
-
 
 ## 3. 서비스 화면
 
@@ -53,21 +45,33 @@
 
 ![식재료 등록 및 게시글 등록](./exec/assets/식재료 등록 및 게시글 등록.gif)
 
-
-
 ### 식재료 매칭
 
-- 식재료 매칭 성공
+- 추천 레시피 &rightarrow; 자동 매칭 성공
 
-![매칭성공](./exec/assets/매칭완료.gif)
+![레시피식재료매칭성공](./exec/assets/레시피식재료매칭성공.gif)
+<br/>
 
-- 식재료 매칭 실패
+- MY 식재료(필요 목록) &rightarrow; 선택 매칭 성공
 
-![매칭실패](./exec/assets/매칭실패.gif)
+![식재료매칭성공](./exec/assets/식재료매칭성공.gif)
+<br/>
 
+- 매칭 성공 시, 결과 페이지
 
+![식재료매칭완료페이지](./exec/assets/식재료매칭완료페이지.gif)
+<br/>
 
+- 추천 레시피 &rightarrow; 자동 매칭 실패
 
+![레시피식재료매칭실패](./exec/assets/레시피식재료매칭실패.gif)
+<br/>
+
+- MY 식재료(필요 목록) &rightarrow; 선택 매칭 실패
+
+![식재료매칭실패](./exec/assets/식재료매칭실패.gif)
+
+<br/><br/>
 
 ### 일정
 
@@ -78,10 +82,6 @@
 - 일정 상세보기(공유)
 
 ![일정상세보기](./exec/assets/%EC%9D%BC%EC%A0%95%EA%B3%B5%EC%9C%A0.gif)
-
-
-
-
 
 ## 4. 기술스택
 
@@ -98,7 +98,7 @@
 
 <br/>
 
-##  🏞Git Flow
+## 🏞Git Flow
 
 git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://techblog.woowahan.com/2553/)을 참고했습니다. 각자 맡은 기능에 맞게 `feature` 브랜치를 생성하고, 완료된 기능은 `develop`에 merge하여 사용했습니다. 충돌 상황을 최소화하고자 매일 오전 스크럼에 `develop` 최신 버전을 `pull`받고 시작할 것을 강조했습니다.
 
@@ -119,7 +119,7 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 <br/>
 
-##  📋 Jira
+## 📋 Jira
 
 매주 월요일 오전 회의에서 차주에 진행되어야 할 이슈를 백로그에 등록했습니다. 금주에 완료하지 못한 이슈나, 앞으로 진행할 이슈들을 추가합니다.
 
@@ -133,7 +133,7 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 <br/>
 
-##  📝Notion
+## 📝Notion
 
 모두가 공유해야할 자료 및 링크는 노션에 정리했습니다. 특히 `userflow`나 `api 명세` 와 같이 여러번 다시 봐야하고 중요한 정보들은 특히 노션에 공유하여 불필요한 커뮤니케이션 리소스를 줄이기 위해 노력했습니다.
 
@@ -149,11 +149,9 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 서버는 AWS EC2 ubuntu를 사용했습니다
 
-
-
 ## (1). ⚙ 시스템 환경 및 구성
 
-![기술스택](C:\Users\multicampus\Desktop\자율프로젝트\exec\assets\아키텍처.png)
+![기술스택](./exec/assets/아키텍처.png)
 
 - OS: Windows10
 - Backend Framework: Spring Boot 2.4.5
@@ -165,8 +163,6 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 - Docker: 20.10.14
 - WEB: Nginx (1.18.0)
 
-
-
 ## (2). Docker
 
 서로 다른 도커 이미지로 저장되어 있어 각각의 이미지를 실행시킵니다.
@@ -175,14 +171,11 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 docker 내부는 같은 네트워크로 묶어주기 위해 docker-compose로 실행합니다.
 
-
 ## (3). DevOps
 
 `Jenkins`로 CI/CD를 구축하여 develop 브랜치에 `merge` 이벤트 발생시 build하도록 구성했습니다.
 
 build 후 docker-compose를 실행하도록 했습니다.
-
-
 
 ## 7. UI / UX
 
@@ -191,10 +184,6 @@ build 후 docker-compose를 실행하도록 했습니다.
 figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런스를 참고하고, 서비스 특성에 맞게 제작했습니다.
 
 ![Figma사진](./exec/assets/figma.png)
-
-
-
-
 
 ## 8. DB
 
@@ -209,12 +198,10 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
 
 ## 👨‍👩‍👧‍👦 팀원 소개
 
-
-
-|             [김광희](https://github.com/heeya15)             |   [김동주]()   |   [김동현]()   |                          [정윤정]()                          |           [최영진](https://github.com/youngjin98)            |            [한성희](https://github.com/ehhclaire)            |
-| :----------------------------------------------------------: | :------------: | :------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="./exec/assets/gwanghee.jpg" width="80px;" height="80px" alt=""/> |                |                | <img src="./exec/assets/yoonjung.jpg" width="80px;" height="80px" alt=""/> | <img src="./exec/assets/youngjin.PNG" width="80px;" height="80px" alt=""/> | <img src="https://avatars.githubusercontent.com/u/22373060?v=4?s=100" width="100px;" alt=""/> |
-|             Front-end<br />Back-end<br/>Dev-Ops              | Front-end<br/> | Front-end<br/> |                        Front-end<br/>                        |                    Front-end<br/>Back-end                    |                    Front-end<br/>Back-end                    |
+|                    [김광희](https://github.com/heeya15)                    |   [김동주]()   |                    [김동현](https://github.com/lewns2)                     |                                 [정윤정]()                                 |                  [최영진](https://github.com/youngjin98)                   |                            [한성희](https://github.com/ehhclaire)                             |
+| :------------------------------------------------------------------------: | :------------: | :------------------------------------------------------------------------: | :------------------------------------------------------------------------: | :------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: |
+| <img src="./exec/assets/gwanghee.jpg" width="80px;" height="80px" alt=""/> |                | <img src="./exec/assets/donghyun.jpg" width="80px;" height="80px" alt=""/> | <img src="./exec/assets/yoonjung.jpg" width="80px;" height="80px" alt=""/> | <img src="./exec/assets/youngjin.PNG" width="80px;" height="80px" alt=""/> | <img src="https://avatars.githubusercontent.com/u/22373060?v=4?s=100" width="100px;" alt=""/> |
+|                    Front-end<br />Back-end<br/>Dev-Ops                     | Front-end<br/> |                               Front-end<br/>                               |                               Front-end<br/>                               |                           Front-end<br/>Back-end                           |                                    Front-end<br/>Back-end                                     |
 
 <br/>
 
@@ -226,7 +213,7 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
 
 - **김동현** :
 
-- **정윤정** : 
+- **정윤정** :
 - **최영진** :
 
 - **한성희** :
