@@ -1,0 +1,125 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  @media only screen and (max-width: 1400px) and (min-width: 992px) {
+    .container {
+      margin-right: 10px;
+    }
+  }
+  @media only screen and (max-width: 991px) {
+    a {
+      display: block;
+      width: 100%;
+    }
+    .badge {
+      margin-left: 20px;
+    }
+  }
+
+  .logo {
+    height: 50px;
+    line-height: 50px;
+    font-size: 25px;
+
+    a {
+      display: block;
+      width: 100%;
+    }
+  }
+  .navbar {
+    overflow: hidden;
+    background-color: #f7c343;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .positioning {
+      position: relative;
+      color: #888;
+      margin-left: 30%;
+
+      display: flex;
+      align-items: center;
+      width: 300px;
+      height: 50px;
+      background-color: #f7f6f2;
+      border-radius: 10px;
+      padding-right: 20px;
+      .addrName {
+        width: 100%;
+        text-align: center;
+        color: #222;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .locationIcon {
+        position: absolute;
+        top: 10.8px;
+        right: 5px;
+        cursor: pointer;
+      }
+      @media only screen and (max-width: 1400px) {
+        margin-left: 25%;
+      }
+      @media only screen and (max-width: 1199px) {
+        margin-left: 14%;
+      }
+      @media only screen and (max-width: 991px) {
+        margin-left: 4%;
+      }
+      @media only screen and (max-width: 767px) {
+        margin-left: 0;
+        width: 210px;
+        .addrName {
+          font-size: 13px;
+        }
+      }
+      @media only screen and (max-width: 387px) {
+        margin-left: -30px;
+        width: 210px;
+        .addrName {
+          font-size: 13px;
+        }
+      }
+    }
+    @media only screen and (max-width: 991px) {
+      #responsive-navbar-nav {
+        margin-top: 12px;
+      }
+    }
+
+    a {
+      color: #222;
+      margin: 0 2rem 0 0;
+      padding: 0;
+      text-decoration: none;
+      font-weight: bold;
+      align-items: center;
+      &:hover {
+        color: #444;
+      }
+    }
+  }
+}
+
+.scrollUl {
+  list-style: none;
+  margin: 0px;
+  position: relative;
+  padding: 0px;
+  width: 320px;
+  max-height: 320px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #f7c343;
+    border-radius: 25px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #eee;
+  }
+}

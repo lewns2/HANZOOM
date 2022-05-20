@@ -1,0 +1,6 @@
+FROM adoptopenjdk/openjdk11:alpine-slim
+EXPOSE 8443
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENV TZ=Asia/Seoul
+ENTRYPOINT ["java","-jar","/app.jar"]

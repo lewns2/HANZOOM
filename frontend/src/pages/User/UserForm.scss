@@ -1,0 +1,110 @@
+.userFormWrap {
+  background-color: #f7c343;
+  height: calc(100vh - 70px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+
+  .formWrap {
+    background-color: #fdf9f9;
+    width: 400px;
+    @media only screen and (max-width: 480px) {
+      width: 350px;
+    }
+    padding: 50px 35px;
+    border-radius: 20px;
+  }
+  .title {
+    color: #f7c343;
+    font-weight: 600;
+    margin-bottom: 40px;
+  }
+  .form-control {
+    margin-bottom: 10px;
+    height: 45px;
+  }
+
+  .formInput {
+    position: relative;
+    padding: 0;
+    font-family: 'GmarketSansMedium';
+  }
+
+  .checkBtn {
+    font-size: 13px;
+    background-color: #f7c343;
+    border: 1px solid #f7c343;
+    border-radius: 8px;
+    width: 65px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    padding: 8px 0;
+  }
+
+  .visibleIcon {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    cursor: pointer;
+  }
+
+  .formBtn {
+    font-size: 18px;
+    font-weight: bolder;
+    background-color: #f7c343;
+    border: 1px solid #f7c343;
+    border-radius: 8px;
+    padding: 8px 0;
+    margin: 10px 0;
+  }
+
+  .loginBottom {
+    padding: 0;
+    p {
+      color: #888;
+      font-size: 12px;
+      cursor: pointer;
+      &:hover {
+        color: #f7af43;
+      }
+    }
+    .findPwd {
+      color: #222;
+      font-weight: bold;
+    }
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .findPwdBottom {
+    padding: 0;
+    p {
+      color: #444;
+      font-size: 13px;
+      cursor: pointer;
+      &:hover {
+        color: #f7af43;
+      }
+    }
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .loginExplain {
+    p {
+      color: #666;
+      font-size: 12px;
+      text-align: right;
+      cursor: pointer;
+      &:hover {
+        color: #f7af43;
+      }
+    }
+    a {
+      text-decoration: none;
+    }
+  }
+}

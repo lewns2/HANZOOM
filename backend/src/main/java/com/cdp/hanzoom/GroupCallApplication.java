@@ -2,6 +2,8 @@ package com.cdp.hanzoom;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -11,8 +13,12 @@ import java.nio.charset.StandardCharsets;
 
 @SpringBootApplication
 public class GroupCallApplication {
+    public static final String APPLICATION_LOCATIONS = "spring.config.location="
+            + "classpath:application.properties,"
+            + "classpath:aws.yml";
+
 	public static void main(String[] args) {
-        SpringApplication.run(GroupCallApplication.class, args);
+        new SpringApplicationBuilder(GroupCallApplication.class).properties(APPLICATION_LOCATIONS).run(args);
     }
 
     @Bean

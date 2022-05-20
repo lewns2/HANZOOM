@@ -1,0 +1,21 @@
+# AWS 관련 키
+# Key는 삭제하고 올리기
+---
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIA4ICHGPGZZS7REHNY #IAM 사용자 엑세스 키
+      secretKey: /23gPMmoUDsc3AN5KbVCCyig9/lNxT/Ojca55ZE/ #IAM 사용자 비밀 엑세스 키
+    s3:
+      bucket: hanzoom-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
