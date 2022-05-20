@@ -51,7 +51,6 @@ export const LoginForm = () => {
       userPassword: password,
     })
       .then((res) => {
-        console.log(res);
         if (res.data.accessToken) {
           sessionStorage.setItem('jwt-token', res.data.accessToken);
         }
