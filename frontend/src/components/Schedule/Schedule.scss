@@ -1,0 +1,286 @@
+.scheduleWrap {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.8);
+
+  .schedule {
+    position: relative;
+    background-color: #fff;
+    width: 1100px;
+
+    height: 600px;
+    margin: 0 auto;
+
+    padding: 10px 40px;
+    border-radius: 10px;
+
+    @media only screen and (max-width: 480px) {
+      width: 400px;
+    }
+    @media only screen and (max-width: 360px) {
+      width: 350px;
+    }
+
+    .boardButton {
+      position: absolute;
+      top: 8px;
+      right: 40px;
+      font-size: 14px;
+      font-weight: bolder;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      padding: 4px 10px;
+      box-shadow: 0 4px 4px -4px #777;
+
+      @media only screen and (max-width: 480px) {
+        font-size: 10px;
+        padding: 4px 1px;
+      }
+    }
+
+    .scheduleItems {
+      background-color: #eee;
+
+      width: 100%;
+      height: 85%;
+      padding: 45px 0;
+
+      @media only screen and (max-width: 992px) {
+        padding: 90px 0 0;
+      }
+
+      .row {
+        width: 100%;
+        height: 100%;
+
+        @media only screen and (max-width: 992px) {
+          overflow: auto;
+          margin-bottom: 90px;
+        }
+      }
+
+      .scheduleDate {
+        position: relative;
+
+        @media only screen and (max-width: 992px) {
+          margin-bottom: 90px;
+        }
+
+        .schecduleTime {
+          position: absolute;
+          bottom: 15px;
+
+          @media only screen and (max-width: 992px) {
+            bottom: -40px;
+          }
+
+          input {
+            width: 44px;
+          }
+          span {
+            display: inline-block;
+            font-size: 20px;
+            line-height: 32px;
+            margin: 1px;
+            padding-top: 3px;
+            margin-left: 3px;
+          }
+          div {
+            margin: 0 3px;
+          }
+        }
+      }
+
+      .scheduleMap {
+        position: relative;
+        height: 100%;
+        .mapExplain {
+          width: 100%;
+          position: absolute;
+          top: -30px;
+          left: 0px;
+          color: #222;
+          z-index: 99999;
+          text-align: center;
+        }
+      }
+
+      .scheduleDetailMap {
+        width: 100%;
+
+        height: 90%;
+
+        #scheduleDetailMap {
+          width: 90%;
+          height: 100%;
+          .bAddr {
+            padding: 5px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-weight: bolder;
+
+            .adrrName {
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+
+    .scheduleDetails {
+      padding-top: 30px;
+    }
+
+    .btn {
+      font-size: 14px;
+      border-radius: 8px;
+      padding: 4px 10px;
+      margin: 0 3px;
+      box-shadow: 0 4px 4px -4px #777;
+
+      @media only screen and (max-width: 992px) {
+      }
+
+      @media only screen and (max-width: 480px) {
+        font-size: 10px;
+        padding: 3px 8px;
+      }
+    }
+
+    .cancelBtn {
+      background-color: #fff;
+      border: 2px solid #f7c343;
+    }
+    .updateBtn {
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+    }
+    .removeBtn {
+      background-color: #fff;
+      border: 2px solid #f7c343;
+    }
+    .registBtn {
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+    }
+    .shareBtn {
+      background-color: #fbe300;
+      border: 2px solid #fbe300;
+
+      img {
+        width: 22px;
+        height: 22px;
+        margin-right: 3px;
+      }
+    }
+  }
+}
+
+// 맵
+#scheduleMap {
+  width: 100%;
+  height: 100%;
+
+  position: relative;
+
+  @media only screen and (max-width: 480px) {
+    width: 90%;
+  }
+
+  .bAddr {
+    padding: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: bolder;
+
+    .adrrName {
+      text-align: center;
+    }
+  }
+  .userImg {
+    margin-bottom: 30px;
+
+    width: 50px;
+    height: 50px;
+    border-radius: 70%;
+  }
+
+  .recommendBtn {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    background-color: #f7c343;
+    border: 1px solid #f7c343;
+    font-size: 16px;
+    font-family: 'CookieRun-Regular';
+  }
+
+  .recommendPlace {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    width: 100%;
+    height: 32px;
+    padding: 3px;
+    background-color: #fff;
+    font-size: 15px;
+    font-family: 'GmarketSansLight';
+    border: 1px solid #ccc;
+
+    .place {
+      margin: 0 20px;
+      cursor: pointer;
+
+      @media only screen and (max-width: 481px) {
+        margin: 0 16px;
+        font-size: 12px;
+      }
+      @media only screen and (max-width: 361px) {
+        margin: 0 10px;
+        font-size: 11px;
+      }
+    }
+
+    .selected {
+      color: #f7c343;
+      font-weight: bold;
+      border-bottom: 2px solid #f7c343;
+    }
+
+    .closeIcon {
+      position: absolute;
+      top: 3.5px;
+      right: 4px;
+    }
+  }
+
+  // infowindow
+  .placeInfo {
+    background-color: #fff;
+    padding: 5px 8px;
+    border-radius: 10px;
+
+    z-index: 3px;
+
+    .placeName {
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .placeUrl {
+      display: block;
+      text-decoration: none;
+      color: #aaa;
+      font-size: 10px;
+    }
+  }
+}

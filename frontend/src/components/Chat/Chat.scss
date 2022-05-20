@@ -1,0 +1,378 @@
+$speed: 0.8s;
+
+// 채팅창 보이게 하기
+.showChatWrap {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: all $speed;
+
+  .showChatList {
+    position: fixed;
+    left: 0px;
+    background-color: #fffcf2;
+    height: calc(100vh - 70px);
+    width: 350px;
+    transition: all $speed;
+    z-index: 99;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #f7c343;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #eee;
+    }
+  }
+}
+
+// 채팅창 안 보이게 하기
+.hideChatWrap {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  transition: all $speed;
+  visibility: hidden;
+
+  .hideChatList {
+    position: fixed;
+    left: -500px;
+    background-color: #fffcf2;
+    height: calc(100vh - 70px);
+    width: 350px;
+    transition: all $speed;
+    z-index: 0;
+  }
+}
+
+// 우측 하단 채팅 아이콘
+.chatIcon {
+  position: fixed;
+  bottom: 15px;
+  right: 35px;
+  cursor: pointer;
+  z-index: 99999;
+}
+
+// 채팅창 목록
+.myChat {
+  .title {
+    position: relative;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 20px 0 0 20px;
+    height: 50px;
+
+    .closeIcon {
+      position: absolute;
+      top: 1px;
+      right: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .myChatList {
+    width: 100%;
+
+    // 채팅 목록이 비었을 때 gif
+    .chatImage {
+      width: 300px;
+      height: 300px;
+    }
+    // 채팅 목록이 빈 경우
+    .emptyChat {
+      font-family: 'GmarketSansMedium';
+    }
+    .listWrap {
+      width: 100%;
+      padding: 10px 0 10px 10px;
+      border-bottom: 1px solid #ccc;
+      &:first-child {
+        border-top: 1px solid #ccc;
+      }
+      cursor: pointer;
+      &:hover {
+        background-color: #f2d17a;
+        .chatInfo {
+          .chatIngredientList {
+            .chatIngredient {
+              background-color: #fffcf2;
+            }
+          }
+          .chatDelete {
+            display: block;
+          }
+        }
+      }
+      .emptyImage {
+        border-radius: 30px;
+      }
+      // 유저 프로필 이미지
+      .profileImage {
+        margin-right: 10px;
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 70%;
+        }
+      }
+      // 채팅 정보
+      .chatInfo {
+        width: 260px;
+        // 유저 닉네임
+        .nickName {
+          font-size: 18px;
+          font-weight: 600;
+          margin-right: 7px;
+          margin-bottom: 0px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        // 채팅 시간
+        .chatTime {
+          // color: #999;
+          font-size: 5px;
+          // line-height: -1px;
+          padding-top: 6px;
+          width: 100px;
+        }
+        .chatIngredientList {
+          // margin-right: 4px;
+          width: 240px;
+          display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
+          // font-family: 'GmarketSansMedium';
+          font-size: 12px;
+          .chatIngredient {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin: 0px 5px 0px 0px;
+            background-color: #f2d17a;
+            border-radius: 10px;
+            padding: 2px 5px;
+          }
+        }
+        // 채팅 삭제
+        .chatDelete {
+          display: none;
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+        // 채팅 내용
+        .chatContent {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          font-size: 14px;
+          font-family: 'GmarketSansMedium';
+        }
+      }
+    }
+  }
+}
+
+.showChatDisplayWrap {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+// .hideChatDisplayWrap {
+//   position: fixed;
+//   top: 70px;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   z-index: 99;
+//   background-color: rgba(0, 0, 0, 0.8);
+// }
+
+// 내 채팅 화면
+.chatDisplayWrap {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  top: 100px;
+  bottom: 30px;
+  width: 50% !important;
+  background-color: #fffcf2;
+  box-shadow: 0 4px 4px -3px #777;
+  border-radius: 10px;
+  z-index: 9999;
+  animation: chat-show 0.3s;
+  @media only screen and (max-width: 1400px) {
+    width: 60% !important;
+  }
+  @media only screen and (max-width: 1200px) {
+    width: 70% !important;
+  }
+  @media only screen and (max-width: 991px) {
+    width: 70% !important;
+  }
+  @media only screen and (max-width: 767px) {
+    width: 90% !important;
+    height: 73%;
+  }
+
+  .chatHeader {
+    height: 10%;
+    // background-color: #999;
+
+    .headerBtn {
+      font-size: 14px;
+      font-weight: bolder;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      margin-right: 10px;
+      padding: 3px 12px;
+      box-shadow: 0 4px 4px -4px #777;
+    }
+    .closeIcon {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      cursor: pointer;
+    }
+  }
+
+  .chatContent {
+    height: 80%;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #f7c343;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #eee;
+    }
+    .imageWrapper {
+      text-align: center;
+      .messageImage {
+        margin-top: 50px;
+        margin-bottom: 20px;
+        width: 80%;
+        height: 80%;
+      }
+    }
+    .userMsg {
+      margin: 30px 0px;
+      width: 100%;
+
+      .msgWrapper {
+        width: 100%;
+        .msgTime {
+          font-size: 10px;
+          margin-top: auto;
+          font-family: 'GmarketSansMedium';
+        }
+        .msgContent {
+          padding: 10px;
+          border-radius: 10px;
+          word-break: break-all;
+          @media only screen and (max-width: 991px) {
+            width: 60%;
+          }
+          @media only screen and (max-width: 767px) {
+            width: 65%;
+          }
+        }
+      }
+
+      .profileImg {
+        margin: 0 12px;
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 70%;
+        }
+      }
+    }
+
+    .myMsg {
+      .msgContent {
+        max-width: 45%;
+        margin-left: 10px;
+        background-color: #f2d17a;
+        border: 1px solid #f2d17a;
+        font-family: 'GmarketSansMedium';
+        word-break: break-all;
+      }
+    }
+    .otherMsg {
+      .msgContent {
+        max-width: 45%;
+        margin-right: 10px;
+        background-color: #fff;
+        border: 1px solid #f2d17a;
+        font-family: 'GmarketSansMedium';
+        word-break: break-all;
+      }
+    }
+  }
+
+  .chatFooter {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+
+    .msgInput {
+      width: 100%;
+      height: 44px;
+      padding-left: 8px;
+      padding-right: 62px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      // outline: 1px solid #999;
+      &:focus {
+        outline: 1px solid #bbb;
+      }
+    }
+    .sendBtn {
+      position: absolute;
+      top: 7px;
+      right: 5px;
+      font-size: 14px;
+      font-weight: bolder;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      padding: 3px 8px;
+    }
+  }
+}
+
+@keyframes chat-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

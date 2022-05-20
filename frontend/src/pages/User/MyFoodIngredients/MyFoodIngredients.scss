@@ -1,0 +1,194 @@
+#myFoodIngredients {
+  padding: 5%;
+  .addFood {
+    height: fit-content;
+    color: #f7c343;
+    cursor: pointer;
+    font-size: 40px;
+  }
+
+  h2 {
+    text-align: center;
+    margin: auto;
+  }
+  .ingreBody {
+    background-color: #fffcf2;
+    border-radius: 15px;
+    padding: 5%;
+    margin: 5%;
+    box-shadow: 0 0 1px 0 rgba(#777, 0.15), 0 6px 12px 0 rgba(#777, 0.15);
+    div:first-child {
+      max-height: 320px;
+      overflow: auto;
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #f7c343;
+        border-radius: 10px;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #eee;
+      }
+    }
+    .dndBody {
+      margin-bottom: 5px;
+      border-bottom: 1px solid rgba(119, 119, 119, 0.1);
+      .dndIcon {
+        position: absolute;
+        visibility: hidden;
+        left: -7px;
+      }
+      .ingreItem:hover + .dndIcon {
+        visibility: visible;
+      }
+    }
+  }
+}
+
+#needs {
+  h2 {
+    text-align: center;
+    margin: auto;
+  }
+  .addNeeds {
+    color: #f7c343;
+    cursor: pointer;
+    font-size: 40px;
+  }
+
+  .ingreBody {
+    background-color: #fffcf2;
+    border-radius: 15px;
+    padding: 5%;
+    margin: 5%;
+    box-shadow: 0 0 1px 0 rgba(#777, 0.15), 0 6px 12px 0 rgba(#777, 0.15);
+
+    .needBody {
+      margin-bottom: 5px;
+      border-bottom: 1px solid rgba(119, 119, 119, 0.1);
+    }
+  }
+}
+.ingreBtn {
+  margin: 0 auto;
+  display: block;
+  padding: 6px 12px;
+  background-color: #f7c343;
+  border: 2px solid #f7c343;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px -4px #777;
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  a:hover {
+    color: black;
+  }
+}
+
+#myBoard {
+  padding: 5%;
+
+  h2 {
+    margin-bottom: 0;
+  }
+
+  .ingredients {
+    &:last-child {
+      margin-bottom: 30px;
+    }
+    font-size: 20px;
+  }
+  .tabsContainer {
+    margin: 20px 20px 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tabs {
+    display: flex;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 0 1px 0 rgba(#777, 0.15), 0 6px 12px 0 rgba(#777, 0.15);
+    padding: 0.75rem;
+    border-radius: 99px;
+    * {
+      z-index: 2;
+    }
+  }
+
+  input[type='radio'] {
+    display: none;
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 54px;
+    width: 200px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: color 0.15s ease-in;
+  }
+
+  input[type='radio'] {
+    &:checked {
+      & + label {
+        color: var(--primary-color);
+      }
+    }
+  }
+
+  input[id='radio-1'] {
+    &:checked {
+      & ~ .glider {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  input[id='radio-2'] {
+    &:checked {
+      & ~ .glider {
+        transform: translateX(100%);
+      }
+    }
+  }
+  input[id='radio-3'] {
+    &:checked {
+      & ~ .glider {
+        transform: translateX(200%);
+      }
+    }
+  }
+
+  .glider {
+    position: absolute;
+    display: flex;
+    height: 54px;
+    width: 200px;
+    background-color: #f7c343;
+    z-index: 1;
+    border-radius: 99px;
+    transition: 0.25s ease-out;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .tabs {
+      transform: scale(0.7);
+    }
+    .ingredients {
+      font-size: medium;
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    .tabs {
+      transform: scale(0.6);
+    }
+  }
+}

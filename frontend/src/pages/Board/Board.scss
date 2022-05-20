@@ -1,0 +1,364 @@
+$mobile: 500px;
+$tablet: 991px;
+$laptopS: 1200px;
+$desktop: 1400px;
+
+/* 제목 + 글쓰기 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 70px;
+}
+
+/* 검색 창 */
+.searchBar {
+  align-items: center;
+  margin-bottom: 15px;
+
+  #text-area {
+    width: 20rem;
+    height: 30px;
+    resize: none;
+  }
+
+  #searchBtn {
+    height: 30px;
+    font-size: 16px;
+    font-weight: bolder;
+    background-color: #f7c343;
+    border: 1px solid #f7c343;
+    border-radius: 8px;
+    text-align: center;
+  }
+}
+
+/* 내 위치, 필터(거리순, 최신순, 조회순) */
+.body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.locationBtn {
+  font-size: 16px;
+  font-weight: bolder;
+  background-color: #f7c343;
+  border: 1px solid #f7c343;
+  border-radius: 8px;
+  padding: 8px 0;
+  margin: 10px 0;
+  text-align: center;
+}
+
+/* 선택되지 않은 필터 버튼 스타일 */
+.filter #filterBtn {
+  width: 70px;
+  font-size: 16px;
+  font-weight: bolder;
+  background-color: #fff;
+  border: 2px solid #f7c343;
+  border-radius: 8px;
+  padding: 3px 2px;
+  margin-right: 5px;
+  box-shadow: 0 4px 4px -4px #777;
+}
+
+/* 선택된 필터 버튼 스타일 */
+.filter #selectedFilterBtn {
+  width: 70px;
+  font-size: 16px;
+  font-weight: bolder;
+  background-color: #f7c343;
+  border: 2px solid #f7c343;
+  border-radius: 8px;
+  padding: 3px 2px;
+  margin-right: 5px;
+  box-shadow: 0 4px 4px -4px #777;
+}
+
+/* 게시글 */
+.contentsContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
+
+  .contentCard {
+    width: calc(25% - 44px);
+    margin-right: 44px;
+    margin-bottom: 56px;
+    cursor: pointer;
+
+    @media only screen and (max-width: $laptopS) {
+      width: calc(($laptopS - 60px) / 4);
+    }
+  }
+  @media only screen and (max-width: $mobile) {
+    .contentCard {
+      height: 150px;
+    }
+  }
+
+  .cardImgWrap {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    box-shadow: inset 0px 0px 0px 1px rgb(0 0 0 / 15%);
+    box-sizing: border-box;
+    .status {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      z-index: 3;
+      font-weight: bolder;
+      background-color: #cccccc;
+      border: 2px solid #cccccc;
+      border-radius: 8px;
+      padding: 3px 2px;
+      margin-right: 5px;
+      box-shadow: 0 4px 4px -4px #777;
+      text-align: center;
+    }
+
+    .cardImg {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .cardBodyHeader {
+    margin-top: 12px;
+    .ingreType {
+      width: 70px;
+      font-size: 16px;
+      font-weight: bolder;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 16px;
+      padding: 3px 2px;
+      margin-right: 5px;
+      box-shadow: 0 4px 4px -4px #777;
+      text-align: center;
+    }
+
+    @media all and (min-width: 992px) and (max-width: 992px) {
+      .ingreType {
+        width: 70px;
+      }
+    }
+    @media (max-width: 991px) {
+      .ingreType {
+        width: 62px;
+        font-size: 12px;
+      }
+    }
+    @media (max-width: 412px) {
+      .ingreType {
+        width: 70px;
+        font-size: 12px;
+      }
+    }
+    @media (max-width: 320px) {
+      .ingreType {
+        width: 60px;
+        font-size: 12px;
+      }
+    }
+    .cardTitle {
+      font-size: 1.25rem;
+      font-weight: bolder;
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      @media all and (min-width: 1338px) and (max-width: 1550px) {
+        p {
+          width: 180px;
+        }
+      }
+      @media all and (min-width: 1248px) and (max-width: 1337px) {
+        p {
+          width: 160px;
+        }
+      }
+      @media all and (min-width: 1007px) and (max-width: 1247px) {
+        p {
+          width: 140px;
+        }
+      }
+      @media all and (min-width: 978px) and (max-width: 992px) {
+        p {
+          width: 130px;
+        }
+      }
+      @media all and (min-width: 770px) and(max-width: 975px) {
+        p {
+          width: 140px;
+        }
+      }
+      @media (max-width: 769px) {
+        p {
+          width: 100px;
+        }
+      }
+    }
+    @media (max-width: 769px) {
+      .cardTitle {
+        width: 100px;
+      }
+    }
+    @media (max-width: 500px) {
+      .cardTitle {
+        width: 180px;
+        p {
+          width: 160px;
+        }
+      }
+    }
+    @media (max-width: 412px) {
+      .cardTitle {
+        width: 160px;
+        p {
+          width: 150px;
+        }
+      }
+    }
+  }
+
+  .boardIngredientResList {
+    display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    @media (max-width: 500px) {
+      width: 200px;
+    }
+  }
+
+  .cardBodyCounts {
+    display: flex;
+    color: #868e96;
+    font-size: 14px;
+  }
+}
+
+/* 페이지네이션 */
+.paginationWrap {
+  display: fixed;
+  bottom: 0;
+  margin-bottom: 50px;
+}
+
+.pagination > li > a {
+  background-color: white;
+  color: black;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover {
+  color: white;
+  background-color: #f2d17a;
+  border-color: #ddd;
+  cursor: pointer;
+}
+
+.pagination > li > a[aria-current] {
+  background-color: #f2d17a;
+  border-color: #ddd;
+  font-weight: bold;
+  cursor: pointer;
+  transform: revert;
+}
+
+/* 검색 실패 */
+.searchNotFoundText {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.searchNotFound {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+  height: 300px;
+}
+
+@media only screen and (max-width: $mobile) {
+  .searchBar {
+    #text-area {
+      display: none;
+    }
+    #searchBtn {
+      display: none;
+    }
+  }
+  .locationBtn {
+    display: none;
+    .filter {
+      visibility: hidden;
+    }
+  }
+  .body {
+    justify-content: center;
+  }
+
+  .contentsContainer {
+    width: 100%;
+    margin: 0 0;
+    overflow-x: hidden;
+    display: block;
+
+    .contentCard {
+      display: flex;
+      .cardImgWrap {
+        position: relative;
+      }
+      .cardBody {
+        max-width: 300px;
+        position: absolute;
+        left: 35%;
+      }
+      .cardBodyHeader {
+        margin-top: 0;
+      }
+    }
+  }
+  .paginationWrap {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: $tablet) {
+  .locationBtn {
+    display: none;
+    .filter {
+      visibility: hidden;
+    }
+  }
+  .contentCard {
+    max-width: 30%;
+    height: auto;
+  }
+}
+
+.react-datepicker__input-container {
+  input {
+    font-family: 'GmarketSansMedium';
+  }
+}

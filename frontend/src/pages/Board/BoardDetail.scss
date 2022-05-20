@@ -1,0 +1,292 @@
+.detailFormWrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  background-color: #fffcf2;
+
+  position: relative;
+  padding: 50px;
+  overflow: auto;
+  overflow-x: hidden;
+
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.25);
+  margin: 70px 0 110px 0;
+
+  .detailHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px auto;
+    width: 90%;
+
+    .detailProfileImg {
+      max-width: 50px;
+      height: 50px;
+      border-radius: 70%;
+    }
+    .detailUserName {
+      margin-left: 10px;
+      font-size: 18px;
+      align-self: flex-end;
+    }
+    .detailStatus {
+      text-align: center;
+      width: 80px;
+      font-size: 16px;
+      font-weight: bolder;
+      background-color: #cccccc;
+      border: 2px solid #cccccc;
+      border-radius: 8px;
+      padding: 3px 2px;
+      margin-right: 5px;
+      box-shadow: 0 4px 4px -4px #777;
+    }
+    @media only screen and (max-width: 767px) {
+      width: 100%;
+      .detailUserName {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .detailBody {
+    display: flex;
+    padding: 40px 0px;
+    justify-content: center;
+
+    @media only screen and (min-width: 991px) and (max-width: 1200px) {
+      margin-bottom: 50px;
+    }
+
+    .detailIngredientImgWrap {
+      margin-right: 40px;
+      flex-shrink: 0;
+      width: 430px;
+      height: 430px;
+      position: relative;
+
+      @media only screen and (max-width: 1200px) {
+        margin-right: 0;
+      }
+
+      .detailIngredientImg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border-radius: 8%;
+      }
+    }
+    .detailContent {
+      .detailTitle {
+        margin-bottom: 25px;
+        line-height: 1.4;
+        height: 20%;
+        font-size: 30px;
+      }
+      .detailDescription {
+        margin-bottom: 25px;
+        height: 30%;
+        font-size: 23px;
+        font-family: 'GmarketSansMedium';
+        overflow: auto;
+        &::-webkit-scrollbar {
+          width: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background-color: #f7c343;
+        }
+        &::-webkit-scrollbar-track {
+          background-color: #eee;
+        }
+      }
+
+      .detailIcon {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        #detailLike {
+          font-size: 20px;
+          height: 56px;
+          width: 30%;
+          background: black;
+          border: 1px solid rgb(204, 204, 204);
+          color: rgb(255, 255, 255);
+        }
+        #detailUnLike {
+          font-size: 20px;
+          height: 56px;
+          width: 30%;
+          background: rgb(204, 204, 204);
+          border: 1px solid rgb(204, 204, 204);
+          color: rgb(255, 255, 255);
+        }
+        #detailChat {
+          font-size: 20px;
+          height: 56px;
+          width: 30%;
+          background: rgb(255, 164, 37);
+          border: 1px solid rgb(243, 150, 20);
+          color: rgb(255, 255, 255);
+        }
+        #detailReport {
+          font-size: 20px;
+          height: 56px;
+          width: 30%;
+          background: rgb(247, 0, 0);
+          border: 1px solid rgb(223, 0, 0);
+          color: rgb(255, 255, 255);
+        }
+
+        @media only screen and (max-width: 433px) {
+          button {
+            font-size: 14px !important;
+          }
+        }
+        @media only screen and (max-width: 384px) {
+          button {
+            font-size: 12px !important;
+          }
+        }
+      }
+      .detailMyContent {
+        text-align: center;
+        font-size: 20px;
+        color: #f7c343;
+        margin-top: 40px;
+      }
+      @media only screen and (min-width: 991px) and (max-width: 1200px) {
+        padding-left: 40px;
+      }
+    }
+  }
+  .detailInfoWrap {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+
+    @media only screen and (max-width: 1200px) {
+      max-height: 500px;
+      overflow: auto;
+    }
+
+    .detailInfo {
+      width: 25%;
+      margin-bottom: 20px;
+      margin-top: 20px;
+      padding: 0 10px;
+
+      @media only screen and (max-width: 1200px) {
+        width: 33.33%;
+        padding: 0 30px;
+      }
+      @media only screen and (max-width: 992px) {
+        width: 50%;
+      }
+      @media only screen and (max-width: 520px) {
+        width: 100%;
+      }
+      .detailTag {
+        text-align: center;
+        font-size: 16px;
+        background-color: #cccccc;
+        border: 2px solid #cccccc;
+        border-radius: 8px;
+        padding: 3px 2px;
+        margin-right: 5px;
+        box-shadow: 0 4px 4px -4px #777;
+      }
+    }
+  }
+
+  .detailCounts {
+    display: flex;
+    margin: 5px 0px;
+  }
+
+  .detailFooter {
+    text-align: center;
+    margin-bottom: 30px;
+    #detailCancelBtn {
+      font-size: 16px;
+      font-weight: bolder;
+      background-color: #fff;
+      border: 2px solid #f7c343;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      padding: 5px 10px;
+      box-shadow: 0 4px 4px -4px #777;
+    }
+    #detailModifyBtn {
+      font-size: 16px;
+      font-weight: bolder;
+      background-color: #f7c343;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      padding: 5px 10px;
+      margin-right: 5px;
+      box-shadow: 0 4px 4px -4px #777;
+    }
+    #detailDeleteBtn {
+      font-size: 16px;
+      font-weight: bolder;
+      background-color: #fff;
+      border: 2px solid #f7c343;
+      border-radius: 8px;
+      padding: 5px 10px;
+      margin-right: 5px;
+      box-shadow: 0 4px 4px -4px #777;
+    }
+  }
+  @media only screen and (max-width: 991px) {
+    .detailIngredientImg {
+      width: 100%;
+    }
+    .detailContent {
+      margin-top: 20px;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      .detailIcon {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+      }
+    }
+    .detailFooter {
+      text-align: right;
+      width: 100%;
+      bottom: 0%;
+    }
+  }
+}
+
+// 신고 버튼
+.reportBtn {
+  font-size: 13px;
+  font-weight: bolder;
+  background-color: #f7c343;
+  border: 2px solid #f7c343;
+  border-radius: 8px;
+  padding: 3px 2px;
+  margin-right: 5px;
+  color: #fff;
+  width: 50px;
+  box-shadow: 0 4px 4px -4px #777;
+}
+.closeBtn {
+  font-size: 13px;
+  font-weight: bolder;
+  background-color: #fff;
+  border: 2px solid #f7c343;
+  border-radius: 8px;
+  padding: 3px 2px;
+  margin-right: 5px;
+  width: 50px;
+  box-shadow: 0 4px 4px -4px #777;
+}

@@ -1,0 +1,143 @@
+.mapWrap {
+  position: relative;
+
+  .searchInput {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 100%;
+
+    z-index: 2;
+  }
+
+  .searchButton {
+    font-family: 'GmarketSansMedium';
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #f7c343;
+    border: 1px solid #f7c343;
+    border-radius: 8px;
+    padding: 4px 6px;
+  }
+  .updateButton {
+    font-family: 'GmarketSansMedium';
+    display: flex;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #f7c343;
+    border: 1px solid #f7c343;
+    border-radius: 8px;
+    padding: 6px 7px;
+  }
+
+  .closeIcon {
+    position: absolute;
+    top: 0px;
+    right: 40px;
+    font-size: 40px;
+    z-index: 1;
+    cursor: pointer;
+  }
+  @media all and (min-width: 413px) and (max-width: 590px) {
+    .closeIcon {
+      top: 0px;
+      right: 35px;
+      font-size: 40px;
+      z-index: 1;
+    }
+  }
+  @media (max-width: 412px) {
+    .closeIcon {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      font-size: 35px;
+      z-index: 1;
+    }
+  }
+}
+
+#map {
+  margin-bottom: 7px;
+  .bAddr {
+    padding: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: bolder;
+
+    .adrrName {
+      text-align: center;
+    }
+  }
+}
+
+.placeinfo_wrap {
+  position: absolute;
+  bottom: 28px;
+  left: -150px;
+  width: 300px;
+}
+.placeinfo {
+  position: relative;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+  background: #fff;
+}
+.placeinfo:nth-of-type(n) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+.placeinfo_wrap .after {
+  content: '';
+  position: relative;
+  margin-left: -12px;
+  left: 50%;
+  width: 22px;
+  height: 12px;
+  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
+}
+.placeinfo a,
+.placeinfo a:hover,
+.placeinfo a:active {
+  color: #fff;
+  text-decoration: none;
+}
+.placeinfo a,
+.placeinfo span {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.placeinfo span {
+  margin: 5px 5px 0 5px;
+  cursor: default;
+  font-size: 13px;
+}
+.placeinfo .title {
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 6px 6px 0 0;
+  margin: -1px -1px 0 -1px;
+  padding: 25px;
+  color: #fff;
+  background: #d95050;
+  background: #f7c343 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
+    no-repeat right 14px center;
+}
+.placeinfo .tel {
+  color: #0f7833;
+}
+.placeinfo .type {
+  color: #434ff7;
+}
+.placeinfo .jibun {
+  color: #999;
+  font-size: 11px;
+  margin-top: 0;
+}
