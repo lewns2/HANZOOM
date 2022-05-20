@@ -26,7 +26,7 @@ export const BestBoard = () => {
     if (user.userInfo.length !== 0) {
       getContents();
     }
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -37,20 +37,18 @@ export const BestBoard = () => {
             display: 'flex',
             overflow: 'hidden',
           }}>
-          {user.userInfo.length !== 0 ? (
-            <section id="main3">
-              <h3 className="text-center">인기 게시글</h3>
-              <div className="bestBoardWrapper">
-                <div className="container contentContainer">
-                  <Slider {...settings}>
-                    {contents.map((content, index) => (
-                      <ContentList content={content} key={index} />
-                    ))}
-                  </Slider>
-                </div>
+          <section id="main3">
+            <h3 className="text-center">인기 게시글</h3>
+            <div className="bestBoardWrapper">
+              <div className="container contentContainer">
+                <Slider {...settings}>
+                  {contents.map((content, index) => (
+                    <ContentList content={content} key={index} />
+                  ))}
+                </Slider>
               </div>
-            </section>
-          ) : null}
+            </div>
+          </section>
         </Box>
       ) : null}
     </>
