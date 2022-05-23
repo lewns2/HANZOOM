@@ -39,7 +39,7 @@
 
 ### 📺 시연영상
 
-[![시연영상](./exec/assets/ucc_thumbnail.PNG)](https://youtu.be/qdT0S32mmjo)
+[![시연영상](./exec/assets/ucc_thumbnail.PNG)](https://youtu.be/H3FUoEA3g6Y)
 
 <br/><br/>
 
