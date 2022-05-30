@@ -2,14 +2,14 @@ importScripts('https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js')
 importScripts('https://www.gstatic.com/firebasejs/9.8.1/firebase-messaging-compat.js');
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDgXmj3E2LXDfu-4jSY2tH1lHlRc-YmV9I',
-  authDomain: 'ssafy-103.firebaseapp.com',
-  databaseURL: 'https://ssafy-103-default-rtdb.asia-southeast1.firebasedatabase.app',
+  apiKey: 'firebase apiKey',
+  authDomain: 'authDomain',
+  databaseURL: 'databaseURL',
   projectId: 'ssafy-103',
-  storageBucket: 'ssafy-103.appspot.com',
-  messagingSenderId: '1021924460606',
-  appId: '1:1021924460606:web:d52fcb580c6ed0e68be96f',
-  measurementId: 'G-74ZS8TSXWE',
+  storageBucket: 'storageBucket',
+  messagingSenderId: 'messagingSenderId',
+  appId: 'appId',
+  measurementId: 'measurementId',
 };
 
 firebase.initializeApp(firebaseConfig);
